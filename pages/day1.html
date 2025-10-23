@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jour 1 — Fondamentaux REST & Lancement Agile</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/day1.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="../assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+        <span class="logo-text">APIs & Microservices</span>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="../index.html" class="nav-link">Accueil</a></li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle">
+            <i class="fas fa-calendar-alt"></i> Journées
+            <i class="fas fa-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+            <a href="day1FilRouge.html" class="dropdown-item">Jour 1 - Fil Rouge</a>
+            <a href="#" class="dropdown-item disabled">Jour 2 - Théorie (Bientôt)</a>
+            <a href="#" class="dropdown-item disabled">Jour 2 - Fil Rouge (Bientôt)</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="../index.html#projet" class="nav-link">Projet</a></li>
+        <li class="nav-item"><a href="#atelier" class="nav-link">Atelier</a></li>
+        <li class="nav-item"><a href="../index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" style="min-height: 60vh;">
+    <div class="hero-background">
+      <img src="../assets/home.jpg" alt="Campus moderne" class="hero-image">
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">Jour 1</h1>
+        <h2 class="hero-subtitle">Fondamentaux REST & Lancement Agile</h2>
+        <p class="hero-description">
+          Objectifs, déroulé de la journée et atelier guidé pour démarrer le fil rouge.
+        </p>
+        <div class="hero-buttons">
+          <a href="day1FilRouge.html" class="btn btn-primary"><i class="fas fa-code"></i>Démarrer l'atelier</a>
+          <a href="../index.html#programme" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Retour au programme</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Objectifs -->
+  <section class="introduction">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Objectifs d'apprentissage</h2>
+      </div>
+      <div class="intro-grid">
+        <div class="intro-card">
+          <div class="card-icon"><i class="fas fa-network-wired"></i></div>
+          <h3>REST en pratique</h3>
+          <p>Comprendre les contraintes REST, la sémantique HTTP et concevoir des URI propres.</p>
+        </div>
+        <div class="intro-card">
+          <div class="card-icon"><i class="fas fa-bug-slash"></i></div>
+          <h3>Erreurs standardisées</h3>
+          <p>Mettre en place un format d'erreurs conforme RFC 7807 pour des APIs robustes.</p>
+        </div>
+        <div class="intro-card">
+          <div class="card-icon"><i class="fas fa-people-group"></i></div>
+          <h3>Démarrage Agile</h3>
+          <p>Lancer le sprint: backlog initial, DoD, planning poker et rôles dans l'équipe.</p>
+        </div>
+        <div class="intro-card">
+          <div class="card-icon"><i class="fas fa-play"></i></div>
+          <h3>Premier service</h3>
+          <p>Implémenter l'Events API (CRUD) avec validation et tests unitaires.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenu de cours approfondi -->
+  <section class="programme">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Fondamentaux REST — Cours détaillé</h2>
+        <p class="section-subtitle">Théorie opérationnelle + bonnes pratiques professionnelles</p>
+      </div>
+
+      <!-- Navigation vers Fil Rouge -->
+      <div class="navigation-section">
+        <div class="nav-buttons">
+          <a href="day1FilRouge.html" class="nav-button">
+            <i class="fas fa-code"></i> Fil Rouge J1
+          </a>
+        </div>
+      </div>
+
+      <div class="days-container">
+        <div class="day-card expanded">
+            <div class="day-header">
+              <span class="day-number">1</span>
+              <span class="day-theme">Architecture : Du Monolithe aux Microservices</span>
+            </div>
+          <div class="day-content" style="max-height: 1000px;">
+            <div class="day-morning">
+              <h4><i class="fas fa-building"></i> L'Architecture Monolithique</h4>
+              
+              <p>Avant de plonger dans les microservices, il est essentiel de comprendre l'architecture traditionnelle qui a dominé le développement logiciel pendant des décennies : le <strong>monolithe</strong>.</p>
+
+              <h5>🏗️ Qu'est-ce qu'un Monolithe ?</h5>
+              <p>Un monolithe est une application construite comme une <strong>unité unique et indivisible</strong>. Tous les composants, modules et fonctionnalités sont développés, déployés et gérés ensemble dans un seul processus.</p>
+
+              <div class="highlight-box">
+                <h6>Caractéristiques du Monolithe :</h6>
+                <ul>
+                  <li><strong>Déploiement unique</strong> : Une seule unité de déploiement pour toute l'application</li>
+                  <li><strong>Base de données partagée</strong> : Une ou plusieurs bases de données utilisées par tous les modules</li>
+                  <li><strong>Communication synchrone</strong> : Appels de fonction directs entre modules</li>
+                  <li><strong>Technologie uniforme</strong> : Généralement une seule stack technologique</li>
+                  <li><strong>Équipe centralisée</strong> : Une équipe ou quelques équipes travaillent sur l'ensemble</li>
+                </ul>
+              </div>
+
+              <h5>📈 Avantages du Monolithe</h5>
+              <ul>
+                <li><strong>Simplicité de développement</strong> : Pas de complexité de communication inter-services</li>
+                <li><strong>Débogage facilité</strong> : Stack trace complète, debugging dans un seul processus</li>
+                <li><strong>Transactions ACID</strong> : Cohérence garantie grâce à la base de données unique</li>
+                <li><strong>Performance</strong> : Pas de latence réseau entre modules</li>
+                <li><strong>Déploiement simple</strong> : Un seul artefact à déployer</li>
+                <li><strong>Tests d'intégration</strong> : Plus faciles car tout est dans le même processus</li>
+              </ul>
+
+              <h5>⚠️ Inconvénients du Monolithe</h5>
+              <ul>
+                <li><strong>Couplage fort</strong> : Modification d'un module peut impacter d'autres modules</li>
+                <li><strong>Évolutivité limitée</strong> : Impossible de scaler indépendamment les parties critiques</li>
+                <li><strong>Technologie figée</strong> : Difficile d'introduire de nouvelles technologies</li>
+                <li><strong>Déploiement risqué</strong> : Un bug peut faire tomber toute l'application</li>
+                <li><strong>Équipes bloquées</strong> : Conflits de déploiement entre équipes</li>
+                <li><strong>Maintenance complexe</strong> : Code base qui grandit exponentiellement</li>
+              </ul>
+
+              <div class="highlight-box">
+                <h6>💡 Exemple Concret : E-commerce Monolithique</h6>
+                <p>Imaginez un site e-commerce avec :</p>
+                <ul>
+                  <li><strong>Module Utilisateurs</strong> : Authentification, profils</li>
+                  <li><strong>Module Catalogue</strong> : Produits, catégories, recherche</li>
+                  <li><strong>Module Panier</strong> : Gestion du panier, calculs</li>
+                  <li><strong>Module Commandes</strong> : Processus de commande, facturation</li>
+                  <li><strong>Module Paiement</strong> : Intégration avec les processeurs</li>
+                  <li><strong>Module Stock</strong> : Gestion des inventaires</li>
+                </ul>
+                <p>Tous ces modules partagent la même base de données, le même serveur, et sont déployés ensemble. Un problème dans le module paiement peut impacter toute la plateforme.</p>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-cubes"></i> L'Architecture Microservices</h4>
+              
+              <p>Les <strong>microservices</strong> sont une approche architecturale qui décompose une application en <strong>services indépendants, faiblement couplés et déployables séparément</strong>.</p>
+
+              <h5>🔧 Définition et Principes</h5>
+              <p>Chaque microservice :</p>
+              <ul>
+                <li><strong>Responsabilité unique</strong> : Un service = un domaine métier</li>
+                <li><strong>Autonomie</strong> : Peut être développé, testé et déployé indépendamment</li>
+                <li><strong>Communication par API</strong> : Généralement HTTP/REST ou message queues</li>
+                <li><strong>Base de données dédiée</strong> : Chaque service gère ses propres données</li>
+                <li><strong>Échec isolé</strong> : La panne d'un service n'affecte pas les autres</li>
+              </ul>
+
+              <h5>🎯 Avantages des Microservices</h5>
+              <ul>
+                <li><strong>Évolutivité indépendante</strong> : Scalabilité fine selon les besoins</li>
+                <li><strong>Technologies diversifiées</strong> : Chaque service peut utiliser sa stack optimale</li>
+                <li><strong>Équipes autonomes</strong> : Développement parallèle sans conflits</li>
+                <li><strong>Déploiement granulaire</strong> : Mise à jour d'un service sans impact global</li>
+                <li><strong>Résilience</strong> : Isolation des pannes</li>
+                <li><strong>Innovation</strong> : Expérimentation facilitée</li>
+              </ul>
+
+              <h5>⚠️ Défis des Microservices</h5>
+              <ul>
+                <li><strong>Complexité opérationnelle</strong> : Monitoring, logging, debugging distribués</li>
+                <li><strong>Communication réseau</strong> : Latence, fiabilité, versioning des APIs</li>
+                <li><strong>Consistance des données</strong> : Transactions distribuées complexes</li>
+                <li><strong>Tests d'intégration</strong> : Plus difficiles à orchestrer</li>
+                <li><strong>Gouvernance</strong> : Standards, conventions, documentation</li>
+                <li><strong>Courbe d'apprentissage</strong> : Nouvelles compétences requises</li>
+              </ul>
+
+              <div class="highlight-box">
+                <h6>💡 Exemple Concret : E-commerce en Microservices</h6>
+                <p>Le même site e-commerce décomposé :</p>
+                <ul>
+                  <li><strong>User Service</strong> : Authentification, profils (Node.js + MongoDB)</li>
+                  <li><strong>Catalog Service</strong> : Produits, recherche (Java + Elasticsearch)</li>
+                  <li><strong>Cart Service</strong> : Panier (Python + Redis)</li>
+                  <li><strong>Order Service</strong> : Commandes (C# + SQL Server)</li>
+                  <li><strong>Payment Service</strong> : Paiements (Go + PostgreSQL)</li>
+                  <li><strong>Inventory Service</strong> : Stock (Rust + Cassandra)</li>
+                </ul>
+                <p>Chaque service peut être développé par une équipe différente, avec sa propre technologie et base de données. Un problème dans le Payment Service n'affecte que les paiements, pas la navigation ou le catalogue.</p>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-balance-scale"></i> Monolithe vs Microservices : Le Dilemme</h4>
+              
+              <p>Le choix entre monolithe et microservices n'est pas binaire. C'est un <strong>spectre architectural</strong> avec des compromis à considérer.</p>
+
+              <h5>📊 Matrice de Décision</h5>
+              
+              <div class="table-wrapper">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Critère</th>
+                      <th>Monolithe</th>
+                      <th>Microservices</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Complexité de développement</strong></td>
+                      <td>✅ Simple</td>
+                      <td>❌ Complexe</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Déploiement</strong></td>
+                      <td>✅ Facile</td>
+                      <td>❌ Complexe</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Debugging</strong></td>
+                      <td>✅ Centralisé</td>
+                      <td>❌ Distribué</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Évolutivité</strong></td>
+                      <td>❌ Limitée</td>
+                      <td>✅ Granulaire</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Technologies</strong></td>
+                      <td>❌ Homogène</td>
+                      <td>✅ Hétérogène</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Équipes</strong></td>
+                      <td>❌ Centralisées</td>
+                      <td>✅ Autonomes</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Résilience</strong></td>
+                      <td>❌ Tout ou rien</td>
+                      <td>✅ Isolée</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Performance</strong></td>
+                      <td>✅ Optimale</td>
+                      <td>❌ Latence réseau</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h5>🎯 Quand Choisir le Monolithe ?</h5>
+              <ul>
+                <li><strong>Équipe petite</strong> (< 10 développeurs)</li>
+                <li><strong>Application simple</strong> avec logique métier cohérente</li>
+                <li><strong>Démarrage rapide</strong> nécessaire</li>
+                <li><strong>Contraintes de performance</strong> strictes</li>
+                <li><strong>Expertise limitée</strong> en architecture distribuée</li>
+              </ul>
+
+              <h5>🚀 Quand Passer aux Microservices ?</h5>
+              <ul>
+                <li><strong>Équipes multiples</strong> (> 20 développeurs)</li>
+                <li><strong>Domaines métier distincts</strong> avec cycles de vie différents</li>
+                <li><strong>Besoin d'évolutivité</strong> granulaire</li>
+                <li><strong>Technologies diverses</strong> requises</li>
+                <li><strong>Déploiements fréquents</strong> sans impact global</li>
+              </ul>
+
+              <div class="highlight-box">
+                <h6>🔄 Évolution Progressive : Monolithe Modulaire</h6>
+                <p>La transition n'est pas brutale. Beaucoup d'organisations passent par une phase intermédiaire :</p>
+                <ul>
+                  <li><strong>Monolithe modulaire</strong> : Modules bien définis avec interfaces claires</li>
+                  <li><strong>Extraction progressive</strong> : Un module à la fois vers un service</li>
+                  <li><strong>Database per Service</strong> : Séparation des données avant la séparation du code</li>
+                  <li><strong>API Gateway</strong> : Point d'entrée unique pour masquer la complexité</li>
+                </ul>
+              </div>
+
+              <h5>🏗️ Patterns de Transition</h5>
+              <ul>
+                <li><strong>Strangler Fig Pattern</strong> : Remplacer progressivement le monolithe</li>
+                <li><strong>Database Decomposition</strong> : Séparer les bases de données d'abord</li>
+                <li><strong>Event Sourcing</strong> : Utiliser les événements pour découpler</li>
+                <li><strong>CQRS</strong> : Séparer lecture et écriture</li>
+              </ul>
+
+              <div class="highlight-box">
+                <h6>💡 Leçon de l'Histoire</h6>
+                <p><strong>Netflix</strong> a migré de monolithe vers microservices en 2008-2012. <strong>Amazon</strong> a popularisé l'approche "Two Pizza Teams" (équipes de 6-8 personnes). <strong>Uber</strong> a commencé en monolithe puis a évolué vers 1000+ microservices.</p>
+                <p>La clé : <strong>commencer simple, évoluer selon les besoins réels</strong>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="day-card expanded">
+          <div class="day-header">
+            <span class="day-number">2</span>
+            <span class="day-theme">Contraintes REST (Fielding) + Modélisation de ressources</span>
+          </div>
+          <div class="day-content" style="max-height: 1000px;">
+            <div class="day-morning">
+              <h4><i class="fas fa-book"></i> Les 6 contraintes REST</h4>
+              <p>
+                En 2000, Roy Fielding soutient sa thèse et met des mots sur une intuition que les ingénieurs du web
+                pressentaient déjà: si le web a tenu l’échelle planétaire, c’est grâce à un petit ensemble de règles
+                simples mais puissantes. Il baptise ce style architectural <em>Representational State Transfer</em> — REST.
+                L’objectif n’est pas la “pureté” académique: c’est la <strong>résilience</strong> et l’<strong>évolutivité</strong> d’un système
+                distribué où tout le monde parle le même langage minimal: HTTP.
+              </p>
+              <p>
+                Fun fact — Fielding était co‑auteur de la spécification HTTP/1.1 et d’Apache. Beaucoup des décisions
+                prises pour REST ne sont pas théoriques: elles arrivent du champ de bataille des premières années du
+                web, quand des millions de navigateurs parlaient à des milliers de serveurs sous des latences
+                capricieuses. REST est une boîte à outils forgée par l’expérience.
+              </p>
+              <p>
+                Les contraintes ne sont pas des dogmes abstraits. Elles sont des garde‑fous contre les complexités qui
+                coûtent cher en production: état serveur glissant, couplage, topologies opaques… Les équipes qui les
+                respectent dorment mieux la nuit. Petit tour d’horizon, avec l’œil du praticien.
+              </p>
+              <p><strong>Client–Server</strong>. Séparer le “comment j’affiche” du “où sont mes données”. Cette coupure nette
+                permet d’itérer l’un sans casser l’autre. Quand votre appli mobile peut évoluer sans demander au backend
+                de changer ses réponses, vous goûtez ce bénéfice au quotidien.</p>
+              <p><strong>Stateless</strong>. Chaque requête porte son contexte (auth, locale, version…). Le serveur n’entretient pas
+                de session cachée. Anecdote: bien des pannes “fantômes” venaient d’un état serveur non répliqué; la
+                statelessness rend le scaling horizontal presque… ennuyeux (et c’est une bonne nouvelle).</p>
+              <p><strong>Cache</strong>. HTTP contient un trésor sous‑exploité: <code>Cache-Control</code>, <code>ETag</code>, <code>Last-Modified</code>.
+                La première <em>optimisation</em> de performance n’est pas un cluster Redis, c’est de ne pas renvoyer ce que
+                le client possède déjà.</p>
+              <p><strong>Uniform Interface</strong>. Des URI stables, des représentations simples (JSON), des codes HTTP qui
+                signifient vraiment quelque chose. Le secret: rendre l’API <em>prévisible</em>. Un bon design est devinable.</p>
+              <p><strong>Layered System</strong>. Entre le client et vous, il y a un monde: CDN, proxy, gateway, WAF. Votre API
+                doit fonctionner même si elle ne sait pas exactement qui lui parle. C’est ce qui rend l’Internet robuste.</p>
+              <p><strong>Code‑on‑Demand</strong> (optionnel). Peu utilisé côté serveur, mais rappelle que le protocole peut porter
+                du comportement. Utile à connaître, rarement nécessaire pour nos services.</p>
+
+              <h4 class="mt-4"><i class="fas fa-diagram-project"></i> Modéliser des ressources</h4>
+              <p>
+                Une erreur fréquente est de calquer la base de données. Une ressource n’est pas une table: c’est un
+                <strong>concept métier stable</strong>. Dans SmartCity, un <em>événement</em> est une ressource; de même, une
+                <em>ligne de transport</em> ou un <em>point d’arrêt</em>. Concevoir des URI, c’est raconter une histoire que
+                vos consommateurs comprendront d’instinct: <code>/events/42</code> se lit “l’événement numéro 42”.
+              </p>
+
+              <h4 class="mt-4"><i class="fas fa-chart-line"></i> Évolution: Monolithe → SOA → Microservices → Serverless</h4>
+              <p>
+                Le monolithe simplifie les débuts mais limite les équipes; la SOA introduit le découplage à l’échelle
+                de l’organisation; les microservices poussent l’autonomie (déploiement indépendant, contrat d’API comme
+                frontière); le serverless externalise l’infrastructure pour des workloads élastiques. REST reste un
+                <em>langage commun</em> entre ces formes, car il s’appuie sur HTTP et des conventions ouvertes.
+              </p>
+
+              <h4 class="mt-4"><i class="fas fa-stairs"></i> Richardson Maturity Model (RMM)</h4>
+              <ul>
+                <li><strong>Niveau 0</strong>: RPC sur HTTP (un seul endpoint, verbe métier dans le body).</li>
+                <li><strong>Niveau 1</strong>: Ressources (URI significatives) mais verbes HTTP mal exploités.</li>
+                <li><strong>Niveau 2</strong>: Verbes et codes HTTP corrects, statuts précis, négociation de contenu.</li>
+                <li><strong>Niveau 3</strong>: Hypermedia (HATEOAS) — liens et affordances dans les réponses.</li>
+              </ul>
+
+              <div class="progression-note mt-4">
+                <h4>Mini‑exercice (10 min)</h4>
+                <p>À partir d’une API publique (ex: GitHub ou Stripe), évaluez le niveau RMM et justifiez votre score.
+                Quelles conventions facilitent l’usage ? Quelles surprises ont coûté du temps ?</p>
+              </div>
+              <p>
+                Autre anecdote: quand Amazon a standardisé la forme de ses URLs, le nombre d’intégrations tierces
+                réussies a bondi. Pas parce que la doc était parfaite — mais parce que l’API était devinable. Les
+                développeurs adorent quand l’intuition suffit pour faire marcher les choses du premier coup.
+              </p>
+              <p>
+                Préférez les pluriels, bannissez les verbes dans l’URL. Les relations s’expriment naturellement:
+                <code>/events/42/attendees</code>. Le filtrage et le tri vivent dans les paramètres de requête:
+                <code>/events?type=concert&sort=-date&page=2&limit=20</code>. Ce sont des conventions qui rendent
+                l’API auto‑documentée, même sans doc.
+              </p>
+
+              <div class="progression-note mt-4">
+                <h4>Anti‑patterns fréquents</h4>
+                <p>Verbes dans l’URL, codes HTTP mal utilisés (toujours 200), mélange des responsabilités (multipart logique), payloads non documentés.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="day-card expanded mt-4">
+          <div class="day-header">
+            <span class="day-number">2</span>
+            <span class="day-theme">Sémantique HTTP, Idempotence, Codes de statut</span>
+          </div>
+          <div class="day-content" style="max-height: 1000px;">
+            <div class="day-afternoon">
+              <h4><i class="fas fa-sitemap"></i> Verbes HTTP (liste détaillée)</h4>
+              <p>
+                HTTP n’est pas une simple tuyauterie: sa <strong>sémantique</strong> encode des promesses. <em>GET</em> dit “je ne
+                modifie rien”, <em>PUT</em> dit “si tu recommences, tu obtiens le même état”, <em>POST</em> dit “je déclenche une
+                action, possiblement créatrice”. Respecter ces promesses rend votre API composable avec proxies,
+                caches, et outils.
+              </p>
+              <ul>
+                <li><strong>GET</strong> — Lecture, <em>sûr</em> et <em>idempotent</em>. Jamais d’effets de bord. Peut être mis en cache.</li>
+                <li><strong>HEAD</strong> — Comme GET mais sans corps. Utile pour tester la disponibilité/metadata.</li>
+                <li><strong>POST</strong> — Création/commande, <em>non idempotent</em>. Répondre <code>201 Created</code> + <code>Location</code>.</li>
+                <li><strong>PUT</strong> — Remplacement complet, <em>idempotent</em>. Rejouable sans surprendre le client.</li>
+                <li><strong>PATCH</strong> — Modification partielle. Définissez le format (JSON Patch/Merge Patch).</li>
+                <li><strong>DELETE</strong> — Suppression, <em>idempotent</em>. <code>204 No Content</code> recommandé.</li>
+                <li><strong>OPTIONS</strong> — Découverte des capacités, souvent pour CORS (pré‑requêtes).</li>
+              </ul>
+
+              <h4 class="mt-4"><i class="fas fa-clone"></i> Idempotence</h4>
+              <p>
+                Imaginez un formulaire de paiement soumis deux fois après un rafraîchissement. Si votre <em>POST</em> n’est
+                pas protégé, deux transactions partent. Les plateformes de paiement imposent une clé d’idempotence
+                pour “dé‑dupliquer” les tentatives. Même logique pour un <em>PUT</em>: répéter l’opération maintient l’état.
+                Cette propriété rend votre API beaucoup plus sûre face aux aléas réseau et aux retries automatiques.
+              </p>
+
+              <h4 class="mt-4"><i class="fas fa-traffic-light"></i> Codes de statut essentiels</h4>
+              <p>
+                Les codes HTTP ne sont pas de simples numéros: ce sont des signaux pour les humains et les robots.
+                Un <code>201 Created</code> + header <code>Location</code> raconte au client où vivre sa nouvelle ressource. Un
+                <code>422 Unprocessable Entity</code> chuchote “ton JSON est valide mais pas conforme au métier”.
+                Racontez l’histoire correcte et vos intégrations s’auto‑documenteront.
+              </p>
+
+              <h4 class="mt-4"><i class="fas fa-exchange-alt"></i> Négociation de contenu (content‑negotiation)</h4>
+              <p>
+                HTTP permet au client d’exprimer ce qu’il peut <em>accepter</em> et au serveur de répondre en
+                conséquence. Bien maîtrisée, la négociation de contenu rend vos APIs plus souples (formats, langues,
+                versions) sans multiplier les endpoints.
+              </p>
+              <ul>
+                <li><strong>Accept</strong> — Formats acceptés par le client (ex: <code>application/json</code>, <code>application/xml</code>).</li>
+                <li><strong>Content-Type</strong> — Format du <em>corps envoyé</em> par le client (sur POST/PUT/PATCH).</li>
+                <li><strong>Accept-Language</strong> — Langues préférées pour les messages (utile pour les erreurs/doc).</li>
+                <li><strong>406 Not Acceptable</strong> — Aucun format disponible ne correspond à <code>Accept</code>.</li>
+                <li><strong>415 Unsupported Media Type</strong> — Le <code>Content-Type</code> reçu n’est pas supporté.</li>
+              </ul>
+              <pre><code># Le client demande JSON en entrée et sortie
+curl -H "Accept: application/json" \
+     -H "Content-Type: application/json" \
+     -d '{"title":"Concert","date":"2025-05-20"}' \
+     https://api.smartcity.dev/events
+
+# Réponse 201 avec Location et représentation JSON
+HTTP/1.1 201 Created
+Content-Type: application/json; charset=utf-8
+Location: /events/42
+              </code></pre>
+
+              <div class="progression-note mt-4">
+                <h4>Bonnes pratiques de négociation</h4>
+                <p>Répondez toujours avec un <code>Content-Type</code> explicite • Refusez les corps sans
+                <code>Content-Type</code> (415) • Documentez clairement les formats supportés et les langues • En cas de
+                conflit, préférez la clarté (406/415) plutôt que d’essayer de deviner.</p>
+              </div>
+
+              <h4 class="mt-4"><i class="fas fa-code-branch"></i> Versioning par média (option avancée)</h4>
+              <p>
+                Au lieu d’encoder la version dans l’URL (<code>/v1/</code>), vous pouvez utiliser des <em>media types</em>
+                versionnés: <code>application/vnd.smartcity.event+json;v=1</code>. Le serveur produit la représentation
+                conforme à la version demandée, ce qui évite la duplication d’URL et permet une migration douce.
+              </p>
+              <pre><code>Accept: application/vnd.smartcity.event+json;v=2
+Content-Type: application/vnd.smartcity.event+json;v=2
+              </code></pre>
+
+              <div class="progression-note mt-4">
+                <h4>Quand versionner ?</h4>
+                <p>Versionnez seulement sur <em>breaking changes</em> (suppression/changement de sémantique). Pour des
+                ajouts non destructifs, restez en v1. Préparez une période de transition avec double production v1/v2.</p>
+              </div>
+
+              <h4 class="mt-4"><i class="fas fa-key"></i> Idempotency‑Key (POST sécurisé)</h4>
+              <p>
+                Les POST peuvent être rendus <em>effectivement idempotents</em> côté serveur en honorant une clé
+                fournie par le client. À requête répétée avec la même clé, renvoyez la même réponse (ou un statut
+                adéquat) au lieu de recréer une ressource.
+              </p>
+              <pre><code># Côté client
+Idempotency-Key: 8d2e6d5a-a1f0-4d0b-9f8a-0a8c7c2e1c90
+
+# Côté serveur (pseudo-code)
+if (store.has(IdempotencyKey)) return store.get(IdempotencyKey)
+const response = handlePost()
+store.set(IdempotencyKey, response, ttl=24h)
+return response
+              </code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="day-card expanded mt-4">
+          <div class="day-header">
+            <span class="day-number">3</span>
+            <span class="day-theme">Gestion d’erreurs standardisée (RFC 7807)</span>
+          </div>
+          <div class="day-content" style="max-height: 1000px;">
+            <div class="day-morning">
+              <h4><i class="fas fa-triangle-exclamation"></i> Problem Details</h4>
+              <p>
+                Avant la RFC 7807, chaque équipe inventait son propre format d’erreur: tantôt
+                <code>{ error: "Bad things" }</code>, tantôt <code>{ message: "Nope" }</code>. Résultat: des clients robustes
+                impossibles à écrire, et des parseurs pleins d’<em>if</em>. La RFC 7807 propose un langage commun pour dire
+                “ce qui s’est mal passé” sans perdre d’information: <code>type</code> pour classer, <code>title</code> pour résumer,
+                <code>detail</code> pour expliquer, <code>status</code> pour refléter HTTP, <code>instance</code> pour pointer l’occurrence.
+              </p>
+              <pre><code>{
+  "type": "https://smartcity.dev/problems/validation-error",
+  "title": "Validation failed",
+  "status": 422,
+  "detail": "Payload is not valid",
+  "instance": "/events",
+  "errors": {
+    "title": ["Required"],
+    "date": ["Must be ISO 8601"]
+  },
+  "correlationId": "f8d9a1f3-1c2b-4a3e-8f0a-12ab34cd56ef"
+}</code></pre>
+
+              <p>
+                L’astuce qui change tout en production est d’y ajouter un <strong>correlationId</strong> propagé de bout en bout
+                (gateway → services → logs → réponse). Quand un étudiant vous dit “ça marche pas”, vous cherchez ce
+                <code>correlationId</code> et vous rejouez l’histoire exact de la requête. C’est Sherlock Holmes intégré.
+              </p>
+              <div class="progression-note mt-4">
+                <h4>Bonnes pratiques</h4>
+                <p>Stabilisez vos URIs de <code>type</code>, localisez <code>title/detail</code>, logguez le <code>correlationId</code> côté serveur et retournez‑le au client.</p>
+              </div>
+
+              <h4 class="mt-4"><i class="fas fa-code"></i> Modèle d’erreur versionné</h4>
+              <p>
+                Pour éviter d’<em>enfermer</em> les clients dans un format figé, exposez des <strong>URIs de type</strong> stables
+                (ex: <code>https://smartcity.dev/problems/validation-error</code>) dont la page décrit le problème,
+                les champs attendus et, si nécessaire, son évolution au fil du temps. Ainsi, même si vous ajoutez des
+                champs d’extension demain, les intégrateurs savent où trouver la vérité.
+              </p>
+
+              <h4 class="mt-4"><i class="fas fa-language"></i> Localisation et traçabilité</h4>
+              <ul>
+                <li><strong>Localiser</strong> <code>title</code>/<code>detail</code> selon l’en‑tête <code>Accept-Language</code> quand c’est utile à l’UX.</li>
+                <li><strong>Traçabilité</strong>: attachez le <code>correlationId</code> aux logs structurés (JSON) avec le niveau et le contexte.</li>
+                <li><strong>Sécurité</strong>: ne divulguez jamais d’implémentation interne; gardez un message public et un log détaillé.</li>
+              </ul>
+
+              <h4 class="mt-4"><i class="fas fa-tags"></i> En‑têtes et métadonnées utiles</h4>
+              <ul>
+                <li><code>Content-Type: application/problem+json</code> — toujours présent pour un Problem Details.</li>
+                <li><code>X-Correlation-Id</code> — renvoyez le même identifiant qu’en entrée (ou générez‑le).</li>
+                <li><code>WWW-Authenticate</code> (401) — indiquez le schéma attendu (Bearer, realm…).</li>
+                <li><code>Retry-After</code> (429, 503) — délai conseillé avant une nouvelle tentative.</li>
+                <li><code>ETag</code>/<code>If-Match</code> — pour préconditions et contrôle de concurrence (412).</li>
+              </ul>
+
+              <h4 class="mt-4"><i class="fas fa-globe"></i> Localisation — patron conseillé</h4>
+              <p>
+                Conservez côté serveur des <em>clés i18n</em> et servez des messages localisés selon <code>Accept-Language</code>.
+                Vous pouvez exposer la clé en champ d’extension (utile aux clients qui souhaitent traduire eux‑mêmes).
+              </p>
+              <pre><code>{
+  "type": "https://smartcity.dev/problems/validation-error",
+  "title": "Échec de validation",
+  "detail": "Le champ 'date' doit être au format ISO 8601.",
+  "status": 422,
+  "i18nKey": "errors.validation.date.invalid",
+  "locale": "fr-FR",
+  "correlationId": "c2c1f8..."
+}</code></pre>
+
+              <h4 class="mt-4"><i class="fas fa-stream"></i> Corrélation et traces</h4>
+              <p>
+                Utilisez un <code>X-Correlation-Id</code> stable pour relier requête, logs et réponse. Quand OpenTelemetry est
+                présent, couplez‑le avec les entêtes W3C (<code>traceparent</code>, <code>tracestate</code>) afin de retrouver le chemin
+                complet d’une requête à travers vos services.
+              </p>
+              <pre><code>// Express (pseudo‑code)
+app.use((req, res, next) => {
+  const id = req.header('x-correlation-id') || crypto.randomUUID()
+  res.setHeader('x-correlation-id', id)
+  req.correlationId = id
+  next()
+})
+
+function problem(res, status, type, title, detail, extras = {}) {
+  return res
+    .status(status)
+    .type('application/problem+json')
+    .send({ type, title, status, detail, instance: res.req.path, correlationId: res.getHeader('x-correlation-id'), ...extras })
+}
+              </code></pre>
+
+              <h4 class="mt-4"><i class="fas fa-shield-alt"></i> Sécurité et erreurs</h4>
+              <p>
+                Les erreurs sont un canal d’<em>exfiltration d’information</em>. Redigez des messages sobres, évitez de
+                révéler des clés étrangères, des chemins système, ou la stack exacte. Dans les réponses publiques,
+                un <code>detail</code> court; dans les logs internes, la vérité complète.
+              </p>
+
+              <h4 class="mt-4"><i class="fas fa-link"></i> RFC 3986 — Encodage d’URL (percent‑encoding)</h4>
+              <p>
+                Les URLs obéissent à la RFC 3986. Les caractères <em>non réservés</em> (A–Z a–z 0–9 <code>-</code> <code>_</code> <code>.</code> <code>~</code>)
+                peuvent apparaître tels quels. Les <em>réservés</em> ont une sémantique (séparateurs, opérateurs) et doivent
+                être encodés par <code>%HH</code> (hex) selon le contexte <em>chemin</em> vs <em>query</em>. Toujours encoder après conversion
+                en UTF‑8 pour les caractères hors ASCII.
+              </p>
+
+              <div class="table-wrapper">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Caractère</th>
+                      <th>Nom</th>
+                      <th>Encodage %</th>
+                      <th>Remarques</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td> </td><td>Espace</td><td>%20</td><td>En query, <code>+</code> est parfois accepté mais préférez %20</td></tr>
+                    <tr><td>!</td><td>Exclamation</td><td>%21</td><td>Réservé</td></tr>
+                    <tr><td>"</td><td>Guillemet</td><td>%22</td><td>À encoder</td></tr>
+                    <tr><td>#</td><td>Hash (fragment)</td><td>%23</td><td>Sépare l’ancre; encoder hors fragment</td></tr>
+                    <tr><td>$</td><td>Dollar</td><td>%24</td><td>Réservé</td></tr>
+                    <tr><td>&</td><td>Ampersand</td><td>%26</td><td>Sépare les paramètres en query</td></tr>
+                    <tr><td>'</td><td>Apostrophe</td><td>%27</td><td>À encoder</td></tr>
+                    <tr><td>(</td><td>Parenthèse ouvrante</td><td>%28</td><td>À encoder</td></tr>
+                    <tr><td>)</td><td>Parenthèse fermante</td><td>%29</td><td>À encoder</td></tr>
+                    <tr><td>*</td><td>Astérisque</td><td>%2A</td><td>Réservé</td></tr>
+                    <tr><td>+</td><td>Plus</td><td>%2B</td><td>En query, <code>+</code> peut signifier espace; encodez <code>%2B</code> si c’est un plus</td></tr>
+                    <tr><td>,</td><td>Virgule</td><td>%2C</td><td>Réservé</td></tr>
+                    <tr><td>/</td><td>Slash</td><td>%2F</td><td>Séparateur de chemin; encoder dans un segment si littéral</td></tr>
+                    <tr><td>:</td><td>Deux‑points</td><td>%3A</td><td>Sépare schéma/host/port; encoder dans segments/params</td></tr>
+                    <tr><td>;</td><td>Point‑virgule</td><td>%3B</td><td>Réservé</td></tr>
+                    <tr><td>=</td><td>Égal</td><td>%3D</td><td>Sépare clé/valeur en query</td></tr>
+                    <tr><td>?</td><td>Point d’interrogation</td><td>%3F</td><td>Démarre la query string</td></tr>
+                    <tr><td>@</td><td>Arobase</td><td>%40</td><td>Infos d’auth dans l’autorité (déconseillé)</td></tr>
+                    <tr><td>[</td><td>Crochet ouvrant</td><td>%5B</td><td>IPv6 dans l’hôte</td></tr>
+                    <tr><td>]</td><td>Crochet fermant</td><td>%5D</td><td>IPv6 dans l’hôte</td></tr>
+                    <tr><td>%</td><td>Pourcent</td><td>%25</td><td>Doit être encodé s’il n’introduit pas un octet codé</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h4 class="mt-4"><i class="fas fa-vial"></i> Exemples concrets</h4>
+              <ul>
+                <li>Segment de chemin littéral: <code>/files/AC/DC</code> → <code>/files/AC%2FDC</code></li>
+                <li>Espace dans un nom: <code>/events/Paris 2025</code> → <code>/events/Paris%202025</code></li>
+                <li>Paramètre “q=a+b c”: <code>?q=a%2Bb%20c</code> (évitez d’utiliser <code>+</code> pour l’espace)</li>
+                <li>Unicode: “Toulouse 🐦” → UTF‑8 → <code>Toulouse%20%F0%9F%90%A6</code></li>
+              </ul>
+
+              <div class="progression-note mt-4">
+                <h4>Pièges à éviter</h4>
+                <p>Double encodage (<code>%252F</code> au lieu de <code>%2F</code>) • Mélanger encodage path/query • Utiliser <code>+</code> pour espace partout • Oublier UTF‑8 avant encodage.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="day-card expanded">
+          <div class="day-header">
+            <span class="day-number">4</span>
+            <span class="day-theme">Panorama des classes 1xx, 2xx, 3xx, 4xx, 5xx</span>
+          </div>
+          <div class="day-content" style="max-height: 1000px;">
+            <div class="day-morning">
+              <h4><i class="fas fa-signal"></i> 1xx — Information</h4>
+              <ul>
+                <li><strong>100 Continue</strong> — Le serveur a reçu les en‑têtes, le client peut envoyer le corps (rare en APIs).</li>
+                <li><strong>101 Switching Protocols</strong> — Passage à un autre protocole (ex: WebSocket).</li>
+              </ul>
+
+              <h4 class="mt-4"><i class="fas fa-check-circle"></i> 2xx — Succès</h4>
+              <ul>
+                <li><strong>200 OK</strong> — Réponse ordinaire avec contenu.</li>
+                <li><strong>201 Created</strong> — Création réussie. Ajoutez <code>Location: /ressource/{id}</code>.</li>
+                <li><strong>202 Accepted</strong> — Traitement asynchrone accepté (file, job). Fournir un endpoint de suivi.</li>
+                <li><strong>204 No Content</strong> — Succès sans corps (souvent pour <em>DELETE</em> ou <em>PUT</em> sans retour).</li>
+                <li><strong>206 Partial Content</strong> — Réponse partielle (entêtes <code>Range</code>/<code>Content-Range</code>).</li>
+              </ul>
+
+              <h4 class="mt-4"><i class="fas fa-random"></i> 3xx — Redirections</h4>
+              <ul>
+                <li><strong>301 Moved Permanently</strong> — Redirection définitive (GET/HEAD seulement conseillé).</li>
+                <li><strong>302 Found</strong> — Redirection temporaire (historiquement ambigu).</li>
+                <li><strong>303 See Other</strong> — Après un POST, rediriger vers une ressource (pattern PRG: Post‑Redirect‑Get).</li>
+                <li><strong>307 Temporary Redirect</strong> — Redirection temporaire <em>sans changer la méthode</em>.</li>
+                <li><strong>308 Permanent Redirect</strong> — Redirection permanente <em>sans changer la méthode</em>.</li>
+              </ul>
+
+              <h4 class="mt-4"><i class="fas fa-user-shield"></i> 4xx — Erreurs côté client</h4>
+              <ul>
+                <li><strong>400 Bad Request</strong> — Requête invalide (syntaxe, JSON mal formé).</li>
+                <li><strong>401 Unauthorized</strong> — Authentification requise/manquante/incorrecte (WWW‑Authenticate pertinent).</li>
+                <li><strong>403 Forbidden</strong> — Authentifié mais non autorisé (RBAC/ABAC).</li>
+                <li><strong>404 Not Found</strong> — Ressource / route inexistante.</li>
+                <li><strong>405 Method Not Allowed</strong> — Méthode non supportée sur cette ressource (+ <code>Allow</code>).</li>
+                <li><strong>406 Not Acceptable</strong> — Négociation de contenu impossible (Accept/Content‑Type).</li>
+                <li><strong>409 Conflict</strong> — Conflit d’état (concurrence optimiste, doublon logique).</li>
+                <li><strong>410 Gone</strong> — Ressource supprimée définitivement (utile pour déprécations).</li>
+                <li><strong>412 Precondition Failed</strong> — Échec d’<em>ETag</em>/<em>If‑Match</em> (contrôle de concurrence).</li>
+                <li><strong>415 Unsupported Media Type</strong> — Mauvais <code>Content-Type</code> (ex: pas de JSON).</li>
+                <li><strong>422 Unprocessable Entity</strong> — Données valides mais non conformes au métier (validation).</li>
+                <li><strong>429 Too Many Requests</strong> — Rate limiting (ajoutez <code>Retry-After</code>).</li>
+              </ul>
+
+              <h4 class="mt-4"><i class="fas fa-server"></i> 5xx — Erreurs côté serveur</h4>
+              <ul>
+                <li><strong>500 Internal Server Error</strong> — Exception imprévue. Log obligatoire avec <code>correlationId</code>.</li>
+                <li><strong>501 Not Implemented</strong> — Fonctionnalité non supportée.</li>
+                <li><strong>502 Bad Gateway</strong> — Proxy/gateway en échec en amont.</li>
+                <li><strong>503 Service Unavailable</strong> — Maintenance / surcharge (avec <code>Retry-After</code>).</li>
+                <li><strong>504 Gateway Timeout</strong> — Délai dépassé côté gateway.</li>
+              </ul>
+
+              <h4 class="mt-4"><i class="fas fa-list"></i> Liste exhaustive par code</h4>
+              <p>Pour référence complète, voici les codes standard reconnus (incluant certains WebDAV et codes récents):</p>
+
+              <h5 class="mt-3">1xx Information</h5>
+              <ul>
+                <li><strong>100</strong> Continue</li>
+                <li><strong>101</strong> Switching Protocols</li>
+                <li><strong>102</strong> Processing (WebDAV)</li>
+                <li><strong>103</strong> Early Hints</li>
+              </ul>
+
+              <h5 class="mt-3">2xx Succès</h5>
+              <ul>
+                <li><strong>200</strong> OK</li>
+                <li><strong>201</strong> Created</li>
+                <li><strong>202</strong> Accepted</li>
+                <li><strong>203</strong> Non-Authoritative Information</li>
+                <li><strong>204</strong> No Content</li>
+                <li><strong>205</strong> Reset Content</li>
+                <li><strong>206</strong> Partial Content</li>
+                <li><strong>207</strong> Multi-Status (WebDAV)</li>
+                <li><strong>208</strong> Already Reported (WebDAV)</li>
+                <li><strong>226</strong> IM Used</li>
+              </ul>
+
+              <h5 class="mt-3">3xx Redirection</h5>
+              <ul>
+                <li><strong>300</strong> Multiple Choices</li>
+                <li><strong>301</strong> Moved Permanently</li>
+                <li><strong>302</strong> Found</li>
+                <li><strong>303</strong> See Other</li>
+                <li><strong>304</strong> Not Modified</li>
+                <li><strong>305</strong> Use Proxy (déprécié)</li>
+                <li><strong>306</strong> (Unused)</li>
+                <li><strong>307</strong> Temporary Redirect</li>
+                <li><strong>308</strong> Permanent Redirect</li>
+              </ul>
+
+              <h5 class="mt-3">4xx Erreur client</h5>
+              <ul>
+                <li><strong>400</strong> Bad Request</li>
+                <li><strong>401</strong> Unauthorized</li>
+                <li><strong>402</strong> Payment Required (réservé)</li>
+                <li><strong>403</strong> Forbidden</li>
+                <li><strong>404</strong> Not Found</li>
+                <li><strong>405</strong> Method Not Allowed</li>
+                <li><strong>406</strong> Not Acceptable</li>
+                <li><strong>407</strong> Proxy Authentication Required</li>
+                <li><strong>408</strong> Request Timeout</li>
+                <li><strong>409</strong> Conflict</li>
+                <li><strong>410</strong> Gone</li>
+                <li><strong>411</strong> Length Required</li>
+                <li><strong>412</strong> Precondition Failed</li>
+                <li><strong>413</strong> Payload Too Large</li>
+                <li><strong>414</strong> URI Too Long</li>
+                <li><strong>415</strong> Unsupported Media Type</li>
+                <li><strong>416</strong> Range Not Satisfiable</li>
+                <li><strong>417</strong> Expectation Failed</li>
+                <li><strong>418</strong> I'm a teapot (RFC 2324, humoristique mais parfois utilisé)</li>
+                <li><strong>421</strong> Misdirected Request</li>
+                <li><strong>422</strong> Unprocessable Entity (WebDAV)</li>
+                <li><strong>423</strong> Locked (WebDAV)</li>
+                <li><strong>424</strong> Failed Dependency (WebDAV)</li>
+                <li><strong>425</strong> Too Early</li>
+                <li><strong>426</strong> Upgrade Required</li>
+                <li><strong>428</strong> Precondition Required</li>
+                <li><strong>429</strong> Too Many Requests</li>
+                <li><strong>431</strong> Request Header Fields Too Large</li>
+                <li><strong>451</strong> Unavailable For Legal Reasons</li>
+              </ul>
+
+              <h5 class="mt-3">5xx Erreur serveur</h5>
+              <ul>
+                <li><strong>500</strong> Internal Server Error</li>
+                <li><strong>501</strong> Not Implemented</li>
+                <li><strong>502</strong> Bad Gateway</li>
+                <li><strong>503</strong> Service Unavailable</li>
+                <li><strong>504</strong> Gateway Timeout</li>
+                <li><strong>505</strong> HTTP Version Not Supported</li>
+                <li><strong>506</strong> Variant Also Negotiates</li>
+                <li><strong>507</strong> Insufficient Storage (WebDAV)</li>
+                <li><strong>508</strong> Loop Detected (WebDAV)</li>
+                <li><strong>510</strong> Not Extended</li>
+                <li><strong>511</strong> Network Authentication Required</li>
+              </ul>
+
+              <div class="progression-note mt-4">
+                <h4>Checklist d’usage recommandée</h4>
+                <p>Création: <code>201 + Location</code> • Mise à jour complète: <code>200</code> ou <code>204</code> • Suppression: <code>204</code> • Validation: <code>422</code> • Auth manquante: <code>401</code> • Interdit: <code>403</code> • Conflit: <code>409</code> • Rate limit: <code>429 + Retry-After</code> • Panne: <code>5xx</code>.</p>
+              </div>
+
+              <h4 class="mt-4"><i class="fas fa-tools"></i> Mappage propre côté serveur (idée)</h4>
+              <pre><code>// Exemple de mapping d'exceptions → codes & RFC 7807
+switch (error.name) {
+  case 'ValidationError': return problem(422, 'validation-error', 'Validation failed', error.message, { errors: error.details })
+  case 'AuthMissingError': return problem(401, 'auth-missing', 'Authentication required', 'No token provided')
+  case 'ForbiddenError': return problem(403, 'forbidden', 'Not allowed', 'Insufficient permissions')
+  case 'ConflictError': return problem(409, 'conflict', 'Conflict', error.message)
+  default: return problem(500, 'internal', 'Internal Server Error', 'Unexpected error')
+}
+              </code></pre>
+
+              <div class="progression-note mt-4">
+                <h4>Pièges fréquents</h4>
+                <p>Tout renvoyer en <code>200</code> “avec un code d’erreur dans le JSON” • Utiliser <code>401</code> pour des droits insuffisants (c’est <code>403</code>) • Répondre <code>200</code> après création (préférez <code>201</code> + <code>Location</code>).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="../assets/logo.jpeg" alt="YNOV Campus" class="footer-logo-img">
+            <span class="footer-logo-text">APIs & Microservices</span>
+          </div>
+          <p class="footer-description">Jour 1 — Fondamentaux REST & Lancement Agile.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="../index.html#programme">Programme</a></li>
+            <li><a href="../index.html#projet">Projet</a></li>
+            <li><a href="#atelier">Atelier J1</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Ressources</h3>
+          <ul>
+            <li>RFC 7807</li>
+            <li>OpenAPI</li>
+            <li>Postman</li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> contact@ynov.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> Campus Ynov</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 YNOV Campus. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

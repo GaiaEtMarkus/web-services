@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APIs & Microservices - Mastère 2</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+                <span class="logo-text">APIs & Microservices</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#accueil" class="nav-link">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#programme" class="nav-link">Programme</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#projet" class="nav-link">Projet SmartCity</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <i class="fas fa-calendar-alt"></i> Journées
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="pages/day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+                        <a href="pages/day1FilRouge.html" class="dropdown-item">Jour 1 - Fil Rouge</a>
+                        <a href="#" class="dropdown-item disabled">Jour 2 - Théorie (Bientôt)</a>
+                        <a href="#" class="dropdown-item disabled">Jour 2 - Fil Rouge (Bientôt)</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#ressources" class="nav-link">Ressources</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="hero">
+        <div class="hero-background">
+            <img src="assets/home.jpg" alt="Campus moderne" class="hero-image">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">APIs & Microservices</h1>
+                <h2 class="hero-subtitle">Mastère 2 - 63h de formation intensive</h2>
+                <p class="hero-description">
+                    Développez une plateforme d'APIs REST pour une ville intelligente 
+                    avec une approche Agile moderne et une progression guidée étape par étape.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">9</span>
+                        <span class="stat-label">Journées</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">4</span>
+                        <span class="stat-label">Sprints</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">63h</span>
+                        <span class="stat-label">Formation</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#programme" class="btn btn-primary">
+                        <i class="fas fa-info-circle"></i>
+                        Découvrir le programme
+                    </a>
+                    <a href="pages/day1.html" class="btn btn-secondary">
+                        <i class="fas fa-play"></i>
+                        Commencer Jour 1
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="introduction">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Une formation complète</h2>
+                <p class="section-subtitle">
+                    Maîtrisez les APIs modernes et l'architecture microservices 
+                    à travers un projet concret et des méthodes agiles.
+                </p>
+            </div>
+            <div class="intro-grid">
+                <div class="intro-card">
+                    <div class="card-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                <h3>Approche Pratique</h3>
+                <p>70% de pratique intensive sur le projet SmartCity avec progression guidée étape par étape pour garantir la réussite.</p>
+                </div>
+                <div class="intro-card">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                <h3>Méthode Agile</h3>
+                <p>4 sprints de 2 jours avec planning poker, daily stand-ups, et démos client régulières.</p>
+                </div>
+                <div class="intro-card">
+                    <div class="card-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Sécurité Avancée</h3>
+                    <p>OWASP Top 10, OAuth 2.0, JWT, penetration testing et audit de sécurité complet.</p>
+                </div>
+                <div class="intro-card">
+                    <div class="card-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                <h3>Production Ready</h3>
+                <p>Docker, CI/CD, observabilité et monitoring avec déploiement simplifié mais professionnel.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programme Section -->
+    <section id="programme" class="programme">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Programme détaillé</h2>
+                <p class="section-subtitle">
+                    9 journées structurées en 4 sprints pour une progression guidée et réalisable
+                </p>
+            </div>
+            
+            <!-- Sprint Overview -->
+            <div class="sprints-overview">
+                <div class="sprint-card sprint-1">
+                    <div class="sprint-header">
+                        <span class="sprint-number">Sprint 1</span>
+                        <span class="sprint-duration">J1-J2</span>
+                    </div>
+                    <h3>Foundation</h3>
+                    <p>APIs REST basiques avec optimisation performance</p>
+                    <ul class="sprint-features">
+                        <li>Events API + Transport API</li>
+                        <li>Gestion d'erreurs standardisée</li>
+                        <li>Caching multi-niveaux</li>
+                        <li>Tests unitaires</li>
+                    </ul>
+                </div>
+                
+                <div class="sprint-card sprint-2">
+                    <div class="sprint-header">
+                        <span class="sprint-number">Sprint 2</span>
+                        <span class="sprint-duration">J3-J4</span>
+                    </div>
+                    <h3>Integration & Security</h3>
+                    <p>Intégration multi-protocoles et sécurité de base</p>
+                    <ul class="sprint-features">
+                        <li>Weather Service (SOAP/REST)</li>
+                        <li>Résilience patterns</li>
+                        <li>Auth Service complet</li>
+                        <li>Audit de sécurité</li>
+                    </ul>
+                </div>
+                
+                <div class="sprint-card sprint-3">
+                    <div class="sprint-header">
+                        <span class="sprint-number">Sprint 3</span>
+                        <span class="sprint-duration">J5-J6</span>
+                    </div>
+                    <h3>Security & Quality</h3>
+                    <p>Sécurité avancée et qualité professionnelle</p>
+                    <ul class="sprint-features">
+                        <li>OAuth 2.0 + social login</li>
+                        <li>Hardening complet</li>
+                        <li>Documentation OpenAPI</li>
+                        <li>Tests complets</li>
+                    </ul>
+                </div>
+                
+                <div class="sprint-card sprint-4">
+                    <div class="sprint-header">
+                        <span class="sprint-number">Sprint 4</span>
+                        <span class="sprint-duration">J7-J8</span>
+                    </div>
+                    <h3>Advanced Architecture</h3>
+                    <p>Observabilité et alternatives architecturales</p>
+                    <ul class="sprint-features">
+                        <li>Observabilité complète</li>
+                        <li>API Gateway</li>
+                        <li>GraphQL + DataLoader</li>
+                        <li>WebSocket + gRPC</li>
+                    </ul>
+                </div>
+                
+                <div class="sprint-card sprint-5">
+                    <div class="sprint-header">
+                        <span class="sprint-number">Final</span>
+                        <span class="sprint-duration">J9</span>
+                    </div>
+                    <h3>Production & Soutenance</h3>
+                    <p>Déploiement et présentation finale</p>
+                    <ul class="sprint-features">
+                        <li>Dockerisation complète</li>
+                        <li>CI/CD production</li>
+                        <li>Polissage final</li>
+                        <li>Soutenance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projet SmartCity Section -->
+    <section id="projet" class="projet">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Projet SmartCity API Platform</h2>
+                <p class="section-subtitle">
+                    Votre fil rouge : Développez une plateforme d'APIs REST pour une ville intelligente - Version simplifiée et réalisable
+                </p>
+            </div>
+            <div class="projet-content">
+                <div class="projet-description">
+                    <h3>🎯 Objectif du projet</h3>
+                    <p>
+                        Conception et développement d'une plateforme d'APIs REST pour une ville intelligente 
+                        en utilisant une approche Agile moderne avec progression guidée. Vous travaillerez en équipes de 3-4 étudiants 
+                        avec des rôles tournants (PO, Dev Lead, DevOps, QA) et une progression étape par étape.
+                    </p>
+                    
+                    <h3>🏗️ Architecture cible</h3>
+                    <div class="architecture-features">
+                        <div class="feature">
+                            <i class="fas fa-server"></i>
+                            <span>Microservices REST</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Sécurité OAuth 2.0</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Observabilité complète</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-rocket"></i>
+                            <span>Déploiement automatisé</span>
+                        </div>
+                    </div>
+
+                    <h3>📦 Services à développer (Version Simplifiée)</h3>
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <i class="fas fa-calendar"></i>
+                            <h4>Events API</h4>
+                            <p>Gestion des événements de la ville (CRUD simple)</p>
+                        </div>
+                        <div class="service-card">
+                            <i class="fas fa-bus"></i>
+                            <h4>Transport API</h4>
+                            <p>Informations transport avec pagination</p>
+                        </div>
+                        <div class="service-card">
+                            <i class="fas fa-cloud-sun"></i>
+                            <h4>Weather Service</h4>
+                            <p>Données météo via API externe</p>
+                        </div>
+                        <div class="service-card">
+                            <i class="fas fa-user-shield"></i>
+                            <h4>Auth Service</h4>
+                            <p>Authentification JWT + OAuth basique</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-note">
+                        <h4>📋 Progression Guidée</h4>
+                        <p>
+                            Chaque après-midi, vous implémenterez une partie spécifique du projet avec des instructions détaillées. 
+                            Si vous suivez la progression à la lettre, vous aurez terminé le projet fil rouge à la fin du 8ème après-midi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Évaluation Section -->
+    <section class="technologies">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Évaluation </h2>
+                <p class="section-subtitle">
+                    Système d'évaluation transparent avec gamification
+                </p>
+            </div>
+            <div class="evaluation-content">
+                <div class="evaluation-criteria">
+                    <h3>📊 Critères d'évaluation</h3>
+                    <div class="criteria-grid">
+                        <div class="criteria-item">
+                            <span class="criteria-percentage">25%</span>
+                            <h4>Code & Architecture</h4>
+                            <p>Qualité du code, architecture, innovation</p>
+                        </div>
+                        <div class="criteria-item">
+                            <span class="criteria-percentage">15%</span>
+                            <h4>Sécurité</h4>
+                            <p>OWASP Top 10, Auth/OAuth, secrets management</p>
+                        </div>
+                        <div class="criteria-item">
+                            <span class="criteria-percentage">15%</span>
+                            <h4>Présentation & Démo</h4>
+                            <p>Démo live, présentation claire, Q&A</p>
+                        </div>
+                        <div class="criteria-item">
+                            <span class="criteria-percentage">10%</span>
+                            <h4>Documentation</h4>
+                            <p>OpenAPI, guides d'intégration, README</p>
+                        </div>
+                        <div class="criteria-item">
+                            <span class="criteria-percentage">10%</span>
+                            <h4>Tests & Qualité</h4>
+                            <p>Coverage >80%, tests de contrats, performance</p>
+                        </div>
+                        <div class="criteria-item">
+                            <span class="criteria-percentage">10%</span>
+                            <h4>DevOps & Production</h4>
+                            <p>CI/CD, Dockerisation, observabilité</p>
+                        </div>
+                        <div class="criteria-item">
+                            <span class="criteria-percentage">10%</span>
+                            <h4>Travail d'Équipe</h4>
+                            <p>Collaboration, répartition, gestion Agile</p>
+                        </div>
+                        <div class="criteria-item">
+                            <span class="criteria-percentage">5%</span>
+                            <h4>Participation</h4>
+                            <p>Présence, implication, entraide</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ressources Section -->
+    <section id="ressources" class="ressources">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Ressources & Support</h2>
+                <p class="section-subtitle">
+                    Tout ce dont vous avez besoin pour réussir
+                </p>
+            </div>
+            <div class="ressources-grid">
+                <div class="ressource-card">
+                    <div class="ressource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Documentation</h3>
+                    <ul>
+                        <li>OpenAPI specs complètes</li>
+                        <li>Guides d'intégration</li>
+                        <li>Architecture diagrams</li>
+                        <li>ADR (Architecture Decision Records)</li>
+                    </ul>
+                </div>
+                <div class="ressource-card">
+                    <div class="ressource-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Outils</h3>
+                    <ul>
+                        <li>Postman collections</li>
+                        <li>Templates de projet</li>
+                        <li>Cheat sheets</li>
+                        <li>Checklist OWASP</li>
+                    </ul>
+                </div>
+                <div class="ressource-card">
+                    <div class="ressource-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Support</h3>
+                    <ul>
+                        <li>Discord/Slack dédié</li>
+                        <li>Code reviews croisées</li>
+                        <li>Pair programming</li>
+                        <li>Mentoring personnalisé</li>
+                    </ul>
+                </div>
+                <div class="ressource-card">
+                    <div class="ressource-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Formation continue</h3>
+                    <ul>
+                        <li>Livres recommandés</li>
+                        <li>Certifications suggérées</li>
+                        <li>Cours en ligne</li>
+                        <li>Communautés à rejoindre</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="assets/logo.jpeg" alt="YNOV Campus" class="footer-logo-img">
+                        <span class="footer-logo-text">APIs & Microservices</span>
+                    </div>
+                    <p class="footer-description">
+                        Formation d'exception en APIs et microservices avec approche Agile moderne.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h3>Programme</h3>
+                    <ul>
+                        <li><a href="#programme">Planning détaillé</a></li>
+                        <li><a href="#projet">Projet SmartCity</a></li>
+                        <li><a href="#ressources">Ressources</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Technologies</h3>
+                    <ul>
+                        <li>REST & GraphQL</li>
+                        <li>OAuth 2.0 & JWT</li>
+                        <li>Docker & Kubernetes</li>
+                        <li>Observabilité</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> contact@ynov.com</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Campus Ynov</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 YNOV Campus. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

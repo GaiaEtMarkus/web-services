@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jour 1 - Fil Rouge | SmartCity API Platform</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/day1FilRouge.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="../assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+                <span class="logo-text">SmartCity API Platform</span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item"><a href="../index.html" class="nav-link">Accueil</a></li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle active">
+                        <i class="fas fa-calendar-alt"></i> Journées
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+                        <a href="day1FilRouge.html" class="dropdown-item active">Jour 1 - Fil Rouge</a>
+                        <a href="#" class="dropdown-item disabled">Jour 2 - Théorie (Bientôt)</a>
+                        <a href="#" class="dropdown-item disabled">Jour 2 - Fil Rouge (Bientôt)</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="../index.html#projet" class="nav-link">Projet</a></li>
+                <li class="nav-item"><a href="../index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">🚀 SmartCity API Platform</h1>
+            <p class="hero-subtitle">Fil Rouge J1 - Kickoff & Fondations</p>
+            <p class="hero-description">Après-midi (13h30-17h00) - Construction des fondations techniques et contractuelles</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🚀 SmartCity API Platform - Kickoff & Fondations</h2>
+                <p class="section-subtitle">Fil Rouge J1 - Après-midi (13h30-17h00)</p>
+            </div>
+
+            <div class="days-container">
+                <!-- Contexte & Objectifs -->
+                <div class="day-card expanded">
+                    <div class="day-header">
+                        <span class="day-number">📋</span>
+                        <span class="day-theme">Contexte & Objectifs (13h30-13h50) - 20 min</span>
+                    </div>
+                    <div class="day-content" style="max-height: 1000px;">
+                        <div class="day-morning">
+                            <p>Vous allez construire <strong>SmartCity</strong>, une plateforme d'APIs REST pour une ville intelligente sur 8 demi-journées. Aujourd'hui, nous posons les fondations techniques et contractuelles.</p>
+
+                            <h5>👥 Les 5 Équipes</h5>
+                            <ul>
+                                <li><strong>Équipe FRONT-END</strong> (3-4 personnes) - SPA qui consomme les APIs</li>
+                                <li><strong>Équipe AUTH</strong> (3-4 personnes) - Service d'authentification centralisé</li>
+                                <li><strong>Équipes SERVICES</strong> (3 équipes de 3-4 personnes) - Chacune choisit SON domaine métier</li>
+                            </ul>
+
+                            <div class="highlight-box">
+                                <h6>🎯 Objectif de CETTE demi-journée (réaliste)</h6>
+                                <p>À 17h00, chaque équipe doit avoir :</p>
+                                <ul>
+                                    <li>✅ Choisi sa stack technique</li>
+                                    <li>✅ Rédigé un contrat OpenAPI minimal (2-3 endpoints max)</li>
+                                    <li>✅ Initialisé un projet Git avec structure de base</li>
+                                    <li>✅ Créé un README avec le plan de route</li>
+                                </ul>
+                                
+                                <p><strong>CE QUI N'EST PAS ATTENDU AUJOURD'HUI :</strong></p>
+                                <ul>
+                                    <li>❌ Code fonctionnel complet</li>
+                                    <li>❌ Base de données connectée</li>
+                                    <li>❌ Tests exhaustifs</li>
+                                    <li>❌ Mock en ligne (on fera ça J2)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 1 : Constitution & Choix -->
+                <div class="day-card expanded">
+                    <div class="day-header">
+                        <span class="day-number">👥</span>
+                        <span class="day-theme">Phase 1 : Constitution & Choix (13h50-14h20) - 30 min</span>
+                    </div>
+                    <div class="day-content" style="max-height: 1000px;">
+                        <div class="day-morning">
+                            <h5>📋 Réunion plénière - Tous ensemble (15 min)</h5>
+                            
+                            <h6>1. Attribution des rôles (5 min)</h6>
+                            <p>Chaque équipe désigne pour ce sprint :</p>
+                            <ul>
+                                <li><strong>Product Owner</strong> : Interface avec les autres équipes, priorise</li>
+                                <li><strong>Tech Lead</strong> : Décisions techniques, architecture</li>
+                                <li><strong>Dev 1 & 2</strong> : Implémentation</li>
+                            </ul>
+                            <p><em>(Les rôles tourneront à chaque sprint)</em></p>
+
+                            <h6>2. Conventions transverses OBLIGATOIRES (10 min)</h6>
+                            <p>À noter par TOUS - Ce sont des règles non négociables :</p>
+                            
+                            <div class="highlight-box">
+                                <h6>📝 NAMING</h6>
+                                <ul>
+                                    <li><strong>URIs</strong> : toujours au pluriel → <code>/events</code>, <code>/users</code>, <code>/transports</code></li>
+                                    <li><strong>Format</strong> : kebab-case → <code>?page-size=20</code> OU <code>?limit=20</code></li>
+                                    <li><strong>IDs</strong> : UUID v4</li>
+                                    <li><strong>Dates</strong> : ISO 8601 → <code>"2025-06-21T14:30:00Z"</code></li>
+                                </ul>
+
+                                <h6>📄 PAGINATION (standard à respecter)</h6>
+                                <p><strong>Request:</strong> <code>GET /resources?page=1&limit=20</code></p>
+                                <p><strong>Response:</strong></p>
+                                <pre><code>{
+  "data": [...],
+  "page": 1,
+  "limit": 20,
+  "total": 156
+}</code></pre>
+
+                                <h6>❌ ERREURS (RFC 7807 - vu ce matin)</h6>
+                                <p><strong>Content-Type:</strong> <code>application/problem+json</code></p>
+                                <pre><code>{
+  "type": "https://smartcity.api/errors/validation-error",
+  "title": "Validation Failed",
+  "status": 422,
+  "detail": "Message détaillé de l'erreur",
+  "correlationId": "uuid-pour-traçabilité"
+}</code></pre>
+
+                                <h6>📋 HEADERS OBLIGATOIRES</h6>
+                                <ul>
+                                    <li><code>X-Correlation-Id: uuid</code> (pour tracer les requêtes)</li>
+                                    <li><code>Content-Type: application/json</code></li>
+                                </ul>
+                            </div>
+
+                <h5>🎯 Travail en équipes (15 min)</h5>
+                
+                <h6>ÉQUIPES BACK-END : Choisissez votre domaine</h6>
+                <p>Voici 8 domaines possibles (choisissez-en 1 par équipe) :</p>
+
+                <div class="team-section">
+                    <h6>1. EVENTS (Événements culturels)</h6>
+                    <p>Gérer concerts, festivals, expositions, conférences</p>
+                    <p><strong>Endpoints futurs :</strong></p>
+                    <ul>
+                        <li><code>GET /events</code> - Liste avec filtres (date, type, lieu)</li>
+                        <li><code>GET /events/{id}</code> - Détails d'un événement</li>
+                        <li><code>POST /events</code> - Créer un événement (authentifié)</li>
+                        <li><code>PUT /events/{id}</code> - Modifier</li>
+                        <li><code>DELETE /events/{id}</code> - Supprimer</li>
+                        <li><code>POST /events/{id}/register</code> - S'inscrire à un événement</li>
+                        <li><code>GET /events/{id}/attendees</code> - Liste des inscrits</li>
+                        <li><code>GET /events/calendar</code> - Vue calendrier</li>
+                        <li><code>GET /events/popular</code> - Événements populaires</li>
+                    </ul>
+                </div>
+
+                <div class="team-section">
+                    <h6>2. TRANSPORT (Mobilité urbaine)</h6>
+                    <p>Lignes de bus/métro/tram, horaires, itinéraires</p>
+                    <p><strong>Endpoints futurs :</strong></p>
+                    <ul>
+                        <li><code>GET /lines</code> - Liste des lignes de transport</li>
+                        <li><code>GET /lines/{id}</code> - Détails d'une ligne</li>
+                        <li><code>GET /lines/{id}/stops</code> - Arrêts d'une ligne</li>
+                        <li><code>GET /stops</code> - Liste des arrêts</li>
+                        <li><code>GET /stops/{id}/schedules</code> - Horaires d'un arrêt</li>
+                        <li><code>POST /itineraries/calculate</code> - Calculer un itinéraire</li>
+                        <li><code>GET /traffic/alerts</code> - Alertes trafic en cours</li>
+                        <li><code>GET /lines/{id}/realtime</code> - Position temps réel</li>
+                        <li><code>GET /stops/nearby?lat=X&lng=Y</code> - Arrêts à proximité</li>
+                    </ul>
+                </div>
+
+                <div class="team-section">
+                    <h6>3. TROC (Échange entre citoyens)</h6>
+                    <p>Plateforme d'échange d'objets entre habitants</p>
+                    <p><strong>Endpoints futurs :</strong></p>
+                    <ul>
+                        <li><code>GET /items</code> - Liste des objets disponibles</li>
+                        <li><code>GET /items/{id}</code> - Détails d'un objet</li>
+                        <li><code>POST /items</code> - Proposer un objet (authentifié)</li>
+                        <li><code>PUT /items/{id}</code> - Modifier</li>
+                        <li><code>DELETE /items/{id}</code> - Retirer</li>
+                        <li><code>POST /items/{id}/propose</code> - Proposer un échange</li>
+                        <li><code>GET /exchanges</code> - Mes échanges en cours</li>
+                        <li><code>POST /exchanges/{id}/accept</code> - Accepter une proposition</li>
+                        <li><code>GET /items/categories</code> - Catégories disponibles</li>
+                    </ul>
+                </div>
+
+                <div class="team-section">
+                    <h6>4. DÉPANNAGE (Services d'urgence)</h6>
+                    <p>Plombiers, électriciens, serruriers disponibles</p>
+                    <p><strong>Endpoints futurs :</strong></p>
+                    <ul>
+                        <li><code>GET /services</code> - Types de services disponibles</li>
+                        <li><code>GET /providers</code> - Liste des prestataires</li>
+                        <li><code>GET /providers/{id}</code> - Profil d'un prestataire</li>
+                        <li><code>POST /appointments</code> - Prendre rendez-vous (authentifié)</li>
+                        <li><code>GET /appointments</code> - Mes rendez-vous</li>
+                        <li><code>PUT /appointments/{id}</code> - Modifier/annuler</li>
+                        <li><code>POST /providers/{id}/reviews</code> - Laisser un avis</li>
+                        <li><code>GET /providers/available?service=X&date=Y</code> - Dispo</li>
+                        <li><code>GET /appointments/{id}/status</code> - Suivi d'intervention</li>
+                    </ul>
+                </div>
+
+                <div class="team-section">
+                    <h6>5. ALERTE INCENDIE (Signalements citoyens)</h6>
+                    <p>Signaler incidents, suivre leur traitement</p>
+                    <p><strong>Endpoints futurs :</strong></p>
+                    <ul>
+                        <li><code>GET /alerts</code> - Liste des alertes</li>
+                        <li><code>GET /alerts/{id}</code> - Détails d'une alerte</li>
+                        <li><code>POST /alerts</code> - Créer une alerte (authentifié)</li>
+                        <li><code>PUT /alerts/{id}/status</code> - Mettre à jour le statut (admin)</li>
+                        <li><code>GET /alerts/map</code> - Alertes sur une carte</li>
+                        <li><code>POST /alerts/{id}/comments</code> - Commenter</li>
+                        <li><code>GET /alerts/nearby?lat=X&lng=Y</code> - Alertes à proximité</li>
+                        <li><code>GET /alerts/statistics</code> - Stats par type/zone</li>
+                        <li><code>POST /alerts/{id}/close</code> - Clôturer (admin)</li>
+                    </ul>
+                </div>
+
+                <div class="team-section">
+                    <h6>6. MÉTÉO (Adapter API externe)</h6>
+                    <p>Récupérer et normaliser données météo</p>
+                    <p><strong>Endpoints futurs :</strong></p>
+                    <ul>
+                        <li><code>GET /weather/current?city=X</code> - Météo actuelle</li>
+                        <li><code>GET /weather/forecast?city=X&days=7</code> - Prévisions</li>
+                        <li><code>GET /weather/alerts?city=X</code> - Alertes météo</li>
+                        <li><code>GET /weather/history?city=X&date=Y</code> - Historique</li>
+                        <li><code>GET /cities</code> - Villes disponibles</li>
+                        <li><code>GET /weather/air-quality?city=X</code> - Qualité de l'air</li>
+                        <li><code>POST /weather/subscribe</code> - S'abonner aux alertes</li>
+                        <li><code>GET /weather/compare?cities=X,Y,Z</code> - Comparer villes</li>
+                    </ul>
+                </div>
+
+                <div class="team-section">
+                    <h6>7. PARKING (Stationnement intelligent)</h6>
+                    <p>Places disponibles, réservations, tarifs</p>
+                    <p><strong>Endpoints futurs :</strong></p>
+                    <ul>
+                        <li><code>GET /parkings</code> - Liste des parkings</li>
+                        <li><code>GET /parkings/{id}</code> - Détails d'un parking</li>
+                        <li><code>GET /parkings/{id}/availability</code> - Places disponibles</li>
+                        <li><code>POST /parkings/{id}/reserve</code> - Réserver (authentifié)</li>
+                        <li><code>GET /reservations</code> - Mes réservations</li>
+                        <li><code>DELETE /reservations/{id}</code> - Annuler</li>
+                        <li><code>GET /parkings/nearby?lat=X&lng=Y</code> - Parkings proches</li>
+                        <li><code>GET /parkings/{id}/prices</code> - Grille tarifaire</li>
+                        <li><code>POST /parkings/{id}/checkin</code> - Arrivée</li>
+                        <li><code>POST /parkings/{id}/checkout</code> - Sortie et paiement</li>
+                    </ul>
+                </div>
+
+                <div class="team-section">
+                    <h6>8. BIBLIOTHÈQUE (Médiathèque municipale)</h6>
+                    <p>Catalogue, emprunts, réservations</p>
+                    <p><strong>Endpoints futurs :</strong></p>
+                    <ul>
+                        <li><code>GET /books</code> - Catalogue avec recherche</li>
+                        <li><code>GET /books/{id}</code> - Détails d'un livre</li>
+                        <li><code>POST /loans</code> - Emprunter (authentifié)</li>
+                        <li><code>GET /loans</code> - Mes emprunts en cours</li>
+                        <li><code>PUT /loans/{id}/extend</code> - Prolonger</li>
+                        <li><code>POST /books/{id}/reserve</code> - Réserver si emprunté</li>
+                        <li><code>GET /loans/history</code> - Historique d'emprunts</li>
+                        <li><code>POST /books/{id}/review</code> - Laisser un avis</li>
+                        <li><code>GET /books/recommendations</code> - Recommandations</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <h6>🎯 Action : Chaque équipe back-end choisit 1 domaine (pas de doublon !)</h6>
+                </div>
+
+                <div class="team-section">
+                    <h6>ÉQUIPE FRONT-END : Définissez vos besoins</h6>
+                    <p>Questions à vous poser :</p>
+                    <ul>
+                        <li>Quelle stack ? (React, Vue, Angular, Svelte...)</li>
+                        <li>Quelles pages prioritaires pour Sprint 1 ?</li>
+                        <li>Quels services back-end voulez-vous consommer en premier ?</li>
+                    </ul>
+                    
+                    <p><strong>Livrables attendus aujourd'hui :</strong></p>
+                    <ul>
+                        <li>Liste des user stories principales</li>
+                        <li>Wireframes ultra-simples (papier/Figma)</li>
+                        <li>Décisions techniques (framework, routing, state management)</li>
+                    </ul>
+                </div>
+
+                <div class="team-section">
+                    <h6>ÉQUIPE AUTH : Cadrez votre périmètre</h6>
+                    <p><strong>Votre mission :</strong> Service d'authentification centralisé pour toute la plateforme</p>
+                    <p>À livrer progressivement sur les 8 demi-journées</p>
+                    
+                    <p><strong>Endpoints prioritaires (pour cette demi-journée, choisissez-en 2-3) :</strong></p>
+                    <ul>
+                        <li><code>POST /auth/register</code> - Inscription</li>
+                        <li><code>POST /auth/login</code> - Connexion</li>
+                        <li><code>POST /auth/refresh</code> - Rafraîchir token</li>
+                        <li><code>POST /auth/logout</code> - Déconnexion</li>
+                        <li><code>GET /users/me</code> - Profil utilisateur</li>
+                    </ul>
+                    <p><em>(Vous ajouterez OAuth, RBAC, etc. plus tard)</em></p>
+                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2 : Rédaction Contrat OpenAPI -->
+                <div class="day-card expanded">
+                    <div class="day-header">
+                        <span class="day-number">📝</span>
+                        <span class="day-theme">Phase 2 : Rédaction Contrat OpenAPI (14h20-15h20) - 60 min</span>
+                    </div>
+                    <div class="day-content" style="max-height: 1000px;">
+                        <div class="day-morning">
+                            <h5>📝 Mini-rappel théorique (5 min)</h5>
+                            <p><strong>OpenAPI = Contrat entre Front et Back</strong></p>
+                            <p>Structure minimale :</p>
+                            <pre><code>openapi: 3.0.3
+info:
+  title: Mon Service
+  version: 1.0.0
+paths:
+  /ma-ressource:
+    get:
+      summary: Description
+      responses:
+        '200':
+          description: Succès</code></pre>
+
+                            <h5>🎯 Consignes pour TOUS</h5>
+                            <p>Aujourd'hui, rédigez UNIQUEMENT :</p>
+                            <ul>
+                                <li>✅ 2-3 endpoints maximum (les plus critiques)</li>
+                                <li>✅ 1 exemple de réponse success par endpoint</li>
+                                <li>✅ 1 exemple d'erreur (422 ou 404)</li>
+                                <li>✅ Schéma de votre ressource principale</li>
+                            </ul>
+
+                            <p><strong>NE PAS faire aujourd'hui :</strong></p>
+                            <ul>
+                                <li>❌ Tous les endpoints possibles</li>
+                                <li>❌ Tous les cas d'erreur</li>
+                                <li>❌ Schémas hyper détaillés</li>
+                            </ul>
+
+                            <div class="highlight-box">
+                                <h6>💡 Exemple guidé : Service EVENTS (structure à adapter)</h6>
+                                <pre><code>openapi: 3.0.3
+info:
+  title: SmartCity Events API
+  version: 1.0.0
+  description: Gestion des événements culturels de la ville
+  contact:
+    name: Équipe Events
+    email: events@smartcity.local
+
+servers:
+  - url: http://localhost:3002/api/v1
+    description: Développement local
+
+paths:
+  /events:
+    get:
+      summary: Liste des événements à venir
+      description: Retourne les événements triés par date
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: type
+          in: query
+          description: Filtrer par type d'événement
+          schema:
+            type: string
+            enum: [concert, exposition, conference, festival, sport]
+      responses:
+        '200':
+          description: Liste paginée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Event'
+                  page:
+                    type: integer
+                  limit:
+                    type: integer
+                  total:
+                    type: integer
+              example:
+                data:
+                  - id: "550e8400-e29b-41d4-a716-446655440000"
+                    title: "Jazz sous les étoiles"
+                    type: "concert"
+                    startDate: "2025-07-15T20:00:00Z"
+                    location:
+                      name: "Place du Capitole"
+                      city: "Toulouse"
+                page: 1
+                limit: 20
+                total: 45
+
+  /events/{id}:
+    get:
+      summary: Détails d'un événement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Détails complets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '404':
+          description: Événement non trouvé
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                type: "https://smartcity.api/errors/not-found"
+                title: "Not Found"
+                status: 404
+                detail: "Événement avec l'ID spécifié introuvable"
+                correlationId: "123e4567-e89b-12d3-a456-426614174000"
+
+components:
+  schemas:
+    Event:
+      type: object
+      required: [id, title, type, startDate]
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          enum: [concert, exposition, conference, festival, sport]
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        location:
+          type: object
+          properties:
+            name:
+              type: string
+            address:
+              type: string
+            city:
+              type: string
+
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        correlationId:
+          type: string</code></pre>
+                            </div>
+
+                            <h5>💡 Guides par type de service</h5>
+                            <div class="highlight-box">
+                                <p><strong>Pour TRANSPORT</strong> : Commencez par <code>GET /lines</code> et <code>GET /lines/{id}</code></p>
+                                <p><strong>Pour TROC</strong> : Commencez par <code>GET /items</code> et <code>POST /items</code></p>
+                                <p><strong>Pour DÉPANNAGE</strong> : Commencez par <code>GET /providers</code> et <code>POST /appointments</code></p>
+                                <p><strong>Pour ALERTE</strong> : Commencez par <code>GET /alerts</code> et <code>POST /alerts</code></p>
+                                <p><strong>Pour MÉTÉO</strong> : Commencez par <code>GET /weather/current</code> et <code>GET /weather/forecast</code></p>
+                                <p><strong>Pour PARKING</strong> : Commencez par <code>GET /parkings</code> et <code>GET /parkings/{id}/availability</code></p>
+                                <p><strong>Pour BIBLIOTHÈQUE</strong> : Commencez par <code>GET /books</code> et <code>POST /loans</code></p>
+                            </div>
+
+                            <h5>🔄 Validation inter-équipes (15 dernières min)</h5>
+                            <div class="highlight-box">
+                                <ol>
+                                    <li><strong>Chaque équipe back</strong> publie son YAML sur un canal partagé (Slack/Discord/Miro)</li>
+                                    <li><strong>L'équipe FRONT</strong> commente : "Est-ce que ces endpoints me permettent de construire mes premières pages ?"</li>
+                                    <li><strong>Ajustements</strong> si nécessaire</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pause -->
+                <div class="day-card expanded">
+                    <div class="day-header">
+                        <span class="day-number">☕</span>
+                        <span class="day-theme">Pause (15h20-15h35) - 15 min</span>
+                    </div>
+                </div>
+
+                <!-- Phase 3 : Initialisation Projet -->
+                <div class="day-card expanded">
+                    <div class="day-header">
+                        <span class="day-number">🏗️</span>
+                        <span class="day-theme">Phase 3 : Initialisation Projet (15h35-16h15) - 40 min</span>
+                    </div>
+                    <div class="day-content" style="max-height: 1000px;">
+                        <div class="day-morning">
+                            <h5>🏗️ Setup technique</h5>
+                            
+                            <h6>1. Choix de stack (5 min par équipe)</h6>
+                            <p>Décidez :</p>
+                            <ul>
+                                <li><strong>Langage</strong> : Node.js ? Python ? Java ? Go ? (libre)</li>
+                                <li><strong>Framework</strong> : Express ? FastAPI ? Spring Boot ? (libre)</li>
+                                <li><strong>Base de données</strong> : PostgreSQL ? MongoDB ? MySQL ? (on connectera J2-J3)</li>
+                            </ul>
+
+                            <h6>2. Structure de projet recommandée</h6>
+                            <pre><code>mon-service/
+├── src/ ou app/          # Code source
+├── tests/               # Tests (à remplir progressivement)
+├── contracts/            # Votre fichier OpenAPI
+├── docs/                 # Documentation
+├── .env.example          # Template de config
+├── .gitignore
+├── README.md
+└── package.json (ou équivalent selon stack)</code></pre>
+
+                            <h6>3. Ce que vous devez avoir dans le README</h6>
+                            <pre><code># [NOM DU SERVICE]
+
+## Description
+[1-2 phrases sur le rôle du service]
+
+## Stack Technique
+- Langage : 
+- Framework :
+- Base de données (prévue) :
+
+## Prérequis
+- [Liste des outils nécessaires]
+
+## Installation
+```bash
+# Commandes pour installer
+```
+
+## Lancement
+```bash
+# Commandes pour démarrer
+```
+
+## Endpoints (v0.1 - Sprint 1)
+- [ ] `GET /ressources` - Liste
+- [ ] `GET /ressources/{id}` - Détail
+- [ ] `POST /ressources` - Création (J2-J3)
+
+## Roadmap
+### Sprint 1 (J1-J2)
+- Contrat OpenAPI ✅
+- Structure projet ✅
+- Endpoints basiques (mock data)
+
+### Sprint 2 (J3-J4)
+- Base de données
+- CRUD complet
+- Auth integration
+
+[...]</code></pre>
+
+                            <h6>4. Git : 1 commit initial</h6>
+                            <pre><code>git init
+git add .
+git commit -m "chore: initial project setup with OpenAPI contract"</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 4 : Review & Planification -->
+                <div class="day-card expanded">
+                    <div class="day-header">
+                        <span class="day-number">📋</span>
+                        <span class="day-theme">Phase 4 : Review & Planification (16h15-17h00) - 45 min</span>
+                    </div>
+                    <div class="day-content" style="max-height: 1000px;">
+                        <div class="day-morning">
+                            <h5>📋 Format</h5>
+                            <p><strong>Chaque équipe présente (7 min max) :</strong></p>
+                            
+                            <ol>
+                                <li><strong>Domaine choisi</strong> (1 min)
+                                    <ul>
+                                        <li>Quel service ?</li>
+                                        <li>Pourquoi ce choix ?</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Décisions techniques</strong> (2 min)
+                                    <ul>
+                                        <li>Stack retenue</li>
+                                        <li>Structure de projet</li>
+                                        <li>Justification</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Contrat OpenAPI</strong> (3 min)
+                                    <ul>
+                                        <li>Montrer le fichier YAML</li>
+                                        <li>Expliquer les 2-3 endpoints choisis pour Sprint 1</li>
+                                        <li>Points d'attention / questions</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Roadmap</strong> (1 min)
+                                    <ul>
+                                        <li>Plan pour J2 (demain après-midi)</li>
+                                        <li>Blockers potentiels</li>
+                                    </ul>
+                                </li>
+                            </ol>
+
+                            <h5>❓ Questions à l'enseignant</h5>
+                            <p>Dernières 10 minutes : Q&A collective</p>
+
+                            <h4 class="mt-5"><i class="fas fa-check-circle"></i> Checklist de fin de journée</h4>
+                            
+                            <div class="highlight-box">
+                                <h6>✅ Chaque équipe vérifie avant de partir :</h6>
+                                <ul>
+                                    <li>☐ Domaine / stack choisi et documenté</li>
+                                    <li>☐ Fichier OpenAPI avec 2-3 endpoints (dans <code>contracts/</code>)</li>
+                                    <li>☐ Structure de projet initialisée</li>
+                                    <li>☐ README avec description, installation, roadmap</li>
+                                    <li>☐ Git init + 1er commit</li>
+                                    <li>☐ Identifié les dépendances à installer pour J2</li>
+                                </ul>
+
+                                <h6>🎨 Équipe FRONT spécifiquement :</h6>
+                                <ul>
+                                    <li>☐ Framework choisi (React/Vue/Angular/Svelte)</li>
+                                    <li>☐ Liste des services back à consommer en priorité</li>
+                                    <li>☐ Wireframes papier des 2-3 premières pages</li>
+                                    <li>☐ User stories principales identifiées</li>
+                                </ul>
+
+                                <p><strong>RIEN DE PLUS N'EST ATTENDU AUJOURD'HUI !</strong></p>
+                            </div>
+
+                            <h4 class="mt-5"><i class="fas fa-calendar-alt"></i> Pour demain (J2 Après-midi)</h4>
+                            
+                            <p><strong>Théorie du matin</strong> : Performance, Caching, Pagination avancée</p>
+                            
+                            <p><strong>Pratique de l'après-midi</strong> :</p>
+                            <ul>
+                                <li>Implémenter les 2-3 endpoints avec données <strong>en dur</strong> (tableau JS/Python/Java)</li>
+                                <li>Générer et publier les mocks avec Prism</li>
+                                <li>Front : consommer les premiers mocks</li>
+                                <li>Middleware de gestion d'erreurs RFC 7807</li>
+                                <li>Tests unitaires basiques (1-2 par endpoint)</li>
+                            </ul>
+
+                            <div class="highlight-box">
+                                <h6>📚 À faire ce soir (optionnel mais recommandé) :</h6>
+                                <ul>
+                                    <li>Installer les dépendances de votre stack</li>
+                                    <li>Regarder 1 vidéo sur votre framework choisi si besoin de refresh</li>
+                                    <li>Lire la doc de Prism : <a href="https://stoplight.io/open-source/prism" target="_blank">https://stoplight.io/open-source/prism</a></li>
+                                </ul>
+                            </div>
+
+                            <h4 class="mt-5"><i class="fas fa-road"></i> Progression sur les 8 demi-journées</h4>
+                            <div class="table-wrapper">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Jour</th>
+                                            <th>Objectif</th>
+                                            <th>Livrables</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>J1 PM</strong></td>
+                                            <td>Contrat OpenAPI + Structure projet</td>
+                                            <td>✅</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>J2 PM</strong></td>
+                                            <td>Endpoints avec mock data + Tests basiques</td>
+                                            <td>🔄</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>J3 PM</strong></td>
+                                            <td>Intégration SOAP/externe + Résilience patterns</td>
+                                            <td>⏳</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>J4 PM</strong></td>
+                                            <td>Sécurité (audit + auth integration)</td>
+                                            <td>⏳</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>J5 PM</strong></td>
+                                            <td>OAuth + Hardening</td>
+                                            <td>⏳</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>J6 PM</strong></td>
+                                            <td>Documentation complète + Tests exhaustifs</td>
+                                            <td>⏳</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>J7 PM</strong></td>
+                                            <td>Observabilité + API Gateway</td>
+                                            <td>⏳</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>J8 PM</strong></td>
+                                            <td>Containerisation + CI/CD</td>
+                                            <td>⏳</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>J9 AM</strong></td>
+                                            <td>Soutenances</td>
+                                            <td>⏳</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="../assets/logo.jpeg" alt="YNOV CAMPUS" class="logo">
+                        <span class="logo-text">SmartCity API Platform</span>
+                    </div>
+                    <p>Formation professionnelle aux microservices et APIs REST</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Technologies</h3>
+                    <ul>
+                        <li>REST</li>
+                        <li>OpenAPI</li>
+                        <li>RFC 7807</li>
+                        <li>Postman</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> contact@ynov.com</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Campus YNOV</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 YNOV CAMPUS. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>

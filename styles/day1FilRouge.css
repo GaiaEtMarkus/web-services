@@ -1,0 +1,395 @@
+/* ========================================
+   DAY 1 - FIL ROUGE STYLES
+   Styles spécifiques pour la page Fil Rouge Jour 1
+   ======================================== */
+
+/* Import des styles de base */
+@import url('styles.css');
+
+/* Styles spécifiques pour la page Fil Rouge */
+.filrouge-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Styles pour les phases du fil rouge */
+.phase-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  border-left: 5px solid var(--primary-color);
+  transition: all 0.3s ease;
+}
+
+.phase-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.phase-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--button-color) 100%);
+  color: white;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.phase-number {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.phase-title {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.phase-duration {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Styles pour le contenu des phases */
+.phase-content {
+  padding: 2rem;
+}
+
+.phase-content h5 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+}
+
+.phase-content h6 {
+  color: var(--button-color);
+  margin-top: 1.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Styles pour les équipes */
+.team-section {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border-left: 4px solid #2196f3;
+}
+
+.team-section h6 {
+  color: #1565c0;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.team-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.team-item {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 3px solid #2196f3;
+}
+
+.team-item h6 {
+  color: #1565c0;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.team-item p {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.team-item ul {
+  margin: 0.5rem 0;
+  padding-left: 1.2rem;
+}
+
+.team-item li {
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+}
+
+/* Styles pour les conventions */
+.conventions-box {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  border: 2px solid #ff9800;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.conventions-box h6 {
+  color: #e65100;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.conventions-box pre {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1rem;
+  margin: 0.8rem 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  overflow-x: auto;
+}
+
+/* Styles pour les domaines */
+.domains-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.domains-table th {
+  background: var(--primary-color);
+  color: white;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.domains-table td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #e9ecef;
+  vertical-align: top;
+}
+
+.domains-table tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+.domains-table tr:hover {
+  background: #e3f2fd;
+}
+
+.domains-table code {
+  background: #f1f3f4;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: #d63384;
+}
+
+/* Styles pour les exemples OpenAPI */
+.openapi-example {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.openapi-example h6 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.openapi-example pre {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+/* Styles pour les checklists */
+.checklist-section {
+  background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+  border: 2px solid #4caf50;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.checklist-section h6 {
+  color: #2e7d32;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.checklist-section ul {
+  margin: 0.5rem 0;
+  padding-left: 1.2rem;
+}
+
+.checklist-section li {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.checklist-section li::before {
+  content: "☐";
+  color: #4caf50;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* Styles pour la progression */
+.progression-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.progression-table th {
+  background: var(--primary-color);
+  color: white;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+.progression-table td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.progression-table tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+.progression-table tr:hover {
+  background: #e3f2fd;
+}
+
+.status-completed {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.status-in-progress {
+  color: #ff9800;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: #9e9e9e;
+  font-weight: bold;
+}
+
+/* Styles pour les pauses */
+.pause-card {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  border: 2px solid #ff9800;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.pause-card .phase-number {
+  background: #ff9800;
+  color: white;
+  font-size: 1.5rem;
+}
+
+/* Responsive Design pour le fil rouge */
+@media (max-width: 768px) {
+  .filrouge-content {
+    padding: 1rem;
+  }
+  
+  .phase-content {
+    padding: 1rem;
+  }
+  
+  .team-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .phase-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .phase-duration {
+    margin-top: 0.5rem;
+  }
+  
+  .domains-table {
+    font-size: 0.9rem;
+  }
+  
+  .domains-table th,
+  .domains-table td {
+    padding: 0.5rem;
+  }
+  
+  .openapi-example pre {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .filrouge-content {
+    padding: 0.5rem;
+  }
+  
+  .phase-content {
+    padding: 0.8rem;
+  }
+  
+  .phase-header {
+    padding: 1rem;
+  }
+  
+  .phase-number {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  
+  .domains-table {
+    font-size: 0.8rem;
+  }
+  
+  .conventions-box pre {
+    font-size: 0.75rem;
+    padding: 0.8rem;
+  }
+}
