@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jour 3 — Développement d'API REST Avancé</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/day3.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="../assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+        <span class="logo-text">WebServices</span>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="../index.html" class="nav-link">Accueil</a></li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle">
+            <i class="fas fa-calendar-alt"></i> Journées
+            <i class="fas fa-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+            <a href="day1FilRouge.html" class="dropdown-item">Jour 1 - Fil Rouge</a>
+            <a href="day2.html" class="dropdown-item">Jour 2 - Théorie</a>
+            <a href="day2FilRouge.html" class="dropdown-item">Jour 2 - Fil Rouge</a>
+            <a href="day3.html" class="dropdown-item">Jour 3 - Théorie</a>
+            <a href="day3FilRouge.html" class="dropdown-item">Jour 3 - Fil Rouge</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="../index.html#projet" class="nav-link">Projet</a></li>
+        <li class="nav-item"><a href="#atelier" class="nav-link">Atelier</a></li>
+        <li class="nav-item"><a href="../index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" style="min-height: 60vh;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">Jour 3 — Développement d'API REST Avancé</h1>
+          <p class="hero-subtitle">Versioning, Documentation et HATEOAS</p>
+          <p class="hero-description">Maîtrisez les techniques avancées pour créer des APIs professionnelles, maintenables et bien documentées.</p>
+          <div class="hero-buttons">
+            <a href="day3FilRouge.html" class="btn btn-primary">
+              <i class="fas fa-code"></i> Démarrer l'atelier
+            </a>
+            <a href="../index.html#programme" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Retour au programme</a>
+          </div>
+        </div>
+        <div class="hero-image-container">
+          <img src="../assets/restapi.jpg" alt="Web Services" class="hero-image">
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Objectifs -->
+  <section class="introduction">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Objectifs d'apprentissage</h2>
+      </div>
+      <div class="intro-grid">
+        <div class="intro-card">
+          <div class="card-icon"><i class="fas fa-code-branch"></i></div>
+          <h3>Versioning d'API</h3>
+          <p>Choisir et implémenter une stratégie de versioning appropriée pour vos APIs.</p>
+        </div>
+        <div class="intro-card">
+          <div class="card-icon"><i class="fas fa-book"></i></div>
+          <h3>Documentation OpenAPI</h3>
+          <p>Maîtriser OpenAPI/Swagger pour documenter vos APIs de manière professionnelle.</p>
+        </div>
+        <div class="intro-card">
+          <div class="card-icon"><i class="fas fa-link"></i></div>
+          <h3>HATEOAS</h3>
+          <p>Comprendre et appliquer HATEOAS pour créer des APIs auto-descriptives.</p>
+        </div>
+        <div class="intro-card">
+          <div class="card-icon"><i class="fas fa-tools"></i></div>
+          <h3>Outils et bonnes pratiques</h3>
+          <p>Utiliser les outils de développement et appliquer les bonnes pratiques avancées.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenu de cours approfondi -->
+  <section class="programme">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Développement d'API REST Avancé — Cours détaillé</h2>
+        <p class="section-subtitle">Techniques avancées pour créer des APIs professionnelles et maintenables</p>
+      </div>
+
+      <!-- Navigation vers Fil Rouge -->
+      <div class="navigation-section">
+        <div class="nav-buttons">
+          <a href="day3FilRouge.html" class="nav-button">
+            <i class="fas fa-code"></i> Fil Rouge J3
+          </a>
+        </div>
+      </div>
+
+      <div class="days-container">
+        <div class="day-card expanded">
+          <div class="day-header">
+            <span class="day-number">1</span>
+            <span class="day-theme">Versioning d'API</span>
+          </div>
+          <div class="day-content">
+            <div class="day-morning">
+              <h4><i class="fas fa-code-branch"></i> Pourquoi versionner une API ?</h4>
+              <p>Imaginons une startup de livraison de repas qui lance son API en 2020. Les restaurants peuvent lister leurs plats, les clients peuvent commander. L'endpoint principal est GET /orders qui renvoie :</p>
+              
+              <div class="json-example">
+                <pre><code>{
+  "id": 123,
+  "customer_name": "Marie Dupont",
+  "total": 45.50,
+  "items": ["Pizza Margherita", "Salade César"]
+}</code></pre>
+              </div>
+              
+              <p>Deux ans plus tard, en 2022, l'entreprise veut améliorer son API. Ils réalisent que renvoyer juste les noms des items est insuffisant. Ils veulent renvoyer des objets complets avec prix, quantité, options. La nouvelle structure serait :</p>
+              
+              <div class="json-example">
+                <pre><code>{
+  "id": 123,
+  "customer": {
+    "id": 456,
+    "name": "Marie Dupont",
+    "email": "marie@example.com"
+  },
+  "total": 45.50,
+  "items": [
+    {
+      "id": 789,
+      "name": "Pizza Margherita",
+      "price": 12.50,
+      "quantity": 2
+    }
+  ]
+}</code></pre>
+              </div>
+              
+              <p>Problème : si vous changez directement l'API existante, vous cassez toutes les applications clientes qui s'attendent à l'ancien format. Des centaines de restaurants utilisent leur application mobile qui parse customer_name comme une string. Avec le nouveau format, elle crashera en essayant de lire customer.name.</p>
+              
+              <p>C'est exactement pour ça qu'on versionne les APIs. Le versioning permet de faire évoluer votre API sans casser les clients existants. Les anciens clients continuent d'utiliser v1, les nouveaux clients utilisent v2.</p>
+
+              <h4 class="mt-5"><i class="fas fa-balance-scale"></i> Quand créer une nouvelle version ?</h4>
+              <p>Tous les changements ne nécessitent pas une nouvelle version. Il faut distinguer les changements compatibles (non-breaking) des changements incompatibles (breaking).</p>
+
+              <h5 class="mt-5">Changements compatibles (pas besoin de nouvelle version)</h5>
+              <ul>
+                <li><strong>Ajouter un nouveau champ optionnel :</strong> Si vous ajoutez phone_number à la réponse, les clients existants l'ignoreront simplement. Pas de casse.</li>
+                <li><strong>Ajouter un nouvel endpoint :</strong> POST /orders/bulk pour créer plusieurs commandes en une fois. Les clients qui ne l'utilisent pas ne sont pas impactés.</li>
+                <li><strong>Ajouter une nouvelle valeur dans un enum :</strong> Si vous aviez status: ["pending", "delivered"] et que vous ajoutez "cancelled", les clients existants continueront de gérer pending et delivered.</li>
+                <li><strong>Rendre un champ obligatoire optionnel :</strong> Si customer_name était obligatoire et devient optionnel, les clients qui l'envoient toujours continueront de fonctionner.</li>
+              </ul>
+
+              <h5 class="mt-5">Changements incompatibles (nouvelle version nécessaire)</h5>
+              <ul>
+                <li><strong>Renommer un champ :</strong> customer_name → customer.name. Les clients qui lisent customer_name ne trouveront plus ce champ.</li>
+                <li><strong>Changer le type d'un champ :</strong> total était un number, devient un string "45.50 EUR". Les clients qui parsent un number crasheront.</li>
+                <li><strong>Supprimer un champ :</strong> Si vous enlevez delivery_address, les clients qui en ont besoin ne pourront plus fonctionner.</li>
+                <li><strong>Changer la structure d'un champ :</strong> items était un array de strings, devient un array d'objets. Breaking change massif.</li>
+                <li><strong>Rendre un champ optionnel obligatoire :</strong> Si email était optionnel et devient obligatoire, les clients qui ne l'envoient pas auront des erreurs 422.</li>
+                <li><strong>Changer le comportement d'un endpoint :</strong> DELETE /users/123 supprimait définitivement, maintenant il fait un soft delete. Même si la structure de réponse ne change pas, le comportement change, c'est potentiellement breaking.</li>
+              </ul>
+              
+              <div class="highlight-box">
+                <h6>🎯 Règle d'or</h6>
+                <p>En cas de doute, considérez que c'est un breaking change et créez une nouvelle version.</p>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-route"></i> Les trois stratégies de versioning</h4>
+              <p>Il existe trois approches principales pour versionner une API. Chacune a ses avantages et inconvénients.</p>
+
+              <h5 class="mt-5">Stratégie 1 : Versioning dans l'URI (la plus courante)</h5>
+              <div class="code-example">
+                <code>https://api.example.com/v1/users<br>
+                https://api.example.com/v2/users<br>
+                https://api.example.com/v3/users</code>
+              </div>
+              
+              <p>C'est l'approche la plus répandue et la plus intuitive. La version fait partie de l'URL elle-même.</p>
+              
+              <div class="comparison-box">
+                <div class="good-example">
+                  <h6>✅ Avantages :</h6>
+                  <ul>
+                    <li><strong>Visible et explicite :</strong> Rien qu'en regardant l'URL, vous savez quelle version vous utilisez</li>
+                    <li><strong>Cache-friendly :</strong> Les proxies et CDNs peuvent cacher v1 et v2 séparément sans confusion</li>
+                    <li><strong>Simple à tester :</strong> Dans Postman, vous changez juste l'URL</li>
+                    <li><strong>Compatible navigateur :</strong> Vous pouvez tester dans un navigateur directement</li>
+                  </ul>
+                </div>
+                <div class="bad-example">
+                  <h6>❌ Inconvénients :</h6>
+                  <ul>
+                    <li><strong>Pas très "RESTful pur" :</strong> Les puristes arguent que /users/123 devrait pointer vers LA ressource utilisateur, pas vers "la version 1 de la ressource utilisateur"</li>
+                    <li><strong>URLs multiples pour la même ressource :</strong> /v1/users/123 et /v2/users/123 sont deux URLs différentes pour le même utilisateur conceptuel</li>
+                  </ul>
+                </div>
+              </div>
+
+              <h5 class="mt-5">Implémentation :</h5>
+              <div class="code-example">
+                <code>// Node.js/Express<br>
+                const v1Router = express.Router();<br>
+                const v2Router = express.Router();<br><br>
+                v1Router.get('/users/:id', (req, res) => {<br>
+                &nbsp;&nbsp;// Ancienne logique<br>
+                &nbsp;&nbsp;res.json({ id: req.params.id, name: 'Marie' });<br>
+                });<br><br>
+                v2Router.get('/users/:id', (req, res) => {<br>
+                &nbsp;&nbsp;// Nouvelle logique<br>
+                &nbsp;&nbsp;res.json({ <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;id: req.params.id, <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;profile: { name: 'Marie', email: 'marie@example.com' }<br>
+                &nbsp;&nbsp;});<br>
+                });<br><br>
+                app.use('/api/v1', v1Router);<br>
+                app.use('/api/v2', v2Router);</code>
+              </div>
+
+              <h5 class="mt-5">Stratégie 2 : Versioning par Header</h5>
+              <div class="code-example">
+                <code>GET /users/123<br>
+                Accept: application/vnd.example.v1+json<br><br>
+                GET /users/123<br>
+                Accept: application/vnd.example.v2+json</code>
+              </div>
+              
+              <p>La version est spécifiée dans un header HTTP, typiquement Accept ou un header custom comme API-Version.</p>
+              
+              <div class="comparison-box">
+                <div class="good-example">
+                  <h6>✅ Avantages :</h6>
+                  <ul>
+                    <li><strong>RESTful pur :</strong> L'URL reste la même, seule la représentation change</li>
+                    <li><strong>URL unique :</strong> /users/123 pointe toujours vers l'utilisateur 123, quelle que soit la version</li>
+                    <li><strong>Flexible :</strong> Vous pouvez avoir différentes versions pour différents formats (v1 en JSON, v1 en XML...)</li>
+                  </ul>
+                </div>
+                <div class="bad-example">
+                  <h6>❌ Inconvénients :</h6>
+                  <ul>
+                    <li><strong>Moins visible :</strong> Vous ne voyez pas la version dans l'URL, il faut regarder les headers</li>
+                    <li><strong>Difficile à tester dans un navigateur :</strong> Vous ne pouvez pas simplement coller l'URL</li>
+                    <li><strong>Complexité du caching :</strong> Les CDNs doivent être configurés pour cacher selon les headers, plus complexe</li>
+                    <li><strong>Erreurs plus fréquentes :</strong> Les développeurs oublient souvent de spécifier le header</li>
+                  </ul>
+                </div>
+              </div>
+
+              <h5 class="mt-5">Stratégie 3 : Versioning par Query Parameter</h5>
+              <div class="code-example">
+                <code>GET /users/123?version=1<br>
+                GET /users/123?version=2</code>
+              </div>
+              
+              <p>La version est passée comme un paramètre de requête.</p>
+              
+              <div class="comparison-box">
+                <div class="good-example">
+                  <h6>✅ Avantages :</h6>
+                  <ul>
+                    <li><strong>Visible dans l'URL :</strong> Comme l'approche URI, mais sans changer le chemin de base</li>
+                    <li><strong>Facile à tester :</strong> Dans un navigateur ou Postman</li>
+                    <li><strong>Optional avec default :</strong> Si pas de paramètre, utiliser une version par défaut</li>
+                  </ul>
+                </div>
+                <div class="bad-example">
+                  <h6>❌ Inconvénients :</h6>
+                  <ul>
+                    <li><strong>Mélange version et filtres :</strong> /users?version=2&status=active&page=1 peut devenir confus</li>
+                    <li><strong>Moins propre :</strong> Le query parameter est généralement réservé pour les filtres et options</li>
+                    <li><strong>Rarement utilisé en pratique :</strong> Peu d'APIs majeures utilisent cette approche</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="highlight-box">
+                <h6>🎯 Quelle stratégie choisir ?</h6>
+                <p>Pour 90% des cas, <strong>versioning dans l'URI (/v1/, /v2/)</strong> est le meilleur choix. C'est ce que font Google, Twitter, Facebook, Amazon, Netflix. C'est simple, explicite, et tout le monde comprend.</p>
+                <p>Utilisez le versioning par header si vous avez des contraintes spécifiques (compatibilité avec des standards existants, architecture complexe avec négociation de contenu avancée).</p>
+                <p>Évitez le versioning par query parameter sauf si vous avez une raison très spécifique.</p>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-tag"></i> Schéma de versioning sémantique</h4>
+              <p>Deux approches principales pour numéroter vos versions :</p>
+              
+              <h5 class="mt-5">Version majeure uniquement : v1, v2, v3...</h5>
+              <ul>
+                <li><strong>Simple, clair</strong></li>
+                <li><strong>Incrémentez seulement pour les breaking changes</strong></li>
+                <li><strong>Utilisé par la plupart des APIs publiques</strong></li>
+              </ul>
+              
+              <h5 class="mt-5">Versioning sémantique complet : v1.2.3</h5>
+              <ul>
+                <li><strong>Major.Minor.Patch (Semver)</strong></li>
+                <li><strong>Incrémentez Major pour breaking changes, Minor pour nouvelles features compatibles, Patch pour bug fixes</strong></li>
+                <li><strong>Plus d'information, mais plus complexe pour une API publique</strong></li>
+              </ul>
+              
+              <div class="highlight-box">
+                <h6>💡 Recommandation</h6>
+                <p>Pour les APIs REST publiques, restez sur les <strong>versions majeures simples : v1, v2, v3</strong>. Gardez le semver complet pour vos bibliothèques et SDKs.</p>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-history"></i> Gestion de la rétrocompatibilité</h4>
+              <p>Une fois que vous avez plusieurs versions, vous devez les maintenir. Mais combien de temps ?</p>
+              
+              <h5 class="mt-5">Politique de support</h5>
+              <p>Définissez et communiquez clairement votre politique. Exemple :</p>
+              <ul>
+                <li><strong>v1 :</strong> Stable, supportée jusqu'au 31/12/2025</li>
+                <li><strong>v2 :</strong> Stable, supportée jusqu'au 31/12/2027</li>
+                <li><strong>v3 :</strong> Beta, production ready Q2 2026</li>
+              </ul>
+              
+              <p><strong>Règle classique :</strong> Supportez au minimum les 2 dernières versions majeures. Quand v4 sort, v2 reste supportée, mais v1 entre en dépréciation.</p>
+
+              <h5 class="mt-5">Stratégie de sunset (coucher de soleil)</h5>
+              <p>Quand vous voulez retirer une ancienne version :</p>
+              <ul>
+                <li><strong>6-12 mois avant :</strong> Annoncez la date de sunset dans votre blog, newsletter, documentation.</li>
+                <li><strong>3-6 mois avant :</strong> Ajoutez un header de dépréciation dans les réponses :</li>
+              </ul>
+              
+              <div class="code-example">
+                <code>Sunset: Sat, 31 Dec 2025 23:59:59 GMT<br>
+                Deprecation: Sat, 01 Jan 2025 00:00:00 GMT<br>
+                Link: &lt;https://api.example.com/docs/migration-v2-to-v3&gt;; rel="successor-version"</code>
+              </div>
+              
+              <ul>
+                <li><strong>1 mois avant :</strong> Contactez directement les gros clients qui utilisent encore l'ancienne version. Offrez du support pour migrer.</li>
+                <li><strong>Jour J :</strong> La version ancienne commence à renvoyer 410 Gone au lieu de fonctionner normalement.</li>
+              </ul>
+              
+              <div class="json-example">
+                <pre><code>{
+  "error": "API v1 has been sunset on December 31, 2025",
+  "migration_guide": "https://api.example.com/docs/migration-v1-to-v2"
+}</code></pre>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-cogs"></i> Maintien de deux versions en parallèle</h4>
+              <p>Comment maintenir v1 et v2 sans dupliquer tout le code ?</p>
+              
+              <h5 class="mt-5">Approche 1 : Adapters/Transformers</h5>
+              <p>Vous avez une logique métier unique, et des adapters qui transforment les données pour chaque version.</p>
+              
+              <div class="code-example">
+                <code>// Logique métier (version agnostique)<br>
+                function getUserData(id) {<br>
+                &nbsp;&nbsp;return database.query('SELECT * FROM users WHERE id = ?', [id]);<br>
+                }<br><br>
+                // Adapter v1<br>
+                function transformToV1(userData) {<br>
+                &nbsp;&nbsp;return {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;id: userData.id,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;name: userData.full_name,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;email: userData.email_address<br>
+                &nbsp;&nbsp;};<br>
+                }<br><br>
+                // Adapter v2<br>
+                function transformToV2(userData) {<br>
+                &nbsp;&nbsp;return {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;id: userData.id,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;profile: {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name: userData.full_name,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;email: userData.email_address,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;phone: userData.phone_number<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;metadata: {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;created_at: userData.created_at,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;updated_at: userData.updated_at<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;};<br>
+                }</code>
+              </div>
+
+              <h5 class="mt-5">Approche 2 : Feature flags</h5>
+              <p>Pour des changements mineurs, utilisez des feature flags dans le code.</p>
+              
+              <div class="code-example">
+                <code>function getUser(id, apiVersion) {<br>
+                &nbsp;&nbsp;const user = database.query('SELECT * FROM users WHERE id = ?', [id]);<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;if (apiVersion === 'v1') {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return { id: user.id, name: user.full_name };<br>
+                &nbsp;&nbsp;} else {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return { id: user.id, profile: { name: user.full_name, email: user.email }};<br>
+                &nbsp;&nbsp;}<br>
+                }</code>
+              </div>
+              
+              <div class="highlight-box">
+                <h6>⚠️ Attention</h6>
+                <p>Cette approche devient vite ingérable si vous avez trop de versions. Préférez les adapters.</p>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-exclamation-triangle"></i> Dépréciation d'endpoints individuels</h4>
+              <p>Parfois, vous ne voulez pas déprécier toute une version, juste un endpoint spécifique.</p>
+              
+              <p>Utilisez le header Deprecation (RFC 8594) :</p>
+              
+              <div class="code-example">
+                <code>GET /users/123/legacy-stats<br><br>
+                HTTP/1.1 200 OK<br>
+                Deprecation: Sat, 01 Jan 2026 00:00:00 GMT<br>
+                Link: &lt;https://api.example.com/users/123/analytics&gt;; rel="alternate"<br>
+                Sunset: Sat, 01 Jul 2026 23:59:59 GMT<br><br>
+                {<br>
+                &nbsp;&nbsp;"data": "...",<br>
+                &nbsp;&nbsp;"deprecation_notice": "This endpoint is deprecated. Please migrate to /users/{id}/analytics"<br>
+                }</code>
+              </div>
+              
+              <p>Documentez clairement l'alternative et la timeline.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="day-card expanded">
+          <div class="day-header">
+            <span class="day-number">2</span>
+            <span class="day-theme">Documentation d'API</span>
+          </div>
+          <div class="day-content">
+            <div class="day-morning">
+              <h4><i class="fas fa-book"></i> Pourquoi documenter est crucial</h4>
+              <p>Une API sans documentation est comme un restaurant sans menu. Techniquement, vous pouvez demander au serveur "qu'est-ce que vous avez ?", mais c'est laborieux et frustrant.</p>
+              
+              <p>Imaginons un développeur externe qui découvre votre API SmartCity. Il veut intégrer les événements culturels dans son application. Sans documentation :</p>
+              
+              <ul>
+                <li>Il ne sait pas quels endpoints existent</li>
+                <li>Il ne sait pas quel format envoyer pour créer un événement</li>
+                <li>Il ne sait pas quelles erreurs peuvent survenir</li>
+                <li>Il ne sait pas s'il doit s'authentifier</li>
+                <li>Il ne sait pas quelles limites de rate limiting existent</li>
+              </ul>
+              
+              <p>Résultat : il abandonne et va voir une API concurrente mieux documentée. Une bonne documentation n'est pas un luxe, c'est une nécessité absolue.</p>
+
+              <h4 class="mt-5"><i class="fas fa-file-code"></i> OpenAPI Specification : le standard de l'industrie</h4>
+              <p>OpenAPI (anciennement Swagger) est devenu LE standard pour documenter les APIs REST. C'est un format YAML (ou JSON) qui décrit complètement votre API de manière machine-readable.</p>
+
+              <h5 class="mt-5">Histoire rapide</h5>
+              <p>En 2011, une entreprise appelée Wordnik crée Swagger pour documenter leur propre API. En 2015, Swagger est racheté par SmartBear et devient open-source. En 2016, la spécification est donnée à la Linux Foundation et renommée OpenAPI Specification (OAS). Aujourd'hui, c'est le standard adopté par Google, Microsoft, IBM, etc.</p>
+
+              <h5 class="mt-5">Structure de base d'un fichier OpenAPI</h5>
+              <p>Voici un exemple complet et détaillé pour le service Events de SmartCity :</p>
+              
+              <div class="code-example">
+                <code>openapi: 3.0.3<br>
+info:<br>
+&nbsp;&nbsp;title: SmartCity Events API<br>
+&nbsp;&nbsp;version: 1.0.0<br>
+&nbsp;&nbsp;description: |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API pour gérer les événements culturels de la ville.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;## Authentification<br>
+&nbsp;&nbsp;&nbsp;&nbsp;La plupart des endpoints nécessitent une authentification JWT.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Obtenez un token via /auth/login et incluez-le dans le header Authorization.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;## Rate Limiting<br>
+&nbsp;&nbsp;&nbsp;&nbsp;100 requêtes par minute par IP pour les endpoints publics.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1000 requêtes par minute pour les utilisateurs authentifiés.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;contact:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name: Équipe Events<br>
+&nbsp;&nbsp;&nbsp;&nbsp;email: events@smartcity.local<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url: https://smartcity.local/support<br>
+&nbsp;&nbsp;license:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name: MIT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url: https://opensource.org/licenses/MIT<br><br>
+servers:<br>
+&nbsp;&nbsp;- url: https://api.smartcity.local/v1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description: Production<br>
+&nbsp;&nbsp;- url: https://api-staging.smartcity.local/v1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description: Staging<br>
+&nbsp;&nbsp;- url: http://localhost:3000/api/v1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description: Développement local</code>
+              </div>
+
+              <h5 class="mt-5">Éléments clés d'un bon fichier OpenAPI</h5>
+              <ul>
+                <li><strong>Section `info`</strong> : Métadonnées complètes avec description, contact, licence. La description peut inclure du Markdown pour formater du texte riche.</li>
+                <li><strong>Section `servers`</strong> : Liste les différents environnements. Le client peut choisir où envoyer ses requêtes.</li>
+                <li><strong>Section `paths`</strong> : Le cœur de la spec. Chaque endpoint avec toutes ses méthodes HTTP, paramètres, corps de requêtes, réponses possibles.</li>
+                <li><strong>Section `components`</strong> : Définitions réutilisables. Utilisez `$ref` pour éviter la duplication. Schémas, réponses d'erreur, mécanismes de sécurité.</li>
+                <li><strong>Section `tags`</strong> : Permet de grouper les endpoints par thématique dans la documentation générée.</li>
+                <li><strong>Exemples multiples</strong> : Utilisez `examples` (au pluriel) pour montrer différents cas d'usage. Très utile pour les développeurs.</li>
+              </ul>
+
+              <h4 class="mt-5"><i class="fas fa-play"></i> Génération de documentation interactive</h4>
+              <p>Le grand avantage d'OpenAPI : génération automatique d'une belle documentation interactive.</p>
+
+              <h5 class="mt-5">Swagger UI</h5>
+              <p>Swagger UI est l'outil le plus populaire. Il lit votre OpenAPI et génère une interface web où les développeurs peuvent :</p>
+              <ul>
+                <li>Voir tous les endpoints groupés par tags</li>
+                <li>Voir les schémas de données avec exemples</li>
+                <li><strong>Tester les endpoints directement depuis le navigateur</strong></li>
+                <li>Voir les codes de réponse possibles</li>
+                <li>Copier des exemples de requêtes</li>
+              </ul>
+
+              <h5 class="mt-5">Intégration Node.js/Express :</h5>
+              <div class="code-example">
+                <code>const swaggerUi = require('swagger-ui-express');<br>
+const YAML = require('yamljs');<br>
+const swaggerDocument = YAML.load('./openapi.yaml');<br><br>
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {<br>
+&nbsp;&nbsp;customCss: '.swagger-ui .topbar { display: none }',<br>
+&nbsp;&nbsp;customSiteTitle: "SmartCity API Documentation"<br>
+}));</code>
+              </div>
+              
+              <p>Allez sur `http://localhost:3000/api-docs` et vous avez votre documentation interactive.</p>
+
+              <h5 class="mt-5">Redoc</h5>
+              <p>Alternative plus moderne visuellement, optimisée pour la lecture plutôt que pour tester.</p>
+              
+              <div class="code-example">
+                <code>const redoc = require('redoc-express');<br><br>
+app.get('/docs', redoc({<br>
+&nbsp;&nbsp;title: 'SmartCity API Documentation',<br>
+&nbsp;&nbsp;specUrl: '/openapi.yaml',<br>
+&nbsp;&nbsp;nonce: '',<br>
+&nbsp;&nbsp;redocOptions: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;theme: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;colors: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;primary: { main: '#2563eb' }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+}));</code>
+              </div>
+
+              <h5 class="mt-5">Comparaison des outils</h5>
+              <div class="comparison-box">
+                <div class="good-example">
+                  <h6>Swagger UI :</h6>
+                  <ul>
+                    <li>✅ Le plus populaire et mature</li>
+                    <li>✅ Excellent pour tester les endpoints</li>
+                    <li>✅ Try-it-out intégré</li>
+                    <li>❌ Design un peu daté</li>
+                  </ul>
+                </div>
+                <div class="good-example">
+                  <h6>Redoc :</h6>
+                  <ul>
+                    <li>✅ Très beau design moderne</li>
+                    <li>✅ Optimisé pour la lecture</li>
+                    <li>✅ Navigation fluide</li>
+                    <li>❌ Moins bon pour tester interactivement</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div class="highlight-box">
+                <h6>💡 Recommandation</h6>
+                <p>Pour SmartCity, commencez avec <strong>Swagger UI</strong>. C'est le standard de l'industrie.</p>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-check-circle"></i> Bonnes pratiques de documentation</h4>
+              
+              <h5 class="mt-5">1. Design-first vs Code-first</h5>
+              <p><strong>Design-first :</strong> Vous écrivez d'abord le contrat OpenAPI, validez-le avec l'équipe, puis implémentez le code.</p>
+              <ul>
+                <li><strong>Avantage :</strong> Force à bien penser l'API avant de coder</li>
+                <li><strong>Inconvénient :</strong> Risque de désynchronisation doc/code</li>
+              </ul>
+              
+              <p><strong>Code-first :</strong> Vous codez d'abord, puis générez l'OpenAPI depuis le code (avec annotations/décorateurs).</p>
+              <ul>
+                <li><strong>Avantage :</strong> Doc toujours synchronisée</li>
+                <li><strong>Inconvénient :</strong> Moins de réflexion sur le design</li>
+              </ul>
+              
+              <div class="highlight-box">
+                <h6>🎯 Recommandation</h6>
+                <p>Pour des APIs publiques, <strong>design-first</strong> est meilleur. Pour des APIs internes, <strong>code-first</strong> peut suffire.</p>
+              </div>
+
+              <h5 class="mt-5">2. Exemples concrets et multiples</h5>
+              <p>Chaque schéma devrait avoir au moins un exemple. Les endpoints complexes devraient avoir plusieurs exemples montrant différents cas d'usage.</p>
+              
+              <div class="comparison-box">
+                <div class="bad-example">
+                  <h6>❌ Mauvais (juste un schéma abstrait):</h6>
+                  <div class="code-example">
+                    <code>schema:<br>
+&nbsp;&nbsp;type: object<br>
+&nbsp;&nbsp;properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;title: string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;price: number</code>
+                  </div>
+                </div>
+                <div class="good-example">
+                  <h6>✅ Bon (schéma + exemples multiples):</h6>
+                  <div class="code-example">
+                    <code>schema:<br>
+&nbsp;&nbsp;$ref: '#/components/schemas/EventInput'<br>
+examples:<br>
+&nbsp;&nbsp;concert:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;summary: Création d'un concert payant<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: "Concert de Rock"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: "concert"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;price: 25.00<br>
+&nbsp;&nbsp;exposition:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;summary: Exposition gratuite<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: "Photos du Monde"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: "exposition"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;price: 0</code>
+                  </div>
+                </div>
+              </div>
+
+              <h5 class="mt-5">3. Descriptions riches en Markdown</h5>
+              <p>OpenAPI supporte le Markdown dans les descriptions. Utilisez-le !</p>
+              
+              <div class="code-example">
+                <code>description: |<br>
+&nbsp;&nbsp;## Authentification requise<br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;Cet endpoint nécessite un JWT token valide.<br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;## Permissions<br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;- **user** : Peut créer des événements<br>
+&nbsp;&nbsp;- **admin** : Peut créer et supprimer<br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;## Limites<br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;- Maximum 100 événements par jour par utilisateur<br>
+&nbsp;&nbsp;- Titre entre 3 et 200 caractères</code>
+              </div>
+
+              <h5 class="mt-5">4. Documentez TOUS les codes de réponse</h5>
+              <p>Ne documentez pas seulement le 200 Success. Documentez les erreurs aussi !</p>
+              
+              <div class="code-example">
+                <code>responses:<br>
+&nbsp;&nbsp;'200':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description: Succès<br>
+&nbsp;&nbsp;'400':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description: JSON invalide ou paramètres manquants<br>
+&nbsp;&nbsp;'401':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description: Token manquant ou invalide<br>
+&nbsp;&nbsp;'403':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description: Permissions insuffisantes (rôle user au lieu d'admin)<br>
+&nbsp;&nbsp;'404':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description: Événement non trouvé<br>
+&nbsp;&nbsp;'422':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description: Validation échouée (titre trop court, date passée...)<br>
+&nbsp;&nbsp;'429':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description: Trop de requêtes (rate limit dépassé)<br>
+&nbsp;&nbsp;'500':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description: Erreur serveur</code>
+              </div>
+
+              <h5 class="mt-5">5. Réutilisez avec $ref</h5>
+              <p>Au lieu de répéter les mêmes schémas partout :</p>
+              
+              <div class="comparison-box">
+                <div class="bad-example">
+                  <h6>❌ Mauvais - répétition</h6>
+                  <div class="code-example">
+                    <code>paths:<br>
+&nbsp;&nbsp;/events/{id}:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;get:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;responses:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'404':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;application/problem+json:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;schema:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status: integer</code>
+                  </div>
+                </div>
+                <div class="good-example">
+                  <h6>✅ Bon - réutilisation</h6>
+                  <div class="code-example">
+                    <code>paths:<br>
+&nbsp;&nbsp;/events/{id}:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;get:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;responses:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'404':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$ref: '#/components/responses/NotFound'</code>
+                  </div>
+                </div>
+              </div>
+
+              <h5 class="mt-5">6. Versionnez la documentation avec le code</h5>
+              <p>Votre fichier OpenAPI doit être versionné dans Git avec votre code. À chaque commit qui change l'API, le fichier OpenAPI change aussi.</p>
+              
+              <div class="code-example">
+                <code>git log openapi.yaml<br>
+commit abc123 - feat: add max_attendees field to events<br>
+commit def456 - fix: correct validation rules for postal_code<br>
+commit ghi789 - feat: add DELETE /events/{id} endpoint</code>
+              </div>
+
+              <h5 class="mt-5">7. Changelog visible</h5>
+              <p>Maintenez un changelog pour que les développeurs voient ce qui a changé.</p>
+              
+              <div class="code-example">
+                <code>## Changelog<br><br>
+### v1.2.0 (2025-11-15)<br>
+**New features:**<br>
+- Nouveau champ `tags` sur les événements<br>
+- Support filtrage par tag: `?tags=musique,jazz`<br>
+- Nouveau endpoint `GET /events/popular`<br><br>
+**Bug fixes:**<br>
+- Correction validation code postal (accepte maintenant 5 chiffres)<br><br>
+### v1.1.0 (2025-09-01)<br>
+**New features:**<br>
+- Ajout champ `image_url` optionnel<br>
+- Support tri par prix: `?sort=price` ou `?sort=-price`</code>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-shield-alt"></i> Validation automatique</h4>
+              <p>Un avantage énorme : validation automatique des requêtes/réponses contre la spec.</p>
+
+              <h5 class="mt-5">Validation côté serveur</h5>
+              <p>Des bibliothèques comme express-openapi-validator valident automatiquement toutes les requêtes entrantes.</p>
+              
+              <div class="code-example">
+                <code>const OpenApiValidator = require('express-openapi-validator');<br><br>
+app.use(<br>
+&nbsp;&nbsp;OpenApiValidator.middleware({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;apiSpec: './openapi.yaml',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;validateRequests: true,     // Valide les requêtes entrantes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;validateResponses: true,     // Valide les réponses sortantes (dev uniquement)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;validateSecurity: true,      // Valide l'authentification<br>
+&nbsp;&nbsp;})<br>
+);<br><br>
+// Si une requête ne match pas la spec, erreur 400 automatique<br>
+// Si une réponse ne match pas la spec, erreur 500 + log détaillé</code>
+              </div>
+              
+              <p>Vous n'avez plus besoin d'écrire manuellement la validation de chaque champ !</p>
+
+              <h5 class="mt-5">Tests de contrat</h5>
+              <p>Testez que votre implémentation respecte le contrat OpenAPI.</p>
+              
+              <div class="code-example">
+                <code>const request = require('supertest');<br>
+const validator = require('swagger-parser');<br><br>
+describe('Contract Tests', () => {<br>
+&nbsp;&nbsp;it('should validate OpenAPI spec', async () => {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;await validator.validate('./openapi.yaml');<br>
+&nbsp;&nbsp;});<br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;it('GET /events should match spec', async () => {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;const res = await request(app).get('/api/v1/events');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;expect(res.status).toBe(200);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;expect(res.body).toHaveProperty('data');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;expect(res.body).toHaveProperty('meta');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;expect(Array.isArray(res.body.data)).toBe(true);<br>
+&nbsp;&nbsp;});<br>
+});</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="day-card expanded">
+          <div class="day-header">
+            <span class="day-number">3</span>
+            <span class="day-theme">HATEOAS et API Hypermedia</span>
+          </div>
+          <div class="day-content">
+            <div class="day-morning">
+              <h4><i class="fas fa-link"></i> Qu'est-ce que HATEOAS ?</h4>
+              <p>HATEOAS signifie "Hypermedia As The Engine Of Application State". C'est la contrainte REST la moins implémentée et la moins comprise.</p>
+              
+              <p>L'idée : une API devrait être découvrable. Le client ne devrait pas avoir besoin de connaître toutes les URLs à l'avance. Le serveur envoie des liens vers les actions possibles, et le client suit ces liens.</p>
+              
+              <p>C'est exactement comme le web fonctionne. Sur Wikipedia, vous ne connaissez pas toutes les URLs des articles. Vous cliquez sur des liens. Chaque page contient des liens vers d'autres pages pertinentes.</p>
+
+              <h4 class="mt-5"><i class="fas fa-balance-scale"></i> Exemple sans et avec HATEOAS</h4>
+              
+              <h5 class="mt-5">Sans HATEOAS (API classique)</h5>
+              <div class="json-example">
+                <pre><code>{
+  "id": 123,
+  "status": "pending_payment",
+  "total": 99.99
+}</code></pre>
+              </div>
+              
+              <p>Le client doit connaître la logique : "Si status est pending_payment, je peux POST à /orders/123/payment". Cette logique est codée en dur côté client.</p>
+
+              <h5 class="mt-5">Avec HATEOAS</h5>
+              <div class="json-example">
+                <pre><code>{
+  "id": 123,
+  "status": "pending_payment",
+  "total": 99.99,
+  "_links": {
+    "self": {
+      "href": "/orders/123",
+      "method": "GET"
+    },
+    "payment": {
+      "href": "/orders/123/payment",
+      "method": "POST",
+      "title": "Payer cette commande"
+    },
+    "cancel": {
+      "href": "/orders/123",
+      "method": "DELETE",
+      "title": "Annuler cette commande"
+    }
+  }
+}</code></pre>
+              </div>
+              
+              <p>Le serveur dit au client : "Voici les actions possibles". Si la commande était déjà payée :</p>
+              
+              <div class="json-example">
+                <pre><code>{
+  "id": 123,
+  "status": "paid",
+  "total": 99.99,
+  "_links": {
+    "self": {
+      "href": "/orders/123",
+      "method": "GET"
+    },
+    "invoice": {
+      "href": "/orders/123/invoice.pdf",
+      "method": "GET",
+      "title": "Télécharger la facture"
+    },
+    "track": {
+      "href": "/orders/123/tracking",
+      "method": "GET",
+      "title": "Suivre la livraison"
+    }
+  }
+}</code></pre>
+              </div>
+              
+              <p>Les liens changent selon l'état. Le client regarde quels liens sont présents et affiche les boutons correspondants. Pas besoin de connaître la logique métier.</p>
+
+              <h4 class="mt-5"><i class="fas fa-file-code"></i> Formats standards</h4>
+              
+              <h5 class="mt-5">HAL (Hypertext Application Language)</h5>
+              <p>Le format le plus simple et populaire pour HATEOAS.</p>
+              
+              <div class="json-example">
+                <pre><code>{
+  "id": 123,
+  "name": "Marie Dupont",
+  "email": "marie@example.com",
+  "_links": {
+    "self": {
+      "href": "/users/123"
+    },
+    "orders": {
+      "href": "/users/123/orders"
+    },
+    "avatar": {
+      "href": "/users/123/avatar.jpg"
+    }
+  },
+  "_embedded": {
+    "recent_orders": [
+      {
+        "id": 456,
+        "total": 99.99,
+        "_links": {
+          "self": { "href": "/orders/456" }
+        }
+      }
+    ]
+  }
+}</code></pre>
+              </div>
+              
+              <ul>
+                <li><strong>`_links`</strong> : Liens vers ressources liées</li>
+                <li><strong>`_embedded`</strong> : Ressources liées incluses directement (évite requêtes supplémentaires)</li>
+              </ul>
+
+              <h5 class="mt-5">JSON:API</h5>
+              <p>Standard plus complet et strict.</p>
+              
+              <div class="json-example">
+                <pre><code>{
+  "data": {
+    "type": "users",
+    "id": "123",
+    "attributes": {
+      "name": "Marie Dupont",
+      "email": "marie@example.com"
+    },
+    "relationships": {
+      "orders": {
+        "links": {
+          "self": "/users/123/relationships/orders",
+          "related": "/users/123/orders"
+        }
+      }
+    },
+    "links": {
+      "self": "/users/123"
+    }
+  }
+}</code></pre>
+              </div>
+              
+              <p>JSON:API est très structuré avec conventions strictes. Excellent pour la cohérence, mais plus verbeux.</p>
+
+              <h4 class="mt-5"><i class="fas fa-check-circle"></i> Avantages de HATEOAS</h4>
+              
+              <h5 class="mt-5">Découvrabilité</h5>
+              <p>Un client peut explorer l'API en suivant les liens, comme on explore le web. Imaginons une API de e-commerce. Un client commence par `GET /`. La réponse contient des liens vers `/products`, `/categories`, `/cart`. En suivant ces liens, le client découvre toute l'API sans documentation préalable.</p>
+
+              <h5 class="mt-5">Logique métier côté serveur</h5>
+              <p>Les règles métier ("peut-on annuler cette commande ?", "peut-on modifier cet événement ?") restent sur le serveur. Le serveur décide dynamiquement quels liens inclure selon l'état de la ressource et les permissions de l'utilisateur. Le client affiche simplement les actions disponibles.</p>
+
+              <h5 class="mt-5">Évolutivité</h5>
+              <p>Si vous ajoutez une nouvelle action possible, vous ajoutez juste un nouveau lien. Les anciens clients qui ne connaissent pas ce lien l'ignorent. Les nouveaux clients qui le reconnaissent peuvent l'utiliser. Pas de breaking change.</p>
+
+              <h5 class="mt-5">Documentation vivante</h5>
+              <p>La réponse elle-même documente ce qui est possible. Un développeur qui explore l'API voit immédiatement quelles actions sont disponibles sur chaque ressource.</p>
+
+              <h5 class="mt-5">Exemple concret</h5>
+              <p>Imaginons un système de réservation d'événements.</p>
+              
+              <div class="json-example">
+                <pre><code>{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "title": "Concert de Jazz",
+  "status": "open",
+  "current_attendees": 45,
+  "max_attendees": 200,
+  "_links": {
+    "self": "/events/550e8400-e29b-41d4-a716-446655440000",
+    "register": {
+      "href": "/events/550e8400-e29b-41d4-a716-446655440000/register",
+      "method": "POST",
+      "title": "S'inscrire à cet événement"
+    },
+    "attendees": "/events/550e8400-e29b-41d4-a716-446655440000/attendees"
+  }
+}</code></pre>
+              </div>
+              
+              <p>Si l'événement est complet :</p>
+              
+              <div class="json-example">
+                <pre><code>{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "title": "Concert de Jazz",
+  "status": "full",
+  "current_attendees": 200,
+  "max_attendees": 200,
+  "_links": {
+    "self": "/events/550e8400-e29b-41d4-a716-446655440000",
+    "attendees": "/events/550e8400-e29b-41d4-a716-446655440000/attendees"
+  }
+}</code></pre>
+              </div>
+              
+              <p>Le lien `register` a disparu. Le client sait immédiatement que l'inscription n'est plus possible sans avoir à connaître la logique "si current_attendees >= max_attendees alors pas d'inscription".</p>
+
+              <h4 class="mt-5"><i class="fas fa-exclamation-triangle"></i> Inconvénients et limitations</h4>
+              
+              <h5 class="mt-5">Complexité d'implémentation</h5>
+              <p>Générer les liens dynamiquement selon l'état de la ressource et les permissions de l'utilisateur est plus complexe que renvoyer juste les données. Vous devez écrire de la logique pour déterminer quels liens inclure dans chaque situation.</p>
+
+              <h5 class="mt-5">Verbosité</h5>
+              <p>Les réponses sont plus grosses avec tous ces liens. Pour une API haute performance où chaque octet compte, c'est un coût. Une réponse qui faisait 500 octets peut facilement doubler de taille.</p>
+
+              <h5 class="mt-5">Adoption faible</h5>
+              <p>Dans la réalité, très peu d'APIs publiques implémentent HATEOAS complètement. Même les APIs qui se disent "RESTful" ne le font généralement pas. GitHub, Twitter, Stripe... aucune n'implémente HATEOAS de manière stricte.</p>
+
+              <h5 class="mt-5">Clients non préparés</h5>
+              <p>La plupart des clients (applications mobiles, SPAs) ne sont pas conçus pour suivre des liens dynamiquement. Ils ont leurs URLs codées en dur : `const API_URL = 'https://api.example.com/orders'`. Ils ne vont pas parser les liens de la réponse pour découvrir les actions possibles. Ils affichent des boutons selon leur propre logique.</p>
+
+              <h5 class="mt-5">Overhead mental</h5>
+              <p>Pour les développeurs habitués aux APIs REST classiques, HATEOAS ajoute une couche de complexité conceptuelle. "Pourquoi je dois générer tous ces liens alors que le client connaît déjà les URLs ?"</p>
+
+              <h5 class="mt-5">Pas de standard universel</h5>
+              <p>HAL, JSON:API, Siren... plusieurs standards existent. Choisir lequel utiliser et former l'équipe ajoute de la friction.</p>
+
+              <h4 class="mt-5"><i class="fas fa-road"></i> Approche pragmatique pour SmartCity</h4>
+              <p>Pour votre projet, voici une approche progressive par niveaux :</p>
+
+              <h5 class="mt-5">Niveau 0 : Pas de liens (acceptable pour MVP)</h5>
+              <div class="json-example">
+                <pre><code>{
+  "id": 123,
+  "title": "Concert de Jazz",
+  "status": "open"
+}</code></pre>
+              </div>
+              
+              <p>Simple, direct. Aucune hypermedia. Le client connaît toutes les URLs. C'est ce que font 80% des APIs.</p>
+
+              <h5 class="mt-5">Niveau 1 : Lien self uniquement (recommandé minimum)</h5>
+              <div class="json-example">
+                <pre><code>{
+  "id": 123,
+  "title": "Concert de Jazz",
+  "status": "open",
+  "_links": {
+    "self": "/events/123"
+  }
+}</code></pre>
+              </div>
+              
+              <p>Ajoute juste un lien vers la ressource elle-même. Très utile quand vous recevez une liste d'objets : chaque objet contient son URL complète. Le client n'a pas à construire l'URL lui-même.</p>
+
+              <h5 class="mt-5">Niveau 2 : Liens vers ressources liées (bon équilibre)</h5>
+              <div class="json-example">
+                <pre><code>{
+  "id": 123,
+  "title": "Concert de Jazz",
+  "status": "open",
+  "current_attendees": 45,
+  "max_attendees": 200,
+  "_links": {
+    "self": "/events/123",
+    "attendees": "/events/123/attendees",
+    "creator": "/users/456",
+    "register": {
+      "href": "/events/123/register",
+      "method": "POST",
+      "title": "S'inscrire"
+    }
+  }
+}</code></pre>
+              </div>
+              
+              <p>Inclut des liens vers les ressources liées et les actions possibles. Le client peut facilement naviguer vers les participants, le créateur de l'événement, ou s'inscrire. C'est un bon équilibre entre utilité et complexité.</p>
+
+              <h5 class="mt-5">Niveau 3 : HAL ou JSON:API complet (pour les puristes)</h5>
+              <p>HAL complet avec `_embedded` :</p>
+              
+              <div class="json-example">
+                <pre><code>{
+  "id": 123,
+  "title": "Concert de Jazz",
+  "status": "open",
+  "_links": {
+    "self": { "href": "/events/123" },
+    "attendees": { "href": "/events/123/attendees" },
+    "creator": { "href": "/users/456" }
+  },
+  "_embedded": {
+    "creator": {
+      "id": 456,
+      "name": "Marie Dupont",
+      "_links": {
+        "self": { "href": "/users/456" }
+      }
+    }
+  }
+}</code></pre>
+              </div>
+              
+              <p>Très complet, mais aussi très verbeux. Réservé aux cas où vous avez vraiment besoin de ce niveau de sophistication.</p>
+              
+              <div class="highlight-box">
+                <h6>🎯 Recommandation pour SmartCity</h6>
+                <p>Visez le <strong>niveau 2</strong>. Assez de liens pour être utile et moderne, sans la complexité du HAL/JSON:API complet. C'est ce que font beaucoup d'APIs modernes bien conçues.</p>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-code"></i> Implémentation simple</h4>
+              <p>Voici comment ajouter des liens basiques dans votre API Node.js :</p>
+              
+              <div class="code-example">
+                <code>// Helper pour générer les liens<br>
+function addLinks(event, baseUrl, user) {<br>
+&nbsp;&nbsp;event._links = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self: `${baseUrl}/events/${event.id}`<br>
+&nbsp;&nbsp;};<br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;// Toujours inclure le lien vers les participants<br>
+&nbsp;&nbsp;event._links.attendees = `${baseUrl}/events/${event.id}/attendees`;<br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;// Lien vers le créateur<br>
+&nbsp;&nbsp;if (event.creator_id) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;event._links.creator = `${baseUrl}/users/${event.creator_id}`;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;// Liens conditionnels selon l'état de l'événement<br>
+&nbsp;&nbsp;if (event.status === 'open') {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// Peut-on s'inscrire ? Vérifier qu'il reste de la place<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (!event.max_attendees || event.current_attendees < event.max_attendees) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event._links.register = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;href: `${baseUrl}/events/${event.id}/register`,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method: 'POST',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: 'S\'inscrire à cet événement'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// Peut-on modifier ? Vérifier les permissions<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (user && (user.id === event.creator_id || user.role === 'admin')) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event._links.update = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;href: `${baseUrl}/events/${event.id}`,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method: 'PATCH',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: 'Modifier cet événement'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// Peut-on supprimer ? Vérifier les permissions<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (user && (user.id === event.creator_id || user.role === 'admin')) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event._links.delete = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;href: `${baseUrl}/events/${event.id}`,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method: 'DELETE',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: 'Supprimer cet événement'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;return event;<br>
+}</code>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-lightbulb"></i> Cas d'usage réels</h4>
+              
+              <h5 class="mt-5">Cas 1 : Interface adaptative</h5>
+              <p>Imaginons une application front-end qui affiche un événement. Au lieu de coder en dur :</p>
+              
+              <div class="comparison-box">
+                <div class="bad-example">
+                  <h6>❌ Logique en dur côté client</h6>
+                  <div class="code-example">
+                    <code>if (event.status === 'open' && event.current_attendees < event.max_attendees) {<br>
+&nbsp;&nbsp;showButton('S\'inscrire');<br>
+}<br>
+if (user.id === event.creator_id || user.role === 'admin') {<br>
+&nbsp;&nbsp;showButton('Modifier');<br>
+&nbsp;&nbsp;showButton('Supprimer');<br>
+}</code>
+                  </div>
+                </div>
+                <div class="good-example">
+                  <h6>✅ Logique côté serveur</h6>
+                  <div class="code-example">
+                    <code>if (event._links.register) {<br>
+&nbsp;&nbsp;showButton('S\'inscrire', event._links.register.href);<br>
+}<br>
+if (event._links.update) {<br>
+&nbsp;&nbsp;showButton('Modifier', event._links.update.href);<br>
+}<br>
+if (event._links.delete) {<br>
+&nbsp;&nbsp;showButton('Supprimer', event._links.delete.href);<br>
+}</code>
+                  </div>
+                </div>
+              </div>
+              
+              <p>Le client affiche juste les boutons pour les liens présents. La logique métier reste sur le serveur.</p>
+
+              <h5 class="mt-5">Cas 2 : Évolution sans breaking change</h5>
+              <p>Vous ajoutez une nouvelle fonctionnalité : dupliquer un événement.</p>
+              
+              <p><strong>Sans HATEOAS :</strong> Vous devez mettre à jour tous les clients pour qu'ils sachent que `POST /events/{id}/duplicate` existe maintenant.</p>
+              
+              <p><strong>Avec HATEOAS :</strong> Vous ajoutez juste le lien dans la réponse :</p>
+              
+              <div class="json-example">
+                <pre><code>{
+  "id": 123,
+  "title": "Concert",
+  "_links": {
+    "self": "/events/123",
+    "duplicate": {
+      "href": "/events/123/duplicate",
+      "method": "POST",
+      "title": "Dupliquer cet événement"
+    }
+  }
+}</code></pre>
+              </div>
+              
+              <p>Les anciens clients ignorent ce lien. Les nouveaux clients qui savent le gérer affichent un bouton "Dupliquer". Pas de breaking change.</p>
+
+              <h5 class="mt-5">Cas 3 : Découverte d'API</h5>
+              <p>Un développeur teste votre API pour la première fois. Il fait `GET /` :</p>
+              
+              <div class="json-example">
+                <pre><code>{
+  "message": "Bienvenue sur l'API SmartCity",
+  "version": "1.0.0",
+  "_links": {
+    "events": "/events",
+    "users": "/users",
+    "auth": "/auth/login",
+    "docs": "/api-docs"
+  }
+}</code></pre>
+              </div>
+              
+              <p>En suivant ces liens, il découvre progressivement toute l'API. C'est comme explorer Wikipedia en suivant les liens.</p>
+
+              <h4 class="mt-5"><i class="fas fa-times-circle"></i> Quand ne PAS utiliser HATEOAS</h4>
+              
+              <ul>
+                <li><strong>API interne entre microservices :</strong> Si vos services se connaissent bien et communiquent en permanence, HATEOAS ajoute juste de la verbosité inutile.</li>
+                <li><strong>API haute performance :</strong> Si chaque milliseconde et chaque octet comptent (gaming, trading haute fréquence), le overhead de HATEOAS n'en vaut pas la peine.</li>
+                <li><strong>Équipe pas formée :</strong> Si votre équipe ne comprend pas HATEOAS et n'y voit pas de valeur, forcer son adoption créera plus de friction que de bénéfices.</li>
+                <li><strong>Clients simples :</strong> Si vos clients sont de simples scripts qui font `GET /data` et c'est tout, pas besoin de sophistication.</li>
+              </ul>
+
+              <h4 class="mt-5"><i class="fas fa-check-double"></i> Conclusion sur HATEOAS</h4>
+              <p>HATEOAS est élégant en théorie. C'est la vision originale de REST par Roy Fielding. Mais dans la pratique, très peu d'APIs l'implémentent complètement car :</p>
+              <ul>
+                <li>La complexité d'implémentation n'en vaut pas toujours la peine</li>
+                <li>Les clients modernes ne sont généralement pas conçus pour exploiter l'hypermedia</li>
+                <li>Ça rend les réponses plus grosses</li>
+              </ul>
+              
+              <div class="highlight-box">
+                <h6>🎯 Recommandation finale</h6>
+                <p>Pour SmartCity, une approche pragmatique : ajoutez au minimum un lien `self`, et si vous avez le temps, ajoutez des liens vers les ressources liées et les actions conditionnelles. Vous aurez une API moderne et bien conçue sans tomber dans la sur-ingénierie.</p>
+                <p><strong>Le plus important :</strong> soyez cohérent. Si vous ajoutez des liens, faites-le partout de la même manière. Si vous ne les ajoutez pas, assumez ce choix. L'incohérence est pire que l'absence de liens.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="../assets/logo.jpeg" alt="YNOV Campus" class="footer-logo-img">
+            <span class="footer-logo-text">Web Services</span>
+          </div>
+          <p class="footer-description">Jour 3 — Développement d'API REST Avancé.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="day1.html">Jour 1 - Théorie</a></li>
+            <li><a href="day2.html">Jour 2 - Théorie</a></li>
+            <li><a href="day3.html">Jour 3 - Théorie</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Ressources</h3>
+          <ul>
+            <li><a href="day1FilRouge.html">Fil Rouge J1</a></li>
+            <li><a href="day2FilRouge.html">Fil Rouge J2</a></li>
+            <li><a href="day3FilRouge.html">Fil Rouge J3</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>Formation Web Services</p>
+          <p>YNOV Campus</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 YNOV Campus. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+  
+  <!-- highlight.js pour la coloration syntaxique -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    // Auto-détection et coloration de tous les blocs de code
+    document.addEventListener('DOMContentLoaded', function() {
+      hljs.highlightAll();
+    });
+  </script>
+</body>
+</html>

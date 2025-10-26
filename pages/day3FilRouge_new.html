@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jour 3 — Fil Rouge : Base de données & CRUD complet</title>
+  <link rel="stylesheet" href="../styles/styles.css">
+  <link rel="stylesheet" href="../styles/day3FilRouge.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="../assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+        <span class="logo-text">SmartCity API Platform</span>
+      </div>
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item"><a href="../index.html" class="nav-link">Accueil</a></li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle active">
+            <i class="fas fa-calendar-alt"></i> Journées
+            <i class="fas fa-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+            <a href="day1FilRouge.html" class="dropdown-item">Jour 1 - Fil Rouge</a>
+            <a href="day2.html" class="dropdown-item">Jour 2 - Théorie</a>
+            <a href="day2FilRouge.html" class="dropdown-item">Jour 2 - Fil Rouge</a>
+            <a href="day3.html" class="dropdown-item">Jour 3 - Théorie</a>
+            <a href="day3FilRouge.html" class="dropdown-item active">Jour 3 - Fil Rouge</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="../index.html#projet" class="nav-link">Projet</a></li>
+        <li class="nav-item"><a href="../index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" style="min-height: 60vh;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">🚀 SmartCity API Platform</h1>
+          <p class="hero-subtitle">Fil Rouge J3 - Base de données & CRUD complet</p>
+          <p class="hero-description">Après-midi (13h30-17h00) - Connecter vos services à de vraies bases de données et implémenter le CRUD complet avec validation.</p>
+          <div class="hero-buttons">
+            <a href="day3.html" class="btn btn-secondary">
+              <i class="fas fa-book"></i> Retour à la théorie
+            </a>
+            <a href="../index.html#programme" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Retour au programme</a>
+          </div>
+        </div>
+        <div class="hero-image-container">
+          <img src="../assets/webservices.jpg" alt="Web Services" class="hero-image">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">🚀 PROJET FIL ROUGE - DEMI-JOURNÉE 3 (J3 Après-midi)</h2>
+        <p class="section-subtitle">SmartCity API Platform - Base de données & CRUD complet</p>
+        <p class="section-description">Durée : 3h30 (13h30-17h00)<br>
+        Contexte : Ce matin vous avez vu le versioning d'API, la documentation OpenAPI et HATEOAS. Cet après-midi, vous allez connecter vos services à de vraies bases de données et implémenter le CRUD complet avec validation.</p>
+      </div>
+
+      <div class="days-container">
+        <!-- RAPPEL DE VOTRE SITUATION -->
+        <div class="day-card expanded">
+          <div class="day-header">
+            <span class="day-number">📋</span>
+            <span class="day-theme">RAPPEL DE VOTRE SITUATION (J2 → J3)</span>
+          </div>
+          <div class="day-content">
+            <div class="day-morning">
+              <h5 class="mt-5">✅ Ce que vous avez (depuis J2)</h5>
+              <ul>
+                <li>Endpoints fonctionnels avec données en dur (tableaux)</li>
+                <li>Pagination implémentée (page/limit)</li>
+                <li>Gestion d'erreurs RFC 7807 centralisée</li>
+                <li>Headers de corrélation (X-Correlation-Id)</li>
+                <li>3-5 tests unitaires qui passent</li>
+                <li>Mock Prism généré et accessible</li>
+                <li>Front qui consomme les mocks Prism</li>
+              </ul>
+
+              <div class="highlight-box">
+                <h6 class="mt-5">🎯 Ce qu'on vise aujourd'hui (réaliste pour 3h30)</h6>
+                <p>À 17h00, chaque équipe doit avoir :</p>
+                <h5 class="mt-5">ÉQUIPES BACK-END (sauf Auth) :</h5>
+                <ul>
+                  <li>✅ Base de données installée et configurée</li>
+                  <li>✅ Schéma/migrations créés</li>
+                  <li>✅ Endpoints CRUD complets (GET, POST, PUT, PATCH, DELETE)</li>
+                  <li>✅ Validation des données entrantes (Joi/Zod/Pydantic)</li>
+                  <li>✅ Tests d'intégration avec DB</li>
+                  <li>✅ Remplacement des tableaux en mémoire par requêtes DB</li>
+                </ul>
+                <h5 class="mt-5">ÉQUIPE AUTH :</h5>
+                <ul>
+                  <li>✅ Table users en base de données</li>
+                  <li>✅ Hash bcrypt pour les mots de passe</li>
+                  <li>✅ Génération de vrais JWT signés avec clé secrète</li>
+                  <li>✅ Vérification de tokens (middleware d'authentification)</li>
+                  <li>✅ Tests avec utilisateurs réels en DB</li>
+                  <li>✅ Middleware d'authentification exportable pour les autres équipes</li>
+                </ul>
+                <h5 class="mt-5">ÉQUIPE FRONT :</h5>
+                <ul>
+                  <li>✅ Basculer des mocks Prism vers les vrais services</li>
+                  <li>✅ Formulaires de création (POST) fonctionnels</li>
+                  <li>✅ Gestion des erreurs de validation côté UI</li>
+                  <li>✅ Intégration avec Auth (login/register)</li>
+                  <li>✅ Stockage du token (localStorage/sessionStorage)</li>
+                </ul>
+                <p><strong>❌ CE QUI N'EST PAS ATTENDU AUJOURD'HUI :</strong></p>
+                <ul>
+                  <li>❌ Tests exhaustifs (J6-J7)</li>
+                  <li>❌ Cache Redis (J7)</li>
+                  <li>❌ API Gateway (J6)</li>
+                  <li>❌ Containerisation (J8)</li>
+                  <li>❌ CI/CD (J8)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 1 : DAILY & ALIGNEMENT -->
+        <div class="day-card">
+          <div class="day-header">
+            <span class="day-number">🏁</span>
+            <span class="day-theme">PHASE 1 : DAILY & ALIGNEMENT (13h30-13h45) - 15 min</span>
+          </div>
+          <div class="day-content">
+            <h5 class="mt-5">Daily Stand-up par équipe (10 min)</h5>
+            <p>Chaque équipe fait son stand-up interne :</p>
+            <ul>
+              <li>Ce qui a été fait depuis J2 (lectures, préparations...)</li>
+              <li>Blockers éventuels (installation DB, choix ORM...)</li>
+              <li>Plan pour aujourd'hui</li>
+            </ul>
+            <h5 class="mt-5">Synchronisation inter-équipes (5 min)</h5>
+            <p>Point rapide tous ensemble :</p>
+            <ul>
+              <li>Back : "Quelle base de données avez-vous choisie ?"</li>
+              <li>Auth : "Format JWT finalisé ? Middleware prêt ?"</li>
+              <li>Front : "Prêt à basculer vers les vrais services ?"</li>
+            </ul>
+            <h5 class="mt-5">Convention d'URLs mises à jour :</h5>
+            <pre><code class="bash">AUTH      → http://localhost:3001/api/v1
+EVENTS    → http://localhost:3002/api/v1
+TRANSPORT → http://localhost:3003/api/v1
+SERVICE_3 → http://localhost:3004/api/v1
+SERVICE_4 → http://localhost:3005/api/v1
+FRONT     → http://localhost:3000</code></pre>
+          </div>
+        </div>
+
+        <!-- PHASE 2 : CONFIGURATION BASE DE DONNÉES -->
+        <div class="day-card">
+          <div class="day-header">
+            <span class="day-number">📦</span>
+            <span class="day-theme">PHASE 2 : CONFIGURATION BASE DE DONNÉES (13h45-14h30) - 45 min</span>
+          </div>
+          <div class="day-content">
+            <h5 class="mt-5">A. Installation et configuration (20 min)</h5>
+            <p>Choix de base de données recommandés :</p>
+            <ul>
+              <li><strong>PostgreSQL</strong> (recommandé) : Robuste, ACID, JSON natif</li>
+              <li><strong>MongoDB</strong> : Document-based, flexible</li>
+              <li><strong>MySQL</strong> : Simple, largement utilisé</li>
+              <li><strong>SQLite</strong> : Pour développement local uniquement</li>
+            </ul>
+            
+            <h6 class="mt-5">Installation rapide avec Docker :</h6>
+            <pre><code class="bash"># PostgreSQL
+docker run --name smartcity-postgres \
+  -e POSTGRES_PASSWORD=secret \
+  -e POSTGRES_DB=smartcity \
+  -p 5432:5432 \
+  -d postgres:15
+
+# MongoDB
+docker run --name smartcity-mongo \
+  -p 27017:27017 \
+  -d mongo:7
+
+# MySQL
+docker run --name smartcity-mysql \
+  -e MYSQL_ROOT_PASSWORD=secret \
+  -e MYSQL_DATABASE=smartcity \
+  -p 3306:3306 \
+  -d mysql:8.0</code></pre>
+
+            <h5 class="mt-5">B. Configuration ORM/ODM (25 min)</h5>
+            
+            <h6 class="mt-5">Node.js - Prisma (recommandé) :</h6>
+            <pre><code class="bash">npm install prisma @prisma/client
+npx prisma init</code></pre>
+            
+            <pre><code class="javascript">// schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id                String   @id @default(uuid())
+  title             String
+  description       String?
+  type              EventType
+  startDate         DateTime @map("start_date")
+  endDate           DateTime? @map("end_date")
+  location          Json     // PostgreSQL JSON
+  price             Float    @default(0)
+  maxAttendees      Int?     @map("max_attendees")
+  currentAttendees  Int      @default(0) @map("current_attendees")
+  imageUrl          String?  @map("image_url")
+  tags              String[]
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  creatorId         String   @map("creator_id")
+  
+  @@map("events")
+}
+
+enum EventType {
+  CONCERT
+  EXPOSITION
+  CONFERENCE
+  FESTIVAL
+  SPORT
+  AUTRE
+}</code></pre>
+
+            <pre><code class="bash">npx prisma migrate dev --name init
+npx prisma generate</code></pre>
+
+            <h6 class="mt-5">Python - SQLAlchemy :</h6>
+            <pre><code class="bash">pip install sqlalchemy psycopg2-binary alembic</code></pre>
+            
+            <pre><code class="python"># models.py
+from sqlalchemy import Column, String, DateTime, Float, Integer, JSON, ARRAY, Enum
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.dialects.postgresql import UUID
+import uuid
+import enum
+
+Base = declarative_base()
+
+class EventType(enum.Enum):
+    CONCERT = "concert"
+    EXPOSITION = "exposition"
+    CONFERENCE = "conference"
+    FESTIVAL = "festival"
+    SPORT = "sport"
+    AUTRE = "autre"
+
+class Event(Base):
+    __tablename__ = "events"
+    
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    title = Column(String(200), nullable=False)
+    description = Column(String(2000))
+    type = Column(Enum(EventType), nullable=False)
+    start_date = Column(DateTime, nullable=False)
+    end_date = Column(DateTime)
+    location = Column(JSON, nullable=False)
+    price = Column(Float, default=0)
+    max_attendees = Column(Integer)
+    current_attendees = Column(Integer, default=0)
+    image_url = Column(String)
+    tags = Column(ARRAY(String))
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    creator_id = Column(String, nullable=False)</code></pre>
+          </div>
+        </div>
+
+        <!-- Pause -->
+        <div class="day-card">
+          <div class="day-header">
+            <span class="day-number">☕</span>
+            <span class="day-theme">Pause (14h30-14h45) - 15 min</span>
+          </div>
+          <div class="day-content">
+            <p>Prenez une courte pause pour vous rafraîchir et discuter de vos progrès.</p>
+          </div>
+        </div>
+
+        <!-- PHASE 3 : CRUD COMPLET & VALIDATION -->
+        <div class="day-card">
+          <div class="day-header">
+            <span class="day-number">🔧</span>
+            <span class="day-theme">PHASE 3 : CRUD COMPLET & VALIDATION (14h45-16h00) - 75 min</span>
+          </div>
+          <div class="day-content">
+            <h5 class="mt-5">A. Implémentation CRUD complet (45 min)</h5>
+            
+            <h6 class="mt-5">GET /resources (liste paginée) - Mise à jour :</h6>
+            <pre><code class="javascript">// Node.js avec Prisma
+app.get('/api/v1/events', async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = Math.min(parseInt(req.query.limit) || 20, 100);
+  const offset = (page - 1) * limit;
+  
+  // Filtres
+  const where = {};
+  if (req.query.type) where.type = req.query.type;
+  if (req.query.city) where.location = { path: ['city'], equals: req.query.city };
+  if (req.query.date_from) where.startDate = { gte: new Date(req.query.date_from) };
+  if (req.query.date_to) where.startDate = { ...where.startDate, lte: new Date(req.query.date_to) };
+  
+  // Tri
+  const orderBy = {};
+  if (req.query.sort) {
+    const field = req.query.sort.replace('-', '');
+    orderBy[field] = req.query.sort.startsWith('-') ? 'desc' : 'asc';
+  } else {
+    orderBy.startDate = 'asc';
+  }
+  
+  try {
+    const [events, total] = await Promise.all([
+      prisma.event.findMany({
+        where,
+        orderBy,
+        skip: offset,
+        take: limit,
+        include: {
+          creator: {
+            select: { id: true, name: true, email: true }
+          }
+        }
+      }),
+      prisma.event.count({ where })
+    ]);
+    
+    res.json({
+      data: events,
+      meta: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit)
+      },
+      links: {
+        self: `/events?page=${page}&limit=${limit}`,
+        first: `/events?page=1&limit=${limit}`,
+        last: `/events?page=${Math.ceil(total / limit)}&limit=${limit}`,
+        next: page < Math.ceil(total / limit) ? `/events?page=${page + 1}&limit=${limit}` : null,
+        prev: page > 1 ? `/events?page=${page - 1}&limit=${limit}` : null
+      }
+    });
+  } catch (error) {
+    console.error('Database error:', error);
+    res.status(500).json({
+      type: 'https://api.smartcity.local/errors/internal-error',
+      title: 'Internal Server Error',
+      status: 500,
+      detail: 'Database operation failed',
+      correlationId: req.correlationId
+    });
+  }
+});</code></pre>
+
+            <h6 class="mt-5">POST /resources (création) - Nouveau :</h6>
+            <pre><code class="javascript">// Validation avec Joi
+const Joi = require('joi');
+
+const eventSchema = Joi.object({
+  title: Joi.string().min(3).max(200).required(),
+  description: Joi.string().max(2000).optional(),
+  type: Joi.string().valid('concert', 'exposition', 'conference', 'festival', 'sport', 'autre').required(),
+  start_date: Joi.date().iso().greater('now').required(),
+  end_date: Joi.date().iso().greater(Joi.ref('start_date')).optional(),
+  location: Joi.object({
+    name: Joi.string().required(),
+    address: Joi.string().required(),
+    city: Joi.string().required(),
+    postal_code: Joi.string().pattern(/^\d{5}$/).optional(),
+    coordinates: Joi.object({
+      latitude: Joi.number().min(-90).max(90).optional(),
+      longitude: Joi.number().min(-180).max(180).optional()
+    }).optional()
+  }).required(),
+  price: Joi.number().min(0).default(0),
+  max_attendees: Joi.number().integer().min(1).optional(),
+  image_url: Joi.string().uri().optional(),
+  tags: Joi.array().items(Joi.string()).default([])
+});
+
+app.post('/api/v1/events', authenticateToken, async (req, res) => {
+  // Validation
+  const { error, value } = eventSchema.validate(req.body);
+  if (error) {
+    return res.status(422).json({
+      type: 'https://api.smartcity.local/errors/validation-error',
+      title: 'Validation Failed',
+      status: 422,
+      detail: 'Invalid input data',
+      errors: error.details.map(detail => ({
+        field: detail.path.join('.'),
+        code: detail.type,
+        message: detail.message
+      })),
+      correlationId: req.correlationId
+    });
+  }
+  
+  try {
+    const event = await prisma.event.create({
+      data: {
+        ...value,
+        creatorId: req.user.id,
+        startDate: new Date(value.start_date),
+        endDate: value.end_date ? new Date(value.end_date) : null
+      },
+      include: {
+        creator: {
+          select: { id: true, name: true, email: true }
+        }
+      }
+    });
+    
+    res.status(201)
+       .header('Location', `/events/${event.id}`)
+       .json(event);
+  } catch (error) {
+    console.error('Database error:', error);
+    res.status(500).json({
+      type: 'https://api.smartcity.local/errors/internal-error',
+      title: 'Internal Server Error',
+      status: 500,
+      detail: 'Failed to create event',
+      correlationId: req.correlationId
+    });
+  }
+});</code></pre>
+
+            <h6 class="mt-5">PUT /resources/{id} (mise à jour complète) - Nouveau :</h6>
+            <pre><code class="javascript">app.put('/api/v1/events/:id', authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  
+  // Vérifier que l'événement existe
+  const existingEvent = await prisma.event.findUnique({
+    where: { id }
+  });
+  
+  if (!existingEvent) {
+    return res.status(404).json({
+      type: 'https://api.smartcity.local/errors/not-found',
+      title: 'Not Found',
+      status: 404,
+      detail: 'Event not found',
+      correlationId: req.correlationId
+    });
+  }
+  
+  // Vérifier les permissions
+  if (existingEvent.creatorId !== req.user.id && req.user.role !== 'admin') {
+    return res.status(403).json({
+      type: 'https://api.smartcity.local/errors/forbidden',
+      title: 'Forbidden',
+      status: 403,
+      detail: 'You can only update your own events',
+      correlationId: req.correlationId
+    });
+  }
+  
+  // Validation
+  const { error, value } = eventSchema.validate(req.body);
+  if (error) {
+    return res.status(422).json({
+      type: 'https://api.smartcity.local/errors/validation-error',
+      title: 'Validation Failed',
+      status: 422,
+      detail: 'Invalid input data',
+      errors: error.details.map(detail => ({
+        field: detail.path.join('.'),
+        code: detail.type,
+        message: detail.message
+      })),
+      correlationId: req.correlationId
+    });
+  }
+  
+  try {
+    const updatedEvent = await prisma.event.update({
+      where: { id },
+      data: {
+        ...value,
+        startDate: new Date(value.start_date),
+        endDate: value.end_date ? new Date(value.end_date) : null
+      },
+      include: {
+        creator: {
+          select: { id: true, name: true, email: true }
+        }
+      }
+    });
+    
+    res.json(updatedEvent);
+  } catch (error) {
+    console.error('Database error:', error);
+    res.status(500).json({
+      type: 'https://api.smartcity.local/errors/internal-error',
+      title: 'Internal Server Error',
+      status: 500,
+      detail: 'Failed to update event',
+      correlationId: req.correlationId
+    });
+  }
+});</code></pre>
+
+            <h6 class="mt-5">DELETE /resources/{id} (suppression) - Nouveau :</h6>
+            <pre><code class="javascript">app.delete('/api/v1/events/:id', authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  
+  // Vérifier que l'événement existe
+  const existingEvent = await prisma.event.findUnique({
+    where: { id }
+  });
+  
+  if (!existingEvent) {
+    return res.status(404).json({
+      type: 'https://api.smartcity.local/errors/not-found',
+      title: 'Not Found',
+      status: 404,
+      detail: 'Event not found',
+      correlationId: req.correlationId
+    });
+  }
+  
+  // Vérifier les permissions
+  if (existingEvent.creatorId !== req.user.id && req.user.role !== 'admin') {
+    return res.status(403).json({
+      type: 'https://api.smartcity.local/errors/forbidden',
+      title: 'Forbidden',
+      status: 403,
+      detail: 'You can only delete your own events',
+      correlationId: req.correlationId
+    });
+  }
+  
+  try {
+    await prisma.event.delete({
+      where: { id }
+    });
+    
+    res.status(204).send();
+  } catch (error) {
+    console.error('Database error:', error);
+    res.status(500).json({
+      type: 'https://api.smartcity.local/errors/internal-error',
+      title: 'Internal Server Error',
+      status: 500,
+      detail: 'Failed to delete event',
+      correlationId: req.correlationId
+    });
+  }
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- CHECKLIST DE FIN DE JOURNÉE -->
+        <div class="day-card">
+          <div class="day-header">
+            <span class="day-number">✅</span>
+            <span class="day-theme">CHECKLIST DE FIN DE JOURNÉE</span>
+          </div>
+          <div class="day-content">
+            <h5 class="mt-5">Chaque équipe BACK vérifie :</h5>
+            <ul>
+              <li>✅ Base de données installée et configurée</li>
+              <li>✅ Schéma/migrations créés et appliqués</li>
+              <li>✅ Endpoints CRUD complets (GET, POST, PUT, PATCH, DELETE)</li>
+              <li>✅ Validation des données entrantes fonctionnelle</li>
+              <li>✅ Tests d'intégration avec DB qui passent</li>
+              <li>✅ Remplacement des tableaux en mémoire par requêtes DB</li>
+              <li>✅ Gestion d'erreurs RFC 7807 maintenue</li>
+              <li>✅ Headers de corrélation propagés</li>
+              <li>✅ README mis à jour avec instructions de configuration DB</li>
+              <li>✅ Au moins 3 commits Git aujourd'hui</li>
+            </ul>
+            
+            <h5 class="mt-5">Équipe AUTH vérifie :</h5>
+            <ul>
+              <li>✅ Table users en base de données</li>
+              <li>✅ Hash bcrypt pour les mots de passe (work factor 12+)</li>
+              <li>✅ Génération de vrais JWT signés avec clé secrète</li>
+              <li>✅ Vérification de tokens (middleware d'authentification)</li>
+              <li>✅ Tests avec utilisateurs réels en DB</li>
+              <li>✅ Middleware d'authentification exportable pour les autres équipes</li>
+              <li>✅ Au moins 3 commits Git aujourd'hui</li>
+            </ul>
+            
+            <h5 class="mt-5">Équipe FRONT vérifie :</h5>
+            <ul>
+              <li>✅ Configuration pour basculer mocks ↔ vrais services</li>
+              <li>✅ Formulaires de création (POST) fonctionnels</li>
+              <li>✅ Gestion des erreurs de validation côté UI</li>
+              <li>✅ Intégration avec Auth (login/register)</li>
+              <li>✅ Stockage du token (localStorage/sessionStorage)</li>
+              <li>✅ Affichage des données depuis la vraie DB</li>
+              <li>✅ Au moins 3 commits Git aujourd'hui</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- POUR DEMAIN -->
+        <div class="day-card">
+          <div class="day-header">
+            <span class="day-number">📚</span>
+            <span class="day-theme">POUR DEMAIN (J4 Après-midi)</span>
+          </div>
+          <div class="day-content">
+            <h5 class="mt-5">Théorie du matin (J4)</h5>
+            <ul>
+              <li>Sécurité API avancée : Rate limiting, CORS, headers de sécurité</li>
+              <li>RBAC (Role-Based Access Control) : Permissions granulaires</li>
+              <li>Audit et logging : Traçabilité des actions</li>
+              <li>Bonnes pratiques de sécurité en production</li>
+            </ul>
+            
+            <h5 class="mt-5">Pratique de l'après-midi (J4)</h5>
+            <h6 class="mt-5">ÉQUIPES BACK :</h6>
+            <ul>
+              <li>Implémenter rate limiting (express-rate-limit, redis)</li>
+              <li>Configurer CORS correctement</li>
+              <li>Ajouter headers de sécurité (helmet)</li>
+              <li>Implémenter RBAC avec permissions granulaires</li>
+              <li>Ajouter audit logging (qui fait quoi, quand)</li>
+            </ul>
+            
+            <h6 class="mt-5">ÉQUIPE AUTH :</h6>
+            <ul>
+              <li>Implémenter refresh token rotation</li>
+              <li>Ajouter rate limiting sur les endpoints d'auth</li>
+              <li>Audit des tentatives de connexion</li>
+              <li>Gestion des sessions et déconnexion</li>
+            </ul>
+            
+            <h6 class="mt-5">ÉQUIPE FRONT :</h6>
+            <ul>
+              <li>Gestion des tokens expirés (refresh automatique)</li>
+              <li>Gestion des erreurs de sécurité</li>
+              <li>Interface d'administration (pour les admins)</li>
+              <li>Amélioration de l'UX de sécurité</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="../assets/logo.jpeg" alt="YNOV Campus" class="footer-logo-img">
+            <span class="footer-logo-text">SmartCity API Platform</span>
+          </div>
+          <p class="footer-description">Fil Rouge J3 - Base de données & CRUD complet.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="../index.html#programme">Programme</a></li>
+            <li><a href="../index.html#projet">Projet</a></li>
+            <li><a href="day3FilRouge.html">Atelier J3</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Ressources</h3>
+          <ul>
+            <li>PostgreSQL</li>
+            <li>Prisma</li>
+            <li>JWT</li>
+            <li>bcrypt</li>
+            <li>Joi</li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> contact@ynov.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> Campus Ynov</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 YNOV Campus. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    // Auto-détection et coloration de tous les blocs de code
+    document.addEventListener('DOMContentLoaded', function() {
+      hljs.highlightAll();
+    });
+  </script>
+</body>
+</html>

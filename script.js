@@ -134,10 +134,6 @@ style.textContent = `
         transition: max-height 0.3s ease-in-out;
     }
     
-    .day-card.expanded .day-content {
-        max-height: 1000px;
-    }
-    
     .day-header {
         cursor: pointer;
         transition: background-color 0.3s ease;
@@ -338,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Console welcome message for developers
 console.log(`
-🚀 APIs & Microservices - Mastère 2
+🚀 WebServices - Mastère 2
 🎯 Projet SmartCity API Platform
 📚 Formation intensive de 63h
 👨‍💻 Développé avec ❤️ pour les étudiants

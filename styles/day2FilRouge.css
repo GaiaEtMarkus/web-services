@@ -1,0 +1,474 @@
+/* ========================================
+   DAY 2 - FIL ROUGE STYLES
+   Styles spécifiques pour la page fil rouge Jour 2
+   ======================================== */
+
+/* Import des styles de base */
+@import url('styles.css');
+
+/* Navigation vers Théorie */
+.navigation-section {
+  margin: 2rem 0;
+  text-align: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.nav-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button:hover {
+  background: var(--button-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.nav-button.secondary {
+  background: var(--gray-600);
+}
+
+.nav-button.secondary:hover {
+  background: var(--gray-700);
+}
+
+/* Objectifs de l'atelier */
+.atelier-objectifs {
+  background: var(--gray-50);
+  padding: 4rem 0;
+}
+
+.objectifs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.objectif-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 4px solid var(--primary-color);
+}
+
+.objectif-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.objectif-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--button-color) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: white;
+  font-size: 2rem;
+}
+
+.objectif-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 1rem;
+}
+
+.objectif-card p {
+  color: var(--gray-600);
+  line-height: 1.6;
+}
+
+/* Contenu de l'atelier */
+.atelier-content {
+  padding: 4rem 0;
+}
+
+.atelier-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.atelier-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  margin-bottom: 1rem;
+}
+
+.atelier-header p {
+  font-size: 1.2rem;
+  color: var(--gray-600);
+}
+
+.atelier-placeholder {
+  background: white;
+  border-radius: 12px;
+  padding: 4rem 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.placeholder-content i {
+  font-size: 4rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.placeholder-content h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 1rem;
+}
+
+.placeholder-content p {
+  color: var(--gray-600);
+  font-size: 1.1rem;
+}
+
+/* Ressources et outils */
+.ressources-atelier {
+  background: var(--gray-50);
+  padding: 4rem 0;
+}
+
+.ressources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.ressource-category {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-top: 4px solid var(--primary-color);
+  transition: transform 0.3s ease;
+}
+
+.ressource-category:hover {
+  transform: translateY(-3px);
+}
+
+.ressource-category h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ressource-category ul {
+  list-style: none;
+  padding: 0;
+}
+
+.ressource-category li {
+  color: var(--gray-600);
+  margin-bottom: 0.8rem;
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.5;
+}
+
+.ressource-category li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.ressource-category li strong {
+  color: var(--gray-800);
+  font-weight: 600;
+}
+
+/* Styles pour les phases d'atelier */
+.phase-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  border-left: 4px solid var(--primary-color);
+}
+
+.phase-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--button-color) 100%);
+  color: white;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.phase-number {
+  background: rgba(255, 255, 255, 0.2);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.phase-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.phase-duration {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-left: auto;
+}
+
+.phase-content {
+  padding: 2rem;
+}
+
+.phase-objectives {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.phase-objectives li {
+  padding: 0.5rem 0;
+  color: var(--gray-600);
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.phase-objectives li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Styles pour les équipes */
+.team-section {
+  background: var(--gray-50);
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.team-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.team-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.team-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.team-tasks {
+  list-style: none;
+  padding: 0;
+}
+
+.team-tasks li {
+  padding: 0.5rem 0;
+  color: var(--gray-600);
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.team-tasks li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Styles pour les conventions */
+.convention-box {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  border-left: 4px solid #ff9800;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+}
+
+.convention-box h6 {
+  color: #e65100;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* Styles pour les exemples de code */
+.code-example {
+  background: var(--gray-900);
+  color: var(--gray-100);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.code-example pre {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+/* Styles pour les checklists */
+.checklist {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border-left: 4px solid var(--primary-color);
+}
+
+.checklist h4 {
+  color: var(--gray-800);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.checklist ul {
+  list-style: none;
+  padding: 0;
+}
+
+.checklist li {
+  padding: 0.5rem 0;
+  color: var(--gray-600);
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.checklist li::before {
+  content: '☐';
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navigation-section {
+    padding: 1rem;
+  }
+  
+  .nav-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .nav-button {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+  
+  .objectifs-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .atelier-header h2 {
+    font-size: 2rem;
+  }
+  
+  .ressources-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .phase-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .phase-duration {
+    margin-left: 0;
+  }
+  
+  .team-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .atelier-content {
+    padding: 2rem 0;
+  }
+  
+  .objectif-card,
+  .ressource-category {
+    padding: 1.5rem;
+  }
+  
+  .phase-content {
+    padding: 1.5rem;
+  }
+  
+  .team-section {
+    padding: 1.5rem;
+  }
+}

@@ -3,62 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jour 1 — Fondamentaux REST & Lancement Agile</title>
+  <title>Jour 1 — Fondamentaux des Web Services</title>
     <link rel="stylesheet" href="../styles/styles.css">
     <link rel="stylesheet" href="../styles/day1.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <!-- Navigation -->
   <nav class="navbar">
     <div class="nav-container">
-      <div class="nav-logo">
-        <img src="../assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
-        <span class="logo-text">APIs & Microservices</span>
-      </div>
-      <ul class="nav-menu">
-        <li class="nav-item"><a href="../index.html" class="nav-link">Accueil</a></li>
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle">
-            <i class="fas fa-calendar-alt"></i> Journées
-            <i class="fas fa-chevron-down"></i>
-          </a>
-          <div class="dropdown-menu">
-            <a href="day1.html" class="dropdown-item">Jour 1 - Théorie</a>
-            <a href="day1FilRouge.html" class="dropdown-item">Jour 1 - Fil Rouge</a>
-            <a href="#" class="dropdown-item disabled">Jour 2 - Théorie (Bientôt)</a>
-            <a href="#" class="dropdown-item disabled">Jour 2 - Fil Rouge (Bientôt)</a>
-          </div>
-        </li>
-        <li class="nav-item"><a href="../index.html#projet" class="nav-link">Projet</a></li>
-        <li class="nav-item"><a href="#atelier" class="nav-link">Atelier</a></li>
-        <li class="nav-item"><a href="../index.html#contact" class="nav-link">Contact</a></li>
-      </ul>
-      <div class="hamburger">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
+        <div class="nav-logo">
+            <img src="assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+            <span class="logo-text">Web Services</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#accueil" class="nav-link">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a href="#programme" class="nav-link">Programme</a>
+            </li>
+            <li class="nav-item">
+                <a href="#projet" class="nav-link">Projet SmartCity</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle">
+                    <i class="fas fa-calendar-alt"></i> Journées
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <div class="dropdown-menu">
+        <a href="pages/day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+        <a href="pages/day1FilRouge.html" class="dropdown-item">Jour 1 - Fil Rouge</a>
+        <a href="pages/day2.html" class="dropdown-item">Jour 2 - Théorie</a>
+        <a href="pages/day2FilRouge.html" class="dropdown-item">Jour 2 - Fil Rouge</a>
+        <a href="pages/day3.html" class="dropdown-item">Jour 3 - Théorie</a>
+        <a href="pages/day3FilRouge.html" class="dropdown-item">Jour 3 - Fil Rouge</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="#ressources" class="nav-link">Ressources</a>
+            </li>
+            <li class="nav-item">
+                <a href="#contact" class="nav-link">Contact</a>
+            </li>
+        </ul>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
     </div>
-  </nav>
+</nav>
 
   <!-- Hero -->
   <section class="hero" style="min-height: 60vh;">
-    <div class="hero-background">
-      <img src="../assets/home.jpg" alt="Campus moderne" class="hero-image">
-      <div class="hero-overlay"></div>
-    </div>
-    <div class="hero-content">
-      <div class="hero-text">
-        <h1 class="hero-title">Jour 1</h1>
-        <h2 class="hero-subtitle">Fondamentaux REST & Lancement Agile</h2>
-        <p class="hero-description">
-          Objectifs, déroulé de la journée et atelier guidé pour démarrer le fil rouge.
-        </p>
-        <div class="hero-buttons">
-          <a href="day1FilRouge.html" class="btn btn-primary"><i class="fas fa-code"></i>Démarrer l'atelier</a>
-          <a href="../index.html#programme" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Retour au programme</a>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">Jour 1</h1>
+          <h2 class="hero-subtitle">Fondamentaux des Web Services</h2>
+          <p class="hero-description">
+            Introduction aux Web Services, architecture client-serveur, HTTP, et formats d'échange de données.
+          </p>
+          <div class="hero-buttons">
+            <a href="day1FilRouge.html" class="btn btn-primary"><i class="fas fa-code"></i>Démarrer l'atelier</a>
+            <a href="../index.html#programme" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Retour au programme</a>
+          </div>
+        </div>
+        <div class="hero-image-container">
+          <img src="../assets/home.jpg" alt="Campus moderne" class="hero-image">
         </div>
       </div>
     </div>
@@ -72,24 +85,24 @@
       </div>
       <div class="intro-grid">
         <div class="intro-card">
-          <div class="card-icon"><i class="fas fa-network-wired"></i></div>
-          <h3>REST en pratique</h3>
-          <p>Comprendre les contraintes REST, la sémantique HTTP et concevoir des URI propres.</p>
+          <div class="card-icon"><i class="fas fa-globe"></i></div>
+          <h3>Web Services</h3>
+          <p>Définir ce qu'est un web service et comprendre son rôle dans l'architecture moderne.</p>
         </div>
         <div class="intro-card">
-          <div class="card-icon"><i class="fas fa-bug-slash"></i></div>
-          <h3>Erreurs standardisées</h3>
-          <p>Mettre en place un format d'erreurs conforme RFC 7807 pour des APIs robustes.</p>
+          <div class="card-icon"><i class="fas fa-server"></i></div>
+          <h3>Architecture Client-Serveur</h3>
+          <p>Maîtriser le modèle client-serveur et le protocole HTTP/HTTPS.</p>
         </div>
         <div class="intro-card">
-          <div class="card-icon"><i class="fas fa-people-group"></i></div>
-          <h3>Démarrage Agile</h3>
-          <p>Lancer le sprint: backlog initial, DoD, planning poker et rôles dans l'équipe.</p>
+          <div class="card-icon"><i class="fas fa-exchange-alt"></i></div>
+          <h3>Méthodes HTTP</h3>
+          <p>Utiliser correctement les méthodes HTTP (GET, POST, PUT, PATCH, DELETE).</p>
         </div>
         <div class="intro-card">
-          <div class="card-icon"><i class="fas fa-play"></i></div>
-          <h3>Premier service</h3>
-          <p>Implémenter l'Events API (CRUD) avec validation et tests unitaires.</p>
+          <div class="card-icon"><i class="fas fa-code"></i></div>
+          <h3>Formats d'échange</h3>
+          <p>Travailler avec JSON et XML pour échanger des données entre systèmes.</p>
         </div>
       </div>
     </div>
@@ -99,8 +112,8 @@
   <section class="programme">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">Fondamentaux REST — Cours détaillé</h2>
-        <p class="section-subtitle">Théorie opérationnelle + bonnes pratiques professionnelles</p>
+        <h2 class="section-title">Fondamentaux des Web Services — Cours détaillé</h2>
+        <p class="section-subtitle">Théorie complète des Web Services avec exemples concrets et bonnes pratiques</p>
       </div>
 
       <!-- Navigation vers Fil Rouge -->
@@ -116,211 +129,106 @@
         <div class="day-card expanded">
             <div class="day-header">
               <span class="day-number">1</span>
-              <span class="day-theme">Architecture : Du Monolithe aux Microservices</span>
+              <span class="day-theme">Introduction aux Web Services</span>
             </div>
-          <div class="day-content" style="max-height: 1000px;">
+          <div class="day-content">
             <div class="day-morning">
-              <h4><i class="fas fa-building"></i> L'Architecture Monolithique</h4>
+              <h4><i class="fas fa-globe"></i> Qu'est-ce qu'un Web Service ?</h4>
               
-              <p>Avant de plonger dans les microservices, il est essentiel de comprendre l'architecture traditionnelle qui a dominé le développement logiciel pendant des décennies : le <strong>monolithe</strong>.</p>
+              <p>Imaginons une banque nationale en 1995. À Paris, le système informatique tourne en COBOL sur un mainframe IBM. À Lyon, les développeurs ont choisi du C++ sur des serveurs Unix. À Marseille, les agences utilisent du Visual Basic sur Windows. Trois systèmes, trois langages, trois architectures complètement différentes. Un jour, le directeur général annonce lors d'une réunion : "Nous devons permettre à nos clients de consulter leur compte depuis n'importe quelle agence, pas seulement celle où ils ont ouvert leur compte."</p>
 
-              <h5>🏗️ Qu'est-ce qu'un Monolithe ?</h5>
-              <p>Un monolithe est une application construite comme une <strong>unité unique et indivisible</strong>. Tous les composants, modules et fonctionnalités sont développés, déployés et gérés ensemble dans un seul processus.</p>
+              <p>L'équipe technique se retrouve face à un casse-tête monumental. Comment faire communiquer ces trois systèmes qui ne parlent littéralement pas le même langage ? Comment s'assurer qu'une requête envoyée depuis Paris peut être comprise par le système de Lyon ? Et surtout, comment faire ça sans tout réécrire depuis zéro ?</p>
 
-              <div class="highlight-box">
-                <h6>Caractéristiques du Monolithe :</h6>
-                <ul>
-                  <li><strong>Déploiement unique</strong> : Une seule unité de déploiement pour toute l'application</li>
-                  <li><strong>Base de données partagée</strong> : Une ou plusieurs bases de données utilisées par tous les modules</li>
-                  <li><strong>Communication synchrone</strong> : Appels de fonction directs entre modules</li>
-                  <li><strong>Technologie uniforme</strong> : Généralement une seule stack technologique</li>
-                  <li><strong>Équipe centralisée</strong> : Une équipe ou quelques équipes travaillent sur l'ensemble</li>
-                </ul>
-              </div>
-
-              <h5>📈 Avantages du Monolithe</h5>
-              <ul>
-                <li><strong>Simplicité de développement</strong> : Pas de complexité de communication inter-services</li>
-                <li><strong>Débogage facilité</strong> : Stack trace complète, debugging dans un seul processus</li>
-                <li><strong>Transactions ACID</strong> : Cohérence garantie grâce à la base de données unique</li>
-                <li><strong>Performance</strong> : Pas de latence réseau entre modules</li>
-                <li><strong>Déploiement simple</strong> : Un seul artefact à déployer</li>
-                <li><strong>Tests d'intégration</strong> : Plus faciles car tout est dans le même processus</li>
-              </ul>
-
-              <h5>⚠️ Inconvénients du Monolithe</h5>
-              <ul>
-                <li><strong>Couplage fort</strong> : Modification d'un module peut impacter d'autres modules</li>
-                <li><strong>Évolutivité limitée</strong> : Impossible de scaler indépendamment les parties critiques</li>
-                <li><strong>Technologie figée</strong> : Difficile d'introduire de nouvelles technologies</li>
-                <li><strong>Déploiement risqué</strong> : Un bug peut faire tomber toute l'application</li>
-                <li><strong>Équipes bloquées</strong> : Conflits de déploiement entre équipes</li>
-                <li><strong>Maintenance complexe</strong> : Code base qui grandit exponentiellement</li>
-              </ul>
+              <p>C'est précisément ce type de problème que les web services sont venus résoudre. Un web service est un système logiciel qui permet à deux applications de communiquer entre elles via un réseau, généralement Internet, en utilisant des standards ouverts que tout le monde comprend. C'est un peu comme un interprète universel qui traduit entre différentes langues informatiques.</p>
 
               <div class="highlight-box">
-                <h6>💡 Exemple Concret : E-commerce Monolithique</h6>
-                <p>Imaginez un site e-commerce avec :</p>
-                <ul>
-                  <li><strong>Module Utilisateurs</strong> : Authentification, profils</li>
-                  <li><strong>Module Catalogue</strong> : Produits, catégories, recherche</li>
-                  <li><strong>Module Panier</strong> : Gestion du panier, calculs</li>
-                  <li><strong>Module Commandes</strong> : Processus de commande, facturation</li>
-                  <li><strong>Module Paiement</strong> : Intégration avec les processeurs</li>
-                  <li><strong>Module Stock</strong> : Gestion des inventaires</li>
-                </ul>
-                <p>Tous ces modules partagent la même base de données, le même serveur, et sont déployés ensemble. Un problème dans le module paiement peut impacter toute la plateforme.</p>
+                <h6>💡 Exemple Concret : Application Météo</h6>
+                <p>Imaginons que vous développez une application météo pour smartphone. Votre application ne dispose d'aucun capteur météorologique, elle ne sait pas mesurer la température, l'humidité ou la pression atmosphérique. Pourtant, quand un utilisateur ouvre l'application, celle-ci affiche instantanément "25°C à Paris, risque de pluie à 15h". Comment est-ce possible ?</p>
+                <p>L'application envoie simplement une requête à un web service de météo : "Donne-moi les prévisions météorologiques pour Paris". Le service météo, qui lui agrège les données de milliers de stations météorologiques à travers le monde, répond avec des données structurées. L'application les reçoit, les met en forme joliment, et les affiche à l'utilisateur. Tout ce processus prend quelques centaines de millisecondes et reste complètement transparent pour l'utilisateur final.</p>
               </div>
 
-              <h4 class="mt-5"><i class="fas fa-cubes"></i> L'Architecture Microservices</h4>
+              <h5>🏗️ Les Trois Composants Fondamentaux</h5>
+              <p>Cette architecture repose sur trois composants fondamentaux :</p>
+              <ul>
+                <li><strong>Provider (fournisseur)</strong> : Celui qui expose des fonctionnalités ou des données</li>
+                <li><strong>Consumer (consommateur)</strong> : L'application qui utilise ces fonctionnalités</li>
+                <li><strong>Contract (contrat)</strong> : Les règles du jeu (format, protocole, données)</li>
+              </ul>
+
+              <h4 class="mt-5"><i class="fas fa-history"></i> L'évolution : de la complexité à la simplicité</h4>
               
-              <p>Les <strong>microservices</strong> sont une approche architecturale qui décompose une application en <strong>services indépendants, faiblement couplés et déployables séparément</strong>.</p>
+              <p>L'histoire des web services est celle d'un aller-retour fascinant entre la complexité et la simplicité. Dans les années 90, quand les premières tentatives de faire communiquer des applications distantes ont émergé, les ingénieurs ont créé des technologies comme CORBA (Common Object Request Broker Architecture) ou DCOM (Distributed Component Object Model). Ces technologies promettaient de résoudre tous les problèmes d'interopérabilité, mais elles étaient d'une complexité redoutable.</p>
 
-              <h5>🔧 Définition et Principes</h5>
-              <p>Chaque microservice :</p>
-              <ul>
-                <li><strong>Responsabilité unique</strong> : Un service = un domaine métier</li>
-                <li><strong>Autonomie</strong> : Peut être développé, testé et déployé indépendamment</li>
-                <li><strong>Communication par API</strong> : Généralement HTTP/REST ou message queues</li>
-                <li><strong>Base de données dédiée</strong> : Chaque service gère ses propres données</li>
-                <li><strong>Échec isolé</strong> : La panne d'un service n'affecte pas les autres</li>
-              </ul>
-
-              <h5>🎯 Avantages des Microservices</h5>
-              <ul>
-                <li><strong>Évolutivité indépendante</strong> : Scalabilité fine selon les besoins</li>
-                <li><strong>Technologies diversifiées</strong> : Chaque service peut utiliser sa stack optimale</li>
-                <li><strong>Équipes autonomes</strong> : Développement parallèle sans conflits</li>
-                <li><strong>Déploiement granulaire</strong> : Mise à jour d'un service sans impact global</li>
-                <li><strong>Résilience</strong> : Isolation des pannes</li>
-                <li><strong>Innovation</strong> : Expérimentation facilitée</li>
-              </ul>
-
-              <h5>⚠️ Défis des Microservices</h5>
-              <ul>
-                <li><strong>Complexité opérationnelle</strong> : Monitoring, logging, debugging distribués</li>
-                <li><strong>Communication réseau</strong> : Latence, fiabilité, versioning des APIs</li>
-                <li><strong>Consistance des données</strong> : Transactions distribuées complexes</li>
-                <li><strong>Tests d'intégration</strong> : Plus difficiles à orchestrer</li>
-                <li><strong>Gouvernance</strong> : Standards, conventions, documentation</li>
-                <li><strong>Courbe d'apprentissage</strong> : Nouvelles compétences requises</li>
-              </ul>
+              <p>Au début des années 2000, une nouvelle approche a émergé : SOAP (Simple Object Access Protocol). L'ironie du nom "Simple" n'a échappé à personne par la suite. L'idée de départ était pourtant bonne : utiliser XML, un format texte structuré et lisible par l'homme, pour échanger des messages entre applications.</p>
 
               <div class="highlight-box">
-                <h6>💡 Exemple Concret : E-commerce en Microservices</h6>
-                <p>Le même site e-commerce décomposé :</p>
-                <ul>
-                  <li><strong>User Service</strong> : Authentification, profils (Node.js + MongoDB)</li>
-                  <li><strong>Catalog Service</strong> : Produits, recherche (Java + Elasticsearch)</li>
-                  <li><strong>Cart Service</strong> : Panier (Python + Redis)</li>
-                  <li><strong>Order Service</strong> : Commandes (C# + SQL Server)</li>
-                  <li><strong>Payment Service</strong> : Paiements (Go + PostgreSQL)</li>
-                  <li><strong>Inventory Service</strong> : Stock (Rust + Cassandra)</li>
-                </ul>
-                <p>Chaque service peut être développé par une équipe différente, avec sa propre technologie et base de données. Un problème dans le Payment Service n'affecte que les paiements, pas la navigation ou le catalogue.</p>
+                <h6>💡 Exemple Concret : SOAP en 2007</h6>
+                <p>Imaginons une entreprise de e-commerce en 2007 qui souhaite intégrer un système de paiement par carte bancaire via SOAP. L'équipe technique reçoit un fichier WSDL de 3000 lignes. Pour effectuer un simple paiement de 50 euros, il faut construire une enveloppe SOAP avec des namespaces XML imbriqués, des headers de sécurité avec signatures numériques, des timestamps... Le moindre espace mal placé dans le XML fait échouer toute la communication, avec des messages d'erreur absolument cryptiques. L'intégration qui devait prendre une semaine se transforme en projet de trois mois.</p>
               </div>
 
-              <h4 class="mt-5"><i class="fas fa-balance-scale"></i> Monolithe vs Microservices : Le Dilemme</h4>
+              <p>Pendant ce temps, en 2000, Roy Fielding publiait sa thèse de doctorat introduisant REST (Representational State Transfer). Mais dans le tumulte de l'engouement pour SOAP, personne n'y prêtait vraiment attention.</p>
+
+              <p>Puis, vers 2005, quelque chose d'intéressant s'est produit. Les startups du Web 2.0 – Flickr pour le partage de photos, del.icio.us pour les marque-pages sociaux, puis Twitter et Facebook – ont commencé à ouvrir leurs plateformes aux développeurs externes. Elles avaient besoin de créer des APIs simples, rapides à mettre en œuvre, et faciles à utiliser. Elles ont choisi REST, pas SOAP.</p>
+
+              <h4 class="mt-5"><i class="fas fa-chart-line"></i> Pourquoi utiliser des Web Services ?</h4>
               
-              <p>Le choix entre monolithe et microservices n'est pas binaire. C'est un <strong>spectre architectural</strong> avec des compromis à considérer.</p>
+              <p>L'histoire de Stripe illustre parfaitement la puissance des web services bien conçus. En 2010, les frères Patrick et John Collison, irlandais installés en Californie, constatent la complexité d'accepter des paiements en ligne. Ils fondent Stripe avec une promesse révolutionnaire : intégrer les paiements avec 7 lignes de code. Pas d'installation lourde, pas de configuration labyrinthique, juste quelques appels à une API REST élégante. En 2025, Stripe traite des centaines de milliards de dollars par an et est valorisée à plus de 50 milliards de dollars.</p>
 
-              <h5>📊 Matrice de Décision</h5>
+              <h5>🎯 Premier avantage : l'interopérabilité universelle</h5>
+              <p>Imaginons une startup qui développe une plateforme de réservation de restaurants. L'équipe souhaite être présente partout : application iPhone, application Android, site web desktop, site web mobile, voire même des bornes tactiles dans les restaurants. Sans web services, il faudrait développer la logique métier cinq fois : une fois en Swift pour iOS, une fois en Kotlin pour Android, une fois en JavaScript pour le web, une fois en Python pour les bornes...</p>
+
+              <p>Avec une API REST bien conçue, la logique métier est développée une seule fois dans le langage de choix (disons Node.js). Cette API unique sert ensuite tous les clients. L'application iOS appelle /api/v1/restaurants, l'application Android appelle le même endpoint, le site web aussi. Un seul backend pour tous les gouverner.</p>
+
+              <h5>🔄 Deuxième avantage : la réutilisabilité et l'économie des APIs</h5>
+              <p>Imaginons un développeur qui souhaite créer une application de livraison de courses. Il a besoin de plusieurs fonctionnalités : afficher des cartes pour la géolocalisation, envoyer des SMS pour notifier les clients, traiter les paiements, envoyer des emails de confirmation. Sans APIs externes, il devrait créer toutes ces fonctionnalités lui-même, avec des années d'expérience dans chaque domaine.</p>
+
+              <p>Grâce aux web services, il peut utiliser l'API Google Maps pour la cartographie, l'API Twilio pour les SMS, l'API Stripe pour les paiements, l'API SendGrid pour les emails. Chaque service est fourni par des experts du domaine. Le développeur peut se concentrer sur sa valeur ajoutée réelle : la logique métier de la livraison de courses.</p>
+
+              <div class="highlight-box">
+                <h6>💡 Anecdote Amazon : Le Mémo de Bezos</h6>
+                <p>En 2006, Jeff Bezos a envoyé un mémo à tous les ingénieurs d'Amazon. Le message était clair et non négociable : "À partir de maintenant, toutes les équipes doivent exposer leurs fonctionnalités via des APIs. Plus aucun accès direct aux bases de données entre équipes. Pas de partage de mémoire. Rien. Uniquement des APIs. Et ces APIs doivent être conçues comme si elles allaient être exposées publiquement, même si ce n'est pas le cas initialement."</p>
+                <p>Quelques années plus tard, Amazon a lancé Amazon Web Services (AWS). Comment ont-ils pu déployer des dizaines de services cloud aussi rapidement ? Parce que toutes les briques technologiques existaient déjà sous forme d'APIs internes. Il suffisait de les documenter proprement, d'ajouter une couche de facturation, et de les ouvrir au public. Aujourd'hui, AWS génère plus de 80 milliards de dollars de revenus annuels.</p>
+              </div>
+
+              <h5>📈 Troisième avantage : la scalabilité et l'évolution</h5>
+              <p>Imaginons Netflix au moment de passer du DVD par la poste au streaming vidéo. Leur application monolithique ne pouvait pas gérer des millions d'utilisateurs simultanés regardant des vidéos en haute définition. Leur solution a été radicale : découper leur application en centaines de microservices, chacun communiquant via des APIs bien définies.</p>
+
+              <p>Aujourd'hui, plus de 1000 microservices différents collaborent pour vous permettre de regarder vos séries préférées. Certains gèrent votre profil utilisateur, d'autres génèrent les recommandations personnalisées, d'autres transcodent les vidéos dans différentes qualités, d'autres gèrent les abonnements et la facturation. Le jour du lancement d'une saison très attendue d'une série populaire, Netflix peut multiplier par 10 les instances du service de streaming vidéo sans toucher aux autres services.</p>
+
+              <h4 class="mt-5"><i class="fas fa-language"></i> Les différentes familles de Web Services</h4>
               
-              <div class="table-wrapper">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Critère</th>
-                      <th>Monolithe</th>
-                      <th>Microservices</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><strong>Complexité de développement</strong></td>
-                      <td>✅ Simple</td>
-                      <td>❌ Complexe</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Déploiement</strong></td>
-                      <td>✅ Facile</td>
-                      <td>❌ Complexe</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Debugging</strong></td>
-                      <td>✅ Centralisé</td>
-                      <td>❌ Distribué</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Évolutivité</strong></td>
-                      <td>❌ Limitée</td>
-                      <td>✅ Granulaire</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Technologies</strong></td>
-                      <td>❌ Homogène</td>
-                      <td>✅ Hétérogène</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Équipes</strong></td>
-                      <td>❌ Centralisées</td>
-                      <td>✅ Autonomes</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Résilience</strong></td>
-                      <td>❌ Tout ou rien</td>
-                      <td>✅ Isolée</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Performance</strong></td>
-                      <td>✅ Optimale</td>
-                      <td>❌ Latence réseau</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <p>Comparons les différents types de web services à des langues humaines, chacune avec sa philosophie et ses cas d'usage.</p>
 
-              <h5>🎯 Quand Choisir le Monolithe ?</h5>
-              <ul>
-                <li><strong>Équipe petite</strong> (< 10 développeurs)</li>
-                <li><strong>Application simple</strong> avec logique métier cohérente</li>
-                <li><strong>Démarrage rapide</strong> nécessaire</li>
-                <li><strong>Contraintes de performance</strong> strictes</li>
-                <li><strong>Expertise limitée</strong> en architecture distribuée</li>
-              </ul>
+              <h5>🌐 SOAP : L'allemand des web services</h5>
+              <p>SOAP est comme l'allemand : très structuré, très formel, avec des règles grammaticales précises. Quand on lit un document SOAP, on sait immédiatement de quoi il s'agit car tout est explicitement décrit. C'est verbeux, ça prend de la place, mais c'est extrêmement rigoureux.</p>
 
-              <h5>🚀 Quand Passer aux Microservices ?</h5>
-              <ul>
-                <li><strong>Équipes multiples</strong> (> 20 développeurs)</li>
-                <li><strong>Domaines métier distincts</strong> avec cycles de vie différents</li>
-                <li><strong>Besoin d'évolutivité</strong> granulaire</li>
-                <li><strong>Technologies diverses</strong> requises</li>
-                <li><strong>Déploiements fréquents</strong> sans impact global</li>
-              </ul>
+              <p>Imaginons une banque internationale qui doit transférer 10 millions d'euros entre deux systèmes bancaires situés dans des pays différents. Elle veut des garanties absolues : la transaction doit être sécurisée avec signatures numériques (WS-Security), fiable avec gestion des erreurs et retry automatiques (WS-ReliableMessaging), transactionnelle avec possibilité de rollback (WS-Transaction). SOAP fournit des standards pour tout ça. C'est lourd, c'est complexe, mais quand il s'agit de millions d'euros, on ne plaisante pas avec la robustesse.</p>
+
+              <h5>🌍 REST : L'anglais des web services</h5>
+              <p>REST est comme l'anglais : simple, pragmatique, flexible, et tout le monde le comprend. REST n'est pas vraiment un protocole rigide, c'est plutôt un ensemble de principes architecturaux. On utilise les verbes HTTP naturels (GET pour récupérer, POST pour créer, PUT pour modifier, DELETE pour supprimer) et des URLs pour identifier les ressources. C'est élégant, intuitif, et extrêmement flexible.</p>
+
+              <p>Imaginons une startup qui lance une API pour partager des photos. Avec REST, les endpoints sont évidents : GET /photos pour lister les photos, POST /photos pour en ajouter une, GET /photos/123 pour en voir une spécifique, DELETE /photos/123 pour la supprimer. Tout développeur comprend immédiatement comment ça fonctionne, même sans lire la documentation.</p>
+
+              <h5>🔮 GraphQL : L'espéranto des web services</h5>
+              <p>GraphQL, c'est un peu l'espéranto : une langue construite pour être logique et efficace. L'idée centrale est brillante : au lieu que le serveur décide quelles données vous renvoyer, c'est vous, le client, qui spécifiez exactement ce dont vous avez besoin.</p>
+
+              <p>Imaginons le développement d'un réseau social. Pour afficher une page de profil, vous avez besoin du nom de l'utilisateur, sa photo de profil, et ses 10 derniers posts avec le nombre de likes. Avec REST, vous appelez GET /users/123 et récupérez peut-être 50 champs (adresse, téléphone, préférences, etc.) alors que vous n'en voulez que 5. Ensuite, vous appelez GET /users/123/posts et récupérez tous les champs de tous les posts. C'est du gaspillage de bande passante.</p>
+
+              <p>Avec GraphQL, vous écrivez une seule query qui dit précisément : "Pour l'utilisateur 123, je veux son nom, sa photo, et les titres de ses 10 derniers posts avec leur nombre de likes". Une seule requête, exactement les données nécessaires. GitHub a migré son API vers GraphQL et a constaté une réduction de 40% de la quantité de données transférées.</p>
+
+              <h5>⚡ gRPC : Le mandarin des web services</h5>
+              <p>gRPC, c'est le mandarin : très efficace quand on le maîtrise, mais avec une courbe d'apprentissage raide. gRPC utilise Protocol Buffers, un format binaire développé par Google, plutôt que du texte comme JSON ou XML. Résultat : c'est 5 à 10 fois plus rapide que REST. C'est bidirectionnel grâce à HTTP/2, ce qui permet du streaming dans les deux sens.</p>
+
+              <p>Imaginons Uber qui doit gérer la communication en temps réel entre les smartphones des chauffeurs et leurs serveurs. La position du véhicule doit être mise à jour toutes les secondes, les demandes de courses doivent arriver instantanément, le tout avec une latence minimale. gRPC excelle dans ce type de scénario. Mais gRPC est moins accessible : on ne peut pas simplement tester un appel gRPC dans un navigateur web comme on le ferait avec REST.</p>
 
               <div class="highlight-box">
-                <h6>🔄 Évolution Progressive : Monolithe Modulaire</h6>
-                <p>La transition n'est pas brutale. Beaucoup d'organisations passent par une phase intermédiaire :</p>
+                <h6>🎯 Dans ce cours</h6>
+                <p>Nous allons nous concentrer principalement sur REST, pour trois raisons :</p>
                 <ul>
-                  <li><strong>Monolithe modulaire</strong> : Modules bien définis avec interfaces claires</li>
-                  <li><strong>Extraction progressive</strong> : Un module à la fois vers un service</li>
-                  <li><strong>Database per Service</strong> : Séparation des données avant la séparation du code</li>
-                  <li><strong>API Gateway</strong> : Point d'entrée unique pour masquer la complexité</li>
+                  <li>C'est de loin le plus utilisé : environ 80% des APIs publiques sont en REST</li>
+                  <li>Les concepts appris avec REST sont transférables. Si vous comprenez bien REST, apprendre GraphQL ou gRPC sera beaucoup plus facile</li>
+                  <li>REST est parfait pour l'apprentissage car il est transparent : on peut voir exactement ce qui se passe, déboguer facilement, tester manuellement</li>
                 </ul>
-              </div>
-
-              <h5>🏗️ Patterns de Transition</h5>
-              <ul>
-                <li><strong>Strangler Fig Pattern</strong> : Remplacer progressivement le monolithe</li>
-                <li><strong>Database Decomposition</strong> : Séparer les bases de données d'abord</li>
-                <li><strong>Event Sourcing</strong> : Utiliser les événements pour découpler</li>
-                <li><strong>CQRS</strong> : Séparer lecture et écriture</li>
-              </ul>
-
-              <div class="highlight-box">
-                <h6>💡 Leçon de l'Histoire</h6>
-                <p><strong>Netflix</strong> a migré de monolithe vers microservices en 2008-2012. <strong>Amazon</strong> a popularisé l'approche "Two Pizza Teams" (équipes de 6-8 personnes). <strong>Uber</strong> a commencé en monolithe puis a évolué vers 1000+ microservices.</p>
-                <p>La clé : <strong>commencer simple, évoluer selon les besoins réels</strong>.</p>
               </div>
             </div>
           </div>
@@ -329,89 +237,177 @@
         <div class="day-card expanded">
           <div class="day-header">
             <span class="day-number">2</span>
-            <span class="day-theme">Contraintes REST (Fielding) + Modélisation de ressources</span>
+            <span class="day-theme">Architecture Client-Serveur et HTTP</span>
           </div>
-          <div class="day-content" style="max-height: 1000px;">
+          <div class="day-content">
             <div class="day-morning">
-              <h4><i class="fas fa-book"></i> Les 6 contraintes REST</h4>
-              <p>
-                En 2000, Roy Fielding soutient sa thèse et met des mots sur une intuition que les ingénieurs du web
-                pressentaient déjà: si le web a tenu l’échelle planétaire, c’est grâce à un petit ensemble de règles
-                simples mais puissantes. Il baptise ce style architectural <em>Representational State Transfer</em> — REST.
-                L’objectif n’est pas la “pureté” académique: c’est la <strong>résilience</strong> et l’<strong>évolutivité</strong> d’un système
-                distribué où tout le monde parle le même langage minimal: HTTP.
-              </p>
-              <p>
-                Fun fact — Fielding était co‑auteur de la spécification HTTP/1.1 et d’Apache. Beaucoup des décisions
-                prises pour REST ne sont pas théoriques: elles arrivent du champ de bataille des premières années du
-                web, quand des millions de navigateurs parlaient à des milliers de serveurs sous des latences
-                capricieuses. REST est une boîte à outils forgée par l’expérience.
-              </p>
-              <p>
-                Les contraintes ne sont pas des dogmes abstraits. Elles sont des garde‑fous contre les complexités qui
-                coûtent cher en production: état serveur glissant, couplage, topologies opaques… Les équipes qui les
-                respectent dorment mieux la nuit. Petit tour d’horizon, avec l’œil du praticien.
-              </p>
-              <p><strong>Client–Server</strong>. Séparer le “comment j’affiche” du “où sont mes données”. Cette coupure nette
-                permet d’itérer l’un sans casser l’autre. Quand votre appli mobile peut évoluer sans demander au backend
-                de changer ses réponses, vous goûtez ce bénéfice au quotidien.</p>
-              <p><strong>Stateless</strong>. Chaque requête porte son contexte (auth, locale, version…). Le serveur n’entretient pas
-                de session cachée. Anecdote: bien des pannes “fantômes” venaient d’un état serveur non répliqué; la
-                statelessness rend le scaling horizontal presque… ennuyeux (et c’est une bonne nouvelle).</p>
-              <p><strong>Cache</strong>. HTTP contient un trésor sous‑exploité: <code>Cache-Control</code>, <code>ETag</code>, <code>Last-Modified</code>.
-                La première <em>optimisation</em> de performance n’est pas un cluster Redis, c’est de ne pas renvoyer ce que
-                le client possède déjà.</p>
-              <p><strong>Uniform Interface</strong>. Des URI stables, des représentations simples (JSON), des codes HTTP qui
-                signifient vraiment quelque chose. Le secret: rendre l’API <em>prévisible</em>. Un bon design est devinable.</p>
-              <p><strong>Layered System</strong>. Entre le client et vous, il y a un monde: CDN, proxy, gateway, WAF. Votre API
-                doit fonctionner même si elle ne sait pas exactement qui lui parle. C’est ce qui rend l’Internet robuste.</p>
-              <p><strong>Code‑on‑Demand</strong> (optionnel). Peu utilisé côté serveur, mais rappelle que le protocole peut porter
-                du comportement. Utile à connaître, rarement nécessaire pour nos services.</p>
+              <h4><i class="fas fa-server"></i> Le modèle client-serveur</h4>
+              <p>Le modèle client-serveur fonctionne comme un restaurant bien organisé. Imaginons que vous entrez dans un restaurant. Vous êtes le client, vous consultez le menu (le contrat), vous appelez le serveur (qui joue le rôle d'intermédiaire) et vous passez une commande : "Un steak frites, s'il vous plaît". Le serveur note votre commande, va en cuisine, transmet l'information au chef, attend que le plat soit prêt, puis revient avec votre assiette.</p>
 
-              <h4 class="mt-4"><i class="fas fa-diagram-project"></i> Modéliser des ressources</h4>
-              <p>
-                Une erreur fréquente est de calquer la base de données. Une ressource n’est pas une table: c’est un
-                <strong>concept métier stable</strong>. Dans SmartCity, un <em>événement</em> est une ressource; de même, une
-                <em>ligne de transport</em> ou un <em>point d’arrêt</em>. Concevoir des URI, c’est raconter une histoire que
-                vos consommateurs comprendront d’instinct: <code>/events/42</code> se lit “l’événement numéro 42”.
-              </p>
+              <p>Vous ne rentrez pas en cuisine pour cuisiner vous-même. Vous ne connaissez pas les recettes exactes. Vous ne savez pas où sont stockés les ingrédients. Vous n'avez même pas besoin de savoir comment le chef s'organise. Tout ce que vous devez faire, c'est passer une commande claire selon le format du menu, et faire confiance au restaurant pour livrer ce que vous avez demandé.</p>
 
-              <h4 class="mt-4"><i class="fas fa-chart-line"></i> Évolution: Monolithe → SOA → Microservices → Serverless</h4>
-              <p>
-                Le monolithe simplifie les débuts mais limite les équipes; la SOA introduit le découplage à l’échelle
-                de l’organisation; les microservices poussent l’autonomie (déploiement indépendant, contrat d’API comme
-                frontière); le serverless externalise l’infrastructure pour des workloads élastiques. REST reste un
-                <em>langage commun</em> entre ces formes, car il s’appuie sur HTTP et des conventions ouvertes.
-              </p>
+              <p>C'est exactement comme ça que fonctionne le web. Votre navigateur (ou votre application mobile) est le client. Il envoie des requêtes : "donne-moi la page d'accueil de Google", "enregistre ce nouveau post Instagram", "récupère mes derniers emails". Le serveur reçoit ces requêtes, exécute les opérations nécessaires – peut-être interroger une base de données, faire des calculs complexes, appeler d'autres services – et renvoie une réponse.</p>
 
-              <h4 class="mt-4"><i class="fas fa-stairs"></i> Richardson Maturity Model (RMM)</h4>
+              <div class="highlight-box">
+                <h6>💡 Séparation des Responsabilités</h6>
+                <p>Ce qui est brillant dans ce modèle, c'est la séparation des responsabilités. Le client n'a pas besoin de savoir comment le serveur fait son travail. Le serveur n'a pas besoin de savoir comment le client va utiliser les données ni comment il va les afficher. Cette séparation permet une flexibilité extraordinaire.</p>
+                <p>Vous pouvez changer complètement votre interface utilisateur, passer d'Angular à React, redesigner toute l'expérience mobile, sans toucher une seule ligne de code du serveur. De l'autre côté, vous pouvez optimiser votre serveur, le réécrire complètement dans un autre langage, migrer votre base de données, tant qu'il répond toujours de la même manière aux mêmes requêtes, les clients n'y verront que du feu.</p>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-globe"></i> Le protocole HTTP</h4>
+              
+              <p>HTTP, ou HyperText Transfer Protocol, c'est le protocole qui fait tourner le web depuis 1991. Quand Tim Berners-Lee a créé le web au CERN, il aurait pu concevoir un protocole binaire complexe, optimisé pour la performance et l'efficacité. Au lieu de ça, il a fait un choix radical pour l'époque : créer un protocole basé sur du texte brut, lisible par l'homme. Cette décision, qui semblait naïve à certains ingénieurs de l'époque, a en réalité changé l'histoire de l'informatique. Grâce à cette lisibilité, n'importe quel développeur peut comprendre ce qui se passe, déboguer facilement, et même écrire des requêtes HTTP à la main si nécessaire.</p>
+
+              <h5>📝 Structure d'une Requête HTTP</h5>
+              <p>Regardons à quoi ressemble une vraie requête HTTP. Imaginons une application web où un utilisateur remplit un formulaire d'inscription pour créer un nouveau compte. Quand il clique sur "S'inscrire", le navigateur va envoyer quelque chose comme ça au serveur :</p>
+
+              <div class="highlight-box">
+                <h6>Exemple de Requête HTTP</h6>
+                <pre><code>POST /api/v1/users HTTP/1.1
+Host: api.example.com
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+Accept: application/json
+Content-Length: 98
+
+{
+  "name": "Marie Dubois",
+  "email": "marie.dubois@example.com",
+  "password": "SecureP@ssw0rd"
+}</code></pre>
+              </div>
+
+              <p>Décortiquons chaque partie de cette requête car elles ont toutes leur importance.</p>
+
+              <h5>🔍 Décortiquons la Requête</h5>
               <ul>
-                <li><strong>Niveau 0</strong>: RPC sur HTTP (un seul endpoint, verbe métier dans le body).</li>
-                <li><strong>Niveau 1</strong>: Ressources (URI significatives) mais verbes HTTP mal exploités.</li>
-                <li><strong>Niveau 2</strong>: Verbes et codes HTTP corrects, statuts précis, négociation de contenu.</li>
-                <li><strong>Niveau 3</strong>: Hypermedia (HATEOAS) — liens et affordances dans les réponses.</li>
+                <li><strong>Ligne de requête</strong> : POST /api/v1/users HTTP/1.1 - méthode, chemin, version</li>
+                <li><strong>Headers</strong> : Métadonnées sur la requête (Host, Content-Type, Authorization, etc.)</li>
+                <li><strong>Body</strong> : Les données envoyées au serveur (après la ligne vide)</li>
               </ul>
 
-              <div class="progression-note mt-4">
-                <h4>Mini‑exercice (10 min)</h4>
-                <p>À partir d’une API publique (ex: GitHub ou Stripe), évaluez le niveau RMM et justifiez votre score.
-                Quelles conventions facilitent l’usage ? Quelles surprises ont coûté du temps ?</p>
-              </div>
-              <p>
-                Autre anecdote: quand Amazon a standardisé la forme de ses URLs, le nombre d’intégrations tierces
-                réussies a bondi. Pas parce que la doc était parfaite — mais parce que l’API était devinable. Les
-                développeurs adorent quand l’intuition suffit pour faire marcher les choses du premier coup.
-              </p>
-              <p>
-                Préférez les pluriels, bannissez les verbes dans l’URL. Les relations s’expriment naturellement:
-                <code>/events/42/attendees</code>. Le filtrage et le tri vivent dans les paramètres de requête:
-                <code>/events?type=concert&sort=-date&page=2&limit=20</code>. Ce sont des conventions qui rendent
-                l’API auto‑documentée, même sans doc.
-              </p>
+              <h5>📨 Structure d'une Réponse HTTP</h5>
+              <p>Maintenant, imaginons que le serveur reçoit cette requête, vérifie que l'email n'est pas déjà utilisé, crée l'utilisateur dans sa base de données, et renvoie une réponse :</p>
 
-              <div class="progression-note mt-4">
-                <h4>Anti‑patterns fréquents</h4>
-                <p>Verbes dans l’URL, codes HTTP mal utilisés (toujours 200), mélange des responsabilités (multipart logique), payloads non documentés.</p>
+              <div class="highlight-box">
+                <h6>Exemple de Réponse HTTP</h6>
+                <pre><code>HTTP/1.1 201 Created
+Content-Type: application/json
+Location: /api/v1/users/550e8400-e29b-41d4-a716-446655440000
+Date: Fri, 24 Oct 2025 14:30:00 GMT
+Content-Length: 156
+
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "Marie Dubois",
+  "email": "marie.dubois@example.com",
+  "createdAt": "2025-10-24T14:30:00Z"
+}</code></pre>
+              </div>
+
+              <p>La première ligne de la réponse, HTTP/1.1 201 Created, contient le code de statut. Le code 201 signifie "Created" – la ressource a été créée avec succès. Le header Location est particulièrement intéressant et illustre une bonne pratique REST. Il indique l'URL complète où le client peut maintenant accéder à la ressource qui vient d'être créée.</p>
+
+              <div class="highlight-box">
+                <h6>💡 Anecdote sur le Caching HTTP</h6>
+                <p>Dans les années 90, quand le web a commencé à exploser, les serveurs étaient rapidement submergés. Les ingénieurs ont réalisé qu'énormément de bande passante était gaspillée à renvoyer les mêmes ressources encore et encore. Une image de logo qui ne change jamais était téléchargée des milliers de fois par les mêmes utilisateurs. C'est là qu'ils ont inventé le système de caching HTTP. L'idée était simple mais géniale : le serveur peut dire au client "cette image ne changera pas avant demain à minuit, garde-la en cache sur ton disque dur". La prochaine fois que le client a besoin de cette image, il utilise sa copie locale plutôt que de la re-télécharger. Simple, élégant, et ça a littéralement permis au web de scaler à l'échelle mondiale.</p>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-keyboard"></i> Les méthodes HTTP : le vocabulaire des APIs</h4>
+              
+              <p>Les méthodes HTTP sont comme les verbes dans une phrase. Elles indiquent l'action que vous voulez effectuer sur une ressource. Il en existe plusieurs, mais cinq sont absolument essentielles pour créer des APIs RESTful : GET, POST, PUT, PATCH et DELETE.</p>
+
+              <h5>📖 GET - Récupérer une ressource</h5>
+              <p>GET est probablement la méthode que vous utilisez le plus souvent, même si vous ne vous en rendez pas compte. Chaque fois que vous tapez une URL dans votre navigateur et que vous appuyez sur Entrée, vous faites un GET. Chaque fois que vous cliquez sur un lien hypertexte, c'est un GET. GET signifie "récupère-moi cette ressource".</p>
+
+              <p>L'important avec GET, c'est qu'il ne doit jamais, jamais modifier quoi que ce soit sur le serveur. GET est ce qu'on appelle une méthode "safe" (sûre). Vous pouvez faire le même GET mille fois de suite, le résultat sera toujours identique, et surtout, l'état du serveur ne changera pas.</p>
+
+              <div class="highlight-box">
+                <h6>Exemples d'utilisation de GET</h6>
+                <pre><code>GET /api/v1/products              # Liste tous les produits
+GET /api/v1/products/789          # Récupère le produit 789
+GET /api/v1/products?category=electronics&price_max=500  # Filtre</code></pre>
+              </div>
+
+              <div class="highlight-box">
+                <h6>❌ Erreur Classique</h6>
+                <p>Une erreur classique qu'on voit souvent chez les débutants : utiliser GET pour des actions. Par exemple, créer un endpoint comme GET /api/v1/users/123/delete. C'est une très mauvaise idée. Pourquoi ? Parce que GET ne devrait jamais supprimer quoi que ce soit. Imaginez qu'un moteur de recherche comme Google découvre votre API et qu'un crawler automatique suit ce lien... Boom, votre utilisateur 123 est supprimé. Utilisez toujours la méthode appropriée pour l'action appropriée.</p>
+              </div>
+
+              <h5>➕ POST - Créer une nouvelle ressource</h5>
+              <p>POST est la méthode pour créer de nouvelles ressources. Quand vous remplissez un formulaire d'inscription sur un site web et que vous cliquez sur le bouton "S'inscrire", votre navigateur fait un POST. Quand vous publiez un tweet, c'est un POST. Quand vous ajoutez un produit à votre panier en ligne, POST.</p>
+
+              <p>POST n'est ni safe ni idempotent. Si vous faites POST deux fois avec exactement les mêmes données, vous créerez deux ressources différentes (deux comptes utilisateur distincts, deux tweets identiques, etc.).</p>
+
+              <div class="highlight-box">
+                <h6>Exemple d'utilisation de POST</h6>
+                <pre><code>POST /api/v1/products
+Content-Type: application/json
+
+{
+  "name": "iPhone 15 Pro",
+  "price": 1199.99,
+  "category": "electronics",
+  "stock": 50
+}</code></pre>
+              </div>
+
+              <h5>🔄 PUT - Remplacer complètement une ressource</h5>
+              <p>PUT est utilisé pour la mise à jour complète d'une ressource existante. La différence subtile mais importante avec POST, c'est que PUT est idempotent. Si vous faites PUT plusieurs fois avec exactement les mêmes données, le résultat final sera identique à si vous l'aviez fait une seule fois.</p>
+
+              <p>Avec PUT, vous remplacez complètement la ressource. Tous les champs doivent être fournis dans la requête.</p>
+
+              <div class="highlight-box">
+                <h6>Exemple d'utilisation de PUT</h6>
+                <pre><code>PUT /api/v1/products/789
+Content-Type: application/json
+
+{
+  "name": "iPhone 15 Pro Max",
+  "price": 1299.99,
+  "category": "electronics",
+  "stock": 30,
+  "description": "Dernier modèle avec écran Retina"
+}</code></pre>
+              </div>
+
+              <h5>✏️ PATCH - Mise à jour partielle</h5>
+              <p>PATCH est une addition relativement récente aux méthodes HTTP couramment utilisées, mais elle est devenue essentielle. Avec PATCH, vous ne spécifiez que les champs que vous voulez modifier. Les autres champs restent intacts.</p>
+
+              <div class="highlight-box">
+                <h6>Exemple d'utilisation de PATCH</h6>
+                <pre><code>PATCH /api/v1/products/789
+Content-Type: application/json
+
+{
+  "price": 1099.99,
+  "stock": 25
+}</code></pre>
+                <p>Seuls le prix et le stock sont modifiés. Le nom, la catégorie, la description restent inchangés.</p>
+              </div>
+
+              <h5>🗑️ DELETE - Supprimer une ressource</h5>
+              <p>DELETE fait exactement ce que son nom indique : supprimer une ressource. Simple et efficace.</p>
+
+              <div class="highlight-box">
+                <h6>Exemple d'utilisation de DELETE</h6>
+                <pre><code>DELETE /api/v1/products/789</code></pre>
+                <p>Le serveur supprime le produit 789 et répond généralement avec un code 204 No Content (succès, mais pas de contenu à renvoyer) ou 200 OK avec un message de confirmation.</p>
+              </div>
+
+              <h5>🔧 HEAD et OPTIONS - Les méthodes auxiliaires</h5>
+              <p>Deux autres méthodes méritent d'être mentionnées, même si elles sont moins utilisées au quotidien.</p>
+
+              <p><strong>HEAD</strong> est exactement comme GET, sauf que le serveur ne renvoie que les headers, pas le body. Imaginons que vous voulez vérifier si un très gros fichier existe ou connaître sa taille avant de le télécharger. Avec HEAD, vous obtenez ces informations sans gaspiller de bande passante à télécharger tout le fichier.</p>
+
+              <p><strong>OPTIONS</strong> permet au client de découvrir quelles méthodes HTTP sont supportées sur un endpoint particulier. Le serveur répond avec un header Allow listant les méthodes disponibles.</p>
+
+              <div class="highlight-box">
+                <h6>Exemple d'utilisation d'OPTIONS</h6>
+                <pre><code>OPTIONS /api/v1/products/789
+
+Réponse:
+Allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS</code></pre>
               </div>
             </div>
           </div>
@@ -419,10 +415,10 @@
 
         <div class="day-card expanded mt-4">
           <div class="day-header">
-            <span class="day-number">2</span>
+            <span class="day-number">3</span>
             <span class="day-theme">Sémantique HTTP, Idempotence, Codes de statut</span>
           </div>
-          <div class="day-content" style="max-height: 1000px;">
+          <div class="day-content">
             <div class="day-afternoon">
               <h4><i class="fas fa-sitemap"></i> Verbes HTTP (liste détaillée)</h4>
               <p>
@@ -449,13 +445,61 @@
                 Cette propriété rend votre API beaucoup plus sûre face aux aléas réseau et aux retries automatiques.
               </p>
 
-              <h4 class="mt-4"><i class="fas fa-traffic-light"></i> Codes de statut essentiels</h4>
-              <p>
-                Les codes HTTP ne sont pas de simples numéros: ce sont des signaux pour les humains et les robots.
-                Un <code>201 Created</code> + header <code>Location</code> raconte au client où vivre sa nouvelle ressource. Un
-                <code>422 Unprocessable Entity</code> chuchote “ton JSON est valide mais pas conforme au métier”.
-                Racontez l’histoire correcte et vos intégrations s’auto‑documenteront.
-              </p>
+              <h4 class="mt-4"><i class="fas fa-traffic-light"></i> Les codes de statut HTTP : apprendre à parler au client</h4>
+              <p>Les codes de statut HTTP sont organisés en cinq familles, et cette organisation n'est pas du tout aléatoire. Chaque famille a une signification claire qui aide à comprendre immédiatement ce qui s'est passé.</p>
+
+              <h5>📊 Famille 1xx - Informationnel (rare)</h5>
+              <p>Les codes 1xx sont informationnels et vous les rencontrerez rarement. Le plus connu est 100 Continue, utilisé dans un pattern d'optimisation spécifique. Imaginons que vous voulez uploader un fichier de 2 Go vers un serveur. Avant d'envoyer tout ce fichier, votre client peut demander "puis-je envoyer ce gros fichier ?" avec un header Expect: 100-continue. Si le serveur répond 100 Continue, vous envoyez le fichier. Si le serveur répond 401 Unauthorized ou 413 Payload Too Large, vous économisez 2 GB de bande passante.</p>
+
+              <h5>✅ Famille 2xx - Succès</h5>
+              <p>Les codes 2xx signifient que la requête a été traitée avec succès. C'est la famille heureuse des codes de statut.</p>
+
+              <ul>
+                <li><strong>200 OK</strong> est le plus commun : "J'ai bien traité ta requête et voilà le résultat". C'est le code par défaut pour une opération réussie.</li>
+                <li><strong>201 Created</strong> signifie "J'ai créé la ressource que tu m'as demandé de créer". Utilisé typiquement en réponse à POST. Devrait idéalement inclure un header Location pointant vers la nouvelle ressource.</li>
+                <li><strong>204 No Content</strong> est intéressant : "J'ai bien traité ta requête, mais je n'ai rien à te renvoyer". Souvent utilisé pour DELETE ou pour des mises à jour où le client n'a pas besoin de récupérer la ressource modifiée.</li>
+              </ul>
+
+              <div class="highlight-box">
+                <h6>💡 Anecdote révélatrice</h6>
+                <p>Imaginons un développeur junior qui crée son première API. Il fait en sorte que tous les endpoints renvoient toujours 200 OK, même en cas d'erreur. Son raisonnement ? "La requête HTTP s'est bien passée techniquement, donc c'est un succès". Le problème devient apparent très vite : son client front-end affiche toujours "Opération réussie avec succès !", même quand l'utilisateur qu'on essaie de créer existe déjà, même quand le mot de passe est incorrect, même quand la base de données est hors ligne. Résultat : confusion totale des utilisateurs et cauchemar de debugging. Il faut tout refactoriser pour utiliser les bons codes de statut. Les codes de statut ne parlent pas du succès de la transmission HTTP en tant que telle, mais du succès de l'opération métier demandée.</p>
+              </div>
+
+              <h5>🔄 Famille 3xx - Redirection</h5>
+              <p>Les codes 3xx concernent les redirections. Ils indiquent que le client doit effectuer une action supplémentaire pour compléter sa requête.</p>
+
+              <ul>
+                <li><strong>301 Moved Permanently</strong> signifie "Cette ressource a déménagé de façon permanente, utilise désormais cette nouvelle URL". Les navigateurs et moteurs de recherche mettent à jour leurs liens. Utilisé lors de refonte de sites web ou de réorganisation d'APIs.</li>
+                <li><strong>302 Found</strong> (ou 307 Temporary Redirect en HTTP/1.1) signifie "La ressource est temporairement à une autre URL, mais continue d'utiliser l'URL originale à l'avenir". Utilisé pour les maintenances temporaires.</li>
+                <li><strong>304 Not Modified</strong> est crucial pour le caching. Imaginons un client qui a une copie d'une ressource et veut savoir si elle est toujours à jour. Il fait une requête GET avec un header If-Modified-Since: Tue, 15 Oct 2025 10:00:00 GMT. Si la ressource n'a pas changé depuis cette date, le serveur répond 304 Not Modified sans body, économisant énormément de bande passante.</li>
+              </ul>
+
+              <h5>❌ Famille 4xx - Erreur client</h5>
+              <p>Les codes 4xx indiquent une erreur du côté du client. C'est lui qui a fait quelque chose de mal dans sa requête. Le serveur, lui, fonctionne correctement.</p>
+
+              <ul>
+                <li><strong>400 Bad Request</strong> signifie "Ta requête est malformée, je ne peux même pas la comprendre". Utilisé quand le JSON est invalide, quand des paramètres obligatoires manquent, quand le format ne correspond pas à ce qui est attendu.</li>
+                <li><strong>401 Unauthorized</strong> (nom historiquement très mauvais, devrait être "Unauthenticated") signifie "Tu n'es pas authentifié, je ne sais pas qui tu es". Le client doit fournir des credentials valides. C'est la réponse appropriée quand un token d'authentification est manquant ou invalide.</li>
+                <li><strong>403 Forbidden</strong> signifie "Je sais parfaitement qui tu es grâce à ton authentification, mais tu n'as pas le droit de faire cette action". Imaginons un utilisateur normal qui essaie de supprimer un compte administrateur. Il est authentifié (pas de 401), mais il n'a pas la permission (403).</li>
+                <li><strong>404 Not Found</strong> - tout le monde connaît celui-là depuis les débuts du web. "La ressource que tu cherches n'existe pas". Important : 404 signifie que la ressource n'existe pas, pas que l'endpoint est invalide. Si quelqu'un appelle GET /api/v1/users/999 et que l'utilisateur 999 n'existe pas, c'est un 404. Si quelqu'un appelle GET /api/v1/inexistant, c'est aussi un 404, mais idéalement on pourrait même renvoyer 400 ou créer une page d'aide.</li>
+                <li><strong>422 Unprocessable Entity</strong> est souvent mal compris. Il signifie "Ta requête est syntaxiquement correcte, mais sémantiquement incorrecte". Imaginons que vous envoyez du JSON parfaitement valide pour créer un utilisateur (pas de 400), mais l'email est déjà utilisé par un autre compte. La requête est bien formée, mais vous ne pouvez pas la traiter pour des raisons métier. C'est un 422.</li>
+                <li><strong>429 Too Many Requests</strong> signifie "Tu fais trop de requêtes, ralentis". Utilisé par les systèmes de rate limiting. Devrait inclure un header Retry-After indiquant quand le client peut réessayer.</li>
+              </ul>
+
+              <h5>🔥 Famille 5xx - Erreur serveur</h5>
+              <p>Les codes 5xx indiquent que le serveur a rencontré un problème. Le client a fait une requête valide, mais le serveur n'a pas pu la traiter. C'est la faute du serveur, pas du client.</p>
+
+              <ul>
+                <li><strong>500 Internal Server Error</strong> est le code d'erreur générique : "Quelque chose a planté de mon côté, mais je ne peux pas (ou ne veux pas) te dire quoi exactement". C'est souvent le résultat d'une exception non gérée dans le code. Dans les logs serveur, vous trouverez la vraie cause (division par zéro, null pointer, base de données inaccessible...), mais le client reçoit juste un 500.</li>
+                <li><strong>502 Bad Gateway</strong> signifie "Je suis un proxy ou une API gateway, et le serveur derrière moi a renvoyé une réponse invalide". Imaginons une architecture avec une API gateway devant plusieurs microservices. Si un microservice crash et renvoie du charabia, la gateway renvoie un 502 au client.</li>
+                <li><strong>503 Service Unavailable</strong> signifie "Je suis temporairement indisponible (maintenance programmée, surcharge, problème temporaire)". Devrait inclure un header Retry-After pour indiquer quand réessayer. Utilisé également quand toutes les workers threads sont occupées ou quand la base de données est en maintenance.</li>
+                <li><strong>504 Gateway Timeout</strong> signifie "Je suis un proxy ou une gateway, et le serveur derrière moi n'a pas répondu dans le délai imparti". Imaginons que votre API gateway attend maximum 30 secondes une réponse d'un microservice, mais celui-ci ne répond pas. La gateway renvoie un 504 au client.</li>
+              </ul>
+
+              <div class="highlight-box">
+                <h6>🎯 Règle d'or</h6>
+                <p><strong>4xx = c'est la faute du client, 5xx = c'est la faute du serveur.</strong> Cette distinction est cruciale pour le debugging et le monitoring.</p>
+              </div>
 
               <h4 class="mt-4"><i class="fas fa-exchange-alt"></i> Négociation de contenu (content‑negotiation)</h4>
               <p>
@@ -526,10 +570,211 @@ return response
 
         <div class="day-card expanded mt-4">
           <div class="day-header">
-            <span class="day-number">3</span>
-            <span class="day-theme">Gestion d’erreurs standardisée (RFC 7807)</span>
+            <span class="day-number">4</span>
+            <span class="day-theme">Formats d'échange de données</span>
           </div>
-          <div class="day-content" style="max-height: 1000px;">
+          <div class="day-content">
+            <div class="day-morning">
+              <h4><i class="fas fa-code"></i> Pourquoi des formats structurés ?</h4>
+              <p>Imaginons que vous devez transmettre les informations d'un utilisateur d'une application à une autre. Vous pourriez simplement concaténer les valeurs : "John Doe|john@example.com|30|true". Mais cette approche pose immédiatement plusieurs problèmes. Comment le destinataire sait-il que le premier élément est le nom, le deuxième l'email, le troisième l'âge, le quatrième le statut actif ? Que se passe-t-il si le nom de l'utilisateur contient un pipe (|) ? Comment représenter des structures plus complexes, comme l'adresse avec rue, ville et code postal ? Et si l'utilisateur n'a pas fourni son âge, comment représenter cette absence d'information ?</p>
+
+              <p>C'est exactement pour résoudre ces problèmes que des formats structurés standardisés ont été créés. Les deux principaux acteurs dans le monde des web services sont JSON et XML. Chacun a ses forces, ses faiblesses, et ses cas d'usage privilégiés.</p>
+
+              <h4 class="mt-5"><i class="fas fa-file-code"></i> JSON - Le roi incontesté du web moderne</h4>
+              <p>JSON (JavaScript Object Notation) a été créé par Douglas Crockford au début des années 2000. L'histoire de sa création est amusante et illustre parfaitement comment les meilleures solutions sont souvent les plus simples. Crockford cherchait un format léger pour échanger des données entre du code JavaScript côté client et le serveur. Il a proposé JSON à ses collègues de travail qui ont répondu : "C'est trop simple, ça ne marchera jamais pour des applications sérieuses". Crockford a persisté, publié la spécification, et aujourd'hui JSON a littéralement mangé le monde du web.</p>
+
+              <h5>📝 Structure et syntaxe de base</h5>
+              <p>Voici un exemple complet de données utilisateur en JSON :</p>
+
+              <div class="highlight-box">
+                <h6>Exemple JSON complet</h6>
+                <pre><code>{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "Marie Dubois",
+  "age": 28,
+  "email": "marie.dubois@example.com",
+  "isActive": true,
+  "roles": ["user", "moderator", "contributor"],
+  "address": {
+    "street": "10 rue de la Paix",
+    "city": "Paris",
+    "zipCode": "75001",
+    "country": "France"
+  },
+  "preferences": null,
+  "lastLogin": "2025-10-24T14:30:00Z"
+}</code></pre>
+              </div>
+
+              <p>JSON supporte six types de données fondamentaux. Les strings (chaînes de caractères) sont entourées de guillemets doubles : "texte". Les numbers peuvent être des entiers ou des décimaux : 42, 3.14159, -17, 1.5e10. Les booleans s'écrivent true ou false (en minuscules). Les arrays (tableaux) sont des listes entre crochets : [1, 2, 3] ou ["rouge", "vert", "bleu"]. Les objects sont des paires clé-valeur entre accolades : {"key": "value", "age": 30}. Et enfin null représente l'absence explicite de valeur.</p>
+
+              <h5>🏆 Pourquoi JSON a gagné la bataille des formats</h5>
+              <p>Plusieurs raisons expliquent la domination absolue de JSON dans le monde des APIs modernes :</p>
+
+              <ul>
+                <li><strong>Simplicité</strong> : Un humain peut lire et comprendre du JSON sans formation particulière</li>
+                <li><strong>Légèreté</strong> : JSON est beaucoup moins verbeux que XML – pour les mêmes données, un document JSON fait généralement 30 à 50% de moins qu'un document XML équivalent</li>
+                <li><strong>Natif JavaScript</strong> : JSON.parse() et JSON.stringify() sont intégrés au langage</li>
+                <li><strong>Universalité</strong> : Tous les langages modernes ont des bibliothèques JSON performantes</li>
+              </ul>
+
+              <h5>✅ Bonnes pratiques JSON</h5>
+              <p><strong>Nommage cohérent</strong> : Choisissez une convention de nommage et tenez-vous-y dans toute votre API. En JavaScript, on utilise généralement camelCase : firstName, lastName, isActive. En Python et Ruby, on préfère snake_case : first_name, last_name, is_active. Les deux sont valides, l'important est la cohérence.</p>
+
+              <p><strong>Structure cohérente pour les collections</strong> : Quand vous renvoyez une liste d'éléments, enveloppez toujours le tableau dans un objet avec des métadonnées utiles :</p>
+
+              <div class="highlight-box">
+                <h6>Exemple de structure cohérente</h6>
+                <pre><code>{
+  "data": [
+    {"id": 1, "name": "Product A", "price": 29.99},
+    {"id": 2, "name": "Product B", "price": 49.99}
+  ],
+  "page": 1,
+  "limit": 20,
+  "total": 156,
+  "hasMore": true
+}</code></pre>
+              </div>
+
+              <p><strong>Gestion des dates</strong> : Utilisez toujours le format ISO 8601 : "2025-10-24T14:30:00Z". Le T sépare la date de l'heure, le Z signifie UTC. N'utilisez jamais des formats ambigus comme "24/10/2025".</p>
+
+              <h4 class="mt-5"><i class="fas fa-file-code"></i> XML - L'ancien champion toujours vivant</h4>
+              <p>XML (eXtensible Markup Language) a dominé le monde des web services dans les années 2000. Aujourd'hui, son utilisation a dramatiquement diminué dans les nouvelles APIs, mais il reste omniprésent dans certains domaines : systèmes legacy des grandes entreprises, finance (standard SWIFT), santé (standard HL7), gouvernement, et dans tous les systèmes SOAP.</p>
+
+              <div class="highlight-box">
+                <h6>Exemple XML équivalent</h6>
+                <pre><code><?xml version="1.0" encoding="UTF-8"?>
+<user id="550e8400-e29b-41d4-a716-446655440000">
+  <name>Marie Dubois</name>
+  <age>28</age>
+  <email>marie.dubois@example.com</email>
+  <isActive>true</isActive>
+  <roles>
+    <role>user</role>
+    <role>moderator</role>
+    <role>contributor</role>
+  </roles>
+  <address>
+    <street>10 rue de la Paix</street>
+    <city>Paris</city>
+    <zipCode>75001</zipCode>
+    <country>France</country>
+  </address>
+  <preferences xsi:nil="true"/>
+  <lastLogin>2025-10-24T14:30:00Z</lastLogin>
+</user></code></pre>
+              </div>
+
+              <h5>⚖️ Avantages de XML</h5>
+              <p>XML a des atouts réels qui expliquent pourquoi il survit dans certains domaines :</p>
+              <ul>
+                <li><strong>Validation stricte</strong> : avec XSD (XML Schema Definition), vous pouvez définir une structure extrêmement précise et contrainte</li>
+                <li><strong>Namespaces</strong> : permettent d'éviter les conflits de noms quand vous combinez des données de différentes sources</li>
+                <li><strong>Flexibilité attributs/éléments</strong> : vous pouvez mettre des données soit dans des attributs soit dans des éléments</li>
+                <li><strong>Standards robustes</strong> : XPath pour requêter, XSLT pour transformer, tout un écosystème mature existe</li>
+              </ul>
+
+              <h5>❌ Pourquoi XML a perdu</h5>
+              <p>Malgré ses qualités indéniables, XML a été progressivement abandonné au profit de JSON pour plusieurs raisons concrètes :</p>
+
+              <ul>
+                <li><strong>Verbosité excessive</strong> : Pour les mêmes données, un document XML fait presque le double d'un document JSON</li>
+                <li><strong>Complexité</strong> : XSD, XSLT, XPath, namespaces... Pour un développeur débutant, c'est intimidant</li>
+                <li><strong>Lisibilité</strong> : JSON est plus compact et plus facile à scanner visuellement</li>
+                <li><strong>Timing</strong> : JSON est arrivé au bon moment, quand JavaScript dominait côté client</li>
+              </ul>
+
+              <div class="highlight-box">
+                <h6>💡 Comparaison concrète</h6>
+                <p><strong>JSON :</strong></p>
+                <pre><code>{"name": "Marie", "age": 28, "city": "Paris"}</code></pre>
+                <p><strong>XML :</strong></p>
+                <pre><code><person>
+  <name>Marie</name>
+  <age>28</age>
+  <city>Paris</city>
+</person></code></pre>
+                <p>JSON est plus compact et plus facile à scanner visuellement. Quand vous debuggez une API à 2h du matin, cette différence de lisibilité compte.</p>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-balance-scale"></i> JSON vs XML : quand utiliser quoi ?</h4>
+              <p>La décision n'est pas toujours évidente, mais voici quelques lignes directrices pragmatiques :</p>
+
+              <div class="highlight-box">
+                <h6>🎯 Utilisez JSON si :</h6>
+                <ul>
+                  <li>Vous construisez une nouvelle API en 2025</li>
+                  <li>La performance et la bande passante sont importantes</li>
+                  <li>Vous travaillez principalement avec JavaScript ou des applications web/mobile modernes</li>
+                  <li>Vous voulez quelque chose de simple que n'importe quel développeur peut comprendre rapidement</li>
+                </ul>
+              </div>
+
+              <div class="highlight-box">
+                <h6>🎯 Utilisez XML si :</h6>
+                <ul>
+                  <li>Vous devez intégrer avec des systèmes legacy existants qui ne parlent que XML</li>
+                  <li>Vous travaillez dans un domaine fortement réglementé (finance, santé, aérospatial) où des standards XML sont imposés</li>
+                  <li>Vous avez besoin d'une validation de schéma extrêmement stricte et complexe</li>
+                  <li>Le client l'exige contractuellement (et vous ne pouvez pas négocier)</li>
+                </ul>
+              </div>
+
+              <div class="highlight-box">
+                <h6>💡 Anecdote réaliste</h6>
+                <p>Imaginons une grande banque européenne qui souhaite moderniser ses APIs. L'équipe technique est enthousiaste à l'idée de passer de SOAP/XML à REST/JSON. Après une analyse approfondie, ils découvrent qu'ils ont 200 systèmes internes qui consomment ces APIs en XML, certains datant de 15 ans. Le coût de migration de tous ces systèmes serait astronomique - plusieurs millions d'euros et plusieurs années de travail. Solution pragmatique : créer une nouvelle API REST/JSON pour tous les nouveaux clients et projets, maintenir l'ancienne API SOAP/XML pour les systèmes internes legacy. Parfois, le pragmatisme l'emporte sur la modernité technologique.</p>
+              </div>
+
+              <h4 class="mt-5"><i class="fas fa-cogs"></i> Autres formats à connaître</h4>
+              <p>Le monde ne se limite pas à JSON et XML. D'autres formats ont trouvé leur niche :</p>
+
+              <h5>⚡ Protocol Buffers (Protobuf)</h5>
+              <p>Protobuf est un format binaire développé par Google pour gRPC. Contrairement à JSON et XML qui sont texte, Protobuf est binaire. Il est extrêmement compact et très rapide à parser.</p>
+
+              <div class="highlight-box">
+                <h6>Exemple Protobuf</h6>
+                <pre><code>message User {
+  string id = 1;
+  string name = 2;
+  int32 age = 3;
+  string email = 4;
+  repeated string roles = 5;
+}</code></pre>
+              </div>
+
+              <p>Protobuf est utilisé quand la performance est absolument critique : communications entre microservices internes, IoT avec bande passante limitée, applications de gaming temps réel. Inconvénient : pas lisible par l'homme, nécessite un compilateur pour générer du code.</p>
+
+              <h5>📦 MessagePack</h5>
+              <p>MessagePack est comme JSON mais en format binaire. Plus compact que JSON, plus rapide à parser, tout en gardant une structure similaire. Redis l'utilise pour certaines opérations. Utile quand vous voulez les avantages de JSON mais avec de meilleures performances.</p>
+
+              <h5>📝 YAML</h5>
+              <p>YAML (YAML Ain't Markup Language) est super pour les fichiers de configuration (Docker Compose, Kubernetes, GitHub Actions), mais moins adapté pour les APIs. Il est lisible mais sensible à l'indentation, ce qui cause souvent des bugs subtils.</p>
+
+              <div class="highlight-box">
+                <h6>Exemple YAML</h6>
+                <pre><code>user:
+  name: Marie Dubois
+  age: 28
+  roles:
+    - user
+    - moderator
+  address:
+    city: Paris
+    country: France</code></pre>
+              </div>
+
+              <p>YAML est excellent pour la configuration, mais évitez-le pour les échanges de données en production. Un espace en trop peut casser tout le parsing.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="day-card expanded mt-4">
+          <div class="day-header">
+            <span class="day-number">5</span>
+            <span class="day-theme">Gestion d'erreurs standardisée (RFC 7807)</span>
+          </div>
+          <div class="day-content">
             <div class="day-morning">
               <h4><i class="fas fa-triangle-exclamation"></i> Problem Details</h4>
               <p>
@@ -692,10 +937,10 @@ function problem(res, status, type, title, detail, extras = {}) {
 
         <div class="day-card expanded">
           <div class="day-header">
-            <span class="day-number">4</span>
+            <span class="day-number">6</span>
             <span class="day-theme">Panorama des classes 1xx, 2xx, 3xx, 4xx, 5xx</span>
           </div>
-          <div class="day-content" style="max-height: 1000px;">
+          <div class="day-content">
             <div class="day-morning">
               <h4><i class="fas fa-signal"></i> 1xx — Information</h4>
               <ul>
@@ -859,6 +1104,123 @@ switch (error.name) {
     </div>
   </section>
 
+  <!-- Récapitulatif et Points Clés -->
+  <section class="recapitulatif">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">🎓 Récapitulatif et Points Clés</h2>
+        <p class="section-subtitle">Ce qu'il faut absolument retenir de cette matinée</p>
+      </div>
+
+      <div class="points-cles">
+        <div class="point-card">
+          <div class="point-icon">🌐</div>
+          <h3>1. Les web services permettent l'interopérabilité universelle</h3>
+          <p>Un seul backend peut servir tous vos clients : applications mobiles iOS et Android, sites web, objets connectés IoT, systèmes internes. Vous développez la logique métier une fois, vous l'exposez via une API bien conçue, et tous vos clients en profitent.</p>
+        </div>
+
+        <div class="point-card">
+          <div class="point-icon">🌍</div>
+          <h3>2. REST domine le paysage actuel</h3>
+          <p>Environ 80% des APIs publiques sont en REST. SOAP survit dans les systèmes legacy et les domaines réglementés. GraphQL et gRPC ont leurs niches (interfaces riches et communications internes performantes respectivement). Si vous créez une nouvelle API en 2025, REST est le choix par défaut sauf cas spéciaux.</p>
+        </div>
+
+        <div class="point-card">
+          <div class="point-icon">⚡</div>
+          <h3>3. HTTP est simple mais incroyablement puissant</h3>
+          <p>Comprendre les méthodes HTTP, les headers et les codes de statut est fondamental. Ces concepts simples permettent de construire des systèmes extrêmement sophistiqués.</p>
+        </div>
+
+        <div class="point-card">
+          <div class="point-icon">🔧</div>
+          <h3>4. Chaque méthode HTTP a son rôle</h3>
+          <ul>
+            <li><strong>GET</strong> : lire une ressource (safe, idempotent, pas de body)</li>
+            <li><strong>POST</strong> : créer une ressource (ni safe ni idempotent, avec body)</li>
+            <li><strong>PUT</strong> : remplacer complètement une ressource (idempotent, avec body complet)</li>
+            <li><strong>PATCH</strong> : modifier partiellement une ressource (avec body partiel)</li>
+            <li><strong>DELETE</strong> : supprimer une ressource (idempotent, généralement sans body)</li>
+          </ul>
+          <p>Ne mélangez pas les rôles. N'utilisez jamais GET pour supprimer ou modifier quelque chose.</p>
+        </div>
+
+        <div class="point-card">
+          <div class="point-icon">🚦</div>
+          <h3>5. Les codes de statut ont du sens précis</h3>
+          <ul>
+            <li><strong>2xx</strong> : succès (200 OK, 201 Created, 204 No Content)</li>
+            <li><strong>3xx</strong> : redirection (301 Moved Permanently, 304 Not Modified)</li>
+            <li><strong>4xx</strong> : erreur du client - c'est lui qui a mal fait (400, 401, 403, 404, 422, 429)</li>
+            <li><strong>5xx</strong> : erreur du serveur - c'est notre faute (500, 502, 503, 504)</li>
+          </ul>
+          <p>Utiliser les bons codes de statut facilite énormément le debugging et améliore l'expérience développeur.</p>
+        </div>
+
+        <div class="point-card">
+          <div class="point-icon">📄</div>
+          <h3>6. JSON est le format standard moderne</h3>
+          <p>Simple, léger, universel, natif JavaScript. À moins d'avoir une raison spécifique (legacy, réglementation, performance extrême), choisissez JSON. Utilisez ISO 8601 pour les dates, soyez cohérent dans le nommage, enveloppez les tableaux dans des objets avec métadonnées.</p>
+        </div>
+
+        <div class="point-card">
+          <div class="point-icon">🏗️</div>
+          <h3>7. L'architecture client-serveur sépare les responsabilités</h3>
+          <p>Le client n'a pas besoin de savoir comment le serveur fait son travail. Cette séparation permet de faire évoluer les deux indépendamment. Vous pouvez refaire complètement votre interface utilisateur sans toucher au backend. Vous pouvez optimiser ou réécrire votre serveur sans impacter les clients.</p>
+        </div>
+      </div>
+
+      <div class="ressources-complementaires">
+        <h3>📚 Ressources Complémentaires</h3>
+        <div class="ressources-grid">
+          <div class="ressource-category">
+            <h4>📖 Documentation officielle</h4>
+            <ul>
+              <li>RFC 7231 : HTTP/1.1 Semantics and Content</li>
+              <li>RFC 7807 : Problem Details for HTTP APIs</li>
+              <li>Spécification OpenAPI 3.0</li>
+              <li>JSON Schema</li>
+            </ul>
+          </div>
+          
+          <div class="ressource-category">
+            <h4>📚 Livres recommandés</h4>
+            <ul>
+              <li>"Architectural Styles and the Design of Network-based Software Architectures" par Roy Fielding (2000)</li>
+              <li>"RESTful Web APIs" par Leonard Richardson et Mike Amundsen</li>
+              <li>"Designing Data-Intensive Applications" par Martin Kleppmann</li>
+            </ul>
+          </div>
+          
+          <div class="ressource-category">
+            <h4>🛠️ Outils à explorer</h4>
+            <ul>
+              <li><strong>Postman</strong> : L'outil incontournable pour tester des APIs</li>
+              <li><strong>Swagger Editor</strong> : Éditeur en ligne pour créer vos fichiers OpenAPI</li>
+              <li><strong>HTTPie</strong> : Client HTTP en ligne de commande, plus friendly que curl</li>
+              <li><strong>JSON Formatter</strong> : Extension navigateur pour afficher du JSON formaté</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="motivation-final">
+        <div class="motivation-content">
+          <h3>🌟 Un dernier mot</h3>
+          <p>Les web services sont au cœur de l'informatique moderne. Chaque application que vous utilisez quotidiennement – Instagram, Uber, Netflix, WhatsApp – repose sur des APIs. Les compétences que vous allez acquérir dans ce cours sont parmi les plus demandées sur le marché du travail. Un développeur qui maîtrise la conception et l'implémentation d'APIs REST solides et sécurisées trouvera facilement un emploi n'importe où dans le monde.</p>
+          
+          <p>Mais au-delà de l'aspect carrière, c'est intellectuellement fascinant. Vous allez comprendre comment des systèmes distribués communiquent, comment gérer l'authentification et la sécurité, comment scaler pour gérer des millions d'utilisateurs, comment architecturer des microservices. Ce sont des problèmes complexes avec des solutions élégantes.</p>
+          
+          <p>Durant ces 9 jours, vous allez construire une vraie plateforme de microservices pour une ville intelligente. Ce n'est pas un exercice théorique dans le vide. C'est un projet concret que vous pourrez montrer dans votre portfolio, dont vous pourrez parler en entretien d'embauche, et qui vous donnera une expérience pratique précieuse.</p>
+          
+          <div class="call-to-action">
+            <h4>🚀 Maintenant, place à la pratique !</h4>
+            <p>Alors profitez de ces sessions. Posez des questions quand vous ne comprenez pas. Expérimentez, faites des erreurs, cassez des choses et réparez-les. C'est comme ça qu'on apprend vraiment. Les meilleurs développeurs que je connais ne sont pas ceux qui n'ont jamais fait d'erreurs, mais ceux qui ont fait énormément d'erreurs, en ont tiré des leçons, et sont devenus excellents grâce à ça.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
@@ -901,5 +1263,15 @@ switch (error.name) {
   </footer>
 
   <script src="../script.js"></script>
+  
+  <!-- highlight.js pour la coloration syntaxique -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    // Auto-détection et coloration de tous les blocs de code
+    document.addEventListener('DOMContentLoaded', function() {
+      hljs.highlightAll();
+    });
+  </script>
 </body>
 </html>

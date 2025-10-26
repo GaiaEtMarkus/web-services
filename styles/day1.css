@@ -8,7 +8,7 @@
 
 /* Styles spécifiques pour la page de théorie */
 .theory-content {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
 }
@@ -264,5 +264,349 @@
   .comparison-table th,
   .comparison-table td {
     padding: 0.5rem;
+  }
+}
+
+/* ========================================
+   RÉCAPITULATIF ET POINTS CLÉS
+   ======================================== */
+
+.recapitulatif {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 4rem 0;
+}
+
+.recapitulatif .section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.recapitulatif .section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  margin-bottom: 1rem;
+}
+
+.recapitulatif .section-subtitle {
+  font-size: 1.2rem;
+  color: var(--gray-600);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Points clés */
+.points-cles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.point-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid var(--primary-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.point-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.point-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.point-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.point-card p {
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.point-card ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.point-card li {
+  color: var(--gray-600);
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+/* Préparation après-midi */
+.preparation-apres-midi {
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 3rem;
+}
+
+.preparation-apres-midi h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.preparation-apres-midi > p {
+  font-size: 1.1rem;
+  color: var(--gray-600);
+  text-align: center;
+  margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.preparation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.preparation-item {
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--gray-50);
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.preparation-item:hover {
+  transform: translateY(-3px);
+}
+
+.preparation-item i {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.preparation-item h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 1rem;
+}
+
+.preparation-item p {
+  color: var(--gray-600);
+  line-height: 1.5;
+}
+
+/* Conseils pratiques */
+.conseils-pratiques {
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 3rem;
+}
+
+.conseils-pratiques h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.conseils-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.conseil-card {
+  background: var(--gray-50);
+  padding: 2rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--button-color);
+  transition: transform 0.3s ease;
+}
+
+.conseil-card:hover {
+  transform: translateY(-3px);
+}
+
+.conseil-card i {
+  font-size: 1.5rem;
+  color: var(--button-color);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.conseil-card h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 1rem;
+}
+
+.conseil-card p {
+  color: var(--gray-600);
+  line-height: 1.5;
+}
+
+/* Ressources complémentaires */
+.ressources-complementaires {
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 3rem;
+}
+
+.ressources-complementaires h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.ressources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.ressource-category {
+  background: var(--gray-50);
+  padding: 2rem;
+  border-radius: 8px;
+  border-top: 4px solid var(--primary-color);
+}
+
+.ressource-category h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 1.5rem;
+}
+
+.ressource-category ul {
+  list-style: none;
+  padding: 0;
+}
+
+.ressource-category li {
+  color: var(--gray-600);
+  margin-bottom: 0.8rem;
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.5;
+}
+
+.ressource-category li::before {
+  content: '📖';
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.ressource-category li strong {
+  color: var(--gray-800);
+  font-weight: 600;
+}
+
+/* Motivation finale */
+.motivation-final {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--button-color) 100%);
+  color: white;
+  padding: 4rem 3rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.motivation-content h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.motivation-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  opacity: 0.95;
+}
+
+.call-to-action {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  backdrop-filter: blur(10px);
+}
+
+.call-to-action h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.call-to-action p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive pour récapitulatif */
+@media (max-width: 768px) {
+  .recapitulatif {
+    padding: 2rem 0;
+  }
+
+  .recapitulatif .section-title {
+    font-size: 2rem;
+  }
+
+  .points-cles {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .point-card {
+    padding: 1.5rem;
+  }
+
+  .preparation-apres-midi,
+  .conseils-pratiques,
+  .ressources-complementaires {
+    padding: 2rem 1.5rem;
+  }
+
+  .preparation-grid,
+  .conseils-grid,
+  .ressources-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .motivation-final {
+    padding: 2rem 1.5rem;
+  }
+
+  .motivation-content h3 {
+    font-size: 1.5rem;
   }
 }

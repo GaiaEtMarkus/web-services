@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jour 2 - Fil Rouge | SmartCity API Platform</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/day2FilRouge.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+          <div class="nav-logo">
+              <img src="assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+              <span class="logo-text">Web Services</span>
+          </div>
+          <ul class="nav-menu">
+              <li class="nav-item">
+                  <a href="#accueil" class="nav-link">Accueil</a>
+              </li>
+              <li class="nav-item">
+                  <a href="#programme" class="nav-link">Programme</a>
+              </li>
+              <li class="nav-item">
+                  <a href="#projet" class="nav-link">Projet SmartCity</a>
+              </li>
+              <li class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle">
+                      <i class="fas fa-calendar-alt"></i> Journées
+                      <i class="fas fa-chevron-down"></i>
+                  </a>
+                  <div class="dropdown-menu">
+          <a href="pages/day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+          <a href="pages/day1FilRouge.html" class="dropdown-item">Jour 1 - Fil Rouge</a>
+          <a href="pages/day2.html" class="dropdown-item">Jour 2 - Théorie</a>
+          <a href="pages/day2FilRouge.html" class="dropdown-item">Jour 2 - Fil Rouge</a>
+          <a href="pages/day3.html" class="dropdown-item">Jour 3 - Théorie</a>
+          <a href="pages/day3FilRouge.html" class="dropdown-item">Jour 3 - Fil Rouge</a>
+                  </div>
+              </li>
+              <li class="nav-item">
+                  <a href="#ressources" class="nav-link">Ressources</a>
+              </li>
+              <li class="nav-item">
+                  <a href="#contact" class="nav-link">Contact</a>
+              </li>
+          </ul>
+          <div class="hamburger">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+          </div>
+      </div>
+  </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">🚀 SmartCity API Platform</h1>
+            <p class="hero-subtitle">Fil Rouge J2 - Implémentation & Mocks</p>
+            <p class="hero-description">Après-midi (13h30-17h00) - Implémentation des premiers endpoints fonctionnels avec données en dur et génération de mocks automatiques</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🚀 SmartCity API Platform - Implémentation & Mocks</h2>
+                <p class="section-subtitle">Fil Rouge J2 - Après-midi (13h30-17h00)</p>
+            </div>
+
+            <div class="days-container">
+                <!-- Contexte & Objectifs -->
+                <div class="day-card expanded">
+                    <div class="day-header">
+                        <span class="day-number">📋</span>
+                        <span class="day-theme">Contexte & Objectifs (13h30-13h45) - 15 min</span>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-morning">
+                            <p>Ce matin vous avez vu l'API REST avancé (versioning, pagination avancée, documentation OpenAPI). Cet après-midi, vous allez implémenter vos premiers endpoints fonctionnels avec des données en dur (tableaux en mémoire) et générer des mocks automatiques.</p>
+
+                            <h5>✅ Ce que vous avez (depuis J1)</h5>
+                            <ul>
+                                <li>Contrat OpenAPI avec 2-3 endpoints définis</li>
+                                <li>Structure de projet initialisée</li>
+                                <li>README avec roadmap</li>
+                                <li>Repository Git avec commit initial</li>
+                                <li>Stack technique choisie</li>
+                            </ul>
+
+                            <h5>🎯 Ce qu'on vise aujourd'hui (réaliste pour 3h30)</h5>
+                            <p>À 17h00, chaque équipe doit avoir :</p>
+
+                            <div class="team-section">
+                                <h6>ÉQUIPES BACK-END :</h6>
+                                <ul>
+                                    <li>✅ 2-3 endpoints fonctionnels avec données en dur (tableaux)</li>
+                                    <li>✅ Pagination implémentée (page/limit)</li>
+                                    <li>✅ Gestion d'erreurs RFC 7807 centralisée</li>
+                                    <li>✅ Headers de corrélation (X-Correlation-Id)</li>
+                                    <li>✅ 3-5 tests unitaires qui passent</li>
+                                    <li>✅ Mock Prism généré et accessible</li>
+                                </ul>
+                            </div>
+
+                            <div class="team-section">
+                                <h6>ÉQUIPE FRONT :</h6>
+                                <ul>
+                                    <li>✅ 1-2 pages qui consomment des mocks Prism</li>
+                                    <li>✅ Gestion d'erreurs côté client</li>
+                                    <li>✅ Affichage des données avec pagination</li>
+                                </ul>
+                            </div>
+
+                            <div class="team-section">
+                                <h6>ÉQUIPE AUTH :</h6>
+                                <ul>
+                                    <li>✅ Endpoints register/login avec réponses mock</li>
+                                    <li>✅ Structure JWT définie (pas encore signés, juste la forme)</li>
+                                    <li>✅ Format d'erreurs d'auth standardisé</li>
+                                </ul>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h6>❌ CE QUI N'EST PAS ATTENDU AUJOURD'HUI</h6>
+                                <ul>
+                                    <li>❌ Base de données connectée (J3)</li>
+                                    <li>❌ Authentification fonctionnelle avec vrais JWT (J3-J4)</li>
+                                    <li>❌ Tests exhaustifs (J6-J7)</li>
+                                    <li>❌ Cache Redis (J7)</li>
+                                    <li>❌ Validation complexe (J3)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 1: Daily & Alignement -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-number">🏁</span>
+                        <span class="day-theme">Phase 1 : Daily & Alignement (13h30-13h45) - 15 min</span>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-morning">
+                            <h5>Daily Stand-up par équipe (10 min)</h5>
+                            <p>Chaque équipe fait son stand-up interne :</p>
+                            <ul>
+                                <li>Ce qui a été fait depuis J1 (installs, lectures...)</li>
+                                <li>Blockers éventuels</li>
+                                <li>Plan pour aujourd'hui</li>
+                            </ul>
+
+                            <h5>Synchronisation inter-équipes (5 min)</h5>
+                            <p>Point rapide tous ensemble :</p>
+                            <ul>
+                                <li>Équipes back : "Nos endpoints seront accessibles à quelle URL ?"</li>
+                                <li>Front : "Quels services on consomme en premier ?"</li>
+                                <li>Auth : "Format de token défini ?"</li>
+                            </ul>
+
+                            <div class="convention-box">
+                                <h6>Convention d'URLs locales (à documenter) :</h6>
+                                <ul>
+                                    <li><strong>AUTH</strong> → http://localhost:3001/api/v1</li>
+                                    <li><strong>EVENTS</strong> → http://localhost:3002/api/v1</li>
+                                    <li><strong>TRANSPORT</strong> → http://localhost:3003/api/v1</li>
+                                    <li><strong>SERVICE_3</strong> → http://localhost:3004/api/v1</li>
+                                    <li><strong>SERVICE_4</strong> → http://localhost:3005/api/v1</li>
+                                    <li><strong>FRONT</strong> → http://localhost:3000</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2: Données en dur & Middleware -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-number">📦</span>
+                        <span class="day-theme">Phase 2 : Données en dur & Middleware (13h45-15h00) - 75 min</span>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-morning">
+                            <h5>A. Créer vos données en dur (20 min)</h5>
+                            <div class="highlight-box">
+                                <h6>IMPORTANT : Pas de base de données aujourd'hui ! Utilisez des tableaux/listes en mémoire.</h6>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>Exemple pour EVENTS - Structure recommandée :</h6>
+                                <pre><code>// src/data/events.js (Node.js)
+const events = [
+  {
+    id: "550e8400-e29b-41d4-a716-446655440000",
+    title: "Jazz sous les étoiles",
+    type: "concert",
+    description: "Soirée jazz en plein air avec des artistes locaux",
+    startDate: "2025-07-15T20:00:00Z",
+    endDate: "2025-07-15T23:30:00Z",
+    location: {
+      name: "Place du Capitole",
+      address: "Place du Capitole",
+      city: "Toulouse",
+      coordinates: { lat: 43.6043, lng: 1.4437 }
+    },
+    capacity: 500,
+    availableSeats: 320
+  },
+  {
+    id: "660e8400-e29b-41d4-a716-446655440001",
+    title: "Exposition Picasso",
+    type: "exposition",
+    description: "Rétrospective des œuvres de jeunesse",
+    startDate: "2025-06-01T10:00:00Z",
+    endDate: "2025-08-31T18:00:00Z",
+    location: {
+      name: "Musée des Augustins",
+      address: "21 Rue de Metz",
+      city: "Toulouse"
+    }
+  },
+  // ... Ajoutez 20-30 événements pour tester la pagination
+];
+
+module.exports = events;</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>Même structure pour Python :</h6>
+                                <pre><code># src/data/events.py
+events = [
+    {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "title": "Jazz sous les étoiles",
+        "type": "concert",
+        # ...
+    },
+    # ...
+]</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>Même structure pour Java :</h6>
+                                <pre><code>// src/main/java/com/smartcity/data/EventsData.java
+public class EventsData {
+    private static final List<Event> events = Arrays.asList(
+        new Event("550e8400-...", "Jazz sous les étoiles", "concert", ...),
+        // ...
+    );
+    
+    public static List<Event> getAll() {
+        return new ArrayList<>(events);
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h6>💡 Données pour les autres services</h6>
+                                
+                                <p><strong>TRANSPORT - Lignes mock :</strong></p>
+                                <div class="code-example">
+                                    <pre><code>const lines = [
+  {
+    id: "line-a-metro",
+    name: "Ligne A - Métro",
+    type: "metro",
+    number: "A",
+    status: "operational",
+    color: "#FF0000"
+  },
+  {
+    id: "line-b-metro",
+    name: "Ligne B - Métro",
+    type: "metro",
+    number: "B",
+    status: "operational",
+    color: "#FFFF00"
+  },
+  // ... 10-15 lignes
+];
+
+const stops = [
+  {
+    id: "stop-capitole",
+    name: "Capitole",
+    address: "Place du Capitole",
+    lat: 43.6043,
+    lng: 1.4437
+  },
+  // ... 30-40 arrêts
+];</code></pre>
+                                </div>
+
+                                <p><strong>TROC - Items mock :</strong></p>
+                                <div class="code-example">
+                                    <pre><code>const items = [
+  {
+    id: "item-001",
+    title: "Vélo de ville",
+    category: "sports",
+    condition: "good",
+    description: "Vélo en bon état, peu utilisé",
+    photos: ["https://example.com/bike1.jpg"],
+    ownerId: "user-123",
+    status: "available"
+  },
+  // ... 20-30 items
+];</code></pre>
+                                </div>
+
+                                <p><strong>DÉPANNAGE - Providers mock :</strong></p>
+                                <div class="code-example">
+                                    <pre><code>const providers = [
+  {
+    id: "provider-001",
+    name: "Martin Plomberie",
+    services: ["plumbing", "heating"],
+    rating: 4.5,
+    reviewsCount: 127,
+    phone: "+33 6 12 34 56 78",
+    available: true
+  },
+  // ... 15-20 prestataires
+];</code></pre>
+                                </div>
+
+                                <p><strong>ALERTE - Alerts mock :</strong></p>
+                                <div class="code-example">
+                                    <pre><code>const alerts = [
+  {
+    id: "alert-001",
+    type: "fire",
+    severity: "high",
+    description: "Incendie signalé rue de la République",
+    location: { lat: 43.6, lng: 1.44, address: "Rue de la République" },
+    status: "open",
+    reportedAt: "2025-01-15T14:30:00Z",
+    reportedBy: "user-456"
+  },
+  // ... 20-30 alertes
+];</code></pre>
+                                </div>
+
+                                <p><strong>PARKING - Parkings mock :</strong></p>
+                                <div class="code-example">
+                                    <pre><code>const parkings = [
+  {
+    id: "parking-001",
+    name: "Parking Victor Hugo",
+    address: "Place Victor Hugo",
+    lat: 43.6,
+    lng: 1.45,
+    totalSpaces: 450,
+    availableSpaces: 127,
+    hourlyPrice: 2.5,
+    dailyPrice: 15,
+    type: "covered"
+  },
+  // ... 10-15 parkings
+];</code></pre>
+                                </div>
+
+                                <p><strong>BIBLIOTHÈQUE - Books mock :</strong></p>
+                                <div class="code-example">
+                                    <pre><code>const books = [
+  {
+    id: "book-001",
+    isbn: "978-2-1234-5680-3",
+    title: "Le Seigneur des Anneaux",
+    author: "J.R.R. Tolkien",
+    category: "fantasy",
+    publishedYear: 1954,
+    totalCopies: 5,
+    availableCopies: 2
+  },
+  // ... 50-100 livres
+];</code></pre>
+                                </div>
+                            </div>
+
+                            <h5>B. Middleware de gestion d'erreurs RFC 7807 (25 min)</h5>
+                            <p><strong>Objectif :</strong> Centraliser la génération d'erreurs standardisées</p>
+
+                            <div class="code-example">
+                                <h6>1. Fonction utilitaire pour créer des erreurs</h6>
+                                <pre><code>// src/utils/problem-details.js
+
+function createProblem(req, res, status, type, title, detail, extensions = {}) {
+  const correlationId = req.headers['x-correlation-id'] || generateUUID();
+  
+  const problem = {
+    type: `https://smartcity.api/errors/${type}`,
+    title,
+    status,
+    detail,
+    instance: req.originalUrl || req.path,
+    correlationId,
+    ...extensions
+  };
+  
+  res.status(status)
+     .type('application/problem+json')
+     .json(problem);
+}
+
+// Raccourcis pratiques
+function problem404(req, res, detail = "Resource not found") {
+  return createProblem(req, res, 404, "not-found", "Not Found", detail);
+}
+
+function problem422(req, res, detail, errors = {}) {
+  return createProblem(req, res, 422, "validation-error", "Validation Failed", detail, { errors });
+}
+
+function problem400(req, res, detail = "Bad request") {
+  return createProblem(req, res, 400, "bad-request", "Bad Request", detail);
+}
+
+module.exports = { createProblem, problem404, problem422, problem400 };</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>2. Middleware de corrélation</h6>
+                                <pre><code>// src/middleware/correlation.js
+
+function correlationMiddleware(req, res, next) {
+  const correlationId = req.headers['x-correlation-id'] || generateUUID();
+  req.correlationId = correlationId;
+  res.setHeader('X-Correlation-Id', correlationId);
+  next();
+}
+
+module.exports = correlationMiddleware;</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>3. Intégration dans votre app</h6>
+                                <pre><code>// src/app.js (ou équivalent)
+
+const correlationMiddleware = require('./middleware/correlation');
+
+// Appliquer le middleware à toutes les routes
+app.use(correlationMiddleware);
+
+// Vos routes...</code></pre>
+                            </div>
+
+                            <h5>C. Implémenter les endpoints avec pagination (30 min)</h5>
+                            
+                            <div class="endpoint-section">
+                                <h6>Endpoint GET /resources (liste paginée)</h6>
+                                <p><strong>Checklist d'implémentation :</strong></p>
+                                <ul>
+                                    <li>✅ Récupérer paramètres page et limit de la query string</li>
+                                    <li>✅ Valeurs par défaut : page=1, limit=20</li>
+                                    <li>✅ Valider : page >= 1, limit entre 1 et 100</li>
+                                    <li>✅ Calculer offset : (page - 1) * limit</li>
+                                    <li>✅ Extraire la tranche de données du tableau en mémoire</li>
+                                    <li>✅ Retourner format standardisé</li>
+                                </ul>
+
+                                <div class="code-example">
+                                    <h6>Format de réponse attendu :</h6>
+                                    <pre><code>{
+  "data": [...],
+  "page": 1,
+  "limit": 20,
+  "total": 156
+}</code></pre>
+                                </div>
+
+                                <div class="code-example">
+                                    <h6>Pseudo-code (multi-langage) :</h6>
+                                    <pre><code>// Importer vos données
+IMPORT events FROM './data/events'
+
+FUNCTION getEvents(request, response):
+  // 1. Extraire et valider params
+  page = parseInt(request.query.page) || 1
+  limit = parseInt(request.query.limit) || 20
+  
+  IF page < 1:
+    RETURN problem422(request, response, "page must be >= 1")
+  
+  IF limit < 1 OR limit > 100:
+    RETURN problem422(request, response, "limit must be between 1 and 100")
+  
+  // 2. Pagination sur le tableau en mémoire
+  offset = (page - 1) * limit
+  paginatedData = events.slice(offset, offset + limit)
+  
+  // 3. Réponse standardisée
+  RETURN response.status(200).json({
+    data: paginatedData,
+    page: page,
+    limit: limit,
+    total: events.length
+  })</code></pre>
+                                </div>
+
+                                <div class="code-example">
+                                    <h6>Exemple concret Node.js/Express :</h6>
+                                    <pre><code>// src/routes/events.js
+const express = require('express');
+const router = express.Router();
+const events = require('../data/events');
+const { problem422 } = require('../utils/problem-details');
+
+router.get('/events', (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 20;
+  
+  if (page < 1) {
+    return problem422(req, res, "page must be >= 1");
+  }
+  
+  if (limit < 1 || limit > 100) {
+    return problem422(req, res, "limit must be between 1 and 100");
+  }
+  
+  const offset = (page - 1) * limit;
+  const paginatedData = events.slice(offset, offset + limit);
+  
+  res.json({
+    data: paginatedData,
+    page,
+    limit,
+    total: events.length
+  });
+});
+
+module.exports = router;</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="endpoint-section">
+                                <h6>Endpoint GET /resources/{id} (détail)</h6>
+                                <p><strong>Checklist :</strong></p>
+                                <ul>
+                                    <li>✅ Extraire id du path</li>
+                                    <li>✅ Chercher dans le tableau en mémoire</li>
+                                    <li>✅ Retourner 404 si non trouvé</li>
+                                    <li>✅ Retourner la ressource si trouvée</li>
+                                </ul>
+
+                                <div class="code-example">
+                                    <h6>Pseudo-code :</h6>
+                                    <pre><code>FUNCTION getEventById(request, response):
+  id = request.params.id
+  
+  // Chercher dans le tableau
+  event = events.find(e => e.id === id)
+  
+  IF NOT event:
+    RETURN problem404(request, response, "Event not found")
+  
+  RETURN response.status(200).json(event)</code></pre>
+                                </div>
+
+                                <div class="code-example">
+                                    <h6>Exemple Node.js :</h6>
+                                    <pre><code>router.get('/events/:id', (req, res) => {
+  const { id } = req.params;
+  
+  const event = events.find(e => e.id === id);
+  
+  if (!event) {
+    return problem404(req, res, "Event not found");
+  }
+  
+  res.json(event);
+});</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pause -->
+                <div class="day-card pause-card">
+                    <div class="day-header">
+                        <span class="day-number">☕</span>
+                        <span class="day-theme">Pause (15h00-15h15) - 15 min</span>
+                    </div>
+                </div>
+
+                <!-- Phase 3: Tests & Mocks Prism -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-number">🧪</span>
+                        <span class="day-theme">Phase 3 : Tests & Mocks Prism (15h15-16h15) - 60 min</span>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-morning">
+                            <h5>A. Tests unitaires basiques (30 min)</h5>
+                            <p><strong>Objectif :</strong> 3-5 tests pour valider le comportement de base</p>
+
+                            <div class="test-section">
+                                <h6>Tests à écrire (priorisés)</h6>
+                                <p><strong>Pour GET /resources :</strong></p>
+                                <ul>
+                                    <li>✅ Retourne 200 avec données paginées</li>
+                                    <li>✅ Respecte les paramètres page/limit</li>
+                                    <li>✅ Retourne 422 si page < 1</li>
+                                    <li>✅ Retourne 422 si limit > 100</li>
+                                </ul>
+
+                                <p><strong>Pour GET /resources/{id} :</strong></p>
+                                <ul>
+                                    <li>✅ Retourne 200 avec la ressource si elle existe</li>
+                                    <li>✅ Retourne 404 si ressource inexistante</li>
+                                </ul>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>Exemple de structure de test (Node.js/Jest)</h6>
+                                <pre><code>// tests/events.test.js
+const request = require('supertest');
+const app = require('../src/app');
+
+describe('GET /api/v1/events', () => {
+  test('should return paginated events with default params', async () => {
+    const response = await request(app)
+      .get('/api/v1/events');
+    
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('data');
+    expect(response.body).toHaveProperty('page', 1);
+    expect(response.body).toHaveProperty('limit', 20);
+    expect(response.body).toHaveProperty('total');
+    expect(Array.isArray(response.body.data)).toBe(true);
+  });
+  
+  test('should respect custom page and limit', async () => {
+    const response = await request(app)
+      .get('/api/v1/events?page=2&limit=5');
+    
+    expect(response.status).toBe(200);
+    expect(response.body.page).toBe(2);
+    expect(response.body.limit).toBe(5);
+    expect(response.body.data.length).toBeLessThanOrEqual(5);
+  });
+  
+  test('should return 422 for invalid page', async () => {
+    const response = await request(app)
+      .get('/api/v1/events?page=0');
+    
+    expect(response.status).toBe(422);
+    expect(response.body.type).toContain('validation-error');
+    expect(response.body).toHaveProperty('correlationId');
+  });
+});
+
+describe('GET /api/v1/events/:id', () => {
+  test('should return event details for valid ID', async () => {
+    const response = await request(app)
+      .get('/api/v1/events/550e8400-e29b-41d4-a716-446655440000');
+    
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('id');
+    expect(response.body).toHaveProperty('title');
+  });
+  
+  test('should return 404 for non-existent ID', async () => {
+    const response = await request(app)
+      .get('/api/v1/events/00000000-0000-0000-0000-000000000000');
+    
+    expect(response.status).toBe(404);
+    expect(response.body.type).toContain('not-found');
+  });
+});</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>Pour Python/pytest :</h6>
+                                <pre><code># tests/test_events.py
+import pytest
+from fastapi.testclient import TestClient
+from src.main import app
+
+client = TestClient(app)
+
+def test_get_events_returns_paginated_results():
+    response = client.get("/api/v1/events")
+    assert response.status_code == 200
+    data = response.json()
+    assert "data" in data
+    assert "page" in data
+    assert "limit" in data
+    assert "total" in data
+
+def test_get_events_respects_custom_pagination():
+    response = client.get("/api/v1/events?page=2&limit=5")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["page"] == 2
+    assert data["limit"] == 5
+
+def test_get_events_returns_422_for_invalid_page():
+    response = client.get("/api/v1/events?page=0")
+    assert response.status_code == 422
+    assert "validation-error" in response.json()["type"]
+
+def test_get_event_by_id_returns_details():
+    response = client.get("/api/v1/events/550e8400-e29b-41d4-a716-446655440000")
+    assert response.status_code == 200
+    assert "id" in response.json()
+
+def test_get_event_by_id_returns_404_when_not_found():
+    response = client.get("/api/v1/events/00000000-0000-0000-0000-000000000000")
+    assert response.status_code == 404</code></pre>
+                            </div>
+
+                            <h5>B. Génération Mock Prism (30 min)</h5>
+                            <p><strong>Prism</strong> = Serveur mock généré automatiquement depuis votre OpenAPI</p>
+
+                            <div class="code-example">
+                                <h6>1. Installation de Prism</h6>
+                                <pre><code># Avec npm (global)
+npm install -g @stoplight/prism-cli
+
+# Ou avec npx (sans install)
+npx @stoplight/prism-cli mock contracts/openapi.yaml
+
+# Ou avec Docker
+docker pull stoplight/prism</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>2. Lancer le mock Prism</h6>
+                                <pre><code># Dans le dossier de votre service
+prism mock contracts/openapi.yaml --port 4010
+
+# Vous verrez :
+# [CLI] …  awaiting  Starting Prism…
+# [CLI] ℹ  info      GET http://127.0.0.1:4010/api/v1/events
+# [CLI] ℹ  info      GET http://127.0.0.1:4010/api/v1/events/{id}</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>3. Tester le mock</h6>
+                                <pre><code># Depuis un autre terminal
+curl http://localhost:4010/api/v1/events
+
+# Retourne un exemple généré depuis votre contrat OpenAPI
+{
+  "data": [
+    {
+      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+      "title": "string",
+      "type": "concert"
+    }
+  ],
+  "page": 1,
+  "limit": 20,
+  "total": 0
+}</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>4. Publier le mock pour le Front</h6>
+                                <p><strong>Option 1 :</strong> Laisser Prism tourner en local</p>
+                                <pre><code># Dans un terminal dédié (tmux/screen ou onglet séparé)
+prism mock contracts/openapi.yaml --port 4010
+
+# Le Front accède à : http://localhost:4010/api/v1</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>Option 2 : Script npm</h6>
+                                <pre><code>// package.json
+{
+  "scripts": {
+    "dev": "node src/server.js",
+    "mock": "prism mock contracts/openapi.yaml --port 4010",
+    "test": "jest"
+  }
+}</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>Mettre à jour votre README :</h6>
+                                <pre><code>## Modes de développement
+
+### Mode Normal (avec serveur réel)
+```bash
+npm run dev
+# API disponible sur http://localhost:3002
+```
+
+### Mode Mock (avec Prism)
+```bash
+npm run mock
+# Mock API disponible sur http://localhost:4010
+# Utile pour le Front quand le back n'est pas prêt
+```</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h6>5. Coordination avec le Front</h6>
+                                <p><strong>Convention d'URLs pour les mocks :</strong></p>
+                                <div class="code-example">
+                                    <pre><code># Mocks Prism (générés automatiquement)
+AUTH      → http://localhost:4010
+EVENTS    → http://localhost:4020
+TRANSPORT → http://localhost:4030
+SERVICE_3 → http://localhost:4040
+
+# Serveurs réels (implémentés par vous)
+AUTH      → http://localhost:3001/api/v1
+EVENTS    → http://localhost:3002/api/v1
+TRANSPORT → http://localhost:3003/api/v1
+SERVICE_3 → http://localhost:3004/api/v1</code></pre>
+                                </div>
+
+                                <p><strong>L'équipe Front peut basculer facilement :</strong></p>
+                                <div class="code-example">
+                                    <pre><code>// front/src/config/api.js
+const USE_MOCKS = process.env.REACT_APP_USE_MOCKS === 'true';
+
+const API_URLS = {
+  events: USE_MOCKS ? 'http://localhost:4020' : 'http://localhost:3002/api/v1',
+  transport: USE_MOCKS ? 'http://localhost:4030' : 'http://localhost:3003/api/v1',
+  // ...
+};</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 4: Intégration Front -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-number">🎨</span>
+                        <span class="day-theme">Phase 4 : Intégration Front (15h15-16h15) - Parallel</span>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-morning">
+                            <p><strong>Cette phase est spécifique à l'équipe FRONT</strong> (pendant que les backs font les tests/mocks)</p>
+
+                            <h5>A. Consommer les mocks Prism (30 min)</h5>
+                            
+                            <div class="code-example">
+                                <h6>1. Configuration des URLs</h6>
+                                <pre><code>// front/src/config/api.js
+
+// Pour l'instant, utiliser uniquement les mocks Prism
+const API_BASE_URLS = {
+  events: 'http://localhost:4020',
+  transport: 'http://localhost:4030',
+  auth: 'http://localhost:4010',
+  // Ajoutez les autres services
+};
+
+export default API_BASE_URLS;</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>2. Créer un client API</h6>
+                                <pre><code>// front/src/api/client.js
+
+import API_BASE_URLS from '../config/api';
+
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+export async function apiGet(service, endpoint, params = {}) {
+  const baseUrl = API_BASE_URLS[service];
+  const queryString = new URLSearchParams(params).toString();
+  const url = `${baseUrl}${endpoint}${queryString ? '?' + queryString : ''}`;
+  
+  const response = await fetch(url, {
+    headers: {
+      'Accept': 'application/json',
+      'X-Correlation-Id': generateUUID()
+    }
+  });
+  
+  if (!response.ok) {
+    const problem = await response.json();
+    throw new ApiError(problem);
+  }
+  
+  return response.json();
+}
+
+class ApiError extends Error {
+  constructor(problem) {
+    super(problem.detail || 'API Error');
+    this.problem = problem;
+    this.status = problem.status;
+  }
+}
+
+export { ApiError };</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>3. Client spécifique pour Events (exemple)</h6>
+                                <pre><code>// front/src/api/events.js
+
+import { apiGet, ApiError } from './client';
+
+export async function getEvents(page = 1, limit = 20) {
+  return apiGet('events', '/api/v1/events', { page, limit });
+}
+
+export async function getEventById(id) {
+  return apiGet('events', `/api/v1/events/${id}`);
+}</code></pre>
+                            </div>
+
+                            <h5>B. Page de liste avec pagination (20 min)</h5>
+                            <div class="code-example">
+                                <h6>Pseudo-code framework-agnostic :</h6>
+                                <pre><code>COMPONENT EventsList:
+  STATE:
+    events = []
+    page = 1
+    limit = 20
+    total = 0
+    loading = false
+    error = null
+  
+  ON_MOUNT:
+    loadEvents()
+  
+  ASYNC FUNCTION loadEvents():
+    loading = true
+    error = null
+    
+    TRY:
+      result = AWAIT getEvents(page, limit)
+      events = result.data
+      total = result.total
+    CATCH error:
+      error = error.message
+    FINALLY:
+      loading = false
+  
+  FUNCTION nextPage():
+    IF page * limit < total:
+      page = page + 1
+      loadEvents()
+  
+  FUNCTION prevPage():
+    IF page > 1:
+      page = page - 1
+      loadEvents()
+  
+  RENDER:
+    <div>
+      IF loading:
+        <Spinner />
+      ELSE IF error:
+        <ErrorDisplay error={error} />
+      ELSE:
+        <EventsGrid events={events} />
+        <Pagination 
+          page={page} 
+          total={total} 
+          limit={limit}
+          onNext={nextPage}
+          onPrev={prevPage}
+        />
+    </div></code></pre>
+                            </div>
+
+                            <h5>C. Gestion d'erreurs côté client (10 min)</h5>
+                            <div class="code-example">
+                                <pre><code>// front/src/components/ErrorDisplay.jsx
+
+export function ErrorDisplay({ error, onRetry }) {
+  // Si c'est une erreur RFC 7807
+  if (error?.problem) {
+    return (
+      <div className="error-card bg-red-50 border border-red-200 p-4 rounded">
+        <h3 className="font-bold text-red-800">{error.problem.title}</h3>
+        <p className="text-red-700">{error.problem.detail}</p>
+        {error.problem.correlationId && (
+          <small className="text-red-600">
+            Correlation ID: {error.problem.correlationId}
+          </small>
+        )}
+        {onRetry && (
+          <button onClick={onRetry} className="mt-2 btn btn-secondary">
+            Réessayer
+          </button>
+        )}
+      </div>
+    );
+  }
+  
+  // Erreur générique
+  return (
+    <div className="error-card">
+      <p>{error?.message || 'Une erreur est survenue'}</p>
+      {onRetry && <button onClick={onRetry}>Réessayer</button>}
+    </div>
+  );
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 5: Équipe Auth spécifique -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-number">🔐</span>
+                        <span class="day-theme">Phase 5 : Équipe AUTH Spécifique (15h15-16h15) - Parallel</span>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-morning">
+                            <p><strong>Pendant que les autres font tests/front, l'équipe AUTH prépare la structure JWT</strong></p>
+
+                            <h5>A. Définir le format JWT (mock) - 20 min</h5>
+                            <p>Aujourd'hui, pas encore de vraie signature, juste définir la structure</p>
+
+                            <div class="code-example">
+                                <h6>Structure du token (claims standards)</h6>
+                                <pre><code>{
+  "sub": "user-123",
+  "email": "alice@example.com",
+  "name": "Alice Dupont",
+  "role": "user",
+  "iat": 1704067200,
+  "exp": 1704070800
+}</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h6>Claims expliqués :</h6>
+                                <ul>
+                                    <li><strong>sub (subject)</strong> : ID de l'utilisateur</li>
+                                    <li><strong>email</strong> : Email de l'utilisateur</li>
+                                    <li><strong>name</strong> : Nom complet</li>
+                                    <li><strong>role</strong> : Rôle (user/admin)</li>
+                                    <li><strong>iat (issued at)</strong> : Timestamp de création</li>
+                                    <li><strong>exp (expiration)</strong> : Timestamp d'expiration (1h par défaut)</li>
+                                </ul>
+                            </div>
+
+                            <h5>B. Endpoints avec réponses mock - 25 min</h5>
+                            
+                            <div class="code-example">
+                                <h6>POST /auth/register (mock)</h6>
+                                <pre><code>// src/routes/auth.js
+
+// Tableau en mémoire pour stocker les utilisateurs (temporaire J2)
+const users = [];
+
+router.post('/auth/register', (req, res) => {
+  const { email, password, name } = req.body;
+  
+  // Validation basique
+  if (!email || !password) {
+    return problem422(req, res, "Email and password are required");
+  }
+  
+  // Vérifier si email existe déjà
+  const existing = users.find(u => u.email === email);
+  if (existing) {
+    return problem409(req, res, "Email already registered");
+  }
+  
+  // Créer l'utilisateur (mot de passe en clair pour l'instant, hash J3)
+  const user = {
+    id: generateUUID(),
+    email,
+    password, // ⚠️ TEMPORAIRE ! Hash avec bcrypt J3
+    name,
+    role: 'user',
+    createdAt: new Date().toISOString()
+  };
+  
+  users.push(user);
+  
+  // Réponse (ne pas retourner le password !)
+  res.status(201).json({
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    role: user.role
+  });
+});</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>POST /auth/login (mock avec JWT non signé)</h6>
+                                <pre><code>router.post('/auth/login', (req, res) => {
+  const { email, password } = req.body;
+  
+  // Validation
+  if (!email || !password) {
+    return problem422(req, res, "Email and password are required");
+  }
+  
+  // Trouver l'utilisateur
+  const user = users.find(u => u.email === email);
+  if (!user) {
+    return problem401(req, res, "Invalid credentials");
+  }
+  
+  // Vérifier le mot de passe (simple comparaison pour J2, bcrypt J3)
+  if (user.password !== password) {
+    return problem401(req, res, "Invalid credentials");
+  }
+  
+  // Créer un "faux JWT" (structure correcte mais pas signé)
+  // On signera vraiment avec JWT library J3
+  const now = Math.floor(Date.now() / 1000);
+  
+  const accessTokenPayload = {
+    sub: user.id,
+    email: user.email,
+    name: user.name,
+    role: user.role,
+    iat: now,
+    exp: now + 3600 // 1 heure
+  };
+  
+  const refreshTokenPayload = {
+    sub: user.id,
+    type: 'refresh',
+    iat: now,
+    exp: now + (7 * 24 * 3600) // 7 jours
+  };
+  
+  // Encoder en base64 pour simuler un JWT (pas sécurisé, juste pour la forme)
+  // Format JWT : header.payload.signature
+  const fakeAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' + 
+                          Buffer.from(JSON.stringify(accessTokenPayload)).toString('base64') +
+                          '.SIGNATURE_PLACEHOLDER';
+  
+  const fakeRefreshToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+                           Buffer.from(JSON.stringify(refreshTokenPayload)).toString('base64') +
+                           '.SIGNATURE_PLACEHOLDER';
+  
+  res.json({
+    accessToken: fakeAccessToken,
+    refreshToken: fakeRefreshToken,
+    expiresIn: 3600,
+    tokenType: 'Bearer',
+    user: {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role
+    }
+  });
+});</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>POST /auth/refresh (mock)</h6>
+                                <pre><code>router.post('/auth/refresh', (req, res) => {
+  const { refreshToken } = req.body;
+  
+  if (!refreshToken) {
+    return problem400(req, res, "Refresh token is required");
+  }
+  
+  // Pour J2, on accepte n'importe quel token et on renvoie un nouveau
+  // J3 : vérifier vraiment le token
+  
+  // Décoder le payload (simpliste)
+  try {
+    const parts = refreshToken.split('.');
+    const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
+    
+    const now = Math.floor(Date.now() / 1000);
+    const newAccessTokenPayload = {
+      sub: payload.sub,
+      email: payload.email,
+      role: payload.role,
+      iat: now,
+      exp: now + 3600
+    };
+    
+    const newAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+                          Buffer.from(JSON.stringify(newAccessTokenPayload)).toString('base64') +
+                          '.SIGNATURE_PLACEHOLDER';
+    
+    res.json({
+      accessToken: newAccessToken,
+      expiresIn: 3600,
+      tokenType: 'Bearer'
+    });
+  } catch (error) {
+    return problem401(req, res, "Invalid refresh token");
+  }
+});</code></pre>
+                            </div>
+
+                            <div class="code-example">
+                                <h6>GET /users/me (mock)</h6>
+                                <pre><code>router.get('/users/me', (req, res) => {
+  // Pour J2, on simule sans vérifier le token
+  // J4 : vérifier vraiment le token Authorization
+  
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return problem401(req, res, "Missing or invalid authorization header");
+  }
+  
+  // Simuler un utilisateur (J4 : extraire du token)
+  const mockUser = {
+    id: "user-123",
+    email: "alice@example.com",
+    name: "Alice Dupont",
+    role: "user"
+  };
+  
+  res.json(mockUser);
+});</code></pre>
+                            </div>
+
+                            <h5>C. Documentation du format JWT - 15 min</h5>
+                            <div class="code-example">
+                                <h6>Créer un document pour les autres équipes :</h6>
+                                <pre><code># Auth Service - Guide d'intégration (J2)
+
+## Format de réponse POST /auth/login
+```json
+{
+  "accessToken": "eyJhbGci...",
+  "refreshToken": "eyJhbGci...",
+  "expiresIn": 3600,
+  "tokenType": "Bearer",
+  "user": {
+    "id": "uuid",
+    "email": "alice@example.com",
+    "name": "Alice Dupont",
+    "role": "user"
+  }
+}
+```
+
+## Structure du Access Token (JWT)
+
+Quand décodé (utilisez jwt.io pour visualiser) :
+
+### Header
+```json
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+
+### Payload
+```json
+{
+  "sub": "user-id",
+  "email": "alice@example.com",
+  "name": "Alice Dupont",
+  "role": "user",
+  "iat": 1704067200,
+  "exp": 1704070800
+}
+```
+
+## Comment utiliser (pour les autres services)
+
+### 1. Le Front obtient un token via /auth/login
+
+### 2. Le Front envoie le token dans les requêtes
+Authorization: Bearer eyJhbGci...
+
+### 3. Les services back vérifient le token (J4)
+⚠️ Pour J2-J3 : pas encore de vérification
+⚠️ À partir de J4 : middleware de vérification fourni
+
+## Erreurs possibles
+
+**401 Unauthorized** - Token manquant, invalide ou expiré
+```json
+{
+  "type": "https://smartcity.api/errors/unauthorized",
+  "title": "Unauthorized",
+  "status": 401,
+  "detail": "Invalid or expired token",
+  "correlationId": "..."
+}
+```
+
+**422 Validation Error** - Champs manquants
+**409 Conflict** - Email déjà utilisé (register)</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 6: Démo & Synchronisation -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-number">🎤</span>
+                        <span class="day-theme">Phase 6 : Démo & Synchronisation (16h15-17h00) - 45 min</span>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-morning">
+                            <p><strong>Format de démo par équipe (5-6 min chacune)</strong></p>
+
+                            <div class="demo-section">
+                                <h6>ÉQUIPES BACK-END</h6>
+                                
+                                <h5>1. Démo live des endpoints (3 min)</h5>
+                                <div class="code-example">
+                                    <pre><code># Test avec curl ou Postman
+
+# GET liste paginée
+curl http://localhost:3002/api/v1/events
+
+# GET avec pagination custom
+curl "http://localhost:3002/api/v1/events?page=2&limit=5"
+
+# GET détail
+curl http://localhost:3002/api/v1/events/550e8400-e29b-41d4-a716-446655440000
+
+# Erreur 404
+curl http://localhost:3002/api/v1/events/00000000-0000-0000-0000-000000000000
+
+# Erreur 422 (page invalide)
+curl "http://localhost:3002/api/v1/events?page=0"</code></pre>
+                                </div>
+
+                                <h5>2. Montrer le format d'erreur RFC 7807 (1 min)</h5>
+                                <ul>
+                                    <li>Afficher une réponse 404 ou 422</li>
+                                    <li>Montrer le correlationId</li>
+                                    <li>Montrer le Content-Type: application/problem+json</li>
+                                </ul>
+
+                                <h5>3. Montrer les tests (1 min)</h5>
+                                <div class="code-example">
+                                    <pre><code>npm test
+# ou pytest
+# ou mvn test
+
+# Montrer que 3-5 tests passent au vert</code></pre>
+                                </div>
+
+                                <h5>4. Démonstration du mock Prism (1 min)</h5>
+                                <div class="code-example">
+                                    <pre><code># Dans un terminal
+prism mock contracts/openapi.yaml --port 4020
+
+# Dans un autre terminal
+curl http://localhost:4020/api/v1/events
+
+# Expliquer : "Le Front peut utiliser ce mock pendant qu'on développe"</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="demo-section">
+                                <h6>ÉQUIPE FRONT</h6>
+                                
+                                <h5>1. Démo de la page de liste (2 min)</h5>
+                                <ul>
+                                    <li>Ouvrir l'application dans le navigateur</li>
+                                    <li>Montrer la liste d'événements (consommée depuis Prism)</li>
+                                    <li>Naviguer entre les pages (pagination)</li>
+                                    <li>Afficher le nombre total d'éléments</li>
+                                </ul>
+
+                                <h5>2. Démo de la page de détail (1 min)</h5>
+                                <ul>
+                                    <li>Cliquer sur un élément</li>
+                                    <li>Afficher le détail complet</li>
+                                    <li>Montrer le chargement (spinner)</li>
+                                </ul>
+
+                                <h5>3. Gestion d'erreurs (1 min)</h5>
+                                <ul>
+                                    <li>Simuler une erreur (éteindre Prism ou URL invalide)</li>
+                                    <li>Montrer l'affichage de l'erreur avec le message RFC 7807</li>
+                                    <li>Montrer le bouton "Réessayer"</li>
+                                </ul>
+
+                                <h5>4. DevTools - Correlation ID (1 min)</h5>
+                                <ul>
+                                    <li>Ouvrir DevTools → Network</li>
+                                    <li>Faire une requête</li>
+                                    <li>Montrer le header X-Correlation-Id dans les requêtes et réponses</li>
+                                </ul>
+                            </div>
+
+                            <div class="demo-section">
+                                <h6>ÉQUIPE AUTH</h6>
+                                
+                                <h5>1. Démo des endpoints (3 min)</h5>
+                                <div class="code-example">
+                                    <pre><code># Register
+curl -X POST http://localhost:3001/api/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "alice@example.com",
+    "password": "secure123",
+    "name": "Alice Dupont"
+  }'
+
+# Réponse 201 avec user créé
+
+# Login
+curl -X POST http://localhost:3001/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "alice@example.com",
+    "password": "secure123"
+  }'
+
+# Réponse avec accessToken et refreshToken
+
+# Refresh
+curl -X POST http://localhost:3001/api/v1/auth/refresh \
+  -H "Content-Type: application/json" \
+  -d '{
+    "refreshToken": "eyJhbGci..."
+  }'
+
+# GET /users/me avec token
+curl http://localhost:3001/api/v1/users/me \
+  -H "Authorization: Bearer eyJhbGci..."</code></pre>
+                                </div>
+
+                                <h5>2. Décodage du JWT (2 min)</h5>
+                                <ul>
+                                    <li>Copier un accessToken de la réponse</li>
+                                    <li>Aller sur https://jwt.io</li>
+                                    <li>Coller le token</li>
+                                    <li>Montrer le payload décodé (sub, email, role, exp...)</li>
+                                    <li>Expliquer : "Pour l'instant ce n'est pas vraiment signé, on fera ça J3"</li>
+                                </ul>
+
+                                <h5>3. Erreurs d'authentification (1 min)</h5>
+                                <div class="code-example">
+                                    <pre><code># Login avec mauvais password
+curl -X POST http://localhost:3001/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "alice@example.com",
+    "password": "wrong"
+  }'
+
+# Réponse 401 avec format RFC 7807</code></pre>
+                                </div>
+                            </div>
+
+                            <h5>Discussion collective (15 min)</h5>
+                            <p><strong>Points à valider tous ensemble :</strong></p>
+                            
+                            <div class="highlight-box">
+                                <h6>1. Compatibilité des contrats (5 min)</h6>
+                                <ul>
+                                    <li>Front : "Les réponses des mocks Prism correspondent à nos attentes ?"</li>
+                                    <li>Back : "Le format de pagination est bien le même partout ?"</li>
+                                    <li>Auth : "Le format du JWT est clair pour tout le monde ?"</li>
+                                </ul>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h6>2. Blockers identifiés (5 min)</h6>
+                                <ul>
+                                    <li>Quels problèmes techniques avez-vous rencontrés ?</li>
+                                    <li>Quelles décisions restent à prendre ?</li>
+                                    <li>Besoin d'aide de l'enseignant pour débloquer ?</li>
+                                </ul>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h6>3. Préparation J3 (5 min)</h6>
+                                <p><strong>Ce qui arrive demain :</strong></p>
+                                <ul>
+                                    <li><strong>Bases de données</strong> : Vous allez remplacer vos tableaux en mémoire par de vraies requêtes DB</li>
+                                    <li><strong>Auth avec vrais JWT</strong> : Signature avec une clé secrète, hash bcrypt des passwords</li>
+                                    <li><strong>CRUD complet</strong> : POST/PUT/DELETE en plus de GET</li>
+                                    <li><strong>Validation</strong> : Valider les données en entrée avec des schémas</li>
+                                </ul>
+
+                                <p><strong>Questions à l'enseignant :</strong></p>
+                                <ul>
+                                    <li>Quelle base de données recommandez-vous pour notre service ?</li>
+                                    <li>Comment gérer les migrations de schéma ?</li>
+                                    <li>Comment tester avec une vraie DB sans polluer les données ?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checklist de fin de journée -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-number">✅</span>
+                        <span class="day-theme">Checklist de fin de journée</span>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-morning">
+                            <div class="checklist-section">
+                                <h6>Chaque équipe BACK vérifie :</h6>
+                                <ul>
+                                    <li>✅ 2-3 endpoints fonctionnels avec données en dur (tableaux)</li>
+                                    <li>✅ Pagination implémentée avec validation (page/limit)</li>
+                                    <li>✅ Middleware RFC 7807 en place et testé</li>
+                                    <li>✅ Header X-Correlation-Id propagé dans toutes les réponses</li>
+                                    <li>✅ 3-5 tests unitaires qui passent (npm test ou équivalent)</li>
+                                    <li>✅ Mock Prism généré et accessible sur un port dédié</li>
+                                    <li>✅ README mis à jour avec :
+                                        <ul>
+                                            <li>Commandes pour lancer le serveur (npm run dev)</li>
+                                            <li>Commandes pour lancer les tests (npm test)</li>
+                                            <li>Commandes pour lancer le mock (npm run mock)</li>
+                                            <li>URL du mock Prism pour le Front</li>
+                                        </ul>
+                                    </li>
+                                    <li>✅ Au moins 2 commits Git aujourd'hui</li>
+                                    <li>✅ Code formaté et sans erreurs de lint</li>
+                                </ul>
+                            </div>
+
+                            <div class="checklist-section">
+                                <h6>Équipe FRONT vérifie :</h6>
+                                <ul>
+                                    <li>✅ Configuration API avec URLs des mocks Prism</li>
+                                    <li>✅ 1-2 pages qui affichent des données depuis les mocks</li>
+                                    <li>✅ Pagination côté UI (boutons Suivant/Précédent)</li>
+                                    <li>✅ Gestion d'erreurs avec affichage RFC 7807</li>
+                                    <li>✅ Correlation ID visible dans DevTools (Network tab)</li>
+                                    <li>✅ Spinner de chargement sur toutes les requêtes</li>
+                                    <li>✅ README avec instructions de lancement</li>
+                                    <li>✅ Au moins 2 commits Git aujourd'hui</li>
+                                </ul>
+                            </div>
+
+                            <div class="checklist-section">
+                                <h6>Équipe AUTH vérifie :</h6>
+                                <ul>
+                                    <li>✅ POST /auth/register implémenté avec validation</li>
+                                    <li>✅ POST /auth/login retourne un token (même si non signé)</li>
+                                    <li>✅ POST /auth/refresh implémenté</li>
+                                    <li>✅ GET /users/me implémenté</li>
+                                    <li>✅ Structure JWT documentée (claims, format)</li>
+                                    <li>✅ Erreurs d'auth standardisées (401, 422, 409)</li>
+                                    <li>✅ Document "Guide d'intégration" créé pour les autres équipes</li>
+                                    <li>✅ Tests basiques (3-5 tests)</li>
+                                    <li>✅ README avec exemples d'utilisation</li>
+                                    <li>✅ Au moins 2 commits Git aujourd'hui</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pour demain -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-number">📚</span>
+                        <span class="day-theme">Pour demain (J3 Après-midi)</span>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-morning">
+                            <h5>Théorie du matin (J3)</h5>
+                            <ul>
+                                <li>Sécurité API (Partie 1) : Authentification, JWT, OAuth 2.0</li>
+                                <li>Hash de mots de passe (bcrypt)</li>
+                                <li>Stratégies de stockage de tokens</li>
+                                <li>Bonnes pratiques de sécurité</li>
+                            </ul>
+
+                            <h5>Pratique de l'après-midi (J3)</h5>
+                            
+                            <div class="team-section">
+                                <h6>ÉQUIPES BACK (sauf Auth) :</h6>
+                                <ul>
+                                    <li>Installer et configurer une base de données (PostgreSQL/MongoDB)</li>
+                                    <li>Créer le schéma/les migrations</li>
+                                    <li>Remplacer les tableaux en mémoire par des requêtes DB</li>
+                                    <li>Implémenter POST/PUT/DELETE (CRUD complet)</li>
+                                    <li>Ajouter validation des données entrantes (Joi/Zod/Pydantic)</li>
+                                    <li>Tests d'intégration avec DB</li>
+                                </ul>
+                            </div>
+
+                            <div class="team-section">
+                                <h6>ÉQUIPE AUTH :</h6>
+                                <ul>
+                                    <li>Créer la table users en base de données</li>
+                                    <li>Implémenter hash bcrypt pour les mots de passe</li>
+                                    <li>Générer de vrais JWT signés avec une clé secrète</li>
+                                    <li>Implémenter la vérification de tokens</li>
+                                    <li>Créer un middleware d'authentification exportable</li>
+                                    <li>Tests avec utilisateurs réels en DB</li>
+                                </ul>
+                            </div>
+
+                            <div class="team-section">
+                                <h6>ÉQUIPE FRONT :</h6>
+                                <ul>
+                                    <li>Basculer des mocks Prism vers les vrais services</li>
+                                    <li>Implémenter des formulaires de création (POST)</li>
+                                    <li>Gérer les erreurs de validation côté UI</li>
+                                    <li>Commencer l'intégration avec Auth (login/register)</li>
+                                    <li>Stocker le token (localStorage/sessionStorage)</li>
+                                </ul>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h6>À préparer ce soir (optionnel mais recommandé)</h6>
+                                <p><strong>Pour toutes les équipes BACK :</strong></p>
+                                <div class="code-example">
+                                    <pre><code># Installer votre SGBD
+# PostgreSQL
+docker run --name smartcity-postgres -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres:15
+
+# MongoDB
+docker run --name smartcity-mongo -p 27017:27017 -d mongo:7
+
+# Ou installer en local selon votre OS</code></pre>
+                                </div>
+
+                                <p><strong>Pour l'équipe AUTH :</strong></p>
+                                <ul>
+                                    <li>Lire la documentation de votre bibliothèque JWT (jsonwebtoken pour Node, PyJWT pour Python, java-jwt pour Java)</li>
+                                    <li>Lire sur bcrypt et les work factors recommandés (12+)</li>
+                                </ul>
+
+                                <p><strong>Pour tous :</strong></p>
+                                <ul>
+                                    <li>Lire sur les ORMs/ODMs de votre stack :
+                                        <ul>
+                                            <li>Node.js : Prisma, Sequelize, TypeORM, Mongoose</li>
+                                            <li>Python : SQLAlchemy, Django ORM, Tortoise ORM</li>
+                                            <li>Java : Hibernate, Spring Data JPA</li>
+                                        </ul>
+                                    </li>
+                                    <li>Réfléchir au schéma de votre base de données</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progression globale -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-number">📈</span>
+                        <span class="day-theme">Progression globale</span>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-morning">
+                            <div class="progression-list">
+                                <div class="progression-item completed">J1 PM ✅ : Contrat OpenAPI + Structure projet</div>
+                                <div class="progression-item completed">J2 PM ✅ : Endpoints mock + Tests + Prism</div>
+                                <div class="progression-item current">J3 PM 🎯 : Base de données + CRUD complet + JWT réels</div>
+                                <div class="progression-item pending">J4 PM : Protection endpoints + RBAC + Audit sécurité</div>
+                                <div class="progression-item pending">J5 PM : Intégration externe + Résilience + Communication</div>
+                                <div class="progression-item pending">J6 PM : API Gateway + Architecture distribuée</div>
+                                <div class="progression-item pending">J7 PM : Performance + Tests de charge + Observabilité</div>
+                                <div class="progression-item pending">J8 PM : Containerisation + CI/CD + Finalisation</div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h6>Excellent travail aujourd'hui ! Vous avez des endpoints fonctionnels et des mocks pour débloquer le Front. 🚀</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Retour d'expérience de l'enseignant -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-number">💡</span>
+                        <span class="day-theme">Retour d'expérience de l'enseignant</span>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-morning">
+                            <div class="highlight-box">
+                                <h6>Ce qui a bien marché aujourd'hui</h6>
+                                <ul>
+                                    <li>✅ Les équipes qui ont commencé par les données mock simples</li>
+                                    <li>✅ L'utilisation de Prism pour débloquer le Front immédiatement</li>
+                                    <li>✅ Les tests écrits en parallèle du code</li>
+                                    <li>✅ La coordination Front ↔ Back sur les formats de réponse</li>
+                                </ul>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h6>Points d'attention pour la suite</h6>
+                                <ul>
+                                    <li>⚠️ Ne pas sous-estimer J3 : La connexion DB prend du temps, prévoyez des marges</li>
+                                    <li>⚠️ Commiter souvent : 3-4 commits minimum par demi-journée</li>
+                                    <li>⚠️ Documenter au fur et à mesure : Pas tout à la fin</li>
+                                    <li>⚠️ Tester avec des données réalistes : 20-30 items mock minimum pour tester la pagination</li>
+                                </ul>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h6>Conseils pour J3</h6>
+                                <ul>
+                                    <li>Commencez par un schéma DB simple, vous pourrez l'enrichir plus tard</li>
+                                    <li>Utilisez des migrations versionnées dès le début</li>
+                                    <li>Créez une base de test séparée (smartcity_test)</li>
+                                    <li>L'équipe Auth est critique : les autres dépendent d'elle pour J4</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="../assets/logo.jpeg" alt="YNOV Campus" class="footer-logo-img">
+                        <span class="footer-logo-text">SmartCity API Platform</span>
+                    </div>
+                    <p class="footer-description">Fil Rouge J2 - Implémentation & Mocks</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="../index.html#programme">Programme</a></li>
+                        <li><a href="../index.html#projet">Projet</a></li>
+                        <li><a href="#atelier">Atelier J2</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Ressources</h3>
+                    <ul>
+                        <li>RFC 7807</li>
+                        <li>Prism Mock</li>
+                        <li>Tests API</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> contact@ynov.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Campus Ynov</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 YNOV Campus. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+
+      <!-- highlight.js pour la coloration syntaxique -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    // Auto-détection et coloration de tous les blocs de code
+    document.addEventListener('DOMContentLoaded', function() {
+      hljs.highlightAll();
+    });
+  </script>
+</body>
+</html>

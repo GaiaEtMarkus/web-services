@@ -6,34 +6,47 @@
     <title>Jour 1 - Fil Rouge | SmartCity API Platform</title>
     <link rel="stylesheet" href="../styles/styles.css">
     <link rel="stylesheet" href="../styles/day1FilRouge.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="../assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
-                <span class="logo-text">SmartCity API Platform</span>
+                <img src="assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+                <span class="logo-text">Web Services</span>
             </div>
-            <ul class="nav-menu" id="nav-menu">
-                <li class="nav-item"><a href="../index.html" class="nav-link">Accueil</a></li>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#accueil" class="nav-link">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#programme" class="nav-link">Programme</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#projet" class="nav-link">Projet SmartCity</a>
+                </li>
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle active">
+                    <a href="#" class="nav-link dropdown-toggle">
                         <i class="fas fa-calendar-alt"></i> Journées
                         <i class="fas fa-chevron-down"></i>
                     </a>
                     <div class="dropdown-menu">
-                        <a href="day1.html" class="dropdown-item">Jour 1 - Théorie</a>
-                        <a href="day1FilRouge.html" class="dropdown-item active">Jour 1 - Fil Rouge</a>
-                        <a href="#" class="dropdown-item disabled">Jour 2 - Théorie (Bientôt)</a>
-                        <a href="#" class="dropdown-item disabled">Jour 2 - Fil Rouge (Bientôt)</a>
+            <a href="pages/day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+            <a href="pages/day1FilRouge.html" class="dropdown-item">Jour 1 - Fil Rouge</a>
+            <a href="pages/day2.html" class="dropdown-item">Jour 2 - Théorie</a>
+            <a href="pages/day2FilRouge.html" class="dropdown-item">Jour 2 - Fil Rouge</a>
+            <a href="pages/day3.html" class="dropdown-item">Jour 3 - Théorie</a>
+            <a href="pages/day3FilRouge.html" class="dropdown-item">Jour 3 - Fil Rouge</a>
                     </div>
                 </li>
-                <li class="nav-item"><a href="../index.html#projet" class="nav-link">Projet</a></li>
-                <li class="nav-item"><a href="../index.html#contact" class="nav-link">Contact</a></li>
+                <li class="nav-item">
+                    <a href="#ressources" class="nav-link">Ressources</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
             </ul>
-            <div class="hamburger" id="hamburger">
+            <div class="hamburger">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -65,7 +78,7 @@
                         <span class="day-number">📋</span>
                         <span class="day-theme">Contexte & Objectifs (13h30-13h50) - 20 min</span>
                     </div>
-                    <div class="day-content" style="max-height: 1000px;">
+                    <div class="day-content">
                         <div class="day-morning">
                             <p>Vous allez construire <strong>SmartCity</strong>, une plateforme d'APIs REST pour une ville intelligente sur 8 demi-journées. Aujourd'hui, nous posons les fondations techniques et contractuelles.</p>
 
@@ -104,7 +117,7 @@
                         <span class="day-number">👥</span>
                         <span class="day-theme">Phase 1 : Constitution & Choix (13h50-14h20) - 30 min</span>
                     </div>
-                    <div class="day-content" style="max-height: 1000px;">
+                    <div class="day-content">
                         <div class="day-morning">
                             <h5>📋 Réunion plénière - Tous ensemble (15 min)</h5>
                             
@@ -343,7 +356,7 @@
                         <span class="day-number">📝</span>
                         <span class="day-theme">Phase 2 : Rédaction Contrat OpenAPI (14h20-15h20) - 60 min</span>
                     </div>
-                    <div class="day-content" style="max-height: 1000px;">
+                    <div class="day-content">
                         <div class="day-morning">
                             <h5>📝 Mini-rappel théorique (5 min)</h5>
                             <p><strong>OpenAPI = Contrat entre Front et Back</strong></p>
@@ -561,7 +574,7 @@ components:
                         <span class="day-number">🏗️</span>
                         <span class="day-theme">Phase 3 : Initialisation Projet (15h35-16h15) - 40 min</span>
                     </div>
-                    <div class="day-content" style="max-height: 1000px;">
+                    <div class="day-content">
                         <div class="day-morning">
                             <h5>🏗️ Setup technique</h5>
                             
@@ -640,7 +653,7 @@ git commit -m "chore: initial project setup with OpenAPI contract"</code></pre>
                         <span class="day-number">📋</span>
                         <span class="day-theme">Phase 4 : Review & Planification (16h15-17h00) - 45 min</span>
                     </div>
-                    <div class="day-content" style="max-height: 1000px;">
+                    <div class="day-content">
                         <div class="day-morning">
                             <h5>📋 Format</h5>
                             <p><strong>Chaque équipe présente (7 min max) :</strong></p>
@@ -825,5 +838,15 @@ git commit -m "chore: initial project setup with OpenAPI contract"</code></pre>
     </footer>
 
     <script src="../script.js"></script>
+
+      <!-- highlight.js pour la coloration syntaxique -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    // Auto-détection et coloration de tous les blocs de code
+    document.addEventListener('DOMContentLoaded', function() {
+      hljs.highlightAll();
+    });
+  </script>
 </body>
 </html>
