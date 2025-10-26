@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../styles/day3.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 </head>
 <body>
   <!-- Navigation -->
@@ -193,9 +194,9 @@
 
               <h5 class="mt-5">Stratégie 1 : Versioning dans l'URI (la plus courante)</h5>
               <div class="code-example">
-                <code>https://api.example.com/v1/users<br>
-                https://api.example.com/v2/users<br>
-                https://api.example.com/v3/users</code>
+                <pre><code class="text">https://api.example.com/v1/users
+https://api.example.com/v2/users
+https://api.example.com/v3/users</code></pre>
               </div>
               
               <p>C'est l'approche la plus répandue et la plus intuitive. La version fait partie de l'URL elle-même.</p>
@@ -221,30 +222,34 @@
 
               <h5 class="mt-5">Implémentation :</h5>
               <div class="code-example">
-                <code>// Node.js/Express<br>
-                const v1Router = express.Router();<br>
-                const v2Router = express.Router();<br><br>
-                v1Router.get('/users/:id', (req, res) => {<br>
-                &nbsp;&nbsp;// Ancienne logique<br>
-                &nbsp;&nbsp;res.json({ id: req.params.id, name: 'Marie' });<br>
-                });<br><br>
-                v2Router.get('/users/:id', (req, res) => {<br>
-                &nbsp;&nbsp;// Nouvelle logique<br>
-                &nbsp;&nbsp;res.json({ <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;id: req.params.id, <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;profile: { name: 'Marie', email: 'marie@example.com' }<br>
-                &nbsp;&nbsp;});<br>
-                });<br><br>
-                app.use('/api/v1', v1Router);<br>
-                app.use('/api/v2', v2Router);</code>
+                <pre><code class="javascript">// Node.js/Express
+const v1Router = express.Router();
+const v2Router = express.Router();
+
+v1Router.get('/users/:id', (req, res) => {
+  // Ancienne logique
+  res.json({ id: req.params.id, name: 'Marie' });
+});
+
+v2Router.get('/users/:id', (req, res) => {
+  // Nouvelle logique
+  res.json({ 
+    id: req.params.id, 
+    profile: { name: 'Marie', email: 'marie@example.com' }
+  });
+});
+
+app.use('/api/v1', v1Router);
+app.use('/api/v2', v2Router);</code></pre>
               </div>
 
               <h5 class="mt-5">Stratégie 2 : Versioning par Header</h5>
               <div class="code-example">
-                <code>GET /users/123<br>
-                Accept: application/vnd.example.v1+json<br><br>
-                GET /users/123<br>
-                Accept: application/vnd.example.v2+json</code>
+                <pre><code class="text">GET /users/123
+Accept: application/vnd.example.v1+json
+
+GET /users/123
+Accept: application/vnd.example.v2+json</code></pre>
               </div>
               
               <p>La version est spécifiée dans un header HTTP, typiquement Accept ou un header custom comme API-Version.</p>
@@ -271,8 +276,8 @@
 
               <h5 class="mt-5">Stratégie 3 : Versioning par Query Parameter</h5>
               <div class="code-example">
-                <code>GET /users/123?version=1<br>
-                GET /users/123?version=2</code>
+                <pre><code class="text">GET /users/123?version=1
+GET /users/123?version=2</code></pre>
               </div>
               
               <p>La version est passée comme un paramètre de requête.</p>
@@ -346,9 +351,9 @@
               </ul>
               
               <div class="code-example">
-                <code>Sunset: Sat, 31 Dec 2025 23:59:59 GMT<br>
-                Deprecation: Sat, 01 Jan 2025 00:00:00 GMT<br>
-                Link: &lt;https://api.example.com/docs/migration-v2-to-v3&gt;; rel="successor-version"</code>
+                <pre><code class="text">Sunset: Sat, 31 Dec 2025 23:59:59 GMT
+Deprecation: Sat, 01 Jan 2025 00:00:00 GMT
+Link: <https://api.example.com/docs/migration-v2-to-v3>; rel="successor-version"</code></pre>
               </div>
               
               <ul>
@@ -370,48 +375,50 @@
               <p>Vous avez une logique métier unique, et des adapters qui transforment les données pour chaque version.</p>
               
               <div class="code-example">
-                <code>// Logique métier (version agnostique)<br>
-                function getUserData(id) {<br>
-                &nbsp;&nbsp;return database.query('SELECT * FROM users WHERE id = ?', [id]);<br>
-                }<br><br>
-                // Adapter v1<br>
-                function transformToV1(userData) {<br>
-                &nbsp;&nbsp;return {<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;id: userData.id,<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;name: userData.full_name,<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;email: userData.email_address<br>
-                &nbsp;&nbsp;};<br>
-                }<br><br>
-                // Adapter v2<br>
-                function transformToV2(userData) {<br>
-                &nbsp;&nbsp;return {<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;id: userData.id,<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;profile: {<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name: userData.full_name,<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;email: userData.email_address,<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;phone: userData.phone_number<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;},<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;metadata: {<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;created_at: userData.created_at,<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;updated_at: userData.updated_at<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                &nbsp;&nbsp;};<br>
-                }</code>
+                <pre><code class="javascript">// Logique métier (version agnostique)
+function getUserData(id) {
+  return database.query('SELECT * FROM users WHERE id = ?', [id]);
+}
+
+// Adapter v1
+function transformToV1(userData) {
+  return {
+    id: userData.id,
+    name: userData.full_name,
+    email: userData.email_address
+  };
+}
+
+// Adapter v2
+function transformToV2(userData) {
+  return {
+    id: userData.id,
+    profile: {
+      name: userData.full_name,
+      email: userData.email_address,
+      phone: userData.phone_number
+    },
+    metadata: {
+      created_at: userData.created_at,
+      updated_at: userData.updated_at
+    }
+  };
+}</code></pre>
               </div>
 
               <h5 class="mt-5">Approche 2 : Feature flags</h5>
               <p>Pour des changements mineurs, utilisez des feature flags dans le code.</p>
               
               <div class="code-example">
-                <code>function getUser(id, apiVersion) {<br>
-                &nbsp;&nbsp;const user = database.query('SELECT * FROM users WHERE id = ?', [id]);<br>
-                &nbsp;&nbsp;<br>
-                &nbsp;&nbsp;if (apiVersion === 'v1') {<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;return { id: user.id, name: user.full_name };<br>
-                &nbsp;&nbsp;} else {<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;return { id: user.id, profile: { name: user.full_name, email: user.email }};<br>
-                &nbsp;&nbsp;}<br>
-                }</code>
+                <pre><code class="javascript">function getUser(id, apiVersion) {
+  const user = database.query('SELECT * FROM users WHERE id = ?', [id]);
+  
+  if (apiVersion === 'v1') {
+    return { id: user.id, name: user.full_name };
+  } else {
+    return { id: user.id, profile: { name: user.full_name, email: user.email }};
+  }
+}</code></pre>
               </div>
               
               <div class="highlight-box">
@@ -425,15 +432,17 @@
               <p>Utilisez le header Deprecation (RFC 8594) :</p>
               
               <div class="code-example">
-                <code>GET /users/123/legacy-stats<br><br>
-                HTTP/1.1 200 OK<br>
-                Deprecation: Sat, 01 Jan 2026 00:00:00 GMT<br>
-                Link: &lt;https://api.example.com/users/123/analytics&gt;; rel="alternate"<br>
-                Sunset: Sat, 01 Jul 2026 23:59:59 GMT<br><br>
-                {<br>
-                &nbsp;&nbsp;"data": "...",<br>
-                &nbsp;&nbsp;"deprecation_notice": "This endpoint is deprecated. Please migrate to /users/{id}/analytics"<br>
-                }</code>
+                <pre><code class="text">GET /users/123/legacy-stats
+
+HTTP/1.1 200 OK
+Deprecation: Sat, 01 Jan 2026 00:00:00 GMT
+Link: <https://api.example.com/users/123/analytics>; rel="alternate"
+Sunset: Sat, 01 Jul 2026 23:59:59 GMT
+
+{
+  "data": "...",
+  "deprecation_notice": "This endpoint is deprecated. Please migrate to /users/{id}/analytics"
+}</code></pre>
               </div>
               
               <p>Documentez clairement l'alternative et la timeline.</p>
@@ -473,29 +482,30 @@
               <p>Voici un exemple complet et détaillé pour le service Events de SmartCity :</p>
               
               <div class="code-example">
-                <code>openapi: 3.0.3<br>
-info:<br>
-&nbsp;&nbsp;title: SmartCity Events API<br>
-&nbsp;&nbsp;version: 1.0.0<br>
-&nbsp;&nbsp;description: |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API pour gérer les événements culturels de la ville.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;## Authentification<br>
-&nbsp;&nbsp;&nbsp;&nbsp;La plupart des endpoints nécessitent une authentification JWT.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Obtenez un token via /auth/login et incluez-le dans le header Authorization.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;## Rate Limiting<br>
-&nbsp;&nbsp;&nbsp;&nbsp;100 requêtes par minute par IP pour les endpoints publics.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;1000 requêtes par minute pour les utilisateurs authentifiés.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;contact:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name: Équipe Events<br>
-&nbsp;&nbsp;&nbsp;&nbsp;email: events@smartcity.local<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url: https://smartcity.local/support<br>
-&nbsp;&nbsp;license:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name: MIT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url: https://opensource.org/licenses/MIT<br><br>
-servers:<br>
+                <pre><code class="yaml">openapi: 3.0.3
+info:
+  title: SmartCity Events API
+  version: 1.0.0
+  description: |
+    API pour gérer les événements culturels de la ville.
+    
+    ## Authentification
+    La plupart des endpoints nécessitent une authentification JWT.
+    Obtenez un token via /auth/login et incluez-le dans le header Authorization.
+    
+    ## Rate Limiting
+    100 requêtes par minute par IP pour les endpoints publics.
+    1000 requêtes par minute pour les utilisateurs authentifiés.
+    
+  contact:
+    name: Équipe Events
+    email: events@smartcity.local
+    url: https://smartcity.local/support
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
 &nbsp;&nbsp;- url: https://api.smartcity.local/v1<br>
 &nbsp;&nbsp;&nbsp;&nbsp;description: Production<br>
 &nbsp;&nbsp;- url: https://api-staging.smartcity.local/v1<br>
@@ -529,13 +539,14 @@ servers:<br>
 
               <h5 class="mt-5">Intégration Node.js/Express :</h5>
               <div class="code-example">
-                <code>const swaggerUi = require('swagger-ui-express');<br>
-const YAML = require('yamljs');<br>
-const swaggerDocument = YAML.load('./openapi.yaml');<br><br>
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {<br>
-&nbsp;&nbsp;customCss: '.swagger-ui .topbar { display: none }',<br>
-&nbsp;&nbsp;customSiteTitle: "SmartCity API Documentation"<br>
-}));</code>
+                <pre><code class="javascript">const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./openapi.yaml');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: "SmartCity API Documentation"
+}));</code></pre>
               </div>
               
               <p>Allez sur `http://localhost:3000/api-docs` et vous avez votre documentation interactive.</p>
@@ -544,19 +555,20 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {<br>
               <p>Alternative plus moderne visuellement, optimisée pour la lecture plutôt que pour tester.</p>
               
               <div class="code-example">
-                <code>const redoc = require('redoc-express');<br><br>
-app.get('/docs', redoc({<br>
-&nbsp;&nbsp;title: 'SmartCity API Documentation',<br>
-&nbsp;&nbsp;specUrl: '/openapi.yaml',<br>
-&nbsp;&nbsp;nonce: '',<br>
-&nbsp;&nbsp;redocOptions: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;theme: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;colors: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;primary: { main: '#2563eb' }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;}<br>
-}));</code>
+                <pre><code class="javascript">const redoc = require('redoc-express');
+
+app.get('/docs', redoc({
+  title: 'SmartCity API Documentation',
+  specUrl: '/openapi.yaml',
+  nonce: '',
+  redocOptions: {
+    theme: {
+      colors: {
+        primary: { main: '#2563eb' }
+      }
+    }
+  }
+}));</code></pre>
               </div>
 
               <h5 class="mt-5">Comparaison des outils</h5>
@@ -613,31 +625,31 @@ app.get('/docs', redoc({<br>
                 <div class="bad-example">
                   <h6>❌ Mauvais (juste un schéma abstrait):</h6>
                   <div class="code-example">
-                    <code>schema:<br>
-&nbsp;&nbsp;type: object<br>
-&nbsp;&nbsp;properties:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;title: string<br>
-&nbsp;&nbsp;&nbsp;&nbsp;price: number</code>
+                    <pre><code class="yaml">schema:
+  type: object
+  properties:
+    title: string
+    price: number</code></pre>
                   </div>
                 </div>
                 <div class="good-example">
                   <h6>✅ Bon (schéma + exemples multiples):</h6>
                   <div class="code-example">
-                    <code>schema:<br>
-&nbsp;&nbsp;$ref: '#/components/schemas/EventInput'<br>
-examples:<br>
-&nbsp;&nbsp;concert:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;summary: Création d'un concert payant<br>
-&nbsp;&nbsp;&nbsp;&nbsp;value:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: "Concert de Rock"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: "concert"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;price: 25.00<br>
-&nbsp;&nbsp;exposition:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;summary: Exposition gratuite<br>
-&nbsp;&nbsp;&nbsp;&nbsp;value:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: "Photos du Monde"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: "exposition"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;price: 0</code>
+                    <pre><code class="yaml">schema:
+  $ref: '#/components/schemas/EventInput'
+examples:
+  concert:
+    summary: Création d'un concert payant
+    value:
+      title: "Concert de Rock"
+      type: "concert"
+      price: 25.00
+  exposition:
+    summary: Exposition gratuite
+    value:
+      title: "Photos du Monde"
+      type: "exposition"
+      price: 0</code></pre>
                   </div>
                 </div>
               </div>
@@ -646,43 +658,43 @@ examples:<br>
               <p>OpenAPI supporte le Markdown dans les descriptions. Utilisez-le !</p>
               
               <div class="code-example">
-                <code>description: |<br>
-&nbsp;&nbsp;## Authentification requise<br>
-&nbsp;&nbsp;<br>
-&nbsp;&nbsp;Cet endpoint nécessite un JWT token valide.<br>
-&nbsp;&nbsp;<br>
-&nbsp;&nbsp;## Permissions<br>
-&nbsp;&nbsp;<br>
-&nbsp;&nbsp;- **user** : Peut créer des événements<br>
-&nbsp;&nbsp;- **admin** : Peut créer et supprimer<br>
-&nbsp;&nbsp;<br>
-&nbsp;&nbsp;## Limites<br>
-&nbsp;&nbsp;<br>
-&nbsp;&nbsp;- Maximum 100 événements par jour par utilisateur<br>
-&nbsp;&nbsp;- Titre entre 3 et 200 caractères</code>
+                <pre><code class="yaml">description: |
+  ## Authentification requise
+  
+  Cet endpoint nécessite un JWT token valide.
+  
+  ## Permissions
+  
+  - **user** : Peut créer des événements
+  - **admin** : Peut créer et supprimer
+  
+  ## Limites
+  
+  - Maximum 100 événements par jour par utilisateur
+  - Titre entre 3 et 200 caractères</code></pre>
               </div>
 
               <h5 class="mt-5">4. Documentez TOUS les codes de réponse</h5>
               <p>Ne documentez pas seulement le 200 Success. Documentez les erreurs aussi !</p>
               
               <div class="code-example">
-                <code>responses:<br>
-&nbsp;&nbsp;'200':<br>
-&nbsp;&nbsp;&nbsp;&nbsp;description: Succès<br>
-&nbsp;&nbsp;'400':<br>
-&nbsp;&nbsp;&nbsp;&nbsp;description: JSON invalide ou paramètres manquants<br>
-&nbsp;&nbsp;'401':<br>
-&nbsp;&nbsp;&nbsp;&nbsp;description: Token manquant ou invalide<br>
-&nbsp;&nbsp;'403':<br>
-&nbsp;&nbsp;&nbsp;&nbsp;description: Permissions insuffisantes (rôle user au lieu d'admin)<br>
-&nbsp;&nbsp;'404':<br>
-&nbsp;&nbsp;&nbsp;&nbsp;description: Événement non trouvé<br>
-&nbsp;&nbsp;'422':<br>
-&nbsp;&nbsp;&nbsp;&nbsp;description: Validation échouée (titre trop court, date passée...)<br>
-&nbsp;&nbsp;'429':<br>
-&nbsp;&nbsp;&nbsp;&nbsp;description: Trop de requêtes (rate limit dépassé)<br>
-&nbsp;&nbsp;'500':<br>
-&nbsp;&nbsp;&nbsp;&nbsp;description: Erreur serveur</code>
+                <pre><code class="yaml">responses:
+  '200':
+    description: Succès
+  '400':
+    description: JSON invalide ou paramètres manquants
+  '401':
+    description: Token manquant ou invalide
+  '403':
+    description: Permissions insuffisantes (rôle user au lieu d'admin)
+  '404':
+    description: Événement non trouvé
+  '422':
+    description: Validation échouée (titre trop court, date passée...)
+  '429':
+    description: Trop de requêtes (rate limit dépassé)
+  '500':
+    description: Erreur serveur</code></pre>
               </div>
 
               <h5 class="mt-5">5. Réutilisez avec $ref</h5>
@@ -692,30 +704,30 @@ examples:<br>
                 <div class="bad-example">
                   <h6>❌ Mauvais - répétition</h6>
                   <div class="code-example">
-                    <code>paths:<br>
-&nbsp;&nbsp;/events/{id}:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;get:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;responses:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'404':<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;application/problem+json:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;schema:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: string<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: string<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status: integer</code>
+                    <pre><code class="yaml">paths:
+  /events/{id}:
+    get:
+      responses:
+        '404':
+          content:
+            application/problem+json:
+              schema:
+                type: object
+                properties:
+                  type: string
+                  title: string
+                  status: integer</code></pre>
                   </div>
                 </div>
                 <div class="good-example">
                   <h6>✅ Bon - réutilisation</h6>
                   <div class="code-example">
-                    <code>paths:<br>
-&nbsp;&nbsp;/events/{id}:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;get:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;responses:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'404':<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$ref: '#/components/responses/NotFound'</code>
+                    <pre><code class="yaml">paths:
+  /events/{id}:
+    get:
+      responses:
+        '404':
+          $ref: '#/components/responses/NotFound'</code></pre>
                   </div>
                 </div>
               </div>
@@ -724,28 +736,31 @@ examples:<br>
               <p>Votre fichier OpenAPI doit être versionné dans Git avec votre code. À chaque commit qui change l'API, le fichier OpenAPI change aussi.</p>
               
               <div class="code-example">
-                <code>git log openapi.yaml<br>
-commit abc123 - feat: add max_attendees field to events<br>
-commit def456 - fix: correct validation rules for postal_code<br>
-commit ghi789 - feat: add DELETE /events/{id} endpoint</code>
+                <pre><code class="text">git log openapi.yaml
+commit abc123 - feat: add max_attendees field to events
+commit def456 - fix: correct validation rules for postal_code
+commit ghi789 - feat: add DELETE /events/{id} endpoint</code></pre>
               </div>
 
               <h5 class="mt-5">7. Changelog visible</h5>
               <p>Maintenez un changelog pour que les développeurs voient ce qui a changé.</p>
               
               <div class="code-example">
-                <code>## Changelog<br><br>
-### v1.2.0 (2025-11-15)<br>
-**New features:**<br>
-- Nouveau champ `tags` sur les événements<br>
-- Support filtrage par tag: `?tags=musique,jazz`<br>
-- Nouveau endpoint `GET /events/popular`<br><br>
-**Bug fixes:**<br>
-- Correction validation code postal (accepte maintenant 5 chiffres)<br><br>
-### v1.1.0 (2025-09-01)<br>
-**New features:**<br>
-- Ajout champ `image_url` optionnel<br>
-- Support tri par prix: `?sort=price` ou `?sort=-price`</code>
+                <pre><code class="markdown">## Changelog
+
+### v1.2.0 (2025-11-15)
+**New features:**
+- Nouveau champ `tags` sur les événements
+- Support filtrage par tag: `?tags=musique,jazz`
+- Nouveau endpoint `GET /events/popular`
+
+**Bug fixes:**
+- Correction validation code postal (accepte maintenant 5 chiffres)
+
+### v1.1.0 (2025-09-01)
+**New features:**
+- Ajout champ `image_url` optionnel
+- Support tri par prix: `?sort=price` ou `?sort=-price`</code></pre>
               </div>
 
               <h4 class="mt-5"><i class="fas fa-shield-alt"></i> Validation automatique</h4>
@@ -755,17 +770,19 @@ commit ghi789 - feat: add DELETE /events/{id} endpoint</code>
               <p>Des bibliothèques comme express-openapi-validator valident automatiquement toutes les requêtes entrantes.</p>
               
               <div class="code-example">
-                <code>const OpenApiValidator = require('express-openapi-validator');<br><br>
-app.use(<br>
-&nbsp;&nbsp;OpenApiValidator.middleware({<br>
-&nbsp;&nbsp;&nbsp;&nbsp;apiSpec: './openapi.yaml',<br>
-&nbsp;&nbsp;&nbsp;&nbsp;validateRequests: true,     // Valide les requêtes entrantes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;validateResponses: true,     // Valide les réponses sortantes (dev uniquement)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;validateSecurity: true,      // Valide l'authentification<br>
-&nbsp;&nbsp;})<br>
-);<br><br>
-// Si une requête ne match pas la spec, erreur 400 automatique<br>
-// Si une réponse ne match pas la spec, erreur 500 + log détaillé</code>
+                <pre><code class="javascript">const OpenApiValidator = require('express-openapi-validator');
+
+app.use(
+  OpenApiValidator.middleware({
+    apiSpec: './openapi.yaml',
+    validateRequests: true,     // Valide les requêtes entrantes
+    validateResponses: true,     // Valide les réponses sortantes (dev uniquement)
+    validateSecurity: true,      // Valide l'authentification
+  })
+);
+
+// Si une requête ne match pas la spec, erreur 400 automatique
+// Si une réponse ne match pas la spec, erreur 500 + log détaillé</code></pre>
               </div>
               
               <p>Vous n'avez plus besoin d'écrire manuellement la validation de chaque champ !</p>
@@ -774,21 +791,22 @@ app.use(<br>
               <p>Testez que votre implémentation respecte le contrat OpenAPI.</p>
               
               <div class="code-example">
-                <code>const request = require('supertest');<br>
-const validator = require('swagger-parser');<br><br>
-describe('Contract Tests', () => {<br>
-&nbsp;&nbsp;it('should validate OpenAPI spec', async () => {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;await validator.validate('./openapi.yaml');<br>
-&nbsp;&nbsp;});<br>
-&nbsp;&nbsp;<br>
-&nbsp;&nbsp;it('GET /events should match spec', async () => {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;const res = await request(app).get('/api/v1/events');<br>
-&nbsp;&nbsp;&nbsp;&nbsp;expect(res.status).toBe(200);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;expect(res.body).toHaveProperty('data');<br>
-&nbsp;&nbsp;&nbsp;&nbsp;expect(res.body).toHaveProperty('meta');<br>
-&nbsp;&nbsp;&nbsp;&nbsp;expect(Array.isArray(res.body.data)).toBe(true);<br>
-&nbsp;&nbsp;});<br>
-});</code>
+                <pre><code class="javascript">const request = require('supertest');
+const validator = require('swagger-parser');
+
+describe('Contract Tests', () => {
+  it('should validate OpenAPI spec', async () => {
+    await validator.validate('./openapi.yaml');
+  });
+  
+  it('GET /events should match spec', async () => {
+    const res = await request(app).get('/api/v1/events');
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty('data');
+    expect(res.body).toHaveProperty('meta');
+    expect(Array.isArray(res.body.data)).toBe(true);
+  });
+});</code></pre>
               </div>
             </div>
           </div>
@@ -1104,52 +1122,52 @@ describe('Contract Tests', () => {<br>
               <p>Voici comment ajouter des liens basiques dans votre API Node.js :</p>
               
               <div class="code-example">
-                <code>// Helper pour générer les liens<br>
-function addLinks(event, baseUrl, user) {<br>
-&nbsp;&nbsp;event._links = {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;self: `${baseUrl}/events/${event.id}`<br>
-&nbsp;&nbsp;};<br>
-&nbsp;&nbsp;<br>
-&nbsp;&nbsp;// Toujours inclure le lien vers les participants<br>
-&nbsp;&nbsp;event._links.attendees = `${baseUrl}/events/${event.id}/attendees`;<br>
-&nbsp;&nbsp;<br>
-&nbsp;&nbsp;// Lien vers le créateur<br>
-&nbsp;&nbsp;if (event.creator_id) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;event._links.creator = `${baseUrl}/users/${event.creator_id}`;<br>
-&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;<br>
-&nbsp;&nbsp;// Liens conditionnels selon l'état de l'événement<br>
-&nbsp;&nbsp;if (event.status === 'open') {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;// Peut-on s'inscrire ? Vérifier qu'il reste de la place<br>
-&nbsp;&nbsp;&nbsp;&nbsp;if (!event.max_attendees || event.current_attendees < event.max_attendees) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event._links.register = {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;href: `${baseUrl}/events/${event.id}/register`,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method: 'POST',<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: 'S\'inscrire à cet événement'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;// Peut-on modifier ? Vérifier les permissions<br>
-&nbsp;&nbsp;&nbsp;&nbsp;if (user && (user.id === event.creator_id || user.role === 'admin')) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event._links.update = {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;href: `${baseUrl}/events/${event.id}`,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method: 'PATCH',<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: 'Modifier cet événement'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;// Peut-on supprimer ? Vérifier les permissions<br>
-&nbsp;&nbsp;&nbsp;&nbsp;if (user && (user.id === event.creator_id || user.role === 'admin')) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event._links.delete = {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;href: `${baseUrl}/events/${event.id}`,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method: 'DELETE',<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: 'Supprimer cet événement'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;<br>
-&nbsp;&nbsp;return event;<br>
-}</code>
+                <pre><code class="javascript">// Helper pour générer les liens
+function addLinks(event, baseUrl, user) {
+  event._links = {
+    self: `${baseUrl}/events/${event.id}`
+  };
+  
+  // Toujours inclure le lien vers les participants
+  event._links.attendees = `${baseUrl}/events/${event.id}/attendees`;
+  
+  // Lien vers le créateur
+  if (event.creator_id) {
+    event._links.creator = `${baseUrl}/users/${event.creator_id}`;
+  }
+  
+  // Liens conditionnels selon l'état de l'événement
+  if (event.status === 'open') {
+    // Peut-on s'inscrire ? Vérifier qu'il reste de la place
+    if (!event.max_attendees || event.current_attendees < event.max_attendees) {
+      event._links.register = {
+        href: `${baseUrl}/events/${event.id}/register`,
+        method: 'POST',
+        title: 'S\'inscrire à cet événement'
+      };
+    }
+    
+    // Peut-on modifier ? Vérifier les permissions
+    if (user && (user.id === event.creator_id || user.role === 'admin')) {
+      event._links.update = {
+        href: `${baseUrl}/events/${event.id}`,
+        method: 'PATCH',
+        title: 'Modifier cet événement'
+      };
+    }
+    
+    // Peut-on supprimer ? Vérifier les permissions
+    if (user && (user.id === event.creator_id || user.role === 'admin')) {
+      event._links.delete = {
+        href: `${baseUrl}/events/${event.id}`,
+        method: 'DELETE',
+        title: 'Supprimer cet événement'
+      };
+    }
+  }
+  
+  return event;
+}</code></pre>
               </div>
 
               <h4 class="mt-5"><i class="fas fa-lightbulb"></i> Cas d'usage réels</h4>
@@ -1161,27 +1179,27 @@ function addLinks(event, baseUrl, user) {<br>
                 <div class="bad-example">
                   <h6>❌ Logique en dur côté client</h6>
                   <div class="code-example">
-                    <code>if (event.status === 'open' && event.current_attendees < event.max_attendees) {<br>
-&nbsp;&nbsp;showButton('S\'inscrire');<br>
-}<br>
-if (user.id === event.creator_id || user.role === 'admin') {<br>
-&nbsp;&nbsp;showButton('Modifier');<br>
-&nbsp;&nbsp;showButton('Supprimer');<br>
-}</code>
+                    <pre><code class="javascript">if (event.status === 'open' && event.current_attendees < event.max_attendees) {
+  showButton('S\'inscrire');
+}
+if (user.id === event.creator_id || user.role === 'admin') {
+  showButton('Modifier');
+  showButton('Supprimer');
+}</code></pre>
                   </div>
                 </div>
                 <div class="good-example">
                   <h6>✅ Logique côté serveur</h6>
                   <div class="code-example">
-                    <code>if (event._links.register) {<br>
-&nbsp;&nbsp;showButton('S\'inscrire', event._links.register.href);<br>
-}<br>
-if (event._links.update) {<br>
-&nbsp;&nbsp;showButton('Modifier', event._links.update.href);<br>
-}<br>
-if (event._links.delete) {<br>
-&nbsp;&nbsp;showButton('Supprimer', event._links.delete.href);<br>
-}</code>
+                    <pre><code class="javascript">if (event._links.register) {
+  showButton('S\'inscrire', event._links.register.href);
+}
+if (event._links.update) {
+  showButton('Modifier', event._links.update.href);
+}
+if (event._links.delete) {
+  showButton('Supprimer', event._links.delete.href);
+}</code></pre>
                   </div>
                 </div>
               </div>
@@ -1300,9 +1318,6 @@ if (event._links.delete) {<br>
   </footer>
 
   <script src="../script.js"></script>
-  
-  <!-- highlight.js pour la coloration syntaxique -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script>
     // Auto-détection et coloration de tous les blocs de code

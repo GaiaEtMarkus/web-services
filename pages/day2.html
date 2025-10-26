@@ -191,17 +191,17 @@
                 <div class="comparison-examples">
                   <div class="bad-example">
                     <h6>❌ Mauvais design (orienté actions)</h6>
-                    <code>POST /createUser<br>
-                    POST /deleteUser?id=123<br>
-                    GET /getUserById?id=123<br>
-                    POST /updateUserEmail</code>
+                    <pre><code class="text">POST /createUser
+POST /deleteUser?id=123
+GET /getUserById?id=123
+POST /updateUserEmail</code></pre>
                   </div>
                   <div class="good-example">
                     <h6>✅ Bon design (orienté ressources)</h6>
-                    <code>POST /users          (créer)<br>
-                    DELETE /users/123    (supprimer)<br>
-                    GET /users/123       (lire)<br>
-                    PATCH /users/123     (modifier)</code>
+                    <pre><code class="text">POST /users          (créer)
+DELETE /users/123    (supprimer)
+GET /users/123       (lire)
+PATCH /users/123     (modifier)</code></pre>
                   </div>
                 </div>
                 <p>Dans le bon design, la ressource est /users et /users/123. Les actions sont exprimées par les verbes HTTP. C'est plus propre, plus cohérent, plus intuitif.</p>
@@ -226,11 +226,13 @@
               <div class="code-comparison">
                 <div class="good">
                   <h6>✅ Bon</h6>
-                  <code>GET /users/123<br>GET /products</code>
+                  <pre><code class="text">GET /users/123
+GET /products</code></pre>
                 </div>
                 <div class="bad">
                   <h6>❌ Mauvais</h6>
-                  <code>GET /user/123<br>GET /product</code>
+                  <pre><code class="text">GET /user/123
+GET /product</code></pre>
                 </div>
               </div>
               
@@ -242,11 +244,15 @@
               <div class="code-comparison">
                 <div class="good">
                   <h6>✅ Bon</h6>
-                  <code>GET /users<br>POST /orders<br>DELETE /products/123</code>
+                  <pre><code class="text">GET /users
+POST /orders
+DELETE /products/123</code></pre>
                 </div>
                 <div class="bad">
                   <h6>❌ Mauvais</h6>
-                  <code>GET /getUsers<br>POST /createOrder<br>DELETE /deleteProduct/123</code>
+                  <pre><code class="text">GET /getUsers
+POST /createOrder
+DELETE /deleteProduct/123</code></pre>
                 </div>
               </div>
               
@@ -258,11 +264,12 @@
               <div class="code-comparison">
                 <div class="good">
                   <h6>✅ Bon</h6>
-                  <code>/users/123/order-history</code>
+                  <pre><code class="text">/users/123/order-history</code></pre>
                 </div>
                 <div class="bad">
                   <h6>❌ Mauvais</h6>
-                  <code>/users/123/orderHistory<br>/users/123/order_history</code>
+                  <pre><code class="text">/users/123/orderHistory
+/users/123/order_history</code></pre>
                 </div>
               </div>
               
@@ -272,9 +279,9 @@
               <p>Quand une ressource appartient clairement à une autre, utilisez l'imbrication.</p>
               
               <div class="code-example">
-                <code>GET /users/123/orders          # Les commandes de l'utilisateur 123<br>
-                GET /orders/456/items          # Les articles de la commande 456<br>
-                GET /posts/789/comments        # Les commentaires du post 789</code>
+                <pre><code class="text">GET /users/123/orders          # Les commandes de l'utilisateur 123
+GET /orders/456/items          # Les articles de la commande 456
+GET /posts/789/comments        # Les commentaires du post 789</code></pre>
               </div>
               
               <p>Mais attention à ne pas trop imbriquer. Maximum 2-3 niveaux. Si vous vous retrouvez avec /users/123/orders/456/items/789/options/012, c'est ingérable. Dans ce cas, mettez les ressources au même niveau et utilisez des query parameters pour filtrer.</p>
@@ -293,12 +300,12 @@
               <h4 class="mt-5"><i class="fas fa-route"></i> Structure des URLs : clarté et cohérence</h4>
               <div class="pattern-box">
                 <h5 class="mt-5">Pattern de base pour les collections</h5>
-                <code>GET    /resources              # Liste toutes les ressources<br>
-                POST   /resources              # Crée une nouvelle ressource<br>
-                GET    /resources/{id}         # Récupère une ressource spécifique<br>
-                PUT    /resources/{id}         # Remplace complètement la ressource<br>
-                PATCH  /resources/{id}         # Modifie partiellement la ressource<br>
-                DELETE /resources/{id}         # Supprime la ressource</code>
+                <pre><code class="text">GET    /resources              # Liste toutes les ressources
+POST   /resources              # Crée une nouvelle ressource
+GET    /resources/{id}         # Récupère une ressource spécifique
+PUT    /resources/{id}         # Remplace complètement la ressource
+PATCH  /resources/{id}         # Modifie partiellement la ressource
+DELETE /resources/{id}         # Supprime la ressource</code></pre>
               </div>
               
               <p>C'est le pattern fondamental. Chaque collection dans votre API devrait suivre ce pattern.</p>
@@ -310,9 +317,9 @@
               Au lieu de voir une action comme un verbe, voyez-la comme une sous-ressource.</p>
               
               <div class="code-example">
-                <code>POST /orders/123/payment        # Payer une commande<br>
-                POST /users/456/activation      # Activer un utilisateur<br>
-                POST /articles/789/publication  # Publier un article</code>
+                <pre><code class="text">POST /orders/123/payment        # Payer une commande
+POST /users/456/activation      # Activer un utilisateur
+POST /articles/789/publication  # Publier un article</code></pre>
               </div>
               
               <p>Ici, payment, activation, publication sont modélisés comme des sous-ressources. Vous créez un paiement, vous créez une activation, vous créez une publication.</p>
@@ -321,9 +328,9 @@
               Quand vraiment l'action ne peut pas être modélisée comme une ressource :</p>
               
               <div class="code-example">
-                <code>POST /users/123/send-reset-email<br>
-                POST /cart/calculate-shipping<br>
-                POST /reports/generate</code>
+                <pre><code class="text">POST /users/123/send-reset-email
+POST /cart/calculate-shipping
+POST /reports/generate</code></pre>
               </div>
               
               <p>C'est moins "pur" REST, mais c'est pragmatique. Mieux vaut une API claire avec quelques verbes qu'une API alambiquée qui force tout dans le moule CRUD.</p>
@@ -357,14 +364,14 @@
               <div class="relation-examples">
                 <div class="relation-approach">
                   <h6>Option 1 : Sous-ressource dans les deux sens</h6>
-                  <code>GET /students/123/courses       # Les cours de l'étudiant 123<br>
-                  GET /courses/456/students       # Les étudiants du cours 456</code>
+                  <pre><code class="text">GET /students/123/courses       # Les cours de l'étudiant 123
+GET /courses/456/students       # Les étudiants du cours 456</code></pre>
                 </div>
                 <div class="relation-approach">
                   <h6>Option 2 : Ressource intermédiaire</h6>
-                  <code>GET /enrollments?student_id=123    # Toutes les inscriptions de l'étudiant 123<br>
-                  GET /enrollments?course_id=456     # Toutes les inscriptions au cours 456<br>
-                  POST /enrollments                  # Créer une nouvelle inscription</code>
+                  <pre><code class="text">GET /enrollments?student_id=123    # Toutes les inscriptions de l'étudiant 123
+GET /enrollments?course_id=456     # Toutes les inscriptions au cours 456
+POST /enrollments                  # Créer une nouvelle inscription</code></pre>
                 </div>
               </div>
               
@@ -374,7 +381,7 @@
               <p>Parfois, le client veut la ressource principale ET les ressources liées en une seule requête. Utilisez un query parameter include ou expand.</p>
               
               <div class="code-example">
-                <code>GET /users/123?include=orders,profile</code>
+                <pre><code class="text">GET /users/123?include=orders,profile</code></pre>
               </div>
               
               <p>Réponse :</p>
@@ -408,11 +415,12 @@
               <p><strong>Cas classique :</strong> création d'utilisateur.</p>
               
               <div class="code-example">
-                <code>POST /users<br>
-                Body: {"name": "Marie", "email": "marie@example.com"}<br><br>
-                Réponse 201 Created:<br>
-                Location: /users/550e8400-e29b-41d4-a716-446655440000<br>
-                Body: {"id": "550e8400...", "name": "Marie", ...}</code>
+                <pre><code class="text">POST /users
+Body: {"name": "Marie", "email": "marie@example.com"}
+
+Réponse 201 Created:
+Location: /users/550e8400-e29b-41d4-a716-446655440000
+Body: {"id": "550e8400...", "name": "Marie", ...}</code></pre>
               </div>
               
               <p>Le serveur a généré l'ID (UUID). On utilise POST.</p>
@@ -420,8 +428,8 @@
               <p><strong>Cas rare :</strong> création avec ID fourni par le client.</p>
               
               <div class="code-example">
-                <code>PUT /users/marie-dubois<br>
-                Body: {"name": "Marie", "email": "marie@example.com"}</code>
+                <pre><code class="text">PUT /users/marie-dubois
+Body: {"name": "Marie", "email": "marie@example.com"}</code></pre>
               </div>
               
               <p>Le client choisit l'ID (ici marie-dubois comme username). On utilise PUT. Si la ressource existe déjà, elle est remplacée (idempotence de PUT).</p>
@@ -433,8 +441,8 @@
               Vous envoyez uniquement les champs à modifier.</p>
               
               <div class="code-example">
-                <code>PATCH /users/123<br>
-                Body: {"email": "new-email@example.com"}</code>
+                <pre><code class="text">PATCH /users/123
+Body: {"email": "new-email@example.com"}</code></pre>
               </div>
               
               <p>Le serveur merge ce JSON avec la ressource existante. Simple, mais limité : vous ne pouvez pas supprimer un champ (mettre à null), vous ne pouvez pas modifier des éléments dans un tableau précisément.</p>
@@ -443,14 +451,14 @@
               Format standardisé (RFC 6902) qui permet des opérations précises.</p>
               
               <div class="code-example">
-                <code>PATCH /users/123<br>
-                Content-Type: application/json-patch+json<br>
-                Body:<br>
-                [<br>
-                  {"op": "replace", "path": "/email", "value": "new@example.com"},<br>
-                  {"op": "add", "path": "/roles/-", "value": "admin"},<br>
-                  {"op": "remove", "path": "/temporary_field"}<br>
-                ]</code>
+                <pre><code class="text">PATCH /users/123
+Content-Type: application/json-patch+json
+Body:
+[
+  {"op": "replace", "path": "/email", "value": "new@example.com"},
+  {"op": "add", "path": "/roles/-", "value": "admin"},
+  {"op": "remove", "path": "/temporary_field"}
+]</code></pre>
               </div>
               
               <p>Opérations : add, remove, replace, move, copy, test. Très puissant, mais plus complexe.</p>
@@ -538,8 +546,8 @@
 
               <h5 class="mt-5">Pagination offset-based (classique)</h5>
               <div class="code-example">
-                <code>GET /products?page=1&per_page=20<br>
-                GET /products?offset=40&limit=20</code>
+                <pre><code class="text">GET /products?page=1&per_page=20
+GET /products?offset=40&limit=20</code></pre>
               </div>
               
               <p>Deux variantes. Première : numéro de page + taille de page. Deuxième : offset (nombre d'éléments à sauter) + limit (nombre à récupérer).</p>
@@ -587,10 +595,10 @@
               <p>Utilisez des query parameters.</p>
               
               <div class="code-example">
-                <code>GET /products?category=electronics<br>
-                GET /products?min_price=100&max_price=500<br>
-                GET /products?in_stock=true<br>
-                GET /users?status=active&role=admin</code>
+                <pre><code class="text">GET /products?category=electronics
+GET /products?min_price=100&max_price=500
+GET /products?in_stock=true
+GET /users?status=active&role=admin</code></pre>
               </div>
               
               <p>Convention : le nom du query parameter correspond au nom du champ. Simple et intuitif.</p>
@@ -606,17 +614,17 @@
 
               <h5 class="mt-5">Recherche textuelle</h5>
               <div class="code-example">
-                <code>GET /products?search=laptop<br>
-                GET /users?q=marie</code>
+                <pre><code class="text">GET /products?search=laptop
+GET /users?q=marie</code></pre>
               </div>
               
               <p>search ou q pour une recherche full-text. Le serveur cherche dans plusieurs champs (nom, description, tags...).</p>
 
               <h5 class="mt-5">Tri</h5>
               <div class="code-example">
-                <code>GET /products?sort=price            # Tri ascendant par prix<br>
-                GET /products?sort=-price           # Tri descendant par prix (le - indique desc)<br>
-                GET /products?sort=category,price   # Tri multiple : par catégorie puis prix</code>
+                <pre><code class="text">GET /products?sort=price            # Tri ascendant par prix
+GET /products?sort=-price           # Tri descendant par prix (le - indique desc)
+GET /products?sort=category,price   # Tri multiple : par catégorie puis prix</code></pre>
               </div>
               
               <p>Convention : - préfixe pour descendant, , pour séparer plusieurs critères.</p>
@@ -754,29 +762,30 @@
               <p>Créez des fonctions helper réutilisables pour générer vos erreurs.</p>
               
               <div class="code-example">
-                <code>// Node.js/Express exemple<br>
-                function problemDetails(type, title, status, detail, instance, extra = {}) {<br>
-                  return {<br>
-                    type: `https://api.example.com/errors/${type}`,<br>
-                    title,<br>
-                    status,<br>
-                    detail,<br>
-                    instance,<br>
-                    correlation_id: uuidv4(),<br>
-                    ...extra<br>
-                  };<br>
-                }<br><br>
-                // Utilisation<br>
-                res.status(422)<br>
-                   .type('application/problem+json')<br>
-                   .json(problemDetails(<br>
-                     'validation-error',<br>
-                     'Validation Failed',<br>
-                     422,<br>
-                     'Email already exists',<br>
-                     req.path,<br>
-                     { errors: [{field: 'email', message: 'Email already exists'}] }<br>
-                   ));</code>
+                <pre><code class="javascript">// Node.js/Express exemple
+function problemDetails(type, title, status, detail, instance, extra = {}) {
+  return {
+    type: `https://api.example.com/errors/${type}`,
+    title,
+    status,
+    detail,
+    instance,
+    correlation_id: uuidv4(),
+    ...extra
+  };
+}
+
+// Utilisation
+res.status(422)
+   .type('application/problem+json')
+   .json(problemDetails(
+     'validation-error',
+     'Validation Failed',
+     422,
+     'Email already exists',
+     req.path,
+     { errors: [{field: 'email', message: 'Email already exists'}] }
+   ));</code></pre>
               </div>
             </div>
           </div>
