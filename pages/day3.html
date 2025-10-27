@@ -478,8 +478,8 @@ Sunset: Sat, 01 Jul 2026 23:59:59 GMT
               <h5 class="mt-5">Histoire rapide</h5>
               <p>En 2011, une entreprise appelée Wordnik crée Swagger pour documenter leur propre API. En 2015, Swagger est racheté par SmartBear et devient open-source. En 2016, la spécification est donnée à la Linux Foundation et renommée OpenAPI Specification (OAS). Aujourd'hui, c'est le standard adopté par Google, Microsoft, IBM, etc.</p>
 
-              <h5 class="mt-5">Structure de base d'un fichier OpenAPI</h5>
-              <p>Voici un exemple complet et détaillé pour le service Events de SmartCity :</p>
+              <h5 class="mt-5">Exemple concret : SmartCity Events API (simplifié)</h5>
+              <p>Voici un exemple complet mais simplifié avec seulement 3 routes essentielles pour bien comprendre la structure :</p>
               
               <div class="code-example">
                 <pre><code class="yaml">openapi: 3.0.3
@@ -493,25 +493,350 @@ info:
     La plupart des endpoints nécessitent une authentification JWT.
     Obtenez un token via /auth/login et incluez-le dans le header Authorization.
     
-    ## Rate Limiting
-    100 requêtes par minute par IP pour les endpoints publics.
-    1000 requêtes par minute pour les utilisateurs authentifiés.
-    
   contact:
     name: Équipe Events
     email: events@smartcity.local
-    url: https://smartcity.local/support
-  license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
 
 servers:
-&nbsp;&nbsp;- url: https://api.smartcity.local/v1<br>
-&nbsp;&nbsp;&nbsp;&nbsp;description: Production<br>
-&nbsp;&nbsp;- url: https://api-staging.smartcity.local/v1<br>
-&nbsp;&nbsp;&nbsp;&nbsp;description: Staging<br>
-&nbsp;&nbsp;- url: http://localhost:3000/api/v1<br>
-&nbsp;&nbsp;&nbsp;&nbsp;description: Développement local</code>
+  - url: https://api.smartcity.local/v1
+    description: Production
+  - url: http://localhost:3000/api/v1
+    description: Développement local
+
+paths:
+  /events:
+    get:
+      summary: Liste des événements
+      description: Retourne tous les événements à venir, triés par date
+      tags:
+        - Events
+      parameters:
+        - name: page
+          in: query
+          description: Numéro de page (commence à 1)
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: Nombre d'événements par page
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: type
+          in: query
+          description: Filtrer par type d'événement
+          schema:
+            type: string
+            enum: [concert, exposition, conference, festival]
+      responses:
+        '200':
+          description: Liste paginée d'événements
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Event'
+                  meta:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      limit:
+                        type: integer
+                      total:
+                        type: integer
+              example:
+                data:
+                  - id: "550e8400-e29b-41d4-a716-446655440000"
+                    title: "Jazz sous les étoiles"
+                    type: "concert"
+                    start_date: "2025-07-15T20:00:00Z"
+                    price: 15.00
+                    location:
+                      name: "Place du Capitole"
+                      city: "Toulouse"
+                meta:
+                  page: 1
+                  limit: 20
+                  total: 45
+
+    post:
+      summary: Créer un événement
+      description: Crée un nouvel événement culturel
+      tags:
+        - Events
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventInput'
+            example:
+              title: "Concert de Rock"
+              description: "Soirée rock avec groupes locaux"
+              type: "concert"
+              start_date: "2025-08-15T20:00:00Z"
+              price: 25.00
+              location:
+                name: "Zenith de Toulouse"
+                city: "Toulouse"
+      responses:
+        '201':
+          description: Événement créé avec succès
+          headers:
+            Location:
+              description: URL du nouvel événement
+              schema:
+                type: string
+              example: "/events/770e8400-e29b-41d4-a716-446655440002"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: Requête invalide
+        '401':
+          description: Non authentifié
+        '422':
+          description: Erreur de validation
+
+  /events/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID unique de l'événement (UUID v4)
+        schema:
+          type: string
+          format: uuid
+        example: "550e8400-e29b-41d4-a716-446655440000"
+
+    get:
+      summary: Détails d'un événement
+      description: Récupère les détails complets d'un événement spécifique
+      tags:
+        - Events
+      responses:
+        '200':
+          description: Détails de l'événement
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+              example:
+                id: "550e8400-e29b-41d4-a716-446655440000"
+                title: "Jazz sous les étoiles"
+                description: "Soirée jazz en plein air avec des artistes locaux"
+                type: "concert"
+                start_date: "2025-07-15T20:00:00Z"
+                end_date: "2025-07-15T23:00:00Z"
+                price: 15.00
+                max_attendees: 200
+                current_attendees: 45
+                location:
+                  name: "Place du Capitole"
+                  address: "Place du Capitole, 31000 Toulouse"
+                  city: "Toulouse"
+                  coordinates:
+                    latitude: 43.6047
+                    longitude: 1.4442
+                tags: ["musique", "jazz", "extérieur"]
+                created_at: "2025-06-01T10:00:00Z"
+        '404':
+          description: Événement non trouvé
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token obtenu via POST /auth/login
+
+  schemas:
+    Event:
+      type: object
+      required:
+        - id
+        - title
+        - type
+        - start_date
+        - location
+        - price
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifiant unique de l'événement
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+          description: Titre de l'événement
+          example: "Jazz sous les étoiles"
+        description:
+          type: string
+          maxLength: 2000
+          description: Description détaillée
+          example: "Soirée jazz en plein air"
+        type:
+          type: string
+          enum: [concert, exposition, conference, festival, sport, autre]
+          description: Type d'événement
+          example: "concert"
+        start_date:
+          type: string
+          format: date-time
+          description: Date et heure de début (ISO 8601)
+          example: "2025-07-15T20:00:00Z"
+        end_date:
+          type: string
+          format: date-time
+          description: Date et heure de fin (optionnel)
+          example: "2025-07-15T23:00:00Z"
+        price:
+          type: number
+          format: float
+          minimum: 0
+          description: Prix d'entrée en euros (0 si gratuit)
+          example: 15.00
+        max_attendees:
+          type: integer
+          minimum: 1
+          description: Nombre maximum de participants
+          nullable: true
+          example: 200
+        current_attendees:
+          type: integer
+          minimum: 0
+          description: Nombre actuel d'inscrits
+          readOnly: true
+          example: 45
+        location:
+          $ref: '#/components/schemas/Location'
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags pour catégoriser l'événement
+          example: ["musique", "jazz", "extérieur"]
+        created_at:
+          type: string
+          format: date-time
+          description: Date de création
+          readOnly: true
+          example: "2025-06-01T10:00:00Z"
+
+    EventInput:
+      type: object
+      required:
+        - title
+        - type
+        - start_date
+        - location
+      properties:
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+          example: "Concert de Rock"
+        description:
+          type: string
+          maxLength: 2000
+          example: "Soirée rock avec groupes locaux"
+        type:
+          type: string
+          enum: [concert, exposition, conference, festival, sport, autre]
+          example: "concert"
+        start_date:
+          type: string
+          format: date-time
+          example: "2025-08-15T20:00:00Z"
+        end_date:
+          type: string
+          format: date-time
+          example: "2025-08-15T23:30:00Z"
+        price:
+          type: number
+          format: float
+          minimum: 0
+          default: 0
+          example: 25.00
+        max_attendees:
+          type: integer
+          minimum: 1
+          example: 5000
+        location:
+          $ref: '#/components/schemas/LocationInput'
+        tags:
+          type: array
+          items:
+            type: string
+          example: ["musique", "rock"]
+
+    Location:
+      type: object
+      required:
+        - name
+        - city
+      properties:
+        name:
+          type: string
+          description: Nom du lieu
+          example: "Place du Capitole"
+        address:
+          type: string
+          description: Adresse complète
+          example: "Place du Capitole, 31000 Toulouse"
+        city:
+          type: string
+          description: Ville
+          example: "Toulouse"
+        postal_code:
+          type: string
+          description: Code postal
+          example: "31000"
+        coordinates:
+          type: object
+          properties:
+            latitude:
+              type: number
+              format: float
+              example: 43.6047
+            longitude:
+              type: number
+              format: float
+              example: 1.4442
+
+    LocationInput:
+      type: object
+      required:
+        - name
+        - city
+      properties:
+        name:
+          type: string
+          example: "Zenith de Toulouse"
+        address:
+          type: string
+          example: "11 Avenue Raymond Badiou, 31300 Toulouse"
+        city:
+          type: string
+          example: "Toulouse"
+        postal_code:
+          type: string
+          example: "31300"</code>
               </div>
 
               <h5 class="mt-5">Éléments clés d'un bon fichier OpenAPI</h5>
