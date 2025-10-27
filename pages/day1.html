@@ -1263,30 +1263,60 @@ switch (error.name) {
               <p>Voici un exemple concret montrant la différence de taille pour les mêmes données :</p>
 
               <div class="highlight-box">
-                <h6>Données utilisateur : JSON vs XML</h6>
+                <h6>Profil utilisateur complet : JSON vs XML</h6>
                 <div class="code-comparison">
                   <div class="json-example">
-                    <h7>JSON (87 caractères)</h7>
+                    <h7>JSON (312 caractères)</h7>
                     <pre><code>{
-  "id": "123",
-  "name": "Marie Dubois",
-  "email": "marie@example.com",
-  "age": 28,
-  "active": true
+  "user": {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "name": "Marie Dubois",
+    "email": "marie.dubois@example.com",
+    "age": 28,
+    "active": true,
+    "address": {
+      "street": "10 rue de la Paix",
+      "city": "Paris",
+      "zipCode": "75001",
+      "country": "France"
+    },
+    "preferences": {
+      "language": "fr",
+      "timezone": "Europe/Paris",
+      "notifications": true
+    },
+    "roles": ["user", "moderator"],
+    "lastLogin": "2025-10-24T14:30:00Z"
+  }
 }</code></pre>
                   </div>
                   <div class="xml-example">
-                    <h7>XML (156 caractères)</h7>
-                    <pre><code><?xml version="1.0" encoding="UTF-8"?>
-<user id="123">
-  <name>Marie Dubois</name>
-  <email>marie@example.com</email>
-  <age>28</age>
-  <active>true</active>
-</user></code></pre>
+                    <h7>XML (485 caractères)</h7>
+                    <pre><code>&lt;user id="550e8400-e29b-41d4-a716-446655440000"&gt;
+  &lt;name&gt;Marie Dubois&lt;/name&gt;
+  &lt;email&gt;marie.dubois@example.com&lt;/email&gt;
+  &lt;age&gt;28&lt;/age&gt;
+  &lt;active&gt;true&lt;/active&gt;
+  &lt;address&gt;
+    &lt;street&gt;10 rue de la Paix&lt;/street&gt;
+    &lt;city&gt;Paris&lt;/city&gt;
+    &lt;zipCode&gt;75001&lt;/zipCode&gt;
+    &lt;country&gt;France&lt;/country&gt;
+  &lt;/address&gt;
+  &lt;preferences&gt;
+    &lt;language&gt;fr&lt;/language&gt;
+    &lt;timezone&gt;Europe/Paris&lt;/timezone&gt;
+    &lt;notifications&gt;true&lt;/notifications&gt;
+  &lt;/preferences&gt;
+  &lt;roles&gt;
+    &lt;role&gt;user&lt;/role&gt;
+    &lt;role&gt;moderator&lt;/role&gt;
+  &lt;/roles&gt;
+  &lt;lastLogin&gt;2025-10-24T14:30:00Z&lt;/lastLogin&gt;
+&lt;/user&gt;</code></pre>
                   </div>
                 </div>
-                <p>XML fait presque le double de JSON pour les mêmes données !</p>
+                <p><strong>Résultat :</strong> XML fait <strong>55% plus gros</strong> que JSON ! (485 vs 312 caractères) Cette différence s'accentue avec la complexité des données.</p>
               </div>
 
               <h5>🎯 Cas d'usage : Quand utiliser quoi ?</h5>
