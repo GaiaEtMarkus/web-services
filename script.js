@@ -218,16 +218,16 @@ document.querySelectorAll('.badge-item').forEach(badge => {
 });
 
 // Statistics counter animation
-function animateCounter(element, target, duration = 2000) {
+function animateCounter(element, target, suffix = '', duration = 2000) {
     let start = 0;
     const increment = target / (duration / 16);
     
     const timer = setInterval(() => {
         start += increment;
-        element.textContent = Math.floor(start);
+        element.textContent = Math.floor(start) + suffix;
         
         if (start >= target) {
-            element.textContent = target;
+            element.textContent = target + suffix;
             clearInterval(timer);
         }
     }, 16);
@@ -239,9 +239,15 @@ const statsObserver = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             const statNumbers = entry.target.querySelectorAll('.stat-number');
             statNumbers.forEach(stat => {
-                const target = parseInt(stat.textContent);
-                if (!isNaN(target)) {
-                    animateCounter(stat, target);
+                const text = stat.textContent;
+                const match = text.match(/^(\d+)/);
+                if (match && match[1]) {
+                    const target = parseInt(match[1]);
+                    const suffix = text.substring(match[1].length);
+                    console.log('Animating:', text, 'Target:', target, 'Suffix:', suffix);
+                    animateCounter(stat, target, suffix);
+                } else {
+                    console.log('No match for:', text);
                 }
             });
             statsObserver.unobserve(entry.target);
