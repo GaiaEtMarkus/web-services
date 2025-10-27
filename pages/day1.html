@@ -409,6 +409,96 @@ Content-Type: application/json
 Réponse:
 Allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS</code></pre>
               </div>
+
+              <h4 class="mt-5"><i class="fas fa-lock"></i> HTTP vs HTTPS : Sécurité et confidentialité</h4>
+              
+              <p>HTTP et HTTPS sont deux protocoles qui semblent similaires mais ont une différence fondamentale : la sécurité. Cette différence n'est pas cosmétique, elle est cruciale pour comprendre pourquoi certaines APIs fonctionnent et d'autres non dans différents contextes.</p>
+
+              <h5>🔓 HTTP : Communication en clair</h5>
+              <p>HTTP (HyperText Transfer Protocol) transmet toutes les données en texte brut, sans aucun chiffrement. C'est comme envoyer une lettre par la poste sans enveloppe : n'importe qui peut lire le contenu en cours de route.</p>
+
+              <div class="highlight-box">
+                <h6>💡 Exemple concret : Problème avec HTTP</h6>
+                <p>Imaginons une application mobile qui utilise une API HTTP pour l'authentification. Quand l'utilisateur se connecte, l'application envoie :</p>
+                <pre><code>POST /api/login HTTP/1.1
+Host: api.example.com
+Content-Type: application/json
+
+{
+  "username": "marie.dubois",
+  "password": "MonMotDePasseSecret123"
+}</code></pre>
+                <p>Si cette requête passe par un réseau WiFi public (aéroport, café), n'importe qui avec un logiciel d'écoute réseau peut capturer ces données et voir le mot de passe en clair. C'est exactement ce qui s'est passé avec de nombreuses applications dans les années 2010, causant des fuites massives de données.</p>
+              </div>
+
+              <h5>🔒 HTTPS : Communication chiffrée</h5>
+              <p>HTTPS (HTTP Secure) ajoute une couche de chiffrement SSL/TLS par-dessus HTTP. Toutes les données sont chiffrées avant d'être transmises, puis déchiffrées à l'arrivée. C'est comme envoyer une lettre dans une enveloppe scellée avec une serrure que seul le destinataire peut ouvrir.</p>
+
+              <div class="highlight-box">
+                <h6>💡 Exemple concret : Sécurité avec HTTPS</h6>
+                <p>Avec HTTPS, la même requête de connexion devient :</p>
+                <pre><code>POST /api/login HTTP/1.1
+Host: api.example.com
+Content-Type: application/json
+
+[Données chiffrées - impossible à lire sans la clé de déchiffrement]</code></pre>
+                <p>Même si quelqu'un intercepte cette requête, il ne peut pas lire le contenu. Il voit juste du charabia chiffré.</p>
+              </div>
+
+              <h5>🛡️ Pourquoi HTTPS est devenu obligatoire</h5>
+              <p>Depuis 2017, Google Chrome affiche un avertissement "Non sécurisé" pour tous les sites HTTP. Les navigateurs modernes bloquent même certaines fonctionnalités sur HTTP (géolocalisation, notifications push, etc.). Pour les APIs, c'est encore plus critique :</p>
+
+              <ul>
+                <li><strong>Authentification</strong> : Les tokens JWT, mots de passe, et cookies de session doivent être transmis en HTTPS</li>
+                <li><strong>Données sensibles</strong> : Informations personnelles, données financières, données médicales</li>
+                <li><strong>Conformité</strong> : RGPD, PCI DSS, HIPAA exigent le chiffrement des données en transit</li>
+                <li><strong>Confiance utilisateur</strong> : Les utilisateurs s'attendent à voir le cadenas vert dans leur navigateur</li>
+              </ul>
+
+              <div class="highlight-box">
+                <h6>🎯 Règle d'or</h6>
+                <p><strong>Toute API en production doit utiliser HTTPS.</strong> Point final. HTTP est acceptable uniquement pour le développement local (localhost) ou des tests internes sur un réseau privé sécurisé.</p>
+              </div>
+
+              <h5>🔧 Implémentation pratique</h5>
+              <p>Pour passer de HTTP à HTTPS, vous devez :</p>
+
+              <ol>
+                <li><strong>Obtenir un certificat SSL</strong> : Gratuit avec Let's Encrypt, ou payant via un fournisseur</li>
+                <li><strong>Configurer votre serveur</strong> : Apache, Nginx, ou votre serveur d'application</li>
+                <li><strong>Rediriger HTTP vers HTTPS</strong> : Toutes les requêtes HTTP doivent être automatiquement redirigées</li>
+                <li><strong>Mettre à jour vos URLs</strong> : Changer http:// en https:// dans tous vos clients</li>
+              </ol>
+
+              <div class="highlight-box">
+                <h6>💡 Configuration Nginx basique</h6>
+                <pre><code>server {
+    listen 80;
+    server_name api.example.com;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name api.example.com;
+    
+    ssl_certificate /path/to/certificate.crt;
+    ssl_certificate_key /path/to/private.key;
+    
+    location / {
+        proxy_pass http://localhost:3000;
+    }
+}</code></pre>
+              </div>
+
+              <h5>⚡ Impact sur les performances</h5>
+              <p>HTTPS ajoute une petite surcharge :</p>
+              <ul>
+                <li><strong>Handshake SSL</strong> : ~100-200ms lors de la première connexion</li>
+                <li><strong>Chiffrement/déchiffrement</strong> : ~1-2% de CPU supplémentaire</li>
+                <li><strong>Taille des données</strong> : Quelques octets de padding</li>
+              </ul>
+              <p>Cette surcharge est négligeable comparée aux bénéfices de sécurité. Les navigateurs modernes optimisent automatiquement HTTPS, et HTTP/2 (qui nécessite HTTPS) peut même être plus rapide que HTTP/1.1.</p>
             </div>
           </div>
         </div>
@@ -935,7 +1025,7 @@ function problem(res, status, type, title, detail, extras = {}) {
           </div>
         </div>
 
-        <div class="day-card expanded">
+        <div class="day-card expanded mt-4">
           <div class="day-header">
             <span class="day-number">6</span>
             <span class="day-theme">Panorama des classes 1xx, 2xx, 3xx, 4xx, 5xx</span>
@@ -1095,7 +1185,204 @@ switch (error.name) {
 
               <div class="progression-note mt-4">
                 <h4>Pièges fréquents</h4>
-                <p>Tout renvoyer en <code>200</code> “avec un code d’erreur dans le JSON” • Utiliser <code>401</code> pour des droits insuffisants (c’est <code>403</code>) • Répondre <code>200</code> après création (préférez <code>201</code> + <code>Location</code>).</p>
+                <p>Tout renvoyer en <code>200</code> "avec un code d'erreur dans le JSON" • Utiliser <code>401</code> pour des droits insuffisants (c'est <code>403</code>) • Répondre <code>200</code> après création (préférez <code>201</code> + <code>Location</code>).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="day-card expanded mt-4">
+          <div class="day-header">
+            <span class="day-number">7</span>
+            <span class="day-theme">JSON vs XML : Comparaison détaillée</span>
+          </div>
+          <div class="day-content">
+            <div class="day-morning">
+              <h4><i class="fas fa-balance-scale"></i> Le duel des formats de données</h4>
+              <p>JSON et XML sont les deux formats de données les plus utilisés dans les web services. Chacun a ses partisans, ses avantages, et ses cas d'usage privilégiés. Comprendre leurs différences est crucial pour faire les bons choix architecturaux.</p>
+
+              <h5>📊 Comparaison technique détaillée</h5>
+              
+              <div class="comparison-box">
+                <div class="comparison-section">
+                  <h6>🏆 JSON (JavaScript Object Notation)</h6>
+                  <div class="pros-cons">
+                    <div class="pros">
+                      <h7>✅ Avantages</h7>
+                      <ul>
+                        <li><strong>Simplicité</strong> : Syntaxe minimaliste et intuitive</li>
+                        <li><strong>Légèreté</strong> : 30-50% plus compact que XML</li>
+                        <li><strong>Performance</strong> : Parsing plus rapide</li>
+                        <li><strong>Natif JavaScript</strong> : Intégration parfaite côté client</li>
+                        <li><strong>Lisibilité</strong> : Facile à lire et déboguer</li>
+                        <li><strong>Support universel</strong> : Tous les langages modernes</li>
+                      </ul>
+                    </div>
+                    <div class="cons">
+                      <h7>❌ Inconvénients</h7>
+                      <ul>
+                        <li><strong>Pas de validation native</strong> : Besoin de JSON Schema</li>
+                        <li><strong>Pas de namespaces</strong> : Risque de conflits de noms</li>
+                        <li><strong>Pas de commentaires</strong> : Documentation externe</li>
+                        <li><strong>Types limités</strong> : Pas de dates natives</li>
+                        <li><strong>Pas d'attributs</strong> : Tout doit être en propriétés</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="comparison-section">
+                  <h6>📋 XML (eXtensible Markup Language)</h6>
+                  <div class="pros-cons">
+                    <div class="pros">
+                      <h7>✅ Avantages</h7>
+                      <ul>
+                        <li><strong>Validation stricte</strong> : XSD pour schémas complexes</li>
+                        <li><strong>Namespaces</strong> : Évite les conflits de noms</li>
+                        <li><strong>Flexibilité</strong> : Attributs + éléments</li>
+                        <li><strong>Écosystème mature</strong> : XPath, XSLT, XQuery</li>
+                        <li><strong>Commentaires</strong> : Documentation intégrée</li>
+                        <li><strong>Standards robustes</strong> : Utilisé dans l'industrie</li>
+                      </ul>
+                    </div>
+                    <div class="cons">
+                      <h7>❌ Inconvénients</h7>
+                      <ul>
+                        <li><strong>Verbosité</strong> : Beaucoup plus lourd</li>
+                        <li><strong>Complexité</strong> : Courbe d'apprentissage raide</li>
+                        <li><strong>Performance</strong> : Parsing plus lent</li>
+                        <li><strong>Lisibilité</strong> : Plus difficile à scanner</li>
+                        <li><strong>Overhead</strong> : Beaucoup de balises</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h5>📏 Comparaison de taille</h5>
+              <p>Voici un exemple concret montrant la différence de taille pour les mêmes données :</p>
+
+              <div class="highlight-box">
+                <h6>Données utilisateur : JSON vs XML</h6>
+                <div class="code-comparison">
+                  <div class="json-example">
+                    <h7>JSON (87 caractères)</h7>
+                    <pre><code>{
+  "id": "123",
+  "name": "Marie Dubois",
+  "email": "marie@example.com",
+  "age": 28,
+  "active": true
+}</code></pre>
+                  </div>
+                  <div class="xml-example">
+                    <h7>XML (156 caractères)</h7>
+                    <pre><code><?xml version="1.0" encoding="UTF-8"?>
+<user id="123">
+  <name>Marie Dubois</name>
+  <email>marie@example.com</email>
+  <age>28</age>
+  <active>true</active>
+</user></code></pre>
+                  </div>
+                </div>
+                <p>XML fait presque le double de JSON pour les mêmes données !</p>
+              </div>
+
+              <h5>🎯 Cas d'usage : Quand utiliser quoi ?</h5>
+              
+              <div class="highlight-box">
+                <h6>🎯 Utilisez JSON si :</h6>
+                <ul>
+                  <li><strong>Nouvelle API en 2025</strong> : C'est le standard moderne</li>
+                  <li><strong>Applications web/mobile</strong> : Intégration native JavaScript</li>
+                  <li><strong>Performance critique</strong> : Parsing rapide et bande passante limitée</li>
+                  <li><strong>Simplicité requise</strong> : Équipe junior ou développement rapide</li>
+                  <li><strong>Microservices</strong> : Communication interne légère</li>
+                  <li><strong>APIs publiques</strong> : Meilleure adoption par les développeurs</li>
+                </ul>
+              </div>
+
+              <div class="highlight-box">
+                <h6>🎯 Utilisez XML si :</h6>
+                <ul>
+                  <li><strong>Systèmes legacy</strong> : Intégration avec anciens systèmes</li>
+                  <li><strong>Domaines réglementés</strong> : Finance (SWIFT), santé (HL7), gouvernement</li>
+                  <li><strong>Validation complexe</strong> : Schémas XSD très stricts requis</li>
+                  <li><strong>Transformation de données</strong> : XSLT pour conversion de formats</li>
+                  <li><strong>Documentation intégrée</strong> : Commentaires et métadonnées importantes</li>
+                  <li><strong>Standards imposés</strong> : Client ou réglementation l'exige</li>
+                </ul>
+              </div>
+
+              <h5>🔄 Migration et coexistence</h5>
+              <p>Dans la réalité, vous n'avez pas toujours le choix. Voici comment gérer les transitions :</p>
+
+              <div class="highlight-box">
+                <h6>💡 Stratégie de migration progressive</h6>
+                <p>Imaginons une entreprise qui doit migrer de SOAP/XML vers REST/JSON :</p>
+                <ol>
+                  <li><strong>Phase 1</strong> : Créer une nouvelle API REST/JSON en parallèle</li>
+                  <li><strong>Phase 2</strong> : Migrer les nouveaux clients vers JSON</li>
+                  <li><strong>Phase 3</strong> : Maintenir les deux APIs pendant la transition</li>
+                  <li><strong>Phase 4</strong> : Migrer progressivement les clients existants</li>
+                  <li><strong>Phase 5</strong> : Déprécier l'ancienne API XML</li>
+                </ol>
+                <p>Cette approche évite les "big bang" risqués et permet une transition en douceur.</p>
+              </div>
+
+              <h5>🛠️ Outils et écosystème</h5>
+              <p>Chaque format a ses outils spécialisés :</p>
+
+              <div class="tools-comparison">
+                <div class="tools-section">
+                  <h6>🔧 Outils JSON</h6>
+                  <ul>
+                    <li><strong>JSON Schema</strong> : Validation et documentation</li>
+                    <li><strong>JSONPath</strong> : Requêtes comme XPath</li>
+                    <li><strong>JSON-LD</strong> : Données liées sémantiques</li>
+                    <li><strong>JSON Patch</strong> : Modifications partielles</li>
+                    <li><strong>JSON Merge Patch</strong> : Mise à jour simple</li>
+                  </ul>
+                </div>
+                <div class="tools-section">
+                  <h6>🔧 Outils XML</h6>
+                  <ul>
+                    <li><strong>XSD</strong> : Schémas de validation</li>
+                    <li><strong>XPath</strong> : Requêtes et navigation</li>
+                    <li><strong>XSLT</strong> : Transformation de documents</li>
+                    <li><strong>XQuery</strong> : Requêtes complexes</li>
+                    <li><strong>XLink/XPointer</strong> : Liens et références</li>
+                  </ul>
+                </div>
+              </div>
+
+              <h5>📈 Tendances et avenir</h5>
+              <p>Les tendances sont claires :</p>
+
+              <div class="highlight-box">
+                <h6>📊 Statistiques d'usage (2025)</h6>
+                <ul>
+                  <li><strong>APIs publiques</strong> : 85% JSON, 10% XML, 5% autres</li>
+                  <li><strong>Microservices internes</strong> : 90% JSON</li>
+                  <li><strong>Systèmes legacy</strong> : 70% XML, 30% JSON</li>
+                  <li><strong>Nouvelles entreprises</strong> : 95% JSON</li>
+                  <li><strong>Grandes entreprises</strong> : 60% JSON, 40% XML (transition en cours)</li>
+                </ul>
+              </div>
+
+              <h5>🎓 Conclusion pratique</h5>
+              <p>Pour un développeur en 2025 :</p>
+              <ul>
+                <li><strong>Apprenez JSON en priorité</strong> : C'est le standard moderne</li>
+                <li><strong>Comprenez XML</strong> : Vous en rencontrerez dans les systèmes legacy</li>
+                <li><strong>Soyez pragmatique</strong> : Utilisez le format imposé par le contexte</li>
+                <li><strong>Maîtrisez les deux</strong> : Flexibilité maximale</li>
+              </ul>
+
+              <div class="highlight-box">
+                <h6>🌟 Règle d'or</h6>
+                <p><strong>Nouveau projet = JSON. Legacy = respecter le format existant. Migration = planifier la transition.</strong></p>
               </div>
             </div>
           </div>

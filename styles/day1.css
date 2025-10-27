@@ -610,3 +610,164 @@
     font-size: 1.5rem;
   }
 }
+
+/* Styles pour la comparaison JSON vs XML */
+.comparison-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 2rem 0;
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.comparison-section {
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid var(--gray-200);
+}
+
+.comparison-section:first-child {
+  border-color: var(--success-color);
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, rgba(34, 197, 94, 0.02) 100%);
+}
+
+.comparison-section:last-child {
+  border-color: var(--warning-color);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.05) 0%, rgba(245, 158, 11, 0.02) 100%);
+}
+
+.comparison-section h6 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--gray-800);
+}
+
+.pros-cons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.pros, .cons {
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.pros {
+  background: rgba(34, 197, 94, 0.1);
+  border-left: 3px solid var(--success-color);
+}
+
+.cons {
+  background: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid var(--error-color);
+}
+
+.pros h7, .cons h7 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.pros h7 {
+  color: var(--success-color);
+}
+
+.cons h7 {
+  color: var(--error-color);
+}
+
+.pros ul, .cons ul {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.pros li, .cons li {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+  color: var(--gray-700);
+}
+
+.code-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.json-example, .xml-example {
+  padding: 1rem;
+  border-radius: 6px;
+  background: var(--gray-50);
+}
+
+.json-example {
+  border-left: 3px solid var(--success-color);
+}
+
+.xml-example {
+  border-left: 3px solid var(--warning-color);
+}
+
+.json-example h7, .xml-example h7 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+  color: var(--gray-600);
+}
+
+.tools-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.tools-section {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid var(--gray-200);
+}
+
+.tools-section h6 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.tools-section ul {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.tools-section li {
+  margin-bottom: 0.5rem;
+  color: var(--gray-600);
+  font-size: 0.9rem;
+}
+
+/* Responsive pour comparaison JSON vs XML */
+@media (max-width: 768px) {
+  .comparison-box {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+  
+  .pros-cons {
+    grid-template-columns: 1fr;
+  }
+  
+  .code-comparison {
+    grid-template-columns: 1fr;
+  }
+  
+  .tools-comparison {
+    grid-template-columns: 1fr;
+  }
+}
