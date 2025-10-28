@@ -303,6 +303,230 @@ Réponse :
           </div>
         </div>
       </div>
+
+      <!-- Nouvelle ressource : Déploiement sur Render -->
+      <div class="day-card expanded mt-4">
+        <div class="day-header">
+          <span class="day-number">🚀</span>
+          <span class="day-theme">Déploiement sur Render</span>
+        </div>
+        <div class="day-content">
+          <!-- Introduction -->
+          <h4 class="mt-5"><i class="fas fa-cloud"></i> Qu'est-ce que Render ?</h4>
+          <p>Render est une plateforme de cloud hosting très populaire (dans la même famille que Vercel, Railway, ou Fly.io) qui permet de déployer gratuitement de petites APIs Node.js / Express.</p>
+
+          <div class="highlight-box" style="background: #e8f4fd; border-left: 4px solid #0066cc;">
+            <h6>📊 Fonctionnalités principales</h6>
+            <ul>
+              <li>✅ Déploiement automatique depuis GitHub/GitLab</li>
+              <li>✅ Hébergement gratuit avec Free Tier</li>
+              <li>✅ PostgreSQL gratuit inclus</li>
+              <li>✅ HTTPS automatique avec URL publique</li>
+              <li>⚡ Sleep mode après 15 minutes d'inactivité (limite du gratuit)</li>
+            </ul>
+          </div>
+
+          <!-- Structure de fichiers -->
+          <h4 class="mt-5"><i class="fas fa-folder"></i> Structure de base d'une API pour Render</h4>
+          
+          <h5 class="mt-4">1. Fichier server.js</h5>
+          <pre><code class="javascript">import express from "express";
+const app = express();
+
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.json({ message: "API en ligne via Render 🚀" });
+});
+
+app.get("/api/status", (req, res) => {
+  res.json({ 
+    status: "ok", 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || "development"
+  });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Serveur démarré sur le port ${PORT}`);
+});</code></pre>
+
+          <h5 class="mt-4">2. Fichier package.json</h5>
+          <pre><code class="json">{
+  "name": "smartcity-api",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "dotenv": "^16.3.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}</code></pre>
+
+          <h5 class="mt-4">3. Fichier .env (optionnel, pour variables locales)</h5>
+          <pre><code class="text">PORT=3000
+NODE_ENV=development
+DATABASE_URL=postgresql://user:password@localhost:5432/smartcity</code></pre>
+
+          <!-- Guide de déploiement -->
+          <h4 class="mt-5"><i class="fas fa-rocket"></i> Guide de déploiement étape par étape</h4>
+
+          <h5 class="mt-4">Étape 1 : Préparer le projet</h5>
+          <ol>
+            <li>Créez votre API Node.js/Express localement</li>
+            <li>Assurez-vous que le fichier <code>package.json</code> contient un script <code>"start"</code></li>
+            <li>Testez que l'API fonctionne en local avec <code>npm start</code></li>
+          </ol>
+
+          <h5 class="mt-4">Étape 2 : Pousser sur GitHub</h5>
+          <pre><code class="bash"># Initialiser le repo si nécessaire
+git init
+git add .
+git commit -m "Initial commit: API SmartCity"
+
+# Créer un repo sur GitHub, puis :
+git remote add origin https://github.com/votre-username/smartcity-api.git
+git branch -M main
+git push -u origin main</code></pre>
+
+          <h5 class="mt-4">Étape 3 : Déployer sur Render</h5>
+          <ol>
+            <li>Allez sur <a href="https://render.com" target="_blank">https://render.com</a></li>
+            <li>Créez un compte (gratuit avec GitHub)</li>
+            <li>Cliquez sur <strong>"New"</strong> → <strong>"Web Service"</strong></li>
+            <li>Connectez votre dépôt GitHub et sélectionnez le projet</li>
+            <li>Configurez les paramètres :
+              <ul>
+                <li><strong>Name :</strong> smartcity-api (ou votre nom)</li>
+                <li><strong>Environment :</strong> Node</li>
+                <li><strong>Build Command :</strong> <code>npm install</code></li>
+                <li><strong>Start Command :</strong> <code>npm start</code></li>
+                <li><strong>Plan :</strong> Free (pour commencer)</li>
+              </ul>
+            </li>
+            <li>Cliquez sur <strong>"Create Web Service"</strong></li>
+          </ol>
+
+          <h5 class="mt-4">Étape 4 : Configuration des variables d'environnement</h5>
+          <p>Dans les paramètres de votre service sur Render, allez dans <strong>"Environment"</strong> et ajoutez :</p>
+          <ul>
+            <li><code>NODE_ENV=production</code></li>
+            <li><code>DATABASE_URL</code> (si vous utilisez PostgreSQL)</li>
+            <li>Toutes autres variables nécessaires à votre API</li>
+          </ul>
+
+          <h5 class="mt-4">Étape 5 : Déploiement automatique</h5>
+          <p>Dès que vous poussez du code sur GitHub (branche <code>main</code>), Render redéploie automatiquement votre API !</p>
+
+          <!-- Exemple complet -->
+          <h4 class="mt-5"><i class="fas fa-code"></i> Exemple complet : API avec route /events</h4>
+          <pre><code class="javascript">import express from "express";
+import cors from "cors";
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// Route de test
+app.get("/", (req, res) => {
+  res.json({ 
+    message: "API SmartCity déployée sur Render 🚀",
+    version: "1.0.0"
+  });
+});
+
+// Route métier
+app.get("/api/events", (req, res) => {
+  res.json({
+    data: [
+      { id: 1, title: "Concert Jazz", date: "2025-07-15" },
+      { id: 2, title: "Exposition Art", date: "2025-08-20" }
+    ]
+  });
+});
+
+// Gestion des erreurs 404
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ API démarrée sur le port ${PORT}`);
+  console.log(`🌐 URL publique: ${process.env.RENDER_EXTERNAL_URL || 'local'}`);
+});</code></pre>
+
+          <!-- Base de données PostgreSQL -->
+          <h4 class="mt-5"><i class="fas fa-database"></i> Ajouter une base de données PostgreSQL</h4>
+          <ol>
+            <li>Dans Render, cliquez sur <strong>"New"</strong> → <strong>"PostgreSQL"</strong></li>
+            <li>Choisissez le <strong>Plan Free</strong></li>
+            <li>Notez la <code>DATABASE_URL</code> générée automatiquement</li>
+            <li>Dans votre Web Service, ajoutez cette URL comme variable d'environnement</li>
+            <li>Installez <code>pg</code> : <code>npm install pg</code></li>
+          </ol>
+
+          <h5 class="mt-4">Exemple de connexion à la DB</h5>
+          <pre><code class="javascript">import pg from 'pg';
+const { Pool } = pg;
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+});
+
+// Test de connexion
+pool.query('SELECT NOW()', (err, res) => {
+  if (err) {
+    console.error('❌ Erreur de connexion à la DB:', err);
+  } else {
+    console.log('✅ Connecté à PostgreSQL:', res.rows[0].now);
+  }
+});</code></pre>
+
+          <!-- Limitations et bonnes pratiques -->
+          <h4 class="mt-5"><i class="fas fa-exclamation-triangle"></i> Limitations du plan gratuit</h4>
+          <div class="highlight-box" style="background: #fff4e6; border-left: 4px solid #ff9800;">
+            <ul>
+              <li>⚠️ <strong>Sleep mode :</strong> Le service s'endort après ~15 minutes d'inactivité (premier appel lent pour réveiller)</li>
+              <li>⚠️ <strong>Ressources limitées :</strong> CPU et mémoire faibles (suffisant pour les cours/démos)</li>
+              <li>⚠️ <strong>Pas de domaine custom :</strong> URL en <code>.onrender.com</code> uniquement</li>
+              <li>⚠️ <strong>Limites de bande passante :</strong> Suffisant pour le développement et tests</li>
+            </ul>
+          </div>
+
+          <h4 class="mt-5"><i class="fas fa-check-circle"></i> Checklist de déploiement</h4>
+          <div class="highlight-box">
+            <ul style="list-style: none; padding-left: 0;">
+              <li>✓ Le fichier <code>package.json</code> existe avec le script <code>"start"</code></li>
+              <li>✓ Le fichier d'entrée principal existe (ex: <code>server.js</code>)</li>
+              <li>✓ L'API écoute sur le port défini par <code>process.env.PORT</code></li>
+              <li>✓ Le projet est poussé sur GitHub</li>
+              <li>✓ Les variables d'environnement sont configurées sur Render</li>
+              <li>✓ Les dépendances sont listées dans <code>package.json</code></li>
+              <li>✓ Les CORS sont configurés si l'API est appelée depuis un frontend</li>
+              <li>✓ La gestion d'erreurs 404 est implémentée</li>
+            </ul>
+          </div>
+
+          <!-- URLs et exemples -->
+          <h4 class="mt-5"><i class="fas fa-link"></i> Résultat attendu</h4>
+          <p>Après le déploiement, vous obtenez une URL publique HTTPS automatiquement :</p>
+          <div class="highlight-box" style="background: #e8f5e9; border-left: 4px solid #4caf50;">
+            <h6>✅ Votre API est accessible à :</h6>
+            <p><code style="font-family: monospace; background: white; padding: 0.5rem; display: block; margin-top: 0.5rem;">https://smartcity-api.onrender.com</code></p>
+            <p>Vous pouvez tester immédiatement :</p>
+            <pre><code class="bash">curl https://smartcity-api.onrender.com/api/events</code></pre>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -315,7 +539,7 @@ Réponse :
             <img src="../assets/logo.jpeg" alt="YNOV Campus" class="footer-logo-img">
             <span class="footer-logo-text">Web Services</span>
           </div>
-          <p class="footer-description">Ressources — Gestion des Clés API.</p>
+          <p class="footer-description">Ressources — Clés API & Déploiement.</p>
         </div>
         <div class="footer-section">
           <h3>Navigation</h3>
