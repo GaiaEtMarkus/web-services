@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ressources — Gestion des Clés API</title>
+  <link rel="stylesheet" href="../styles/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <img src="../assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+            <span class="logo-text">Web Services</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="../index.html" class="nav-link">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a href="../index.html#programme" class="nav-link">Programme</a>
+            </li>
+            <li class="nav-item">
+                <a href="../index.html#projet" class="nav-link">Projet SmartCity</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle">
+                    <i class="fas fa-calendar-alt"></i> Journées
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+                    <a href="day1FilRouge.html" class="dropdown-item">Jour 1 - Fil Rouge</a>
+                    <a href="day2.html" class="dropdown-item">Jour 2 - Théorie</a>
+                    <a href="day2FilRouge.html" class="dropdown-item">Jour 2 - Fil Rouge</a>
+                    <a href="day3.html" class="dropdown-item">Jour 3 - Théorie</a>
+                    <a href="day3FilRouge.html" class="dropdown-item">Jour 3 - Fil Rouge</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="resources.html" class="nav-link active">Ressources</a>
+            </li>
+            <li class="nav-item">
+                <a href="../index.html#contact" class="nav-link">Contact</a>
+            </li>
+        </ul>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </div>
+</nav>
+
+  <!-- Hero -->
+  <section class="hero" style="min-height: 40vh;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">Ressources</h1>
+          <h2 class="hero-subtitle">Gestion Sécurisée des Clés API</h2>
+          <p class="hero-description">
+            Guide complet pour générer, stocker et utiliser des clés API de manière sécurisée dans vos applications.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenu principal -->
+  <section class="programme">
+    <div class="container">
+      <div class="day-card expanded">
+        <div class="day-header">
+          <span class="day-number">🔑</span>
+          <span class="day-theme">Gestion des Clés API</span>
+        </div>
+        <div class="day-content">
+          <!-- Génération -->
+          <h4 class="mt-5"><i class="fas fa-key"></i> Génération de la clé API</h4>
+          <h5>Caractéristiques d'une bonne clé API</h5>
+          <ul>
+            <li><strong>Longueur minimale :</strong> 32 caractères</li>
+            <li><strong>Caractères aléatoires :</strong> Utiliser des caractères alphanumériques + symboles</li>
+            <li><strong>Imprévisible :</strong> Générée avec un générateur cryptographiquement sécurisé</li>
+          </ul>
+
+          <h5 class="mt-4">Exemple de génération (Node.js)</h5>
+          <pre><code class="javascript">const crypto = require('crypto');
+
+function generateApiKey() {
+  return crypto.randomBytes(32).toString('hex');
+  // Génère une clé de 64 caractères hexadécimaux
+}</code></pre>
+
+          <h5 class="mt-4">Format recommandé</h5>
+          <p><strong>Préfixe identifiable + clé aléatoire</strong></p>
+          <p>Exemple : <code>sk_live_a3f8d9c2b1e4f5a6d7c8b9e0f1a2b3c4</code></p>
+
+          <!-- Section 2: Stockage -->
+          <h4 class="mt-5"><i class="fas fa-database"></i> Stockage sécurisé</h4>
+          <div class="highlight-box" style="background: #fee; border-left: 4px solid #f00;">
+            <h6>⚠️ Ne JAMAIS stocker la clé en clair</h6>
+          </div>
+
+          <h5 class="mt-4">Mauvaise pratique ❌</h5>
+          <pre><code class="sql">INSERT INTO api_keys (key, user_id) 
+VALUES ('sk_live_abc123...', 1);</code></pre>
+
+          <h5 class="mt-4">Bonne pratique ✅</h5>
+          <pre><code class="javascript">const crypto = require('crypto');
+
+function hashApiKey(apiKey) {
+  return crypto
+    .createHash('sha256')
+    .update(apiKey)
+    .digest('hex');
+}
+
+// Stockage
+const hashedKey = hashApiKey(apiKey);
+// Stocker hashedKey dans la base de données</code></pre>
+
+          <h5 class="mt-4">Structure de table recommandée</h5>
+          <pre><code class="sql">CREATE TABLE api_keys (
+  id SERIAL PRIMARY KEY,
+  key_hash VARCHAR(64) NOT NULL UNIQUE,
+  user_id INTEGER NOT NULL,
+  name VARCHAR(100),
+  created_at TIMESTAMP DEFAULT NOW(),
+  last_used_at TIMESTAMP,
+  expires_at TIMESTAMP,
+  is_active BOOLEAN DEFAULT true
+);</code></pre>
+
+          <!-- Section 3: Mise à disposition -->
+          <h4 class="mt-5"><i class="fas fa-user-check"></i> Mise à disposition au client</h4>
+          <h5>Affichage unique lors de la création</h5>
+          <div class="highlight-box" style="background: #efe; border-left: 4px solid #0a0;">
+            <h6>✅ Clé API créée avec succès !</h6>
+            <p><code style="font-family: monospace; background: #f5f5f5; padding: 0.5rem;">sk_live_a3f8d9c2b1e4f5a6d7c8b9e0f1a2b3c4</code></p>
+            <h6>⚠️ IMPORTANT :</h6>
+            <ul>
+              <li>Copiez cette clé maintenant</li>
+              <li>Elle ne sera plus affichée</li>
+              <li>Conservez-la en lieu sûr</li>
+            </ul>
+          </div>
+
+          <h5 class="mt-4">API de création</h5>
+          <pre><code class="javascript">// POST /api/keys
+{
+  "name": "Clé de production",
+  "expires_in_days": 365
+}
+
+// Réponse
+{
+  "api_key": "sk_live_a3f8d9c2b1e4f5a6d7c8b9e0f1a2b3c4",
+  "name": "Clé de production",
+  "created_at": "2025-10-28T10:30:00Z",
+  "expires_at": "2026-10-28T10:30:00Z",
+  "message": "Sauvegardez cette clé, elle ne sera plus affichée"
+}</code></pre>
+
+          <!-- Section 4: Vérification -->
+          <h4 class="mt-5"><i class="fas fa-shield-alt"></i> Vérification de la clé</h4>
+          <h5>Middleware de vérification (Express.js)</h5>
+          <pre><code class="javascript">async function verifyApiKey(req, res, next) {
+  // 1. Extraire la clé du header
+  const apiKey = req.headers['x-api-key'] || 
+                 req.headers['authorization']?.replace('Bearer ', '');
+  
+  if (!apiKey) {
+    return res.status(401).json({ 
+      error: 'Clé API manquante' 
+    });
+  }
+
+  // 2. Hasher la clé reçue
+  const hashedKey = hashApiKey(apiKey);
+
+  // 3. Rechercher dans la base de données
+  const key = await db.query(
+    `SELECT * FROM api_keys 
+     WHERE key_hash = $1 
+     AND is_active = true 
+     AND (expires_at IS NULL OR expires_at > NOW())`,
+    [hashedKey]
+  );
+
+  if (!key) {
+    return res.status(401).json({ 
+      error: 'Clé API invalide ou expirée' 
+    });
+  }
+
+  // 4. Mettre à jour la dernière utilisation
+  await db.query(
+    'UPDATE api_keys SET last_used_at = NOW() WHERE id = $1',
+    [key.id]
+  );
+
+  // 5. Ajouter l'utilisateur au contexte
+  req.user = key.user_id;
+  next();
+}
+
+// Utilisation
+app.get('/api/data', verifyApiKey, (req, res) => {
+  // Route protégée
+});</code></pre>
+
+          <!-- Section 5: Bonnes pratiques -->
+          <h4 class="mt-5"><i class="fas fa-lock"></i> Bonnes pratiques de sécurité</h4>
+          <h5>Limitation de débit (Rate Limiting)</h5>
+          <pre><code class="javascript">const rateLimit = require('express-rate-limit');
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // 100 requêtes max
+  keyGenerator: (req) => req.user, // Par utilisateur
+  message: 'Trop de requêtes, réessayez plus tard'
+});
+
+app.use('/api/', apiLimiter);</code></pre>
+
+          <h5 class="mt-4">Rotation des clés</h5>
+          <ul>
+            <li>Permettre aux clients de générer de nouvelles clés</li>
+            <li>Période de transition avec deux clés actives</li>
+            <li>Notification avant expiration</li>
+          </ul>
+
+          <h5 class="mt-4">Surveillance</h5>
+          <ul>
+            <li>Logger les tentatives d'accès échouées</li>
+            <li>Alerter sur les comportements suspects</li>
+            <li>Révoquer automatiquement après X échecs consécutifs</li>
+          </ul>
+
+          <!-- Section 6: Documentation -->
+          <h4 class="mt-5"><i class="fas fa-book"></i> Documentation pour les clients</h4>
+          <h5>Comment utiliser la clé API</h5>
+          
+          <h5 class="mt-4">En-tête HTTP recommandé</h5>
+          <pre><code class="bash">curl -H "X-API-Key: sk_live_votre_cle_ici" \
+     https://api.votreservice.com/data</code></pre>
+
+          <p>Ou avec Bearer token</p>
+          <pre><code class="bash">curl -H "Authorization: Bearer sk_live_votre_cle_ici" \
+     https://api.votreservice.com/data</code></pre>
+
+          <h5 class="mt-4">Codes d'erreur</h5>
+          <ul>
+            <li><strong>401 :</strong> Clé manquante ou invalide</li>
+            <li><strong>403 :</strong> Clé valide mais accès refusé à cette ressource</li>
+            <li><strong>429 :</strong> Limite de débit dépassée</li>
+          </ul>
+
+          <!-- Section 7: Gestion côté client -->
+          <h4 class="mt-5"><i class="fas fa-list"></i> Gestion des clés côté client</h4>
+          <h5>Liste des clés actives</h5>
+          <pre><code class="text">GET /api/keys
+
+Réponse :
+[
+  {
+    "id": 1,
+    "name": "Clé de production",
+    "prefix": "sk_live_a3f8",
+    "created_at": "2025-10-28T10:30:00Z",
+    "last_used_at": "2025-10-28T15:20:00Z",
+    "expires_at": "2026-10-28T10:30:00Z"
+  }
+]</code></pre>
+
+          <h5 class="mt-4">Révocation d'une clé</h5>
+          <pre><code class="text">DELETE /api/keys/:id
+
+Réponse :
+{
+  "message": "Clé révoquée avec succès"
+}</code></pre>
+
+          <!-- Checklist -->
+          <h4 class="mt-5"><i class="fas fa-check-square"></i> Checklist de sécurité</h4>
+          <div class="highlight-box">
+            <ul style="list-style: none; padding-left: 0;">
+              <li>✓ Les clés sont générées de manière cryptographiquement sécurisée</li>
+              <li>✓ Les clés sont hashées avant stockage (jamais en clair)</li>
+              <li>✓ La clé n'est affichée qu'une seule fois lors de la création</li>
+              <li>✓ Limitation du nombre de requêtes par clé</li>
+              <li>✓ Logging des accès et tentatives échouées</li>
+              <li>✓ Possibilité de révoquer une clé</li>
+              <li>✓ Expiration automatique des clés</li>
+              <li>✓ Communication HTTPS uniquement</li>
+              <li>✓ Documentation claire pour les développeurs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="../assets/logo.jpeg" alt="YNOV Campus" class="footer-logo-img">
+            <span class="footer-logo-text">Web Services</span>
+          </div>
+          <p class="footer-description">Ressources — Gestion des Clés API.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="../index.html#programme">Programme</a></li>
+            <li><a href="../index.html#projet">Projet</a></li>
+            <li><a href="resources.html">Ressources</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 YNOV Campus. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      hljs.highlightAll();
+    });
+  </script>
+</body>
+</html>
+
