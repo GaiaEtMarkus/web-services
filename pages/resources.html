@@ -67,13 +67,531 @@
           </p>
         </div>
       </div>
+      <!-- Nouvelle ressource : Validation avec Zod + Express -->
+   
     </div>
   </section>
 
   <!-- Contenu principal -->
   <section class="programme">
     <div class="container">
-      <div class="day-card expanded">
+
+      <div class="day-card expanded mb-4" id="zod-express">
+        <div class="day-header">
+          <span class="day-number">🧩</span>
+          <span class="day-theme">Validation avec Zod + Express</span>
+        </div>
+        <div class="day-content">
+          <p><strong>Zod</strong> permet de valider et typer vos données côté serveur. Il fonctionne en <strong>JavaScript</strong> et en <strong>TypeScript</strong>.</p>
+
+          <h4 class="mt-5"><i class="fas fa-box"></i> Installation de base</h4>
+          <pre><code class="bash">npm init -y
+npm install express zod
+npm install -D nodemon</code></pre>
+
+          <p><strong>Option TypeScript</strong> :</p>
+          <pre><code class="bash">npm install -D typescript @types/express @types/node ts-node
+npx tsc --init</code></pre>
+
+          <h4 class="mt-5"><i class="fas fa-code"></i> Version JavaScript</h4>
+          <h5>Structure de projet</h5>
+          <pre><code class="text">projet/
+├── src/
+│   ├── schemas/
+│   │   └── user.schema.js
+│   ├── middleware/
+│   │   └── validate.js
+│   └── server.js
+├── package.json
+└── .gitignore</code></pre>
+
+          <h5 class="mt-4">1) Schémas de validation — <code>src/schemas/user.schema.js</code></h5>
+          <pre><code class="javascript">const { z } = require('zod');
+
+// Schéma pour créer un utilisateur
+const createUserSchema = z.object({
+  body: z.object({
+    name: z.string({
+      required_error: "Le nom est requis"
+    }).min(3, "Le nom doit faire au moins 3 caractères"),
+
+    email: z.string({
+      required_error: "L'email est requis"
+    }).email("Email invalide"),
+
+    age: z.number({
+      required_error: "L'âge est requis"
+    }).int().positive().min(18, "Vous devez avoir au moins 18 ans"),
+
+    password: z.string()
+      .min(8, "Le mot de passe doit faire au moins 8 caractères")
+      .regex(/[A-Z]/, "Doit contenir au moins une majuscule")
+      .regex(/[0-9]/, "Doit contenir au moins un chiffre")
+  })
+});
+
+// Schéma pour mettre à jour un utilisateur
+const updateUserSchema = z.object({
+  params: z.object({
+    id: z.string()
+  }),
+  body: z.object({
+    name: z.string().min(3).optional(),
+    email: z.string().email().optional(),
+    age: z.number().int().positive().optional()
+  })
+});
+
+// Schéma pour les query params (pagination)
+const getUsersSchema = z.object({
+  query: z.object({
+    page: z.string()
+      .optional()
+      .default("1")
+      .transform(val => parseInt(val))
+      .pipe(z.number().int().positive()),
+
+    limit: z.string()
+      .optional()
+      .default("10")
+      .transform(val => parseInt(val))
+      .pipe(z.number().int().positive().max(100))
+  })
+});
+
+module.exports = {
+  createUserSchema,
+  updateUserSchema,
+  getUsersSchema
+};</code></pre>
+
+          <h5 class="mt-4">2) Middleware de validation — <code>src/middleware/validate.js</code></h5>
+          <pre><code class="javascript">const { ZodError } = require('zod');
+
+const validate = (schema) => {
+  return async (req, res, next) => {
+    try {
+      // Valide body, query et params en une seule fois
+      await schema.parseAsync({
+        body: req.body,
+        query: req.query,
+        params: req.params
+      });
+      next();
+    } catch (error) {
+      if (error instanceof ZodError) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Erreur de validation',
+          errors: error.errors.map(err => ({
+            field: err.path.join('.'),
+            message: err.message
+          }))
+        });
+      }
+      next(error);
+    }
+  };
+};
+
+module.exports = { validate };</code></pre>
+
+          <h5 class="mt-4">3) Serveur Express — <code>src/server.js</code></h5>
+          <pre><code class="javascript">const express = require('express');
+const { validate } = require('./middleware/validate');
+const { 
+  createUserSchema, 
+  updateUserSchema,
+  getUsersSchema
+} = require('./schemas/user.schema');
+
+const app = express();
+app.use(express.json());
+
+// Base de données simulée
+let users = [];
+let nextId = 1;
+
+// ✅ POST /users - Créer un utilisateur
+app.post('/users', validate(createUserSchema), (req, res) => {
+  const { password, ...userData } = req.body;
+
+  const newUser = {
+    id: nextId++,
+    ...userData,
+    createdAt: new Date().toISOString()
+  };
+
+  users.push({ ...newUser, password }); // Stocke avec password
+
+  res.status(201).json({
+    status: 'success',
+    data: newUser // Renvoie sans password
+  });
+});
+
+// ✅ GET /users - Liste des utilisateurs (avec pagination)
+app.get('/users', validate(getUsersSchema), (req, res) => {
+  const { page, limit } = req.query;
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+
+  res.json({
+    status: 'success',
+    data: users.slice(startIndex, endIndex).map(u => {
+      const { password, ...user } = u;
+      return user;
+    }),
+    pagination: {
+      page,
+      limit,
+      total: users.length
+    }
+  });
+});
+
+// ✅ GET /users/:id - Récupérer un utilisateur
+app.get('/users/:id', (req, res) => {
+  const user = users.find(u => u.id === Number(req.params.id));
+  if (!user) {
+    return res.status(404).json({ status: 'error', message: 'Utilisateur non trouvé' });
+  }
+  const { password, ...userData } = user;
+  res.json({ status: 'success', data: userData });
+});
+
+// ✅ PUT /users/:id - Mettre à jour un utilisateur
+app.put('/users/:id', validate(updateUserSchema), (req, res) => {
+  const { id } = req.params;
+  const userIndex = users.findIndex(u => u.id === Number(id));
+  if (userIndex === -1) {
+    return res.status(404).json({ status: 'error', message: 'Utilisateur non trouvé' });
+  }
+  users[userIndex] = {
+    ...users[userIndex],
+    ...req.body,
+    updatedAt: new Date().toISOString()
+  };
+  const { password, ...userData } = users[userIndex];
+  res.json({ status: 'success', data: userData });
+});
+
+// ✅ DELETE /users/:id - Supprimer un utilisateur
+app.delete('/users/:id', (req, res) => {
+  const { id } = req.params;
+  const userIndex = users.findIndex(u => u.id === Number(id));
+  if (userIndex === -1) {
+    return res.status(404).json({ status: 'error', message: 'Utilisateur non trouvé' });
+  }
+  users.splice(userIndex, 1);
+  res.json({ status: 'success', message: 'Utilisateur supprimé' });
+});
+
+// Gestion des erreurs globale
+app.use((err, req, res, next) => {
+  console.error('Erreur:', err);
+  res.status(500).json({ status: 'error', message: 'Erreur serveur interne' });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
+});</code></pre>
+
+          <h5 class="mt-4">4) Scripts — <code>package.json</code></h5>
+          <pre><code class="json">{
+  "name": "express-zod-validation",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  }
+}</code></pre>
+
+          <h5 class="mt-4">Démarrer le serveur</h5>
+          <pre><code class="bash">npm run dev</code></pre>
+
+          <h4 class="mt-5"><i class="fas fa-diamond"></i> Version TypeScript</h4>
+          <h5>Structure de projet</h5>
+          <pre><code class="text">projet/
+├── src/
+│   ├── schemas/
+│   │   └── user.schema.ts
+│   ├── middleware/
+│   │   └── validate.ts
+│   └── server.ts
+├── package.json
+├── tsconfig.json
+└── .gitignore</code></pre>
+
+          <h5 class="mt-4">1) <code>tsconfig.json</code></h5>
+          <pre><code class="json">{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}</code></pre>
+
+          <h5 class="mt-4">2) Schémas — <code>src/schemas/user.schema.ts</code></h5>
+          <pre><code class="typescript">import { z } from 'zod';
+
+// Schéma pour créer un utilisateur
+export const createUserSchema = z.object({
+  body: z.object({
+    name: z.string({
+      required_error: "Le nom est requis"
+    }).min(3, "Le nom doit faire au moins 3 caractères"),
+
+    email: z.string({
+      required_error: "L'email est requis"
+    }).email("Email invalide"),
+
+    age: z.number({
+      required_error: "L'âge est requis"
+    }).int().positive().min(18, "Vous devez avoir au moins 18 ans"),
+
+    password: z.string()
+      .min(8, "Le mot de passe doit faire au moins 8 caractères")
+      .regex(/[A-Z]/, "Doit contenir au moins une majuscule")
+      .regex(/[0-9]/, "Doit contenir au moins un chiffre")
+  })
+});
+
+// Schéma pour mettre à jour un utilisateur
+export const updateUserSchema = z.object({
+  params: z.object({
+    id: z.string()
+  }),
+  body: z.object({
+    name: z.string().min(3).optional(),
+    email: z.string().email().optional(),
+    age: z.number().int().positive().optional()
+  })
+});
+
+// Schéma pour les query params
+export const getUsersSchema = z.object({
+  query: z.object({
+    page: z.string()
+      .optional()
+      .default("1")
+      .transform(val => parseInt(val))
+      .pipe(z.number().int().positive()),
+
+    limit: z.string()
+      .optional()
+      .default("10")
+      .transform(val => parseInt(val))
+      .pipe(z.number().int().positive().max(100))
+  })
+});
+
+// 🎯 Types TypeScript inférés automatiquement
+export type CreateUserInput = z.infer<typeof createUserSchema>['body'];
+export type UpdateUserInput = z.infer<typeof updateUserSchema>['body'];
+export type GetUsersQuery = z.infer<typeof getUsersSchema>['query'];</code></pre>
+
+          <h5 class="mt-4">3) Middleware — <code>src/middleware/validate.ts</code></h5>
+          <pre><code class="typescript">import { Request, Response, NextFunction } from 'express';
+import { AnyZodObject, ZodError } from 'zod';
+
+export const validate = (schema: AnyZodObject) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await schema.parseAsync({
+        body: req.body,
+        query: req.query,
+        params: req.params
+      });
+      next();
+    } catch (error) {
+      if (error instanceof ZodError) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Erreur de validation',
+          errors: error.errors.map(err => ({
+            field: err.path.join('.'),
+            message: err.message
+          }))
+        });
+      }
+      next(error);
+    }
+  };
+};</code></pre>
+
+          <h5 class="mt-4">4) Serveur — <code>src/server.ts</code></h5>
+          <pre><code class="typescript">import express, { Request, Response, NextFunction } from 'express';
+import { validate } from './middleware/validate';
+import { 
+  createUserSchema, 
+  updateUserSchema,
+  getUsersSchema,
+  CreateUserInput 
+} from './schemas/user.schema';
+
+const app = express();
+app.use(express.json());
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  age: number;
+  password: string;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+let users: User[] = [];
+let nextId = 1;
+
+// ✅ POST /users
+app.post(
+  '/users',
+  validate(createUserSchema),
+  (req: Request<{}, {}, CreateUserInput>, res: Response) => {
+    const { password, ...userData } = req.body;
+    const newUser: User = {
+      id: nextId++,
+      ...userData,
+      password,
+      createdAt: new Date().toISOString()
+    };
+    users.push(newUser);
+    const { password: _, ...userResponse } = newUser;
+    res.status(201).json({ status: 'success', data: userResponse });
+  }
+);
+
+// ✅ GET /users
+app.get('/users', validate(getUsersSchema), (req: Request, res: Response) => {
+  const { page = 1, limit = 10 } = req.query as any;
+  const startIndex = (Number(page) - 1) * Number(limit);
+  const endIndex = startIndex + Number(limit);
+  const usersWithoutPassword = users.slice(startIndex, endIndex).map(u => {
+    const { password, ...user } = u; return user;
+  });
+  res.json({
+    status: 'success',
+    data: usersWithoutPassword,
+    pagination: { page: Number(page), limit: Number(limit), total: users.length }
+  });
+});
+
+// ✅ GET /users/:id
+app.get('/users/:id', (req: Request, res: Response) => {
+  const user = users.find(u => u.id === Number(req.params.id));
+  if (!user) return res.status(404).json({ status: 'error', message: 'Utilisateur non trouvé' });
+  const { password, ...userData } = user;
+  res.json({ status: 'success', data: userData });
+});
+
+// ✅ PUT /users/:id
+app.put('/users/:id', validate(updateUserSchema), (req: Request, res: Response) => {
+  const { id } = req.params;
+  const userIndex = users.findIndex(u => u.id === Number(id));
+  if (userIndex === -1) return res.status(404).json({ status: 'error', message: 'Utilisateur non trouvé' });
+  users[userIndex] = { ...users[userIndex], ...req.body, updatedAt: new Date().toISOString() };
+  const { password, ...userData } = users[userIndex];
+  res.json({ status: 'success', data: userData });
+});
+
+// ✅ DELETE /users/:id
+app.delete('/users/:id', (req: Request, res: Response) => {
+  const { id } = req.params;
+  const userIndex = users.findIndex(u => u.id === Number(id));
+  if (userIndex === -1) return res.status(404).json({ status: 'error', message: 'Utilisateur non trouvé' });
+  users.splice(userIndex, 1);
+  res.json({ status: 'success', message: 'Utilisateur supprimé' });
+});
+
+// Gestion des erreurs
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error('Erreur:', err);
+  res.status(500).json({ status: 'error', message: 'Erreur serveur interne' });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
+});</code></pre>
+
+          <h5 class="mt-4">5) Scripts — <code>package.json</code></h5>
+          <pre><code class="json">{
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  }
+}</code></pre>
+
+          <h4 class="mt-5"><i class="fas fa-vial"></i> Tests avec cURL</h4>
+          <h5>Créer un utilisateur (valide)</h5>
+          <pre><code class="bash">curl -X POST http://localhost:3000/users \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Alice Dubois",
+    "email": "alice@example.com",
+    "age": 25,
+    "password": "Password123"
+  }'</code></pre>
+
+          <h5>Créer un utilisateur (invalide)</h5>
+          <pre><code class="bash">curl -X POST http://localhost:3000/users \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Al",
+    "email": "invalid-email",
+    "age": 15,
+    "password": "weak"
+  }'</code></pre>
+
+          <h5>Liste (pagination)</h5>
+          <pre><code class="bash">curl "http://localhost:3000/users?page=1&limit=10"</code></pre>
+
+          <h5>Récupérer / Mettre à jour / Supprimer</h5>
+          <pre><code class="bash">curl http://localhost:3000/users/1
+curl -X PUT http://localhost:3000/users/1 -H "Content-Type: application/json" -d '{"name":"Alice Martin","age":26}'
+curl -X DELETE http://localhost:3000/users/1</code></pre>
+
+          <h4 class="mt-5"><i class="fas fa-lightbulb"></i> Bonus : validations avancées</h4>
+          <pre><code class="javascript">// Email personnalisé
+email: z.string().email().endsWith('@school.com')
+
+// Enum
+role: z.enum(['admin', 'user', 'guest'])
+
+// Date (ISO)
+birthDate: z.string().datetime()
+
+// Validation conditionnelle
+z.object({
+  type: z.enum(['student', 'teacher']),
+  studentId: z.string().optional()
+}).refine(data => {
+  if (data.type === 'student') {
+    return !!data.studentId;
+  }
+  return true;
+}, {
+  message: "studentId requis pour les étudiants",
+  path: ['studentId']
+})</code></pre>
+        </div>
+      </div>
+
+
+      <div class="day-card expanded mb-4">
         <div class="day-header">
           <span class="day-number">🔑</span>
           <span class="day-theme">Gestion des Clés API</span>
@@ -305,7 +823,7 @@ Réponse :
       </div>
 
       <!-- Nouvelle ressource : Déploiement sur Render -->
-      <div class="day-card expanded mt-4">
+      <div class="day-card expanded mb-4">
         <div class="day-header">
           <span class="day-number">🚀</span>
           <span class="day-theme">Déploiement sur Render</span>
