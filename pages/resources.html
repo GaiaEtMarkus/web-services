@@ -95,6 +95,7 @@ npx tsc --init</code></pre>
 
           <h4 class="mt-5"><i class="fas fa-code"></i> Version JavaScript</h4>
           <h5>Structure de projet</h5>
+          <p>Cette arborescence sépare clairement <code>schemas</code> (règles de validation), <code>middleware</code> (branchements Express) et <code>server</code> (routes). On branche ensuite les schémas via le middleware sur chaque route.</p>
           <pre><code class="text">projet/
 ├── src/
 │   ├── schemas/
@@ -106,6 +107,7 @@ npx tsc --init</code></pre>
 └── .gitignore</code></pre>
 
           <h5 class="mt-4">1) Schémas de validation — <code>src/schemas/user.schema.js</code></h5>
+          <p>Les schémas décrivent la « forme » attendue des données. Ici, on valide <code>body</code>, <code>params</code> et <code>query</code>. Remarquez l'usage de <code>transform</code> et <code>pipe</code> pour convertir les query strings en nombres typés.</p>
           <pre><code class="javascript">const { z } = require('zod');
 
 // Schéma pour créer un utilisateur
@@ -166,6 +168,7 @@ module.exports = {
 };</code></pre>
 
           <h5 class="mt-4">2) Middleware de validation — <code>src/middleware/validate.js</code></h5>
+          <p>Le middleware fait le « branchement » entre Express et Zod : il appelle <code>schema.parseAsync</code> avec <code>req.body</code>, <code>req.query</code> et <code>req.params</code>. En cas d'erreur, il renvoie une réponse 400 structurée.</p>
           <pre><code class="javascript">const { ZodError } = require('zod');
 
 const validate = (schema) => {
@@ -197,6 +200,7 @@ const validate = (schema) => {
 module.exports = { validate };</code></pre>
 
           <h5 class="mt-4">3) Serveur Express — <code>src/server.js</code></h5>
+          <p>Chaque route est protégée par <code>validate(schema)</code> au plus près de la déclaration. Les schémas garantissent que les données entrantes sont correctes avant d'atteindre votre logique métier.</p>
           <pre><code class="javascript">const express = require('express');
 const { validate } = require('./middleware/validate');
 const { 
@@ -300,6 +304,7 @@ app.listen(PORT, () => {
 });</code></pre>
 
           <h5 class="mt-4">4) Scripts — <code>package.json</code></h5>
+          <p>Un script <code>dev</code> pour le rechargement à chaud (nodemon) et un <code>start</code> pour la prod locale. Démarrez en développement avec <code>npm run dev</code>.</p>
           <pre><code class="json">{
   "name": "express-zod-validation",
   "version": "1.0.0",
@@ -326,6 +331,7 @@ app.listen(PORT, () => {
 └── .gitignore</code></pre>
 
           <h5 class="mt-4">1) <code>tsconfig.json</code></h5>
+          <p>Configuration minimale pour compiler depuis <code>src</code> vers <code>dist</code>, avec typage strict et interop ES activée.</p>
           <pre><code class="json">{
   "compilerOptions": {
     "target": "ES2020",
@@ -342,6 +348,7 @@ app.listen(PORT, () => {
 }</code></pre>
 
           <h5 class="mt-4">2) Schémas — <code>src/schemas/user.schema.ts</code></h5>
+          <p>Les mêmes schémas Zod servent au runtime et exposent des types <code>z.infer</code> pour bénéficier de l'autocomplétion côté TypeScript sans duplication.</p>
           <pre><code class="typescript">import { z } from 'zod';
 
 // Schéma pour créer un utilisateur
@@ -401,6 +408,7 @@ export type UpdateUserInput = z.infer<typeof updateUserSchema>['body'];
 export type GetUsersQuery = z.infer<typeof getUsersSchema>['query'];</code></pre>
 
           <h5 class="mt-4">3) Middleware — <code>src/middleware/validate.ts</code></h5>
+          <p>Le middleware est typé avec les interfaces Express. On conserve le même flux : parse → next() ou réponse 400 avec liste d'erreurs.</p>
           <pre><code class="typescript">import { Request, Response, NextFunction } from 'express';
 import { AnyZodObject, ZodError } from 'zod';
 
@@ -430,6 +438,7 @@ export const validate = (schema: AnyZodObject) => {
 };</code></pre>
 
           <h5 class="mt-4">4) Serveur — <code>src/server.ts</code></h5>
+          <p>On illustre l'usage des types inférés (<code>CreateUserInput</code>) pour typer <code>req.body</code> et sécuriser la manipulation des données dans les handlers.</p>
           <pre><code class="typescript">import express, { Request, Response, NextFunction } from 'express';
 import { validate } from './middleware/validate';
 import { 
@@ -527,6 +536,7 @@ app.listen(PORT, () => {
 });</code></pre>
 
           <h5 class="mt-4">5) Scripts — <code>package.json</code></h5>
+          <p>En TS, on démarre en dev via <code>ts-node</code>, on build avec <code>tsc</code>, puis on lance le JavaScript généré dans <code>dist</code>.</p>
           <pre><code class="json">{
   "scripts": {
     "dev": "nodemon --exec ts-node src/server.ts",
@@ -536,6 +546,7 @@ app.listen(PORT, () => {
 }</code></pre>
 
           <h4 class="mt-5"><i class="fas fa-vial"></i> Tests avec cURL</h4>
+          <p>Ces appels montrent le comportement attendu : 201 en création valide, 400 avec liste d'erreurs sinon, pagination correcte pour la liste.</p>
           <h5>Créer un utilisateur (valide)</h5>
           <pre><code class="bash">curl -X POST http://localhost:3000/users \
   -H "Content-Type: application/json" \
