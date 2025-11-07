@@ -527,6 +527,7 @@ RFC et spécifications :
 
 RFC 7807 : Problem Details for HTTP APIs
 OpenAPI Specification 3.0 : https://swagger.io/specification/
+
 JSON:API : https://jsonapi.org/ (alternative à REST avec conventions très strictes)
 
 Guides de style d'APIs :
