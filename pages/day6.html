@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jour 6 — Architecture SOA et Services SOAP</title>
+  <link rel="stylesheet" href="../styles/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="../assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+        <span class="logo-text">Web Services</span>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="../index.html" class="nav-link">Accueil</a></li>
+        <li class="nav-item"><a href="../index.html#programme" class="nav-link">Programme</a></li>
+        <li class="nav-item"><a href="../index.html#projet" class="nav-link">Projet SmartCity</a></li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle">
+            <i class="fas fa-calendar-alt"></i> Journées
+            <i class="fas fa-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+            <a href="day1FilRouge.html" class="dropdown-item">Jour 1 - Fil Rouge</a>
+            <a href="day2.html" class="dropdown-item">Jour 2 - Théorie</a>
+            <a href="day2FilRouge.html" class="dropdown-item">Jour 2 - Fil Rouge</a>
+            <a href="day3.html" class="dropdown-item">Jour 3 - Théorie</a>
+            <a href="day3FilRouge.html" class="dropdown-item">Jour 3 - Fil Rouge</a>
+            <a href="day4.html" class="dropdown-item">Jour 4/5 - Théorie</a>
+            <a href="day6.html" class="dropdown-item">Jour 6 - Théorie</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="../index.html#ressources" class="nav-link">Ressources</a></li>
+        <li class="nav-item"><a href="../index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" style="min-height: 60vh;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">Jour 6</h1>
+          <h2 class="hero-subtitle">Architecture SOA et Services SOAP</h2>
+          <p class="hero-description">
+            Comprendre comment les grandes organisations ont résolu (et compliqué) l’intégration de systèmes hétérogènes grâce à SOA, SOAP, WSDL et UDDI.
+          </p>
+          <div class="hero-buttons">
+            <a href="../index.html#programme" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Retour au programme</a>
+          </div>
+        </div>
+        <div class="hero-image-container">
+          <img src="../assets/home.jpg" alt="Architecture SOA" class="hero-image">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Objectifs -->
+  <section class="introduction">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Objectifs d'apprentissage</h2>
+      </div>
+      <div class="intro-grid">
+        <div class="intro-card">
+          <div class="card-icon"><i class="fas fa-network-wired"></i></div>
+          <h3>Architecture SOA</h3>
+          <p>Revenir sur l’émergence de SOA et comprendre pourquoi cette approche est née.</p>
+        </div>
+        <div class="intro-card">
+          <div class="card-icon"><i class="fas fa-layer-group"></i></div>
+          <h3>Principes clés</h3>
+          <p>Identifier les 8 principes fondateurs de SOA et leurs implications concrètes.</p>
+        </div>
+        <div class="intro-card">
+          <div class="card-icon"><i class="fas fa-server"></i></div>
+          <h3>Orchestration</h3>
+          <p>Visualiser la structure en couches d’une plateforme SOA et le rôle de l’ESB.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partie 1 -->
+  <section class="programme">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">PARTIE 1 : LE PARADIGME SOA</h2>
+        <p class="section-subtitle">Architecture orientée services : contexte, principes et organisation</p>
+      </div>
+
+      <div class="collapsible-section">
+        <div class="collapsible-header" onclick="togglePartie1()">
+          <h3 class="collapsible-title">
+            <i class="fas fa-chevron-down collapsible-icon" id="partie1-icon"></i>
+            Partie 1 : Le paradigme SOA
+          </h3>
+          <span class="collapsible-badge">5 sous-parties</span>
+        </div>
+        <div class="collapsible-content" id="partie1-content">
+          <div class="days-container">
+
+            <!-- 1.1 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">1.1</span>
+                <span class="day-theme">L’histoire de SOA : d’où vient ce besoin ?</span>
+              </div>
+              <div class="day-content">
+                <p>Au début des années 2000, les grandes entreprises se retrouvent avec une mosaïque d’applications héritées :</p>
+                <ul>
+                  <li>Mainframe COBOL pour la gestion des comptes (années 1970).</li>
+                  <li>Applications Java sur Unix pour les prêts (années 1990).</li>
+                  <li>CRM .NET sur Windows pour la relation client (années 2000).</li>
+                </ul>
+                <p>Chaque système possède ses propres protocoles, formats de données, cycles de vie. L’intégration devient un cauchemar.</p>
+
+                <div class="comparison-box" style="margin-top: 1.5rem;">
+                  <div class="bad-example">
+                    <h6>❌ Les tentatives ratées</h6>
+                    <ul>
+                      <li>CORBA (1991) : trop complexe, adoption limitée.</li>
+                      <li>DCOM (1996) : enfermé dans l’écosystème Microsoft.</li>
+                      <li>RMI (1997) : réservé au monde Java.</li>
+                      <li>EDI : coûteux, réservé aux grandes organisations B2B.</li>
+                    </ul>
+                  </div>
+                  <div class="good-example">
+                    <h6>✅ L’émergence de SOA (2000-2005)</h6>
+                    <p>Les organismes de standardisation (W3C, OASIS) promeuvent l’idée d’exposer des services réutilisables via des standards ouverts (XML, HTTP).</p>
+                    <p>Les éditeurs majeurs se positionnent : IBM WebSphere, Microsoft WCF, Oracle SOA Suite, SAP NetWeaver…</p>
+                  </div>
+                </div>
+
+                <div class="highlight-box" style="background:#fff4e6; border-left:4px solid #ff9800; margin-top:1.5rem;">
+                  <h6>⚠️ La désillusion (2010-2015)</h6>
+                  <ul>
+                    <li>Budgets dépassés de 200-300 %.</li>
+                    <li>Projets livrés en 2-3 ans au lieu de 6 mois.</li>
+                    <li>Architecture devenue incontrôlable et gourmande en expertise.</li>
+                  </ul>
+                </div>
+
+                <p>Pendant ce temps, le cloud AWS (2006), REST (2010) et plus tard les microservices (2014) offrent des alternatives plus agiles.</p>
+                <p class="mt-5"><strong>Verdict :</strong> SOA n’a pas échoué techniquement, mais a souvent été mal vendu et mal mis en œuvre. Les principes restent pertinents, l’exécution l’était moins.</p>
+              </div>
+            </div>
+
+            <!-- 1.2 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">1.2</span>
+                <span class="day-theme">Les 8 principes fondamentaux de SOA</span>
+              </div>
+              <div class="day-content">
+                <p>SOA n’est pas une technologie mais une philosophie architecturale. Huit principes clés garantissent la cohérence du modèle :</p>
+
+                <div class="principles-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; margin-top:1.5rem;">
+                  <div class="principle-card">
+                    <h5>1. Contrat standardisé</h5>
+                    <p>Chaque service expose un contrat formel (WSDL) décrivant exactement ses opérations sans dévoiler l’implémentation.</p>
+                    <pre><code class="text">ProcessPayment(amount, account)
+RefundPayment(transactionId)
+GetPaymentStatus(transactionId)</code></pre>
+                  </div>
+                  <div class="principle-card">
+                    <h5>2. Couplage faible</h5>
+                    <p>Les services restent indépendants : le contrat change rarement, l’implémentation librement.</p>
+                    <p class="principle-note">Contre-exemple : une base partagée où une modification casse les autres services.</p>
+                  </div>
+                  <div class="principle-card">
+                    <h5>3. Abstraction</h5>
+                    <p>Le client ne connaît que le contrat. La complexité interne (langage, stockage) est entièrement masquée.</p>
+                  </div>
+                  <div class="principle-card">
+                    <h5>4. Réutilisabilité</h5>
+                    <p>Un service peut alimenter plusieurs canaux : application web, mobile, portail partenaire, API publique.</p>
+                  </div>
+                  <div class="principle-card">
+                    <h5>5. Autonomie</h5>
+                    <p>Chaque service contrôle ses données. Pour accéder aux utilisateurs, le service Commande appelle le service Utilisateur au lieu de lire sa base.</p>
+                  </div>
+                  <div class="principle-card">
+                    <h5>6. Stateless</h5>
+                    <p>Pas d’état partagé entre requêtes : toutes les informations nécessaires voyagent dans le message.</p>
+                    <p>Avantage : la scalabilité horizontale devient naturelle.</p>
+                  </div>
+                  <div class="principle-card">
+                    <h5>7. Découvrabilité</h5>
+                    <p>Les services sont catalogués et documentés (UDDI) pour que les équipes puissent les retrouver facilement.</p>
+                  </div>
+                  <div class="principle-card">
+                    <h5>8. Composabilité</h5>
+                    <p>On assemble des services spécialisés pour créer un processus métier complet : stock, prix, paiement, commande, confirmation…</p>
+                  </div>
+                </div>
+
+                <div class="highlight-box" style="background:#e8f4fd; border-left:4px solid #0066cc; margin-top:1.5rem;">
+                  <h6>💡 À retenir</h6>
+                  <p>Ce sont ces principes que les microservices conserveront plus tard, en supprimant la lourdeur d’un ESB centralisé.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1.3 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">1.3</span>
+                <span class="day-theme">Architecture en couches SOA</span>
+              </div>
+              <div class="day-content">
+                <p>Une plateforme SOA typique s’organise en plusieurs couches complémentaires :</p>
+
+                <pre><code class="text">┌─────────────────────────────────────────┐
+│     PRÉSENTATION                        │  Applications Web, Mobile
+└────────────┬────────────────────────────┘
+             │
+┌────────────▼────────────────────────────┐
+│     PROCESSUS MÉTIER                    │  Orchestration (BPEL, Workflow)
+└────────────┬────────────────────────────┘
+             │
+┌────────────▼────────────────────────────┐
+│     SERVICES MÉTIER                     │  Commande, Paiement, Facturation…
+└────────────┬────────────────────────────┘
+             │
+┌────────────▼────────────────────────────┐
+│     SERVICES INFRASTRUCTURE             │  Sécurité, Logs, Cache
+└────────────┬────────────────────────────┘
+             │
+┌────────────▼────────────────────────────┐
+│     DONNÉES                             │  Bases de données, ERP, Legacy
+└─────────────────────────────────────────┘</code></pre>
+
+                <div class="highlight-box" style="background:#fff4e6; border-left:4px solid #ff9800; margin-top:1.5rem;">
+                  <h6>🎯 L’ESB (Enterprise Service Bus)</h6>
+                  <p>Cœur de l’architecture SOA, l’ESB assure :</p>
+                  <ul>
+                    <li>Le routage intelligent des messages entre services.</li>
+                    <li>La transformation des formats (XML ↔ JSON ↔ CSV).</li>
+                    <li>La gestion de la sécurité, des transactions et de la tolérance aux pannes.</li>
+                    <li>L’application de patterns d’intégration (aggregator, splitter…).</li>
+                  </ul>
+                </div>
+
+                <div class="comparison-box" style="margin-top:1.5rem;">
+                  <div class="bad-example">
+                    <h6>⚠️ Limites</h6>
+                    <p>L’ESB peut vite devenir un point de défaillance unique et un goulot d’étranglement lorsqu’on y concentre trop de logique.</p>
+                  </div>
+                  <div class="good-example">
+                    <h6>✅ Bon usage</h6>
+                    <p>Limiter l’ESB aux préoccupations transverses (sécurité, transformation, monitoring) et garder la logique métier dans les services.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+      <!-- 1.4 -->
+      <div class="day-card expanded">
+        <div class="day-header">
+          <span class="day-number">1.4</span>
+          <span class="day-theme">SOA vs Microservices vs REST</span>
+        </div>
+        <div class="day-content">
+          <p>Trois approches dominent aujourd’hui. Cette synthèse met en évidence leurs objectifs, leur complexité et leurs coûts :</p>
+
+          <div class="table-wrapper">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Aspect</th>
+                  <th>SOA</th>
+                  <th>Microservices</th>
+                  <th>REST</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Naissance</td>
+                  <td>2000-2005</td>
+                  <td>2014+</td>
+                  <td>2010+</td>
+                </tr>
+                <tr>
+                  <td>Philosophie</td>
+                  <td>Interopérabilité & réutilisation</td>
+                  <td>Agilité & autonomie</td>
+                  <td>Simplicité</td>
+                </tr>
+                <tr>
+                  <td>Protocole dominant</td>
+                  <td>SOAP (XML/HTTP)</td>
+                  <td>HTTP/JSON, gRPC</td>
+                  <td>HTTP/JSON</td>
+                </tr>
+                <tr>
+                  <td>Taille des services</td>
+                  <td>Large (10-100 fonctions)</td>
+                  <td>Petite (1-10 fonctions)</td>
+                  <td>Variable</td>
+                </tr>
+                <tr>
+                  <td>Communication</td>
+                  <td>ESB central</td>
+                  <td>Point-à-point</td>
+                  <td>Point-à-point</td>
+                </tr>
+                <tr>
+                  <td>Base de données</td>
+                  <td>Souvent partagée</td>
+                  <td>Une par service</td>
+                  <td>Variable</td>
+                </tr>
+                <tr>
+                  <td>Gouvernance</td>
+                  <td>Centralisée</td>
+                  <td>Décentralisée</td>
+                  <td>Faible</td>
+                </tr>
+                <tr>
+                  <td>Contrat</td>
+                  <td>WSDL strict</td>
+                  <td>OpenAPI (optionnel)</td>
+                  <td>Souvent informel</td>
+                </tr>
+                <tr>
+                  <td>Découverte</td>
+                  <td>UDDI</td>
+                  <td>Service Registry</td>
+                  <td>Documentation</td>
+                </tr>
+                <tr>
+                  <td>Complexité</td>
+                  <td>⚠️⚠️⚠️ Très élevée</td>
+                  <td>⚠️⚠️ Moyenne</td>
+                  <td>✅ Simple</td>
+                </tr>
+                <tr>
+                  <td>Coût</td>
+                  <td>💰💰💰 Très élevé</td>
+                  <td>💰💰 Moyen</td>
+                  <td>💰 Abordable</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="highlight-box" style="margin-top:1.5rem; background:#eef9ff; border-left:4px solid #2196f3;">
+            <h6>À retenir</h6>
+            <ul>
+              <li><strong>SOA</strong> : architecture lourde, très gouvernée, orientée interopérabilité.</li>
+              <li><strong>Microservices</strong> : SOA modernisé, agile, supporté par le DevOps.</li>
+              <li><strong>REST</strong> : style architectural minimaliste adapté aux APIs web publiques.</li>
+            </ul>
+            <blockquote>“Microservices are SOA done right.” — Martin Fowler</blockquote>
+            <p>Les microservices reprennent les principes de SOA (couplage faible, autonomie) en supprimant l’ESB central et la lourdeur des standards XML.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1.5 -->
+      <div class="day-card expanded">
+        <div class="day-header">
+          <span class="day-number">1.5</span>
+          <span class="day-theme">Quand utiliser SOA en 2025 ?</span>
+        </div>
+        <div class="day-content">
+          <p>Toutes les organisations n’ont pas les mêmes contraintes. Voici comment choisir :</p>
+
+          <div class="comparison-box" style="margin-top:1.5rem;">
+            <div class="good-example">
+              <h6>✅ SOA reste pertinent si :</h6>
+              <ul>
+                <li>Vous devez intégrer des systèmes legacy très hétérogènes.</li>
+                <li>Votre secteur est fortement régulé (banque, assurance, santé, administration).</li>
+                <li>Vous gérez des transactions distribuées ACID complexes.</li>
+                <li>Des partenaires imposent SOAP ou des spécifications WS-*.</li>
+                <li>La gouvernance, la traçabilité et l’audit sont critiques.</li>
+                <li>Vous connectez des ERP, mainframes ou solutions métier historiques.</li>
+              </ul>
+            </div>
+            <div class="bad-example">
+              <h6>🚀 Préférez REST / microservices si :</h6>
+              <ul>
+                <li>Vous êtes une startup ou une PME orientée time-to-market.</li>
+                <li>Vous devez livrer fréquemment (CI/CD, DevOps).</li>
+                <li>Vous exposez des APIs web ou mobiles publiques.</li>
+                <li>Votre équipe maîtrise les pratiques Cloud-native.</li>
+                <li>Votre budget est limité et vous cherchez la simplicité.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="highlight-box" style="margin-top:1.5rem; background:#fff8e1; border-left:4px solid #ffb300;">
+            <h6>La réalité en 2025</h6>
+            <ul>
+              <li>Les nouvelles architectures “SOA pur” sont rares.</li>
+              <li>Les grands groupes migrent progressivement vers des microservices.</li>
+              <li>SOAP reste très présent dans les systèmes legacy… et y restera encore longtemps.</li>
+              <li>Comprendre SOA demeure indispensable pour maintenir ces environnements et planifier des migrations maîtrisées.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- Partie 2 -->
+  <section class="programme">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">PARTIE 2 : SOAP & WSDL</h2>
+        <p class="section-subtitle">Comprendre le protocole SOAP, ses spécifications et son contrat de service</p>
+      </div>
+
+      <div class="collapsible-section">
+        <div class="collapsible-header" onclick="togglePartie2()">
+          <h3 class="collapsible-title">
+            <i class="fas fa-chevron-down collapsible-icon" id="partie2-icon"></i>
+            Partie 2 : SOAP & WSDL
+          </h3>
+          <span class="collapsible-badge">4 sous-parties</span>
+        </div>
+        <div class="collapsible-content" id="partie2-content">
+          <div class="days-container">
+
+            <!-- 2.1 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">2.1</span>
+                <span class="day-theme">SOAP : le protocole de communication</span>
+              </div>
+              <div class="day-content">
+                <p><strong>SOAP</strong> (Simple Object Access Protocol) est un protocole structuré autour de messages XML échangés via HTTP, SMTP ou JMS. Malgré son nom, il reste verbeux et complexe.</p>
+
+                <div class="highlight-box" style="margin-top:1.5rem; background:#eef9ff; border-left:4px solid #2196f3;">
+                  <h6>Structure générale d’un message</h6>
+                  <pre><code class="language-text">Message SOAP = Enveloppe
+    ├─ Header (optionnel) : sécurité, métadonnées, transactions
+    └─ Body : requête ou réponse</code></pre>
+                </div>
+
+                <p>Exemple de requête <strong>SOAP</strong> pour récupérer un événement :</p>
+                <pre><code class="language-xml">&lt;soap:Envelope xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot;&gt;
+  &lt;soap:Header&gt;
+    &lt;Authentication&gt;
+      &lt;Token&gt;abc123xyz&lt;/Token&gt;
+    &lt;/Authentication&gt;
+  &lt;/soap:Header&gt;
+  &lt;soap:Body&gt;
+    &lt;GetEventDetails&gt;
+      &lt;EventID&gt;550e8400&lt;/EventID&gt;
+    &lt;/GetEventDetails&gt;
+  &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;</code></pre>
+
+                <p>Réponse correspondante :</p>
+                <pre><code class="language-xml">&lt;soap:Envelope xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot;&gt;
+  &lt;soap:Body&gt;
+    &lt;GetEventDetailsResponse&gt;
+      &lt;Event&gt;
+        &lt;ID&gt;550e8400&lt;/ID&gt;
+        &lt;Title&gt;Jazz sous les étoiles&lt;/Title&gt;
+        &lt;Date&gt;2025-07-15T20:00:00Z&lt;/Date&gt;
+        &lt;Price&gt;15.00&lt;/Price&gt;
+      &lt;/Event&gt;
+    &lt;/GetEventDetailsResponse&gt;
+  &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;</code></pre>
+
+                <p>Comparaison avec l’équivalent <strong>REST</strong> :</p>
+                <pre><code class="language-http">GET /api/events/550e8400
+Authorization: Bearer abc123xyz
+
+{
+  "id": "550e8400",
+  "title": "Jazz sous les étoiles",
+  "date": "2025-07-15T20:00:00Z",
+  "price": 15.00
+}</code></pre>
+
+                <p><strong>Constat :</strong> REST est environ cinq fois plus concis pour le même résultat.</p>
+              </div>
+            </div>
+
+            <!-- 2.2 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">2.2</span>
+                <span class="day-theme">Les spécifications WS-*</span>
+              </div>
+              <div class="day-content">
+                <p>SOAP s’accompagne d’un ensemble de spécifications optionnelles, les <strong>WS-*</strong>, qui visent à couvrir les besoins d’entreprise : sécurité, transactions, routage…</p>
+
+                <div class="table-wrapper">
+                  <table class="comparison-table">
+                    <thead>
+                      <tr>
+                        <th>Spécification</th>
+                        <th>Fonction</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>WS-Security</td>
+                        <td>Chiffrement et signature des messages</td>
+                      </tr>
+                      <tr>
+                        <td>WS-Transaction</td>
+                        <td>Transactions distribuées ACID</td>
+                      </tr>
+                      <tr>
+                        <td>WS-ReliableMessaging</td>
+                        <td>Garantie de livraison des messages</td>
+                      </tr>
+                      <tr>
+                        <td>WS-Addressing</td>
+                        <td>Routage via intermédiaires, adresses logiques</td>
+                      </tr>
+                      <tr>
+                        <td>WS-Policy</td>
+                        <td>Déclaration de contraintes et politiques de sécurité</td>
+                      </tr>
+                      <tr>
+                        <td>WS-Coordination</td>
+                        <td>Coordination de plusieurs services dans un même processus</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="highlight-box" style="margin-top:1.5rem; background:#fff4e6; border-left:4px solid #ff9800;">
+                  <h6>Limites dans la pratique</h6>
+                  <ul>
+                    <li>Les spécifications sont fortement inter-dépendantes (WS-Security nécessite WS-Policy, etc.).</li>
+                    <li>Peu d’entreprises implémentent l’ensemble : SOAP + HTTPS suffit souvent.</li>
+                    <li>L’empilement de WS-* complexifie énormément les projets.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2.3 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">2.3</span>
+                <span class="day-theme">WSDL : le contrat de service</span>
+              </div>
+              <div class="day-content">
+                <p><strong>WSDL</strong> (Web Services Description Language) décrit complètement un service SOAP. C’est l’équivalent d’OpenAPI pour le monde SOAP.</p>
+
+                <div class="highlight-box" style="margin-top:1.5rem; background:#e8f4fd; border-left:4px solid #0066cc;">
+                  <h6>Les 5 sections clés</h6>
+                  <ol>
+                    <li><strong>Types</strong> : schémas de données (XSD).</li>
+                    <li><strong>Messages</strong> : requêtes et réponses.</li>
+                    <li><strong>PortType</strong> : liste d’opérations.</li>
+                    <li><strong>Binding</strong> : protocole et style SOAP.</li>
+                    <li><strong>Service</strong> : endpoints accessibles.</li>
+                  </ol>
+                </div>
+
+                <p>Extrait commenté :</p>
+                <pre><code class="language-xml">&lt;definitions name=&quot;EventService&quot;&gt;
+  &lt;types&gt;
+    &lt;Event&gt;
+      &lt;ID&gt;string&lt;/ID&gt;
+      &lt;Title&gt;string&lt;/Title&gt;
+      &lt;Price&gt;decimal&lt;/Price&gt;
+    &lt;/Event&gt;
+  &lt;/types&gt;
+
+  &lt;message name=&quot;GetEventRequest&quot;&gt;
+    &lt;part name=&quot;eventID&quot; type=&quot;string&quot; /&gt;
+  &lt;/message&gt;
+  &lt;message name=&quot;GetEventResponse&quot;&gt;
+    &lt;part name=&quot;event&quot; type=&quot;Event&quot; /&gt;
+  &lt;/message&gt;
+
+  &lt;portType name=&quot;EventServicePort&quot;&gt;
+    &lt;operation name=&quot;GetEvent&quot;&gt;
+      &lt;input message=&quot;GetEventRequest&quot; /&gt;
+      &lt;output message=&quot;GetEventResponse&quot; /&gt;
+    &lt;/operation&gt;
+  &lt;/portType&gt;
+
+  &lt;binding name=&quot;EventServiceBinding&quot; type=&quot;EventServicePort&quot;&gt;
+    &lt;soap:binding style=&quot;document&quot; transport=&quot;http&quot; /&gt;
+  &lt;/binding&gt;
+
+  &lt;service name=&quot;EventService&quot;&gt;
+    &lt;port name=&quot;EventPort&quot; binding=&quot;EventServiceBinding&quot;&gt;
+      &lt;soap:address location=&quot;https://api.smartcity.local/soap/events&quot; /&gt;
+    &lt;/port&gt;
+  &lt;/service&gt;
+&lt;/definitions&gt;</code></pre>
+
+                <p><strong>Génération automatique</strong> : la vraie force de WSDL.</p>
+                <pre><code class="language-bash"># Java
+wsimport http://api.smartcity.local/soap/events?wsdl
+
+# .NET
+wsdl http://api.smartcity.local/soap/events?wsdl
+
+# Python
+python -m zeep http://api.smartcity.local/soap/events?wsdl</code></pre>
+
+                <pre><code class="language-java">EventService service = new EventService();
+Event event = service.getEvent(&quot;550e8400&quot;);
+System.out.println(event.getTitle()); // &quot;Jazz sous les étoiles&quot;</code></pre>
+
+                <p>En REST, la génération de client n’est pas standard (OpenAPI comble progressivement ce manque).</p>
+              </div>
+            </div>
+
+            <!-- 2.4 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">2.4</span>
+                <span class="day-theme">SOAP vs REST : verdict pragmatique</span>
+              </div>
+              <div class="day-content">
+                <p>SOAP et REST répondent à des besoins très différents. Voici une comparaison rapide pour choisir en connaissance de cause :</p>
+
+                <div class="table-wrapper">
+                  <table class="comparison-table">
+                    <thead>
+                      <tr>
+                        <th>Critère</th>
+                        <th>SOAP</th>
+                        <th>REST</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Simplicité</td>
+                        <td>❌ XML verbeux</td>
+                        <td>✅ JSON léger</td>
+                      </tr>
+                      <tr>
+                        <td>Performance</td>
+                        <td>❌ Messages ~1200 bytes</td>
+                        <td>✅ Messages ~250 bytes</td>
+                      </tr>
+                      <tr>
+                        <td>Typage strict</td>
+                        <td>✅ WSDL formel</td>
+                        <td>❌ Informel (sauf OpenAPI)</td>
+                      </tr>
+                      <tr>
+                        <td>Génération de code</td>
+                        <td>✅ Automatique</td>
+                        <td>⚠️ Possible via OpenAPI</td>
+                      </tr>
+                      <tr>
+                        <td>Sécurité avancée</td>
+                        <td>✅ WS-Security (message-level)</td>
+                        <td>⚠️ HTTPS + JWT</td>
+                      </tr>
+                      <tr>
+                        <td>Transactions</td>
+                        <td>✅ WS-Transaction</td>
+                        <td>❌ Pas de standard natif</td>
+                      </tr>
+                      <tr>
+                        <td>Support navigateur</td>
+                        <td>❌ Non natif</td>
+                        <td>✅ fetch / axios / XHR</td>
+                      </tr>
+                      <tr>
+                        <td>Adoption (2025)</td>
+                        <td>❌ En déclin</td>
+                        <td>✅ Dominant</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="highlight-box" style="margin-top:1.5rem; background:#e8f4fd; border-left:4px solid #0066cc;">
+                  <h6>À retenir</h6>
+                  <ul>
+                    <li><strong>REST</strong> est léger, rapide à développer et parfaitement adapté aux APIs web/mobile modernes.</li>
+                    <li><strong>SOAP</strong> garde l’avantage pour les transactions distribuées, la génération de clients fortement typés et la sécurité message-level.</li>
+                  </ul>
+                </div>
+
+                <div class="comparison-box" style="margin-top:1.5rem;">
+                  <div class="good-example">
+                    <h6>✅ Choisir SOAP si :</h6>
+                    <ul>
+                      <li>Vos partenaires imposent des services SOAP/WSDL.</li>
+                      <li>Vous gérez des transactions ACID multi-systèmes.</li>
+                      <li>Vous avez besoin de WS-Security et d’un contrat formel.</li>
+                    </ul>
+                  </div>
+                  <div class="bad-example">
+                    <h6>🚀 Choisir REST si :</h6>
+                    <ul>
+                      <li>Vous exposez des APIs publiques web ou mobile.</li>
+                      <li>Vous recherchez la simplicité et une adoption rapide.</li>
+                      <li>Vous exploitez l’écosystème moderne (API Gateway, SPA, IoT).</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <p style="margin-top:1.5rem;"><strong>Synthèse 2025 :</strong> REST a gagné la bataille du web. SOAP reste incontournable dans les contextes legacy et régulés où la gouvernance prime sur la simplicité.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partie 3 -->
+  <section class="programme">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">PARTIE 3 : DÉCOUVERTE & ANNUAIRES</h2>
+        <p class="section-subtitle">Du rêve UDDI aux solutions modernes de service discovery</p>
+      </div>
+
+      <div class="collapsible-section">
+        <div class="collapsible-header" onclick="togglePartie3()">
+          <h3 class="collapsible-title">
+            <i class="fas fa-chevron-down collapsible-icon" id="partie3-icon"></i>
+            Partie 3 : Découverte & annuaires
+          </h3>
+          <span class="collapsible-badge">3 sous-parties</span>
+        </div>
+        <div class="collapsible-content" id="partie3-content">
+          <div class="days-container">
+
+            <!-- 3.1 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">3.1</span>
+                <span class="day-theme">UDDI : le rêve d’un annuaire universel</span>
+              </div>
+              <div class="day-content">
+                <p><strong>UDDI</strong> (Universal Description, Discovery and Integration) voulait devenir le <em>Pages Jaunes mondial</em> des services SOAP.</p>
+
+                <div class="highlight-box" style="margin-top:1.5rem; background:#eef9ff; border-left:4px solid #2196f3;">
+                  <h6>Promesse initiale (2001)</h6>
+                  <ul>
+                    <li>Publier ses services dans un registre unique.</li>
+                    <li>Être découvert automatiquement par tous les partenaires.</li>
+                    <li>Simplifier l’intégration B2B.</li>
+                  </ul>
+                  <blockquote>« Publions tous nos services et laissons le réseau faire le reste. » — Vision 2001</blockquote>
+                </div>
+
+                <p>La réalité a été plus rude :</p>
+                <div class="table-wrapper">
+                  <table class="comparison-table">
+                    <thead>
+                      <tr>
+                        <th>Pourquoi UDDI a échoué ?</th>
+                        <th>Conséquence</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>API SOAP complexe</td>
+                        <td>Mise en œuvre lourde</td>
+                      </tr>
+                      <tr>
+                        <td>Gouvernance floue</td>
+                        <td>Peu d’entreprises prêtes à publier</td>
+                      </tr>
+                      <tr>
+                        <td>Manque de confiance</td>
+                        <td>Pas de services sensibles exposés</td>
+                      </tr>
+                      <tr>
+                        <td>Effet boule de neige</td>
+                        <td>Faible catalogue → faible adoption</td>
+                      </tr>
+                      <tr>
+                        <td>Google plus simple</td>
+                        <td>Recherche d’API… sur Google</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <p style="margin-top:1.5rem;">👉 <strong>Aujourd’hui :</strong> UDDI ne subsiste que dans quelques registres privés internes.</p>
+              </div>
+            </div>
+
+            <!-- 3.2 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">3.2</span>
+                <span class="day-theme">Structure conceptuelle d’UDDI</span>
+              </div>
+              <div class="day-content">
+                <p>Un registre UDDI se compose de trois « pages » :</p>
+                <div class="highlight-box" style="margin-top:1.5rem; background:#fff4e6; border-left:4px solid #ff9800;">
+                  <h6>Les trois couches</h6>
+                  <ul>
+                    <li><strong>White Pages</strong> : identité de l’entreprise (nom, contact, adresse).</li>
+                    <li><strong>Yellow Pages</strong> : classement par catégories métier.</li>
+                    <li><strong>Green Pages</strong> : informations techniques (URL, WSDL, protocoles).</li>
+                  </ul>
+                </div>
+                <p>💡 <strong>Métaphore :</strong> un annuaire téléphonique complet – qui je suis, dans quel domaine j’opère, comment me contacter techniquement.</p>
+              </div>
+            </div>
+
+            <!-- 3.3 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">3.3</span>
+                <span class="day-theme">Alternatives modernes</span>
+              </div>
+              <div class="day-content">
+                <p>Le besoin de découverte de services perdure, mais les outils ont évolué :</p>
+
+                <div class="comparison-box" style="margin-top:1.5rem;">
+                  <div class="good-example">
+                    <h6>Service discovery interne</h6>
+                    <ul>
+                      <li><strong>Consul</strong> : registre distribué, health checks, DNS.</li>
+                      <li><strong>Eureka</strong> : registry + load balancing côté client.</li>
+                      <li><strong>Kubernetes</strong> : découverte native via DNS, labels.</li>
+                    </ul>
+                  </div>
+                  <div class="bad-example">
+                    <h6>Marketplaces publiques</h6>
+                    <ul>
+                      <li><strong>RapidAPI</strong>, <strong>Postman Network</strong>.</li>
+                      <li>Documentation interactive, onboarding rapide.</li>
+                      <li>Pas de découverte automatique, mais une UX exemplaire.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <p style="margin-top:1.5rem;">🎯 <strong>Leçon :</strong> UDDI a échoué car trop complexe. Les solutions modernes misent sur la simplicité et l’expérience développeur.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partie 4 -->
+  <section class="programme">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">PARTIE 4 : PATTERNS SOA</h2>
+        <p class="section-subtitle">Les briques d’architecture toujours utiles en 2025</p>
+      </div>
+
+      <div class="collapsible-section">
+        <div class="collapsible-header" onclick="togglePartie4()">
+          <h3 class="collapsible-title">
+            <i class="fas fa-chevron-down collapsible-icon" id="partie4-icon"></i>
+            Partie 4 : Patterns SOA</h3>
+          <span class="collapsible-badge">4 sous-parties</span>
+        </div>
+        <div class="collapsible-content" id="partie4-content">
+          <div class="days-container">
+
+            <!-- 4.1 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">4.1</span>
+                <span class="day-theme">Patterns de conception</span>
+              </div>
+              <div class="day-content">
+                <p>Ces patterns structurent la manière d’exposer et de partager les services :</p>
+
+                <div class="table-wrapper">
+                  <table class="comparison-table">
+                    <thead>
+                      <tr>
+                        <th>Pattern</th>
+                        <th>Problème</th>
+                        <th>Solution</th>
+                        <th>Bénéfice</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Service Façade</strong></td>
+                        <td>Legacy avec 50 méthodes opaques</td>
+                        <td>Façade qui expose seulement les 5 opérations utiles</td>
+                        <td>Interface claire, complexité cachée</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Service Adapter</strong></td>
+                        <td>Source non SOAP (BDD, fichier, REST)</td>
+                        <td>Adaptateur qui traduit SOAP ↔ protocole natif</td>
+                        <td>Uniformisation des interfaces</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Canonical Data Model</strong></td>
+                        <td>Formats différents selon les services</td>
+                        <td>Modèle de données canonique + transformations ESB</td>
+                        <td>N transformations, pas N×(N-1)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <pre><code class="language-text">Client → Service Façade → Système Legacy
+              ↓
+        expose 5 méthodes clés</code></pre>
+                <pre><code class="language-text">SOAP Request → Adapter → SQL Query → Base</code></pre>
+                <pre><code class="language-text">Service A → ESB → Modèle canonique → ESB → Service B</code></pre>
+              </div>
+            </div>
+
+            <!-- 4.2 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">4.2</span>
+                <span class="day-theme">Orchestration vs Chorégraphie</span>
+              </div>
+              <div class="day-content">
+                <p>Deux approches pour coordonner plusieurs services :</p>
+
+                <div class="highlight-box" style="margin-top:1.5rem; background:#e8f4fd; border-left:4px solid #0066cc;">
+                  <h6>Orchestration (chef d’orchestre)</h6>
+                  <pre><code class="language-text">Orchestrateur
+  ├─ Vérifier stock
+  ├─ Calculer prix
+  ├─ Traiter paiement
+  ├─ Créer commande
+  └─ Envoyer confirmation</code></pre>
+                  <ul>
+                    <li>Contrôle centralisé (BPEL historiquement).</li>
+                    <li>Supervision simple mais dépendance forte à l’orchestrateur.</li>
+                  </ul>
+                </div>
+
+                <div class="highlight-box" style="margin-top:1.5rem; background:#fff4e6; border-left:4px solid #ff9800;">
+                  <h6>Chorégraphie (partition partagée)</h6>
+                  <pre><code class="language-text">Service A → publie "OrderCreated"
+        ↓
+Service B → publie "PaymentProcessed"
+        ↓
+Service C → publie "OrderShipped"</code></pre>
+                  <ul>
+                    <li>Architecture décentralisée et résiliente.</li>
+                    <li>Monitoring plus complexe (event-driven, Kafka, RabbitMQ).</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4.3 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">4.3</span>
+                <span class="day-theme">Patterns de fiabilité</span>
+              </div>
+              <div class="day-content">
+                <p>Dans une architecture distribuée, la fiabilité est critique :</p>
+
+                <div class="table-wrapper">
+                  <table class="comparison-table">
+                    <thead>
+                      <tr>
+                        <th>Pattern</th>
+                        <th>Pourquoi ?</th>
+                        <th>Principe</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Idempotence</strong></td>
+                        <td>Les messages peuvent être rejoués</td>
+                        <td>Rejouer une commande ne change pas l’état (`createOrder(123)`)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Circuit Breaker</strong></td>
+                        <td>Éviter l’effet domino si un service tombe</td>
+                        <td>Disjoncter après X échecs, état half-open pour tester le retour</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Retry + Backoff</strong></td>
+                        <td>Gérer les indisponibilités temporaires</td>
+                        <td>Réessayer avec délais croissants (1s, 2s, 4s…)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <pre><code class="language-text">Tentative 1 → Échec → Attendre 1s
+Tentative 2 → Échec → Attendre 2s
+Tentative 3 → Échec → Attendre 4s
+Tentative 4 → Échec → Attendre 8s
+Tentative 5 → Abandonner</code></pre>
+
+                <p>💡 Ces patterns sont intégrés dans de nombreuses bibliothèques modernes (Hystrix/Resilience4j, AWS SDK, gRPC…).</p>
+              </div>
+            </div>
+
+            <!-- 4.4 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">4.4</span>
+                <span class="day-theme">Anti-patterns SOA</span>
+              </div>
+              <div class="day-content">
+                <p>Trois anti-patterns classiques à surveiller :</p>
+
+                <div class="table-wrapper">
+                  <table class="comparison-table">
+                    <thead>
+                      <tr>
+                        <th>Anti-pattern</th>
+                        <th>Symptôme</th>
+                        <th>Conséquence</th>
+                        <th>Remède</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>God Service</strong></td>
+                        <td>Un service “UserManagement” avec 150 opérations</td>
+                        <td>Monolithe déguisé, aucune évolutivité</td>
+                        <td>Découper par domaines cohérents (User, Order…)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Chatty Services</strong></td>
+                        <td>5 appels réseau pour afficher un profil</td>
+                        <td>Latence élevée, fragilité réseau</td>
+                        <td>Créer une façade (`GetCompleteUserProfile`)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>ESB Spaghetti</strong></td>
+                        <td>ESB chargé de règles métier</td>
+                        <td>Goulot d’étranglement incompréhensible</td>
+                        <td>Limiter l’ESB aux préoccupations transverses</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Synthèse & Ressources -->
+  <section class="programme">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">SYNTHÈSE &amp; RESSOURCES</h2>
+        <p class="section-subtitle">Ce qu’il faut retenir, chiffres clés et prochaines étapes</p>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-card">
+          <h3>L’héritage de SOA</h3>
+          <ul>
+            <li>Couplage faible et contrats clairs restent des fondamentaux.</li>
+            <li>Abstraction et réutilisabilité réduisent les coûts sur le long terme.</li>
+            <li>Les patterns nés avec SOA (façade, adapter, orchestration…) vivent en microservices.</li>
+          </ul>
+        </div>
+        <div class="summary-card warning">
+          <h3>Les pièges à éviter</h3>
+          <ul>
+            <li>Sur-ingénierie avec WS-* et gouvernance bloquante.</li>
+            <li>ESB transformé en monstre central.</li>
+            <li>Complexité qui masque la valeur métier.</li>
+          </ul>
+        </div>
+        <div class="summary-card">
+          <h3>SOA vs Microservices</h3>
+          <ul>
+            <li>SOA/SOAP pertinent pour les secteurs régulés et l’héritage.</li>
+            <li>REST/Microservices pour l’agilité, les APIs publiques et la scalabilité.</li>
+            <li>En 2025, 65% des nouvelles architectures sont REST/microservices.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight-box" style="margin-top:2rem; background:#eef9ff; border-left:4px solid #2196f3;">
+        <h3>Stratégie de migration concrète</h3>
+        <ol>
+          <li><strong>Strangler Fig</strong> : envelopper l’ancien système et migrer service par service.</li>
+          <li><strong>API Gateway</strong> : unique point d’entrée SOAP ↔ REST.</li>
+          <li><strong>Itérations</strong> : 2 à 5 ans pour moderniser un grand SI.</li>
+        </ol>
+      </div>
+
+      <div class="summary-grid" style="margin-top:2rem;">
+        <div class="summary-card">
+          <h3>Ressources clés</h3>
+          <ul>
+            <li>📘 <em>Enterprise Integration Patterns</em> — Gregor Hohpe</li>
+            <li>📗 <em>SOA Patterns</em> — Arnon Rotem-Gal-Oz</li>
+            <li>📕 <em>Building Microservices</em> — Sam Newman</li>
+            <li>W3C SOAP, WSDL 2.0, OASIS Web Services</li>
+          </ul>
+        </div>
+        <div class="summary-card">
+          <h3>Outils & exercices</h3>
+          <ul>
+            <li>SoapUI, Postman, Apache Camel.</li>
+            <li>Implémenter une même feature en SOAP et REST.</li>
+            <li>Auditer un SI SOA existant et planifier la migration.</li>
+          </ul>
+        </div>
+        <div class="summary-card">
+          <h3>À méditer</h3>
+          <p class="quote">“SOA n’est pas mort, c’est un héritage à comprendre pour mieux construire l’avenir.”</p>
+          <ul>
+            <li>La simplicité bat toujours la complexité.</li>
+            <li>Les patterns sont intemporels, les technologies passent.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout">
+        <h3>Prochaines étapes</h3>
+        <ul>
+          <li>Appliquer ces patterns sur le projet SmartCity.</li>
+          <li>Explorer un service SOAP réel avec SoapUI.</li>
+          <li>Esquisser une feuille de route de modernisation d’un système legacy.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="../assets/logo.jpeg" alt="YNOV Campus" class="footer-logo-img">
+            <span class="footer-logo-text">Web Services</span>
+          </div>
+          <p class="footer-description">Jour 6 — Architecture SOA et Services SOAP.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="day1.html">Jour 1 - Théorie</a></li>
+            <li><a href="day2.html">Jour 2 - Théorie</a></li>
+            <li><a href="day3.html">Jour 3 - Théorie</a></li>
+            <li><a href="day4.html">Jour 4/5 - Théorie</a></li>
+            <li><a href="day6.html">Jour 6 - Théorie</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Ressources</h3>
+          <ul>
+            <li><a href="../index.html#ressources">Documentation</a></li>
+            <li><a href="../index.html#programme">Programme</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>Formation Web Services</p>
+          <p>YNOV Campus</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 YNOV Campus. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      hljs.highlightAll();
+    });
+
+    function togglePartie1() {
+      const content = document.getElementById('partie1-content');
+      const icon = document.getElementById('partie1-icon');
+      const header = content.closest('.collapsible-section').querySelector('.collapsible-header');
+
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+        header.classList.remove('collapsed');
+      } else {
+        content.style.display = 'none';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+        header.classList.add('collapsed');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const content = document.getElementById('partie1-content');
+      const icon = document.getElementById('partie1-icon');
+      const header = content.closest('.collapsible-section').querySelector('.collapsible-header');
+
+      content.style.display = 'none';
+      icon.classList.remove('fa-chevron-down');
+      icon.classList.add('fa-chevron-right');
+      header.classList.add('collapsed');
+    });
+
+    function togglePartie2() {
+      const content = document.getElementById('partie2-content');
+      const icon = document.getElementById('partie2-icon');
+      const header = content.closest('.collapsible-section').querySelector('.collapsible-header');
+
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+        header.classList.remove('collapsed');
+      } else {
+        content.style.display = 'none';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+        header.classList.add('collapsed');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const content = document.getElementById('partie2-content');
+      const icon = document.getElementById('partie2-icon');
+      const header = content.closest('.collapsible-section').querySelector('.collapsible-header');
+
+      content.style.display = 'none';
+      icon.classList.remove('fa-chevron-down');
+      icon.classList.add('fa-chevron-right');
+      header.classList.add('collapsed');
+    });
+
+    function togglePartie3() {
+      const content = document.getElementById('partie3-content');
+      const icon = document.getElementById('partie3-icon');
+      const header = content.closest('.collapsible-section').querySelector('.collapsible-header');
+
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+        header.classList.remove('collapsed');
+      } else {
+        content.style.display = 'none';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+        header.classList.add('collapsed');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const content = document.getElementById('partie3-content');
+      const icon = document.getElementById('partie3-icon');
+      const header = content.closest('.collapsible-section').querySelector('.collapsible-header');
+
+      content.style.display = 'none';
+      icon.classList.remove('fa-chevron-down');
+      icon.classList.add('fa-chevron-right');
+      header.classList.add('collapsed');
+    });
+
+    function togglePartie4() {
+      const content = document.getElementById('partie4-content');
+      const icon = document.getElementById('partie4-icon');
+      const header = content.closest('.collapsible-section').querySelector('.collapsible-header');
+
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+        header.classList.remove('collapsed');
+      } else {
+        content.style.display = 'none';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+        header.classList.add('collapsed');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const content = document.getElementById('partie4-content');
+      const icon = document.getElementById('partie4-icon');
+      const header = content.closest('.collapsible-section').querySelector('.collapsible-header');
+
+      content.style.display = 'none';
+      icon.classList.remove('fa-chevron-down');
+      icon.classList.add('fa-chevron-right');
+      header.classList.add('collapsed');
+    });
+  </script>
+
+  <style>
+    .collapsible-section {
+      margin: 2rem 0;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .collapsible-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: linear-gradient(135deg, #00a8ff 0%, #9c88ff 100%);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .collapsible-header:hover {
+      background: linear-gradient(135deg, #9c88ff 0%, #00a8ff 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 168, 255, 0.3);
+    }
+
+    .collapsible-header.collapsed {
+      background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+    }
+
+    .collapsible-title {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: white;
+    }
+
+    .collapsible-icon {
+      transition: transform 0.3s ease;
+      font-size: 1.2rem;
+    }
+
+    .collapsible-badge {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .collapsible-content {
+      padding: 0;
+      transition: all 0.3s ease;
+    }
+
+    .collapsible-content .days-container {
+      padding: 1rem;
+    }
+
+    .principle-card {
+      background: #f7f9fc;
+      border: 1px solid #dfe6f0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 6px 18px rgba(15, 76, 129, 0.08);
+    }
+
+    .principle-card h5 {
+      margin-bottom: 0.75rem;
+      color: #0f4c81;
+    }
+
+    .principle-note {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 1.5rem;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      border: 1px solid #dde4ee;
+      padding: 0.9rem 1.1rem;
+      text-align: left;
+    }
+
+    .comparison-table thead {
+      background: #0f4c81;
+      color: #fff;
+    }
+
+    .comparison-table tbody tr:nth-child(even) {
+      background: #f7f9fc;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .summary-card {
+      background: #ffffff;
+      border: 1px solid #dde4ee;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 6px 18px rgba(15, 76, 129, 0.08);
+    }
+
+    .summary-card.warning {
+      background: #fff4e6;
+      border-color: #ffb300;
+    }
+
+    .summary-card .quote {
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .callout {
+      margin-top: 2.5rem;
+      padding: 1.75rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(0, 168, 255, 0.12), rgba(156, 136, 255, 0.12));
+      border: 1px solid rgba(0, 168, 255, 0.2);
+    }
+  </style>
+</body>
+</html>
