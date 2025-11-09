@@ -33,7 +33,7 @@ MicroServices/
 - **Highlighting du code** : intégration de `highlight.js` avec balises `<pre><code>` uniformisées pour chaque exemple de code.
 - **Pages par journée** :
   - Jour 1 à 3 : théorie + fil rouge (SmartCity) entièrement détaillés.
-  - Jour 4 : sécurité des Web Services avec sections repliables, comparatifs, schémas et bonnes pratiques.
+  - Jour 4 : sécurité des Web Services avec sections repliables, comparatifs, schémas et bonnes pratiques (nouvelle sous-partie 1.12 dédiée à la révocabilité des méthodes d’authentification).
   - Jour 6 : architecture SOA/SOAP avec plan complet (Parties 1 à 4) et synthèse finale.
 - **Sections repliables** : cards interactives (Parties 1 à 4) pour alléger la lecture sur les longues pages.
 - **Ressources pédagogiques** : contenu Markdown converti en HTML, synthèse & ressources intégrées pour Jour 6.

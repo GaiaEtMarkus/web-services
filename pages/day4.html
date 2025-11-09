@@ -1829,6 +1829,28 @@ app.post('/oauth/token', (req, res) => {
           </div>
         </div>
 
+        <!-- Partie 1.12 -->
+        <div class="day-card expanded">
+          <div class="day-header">
+            <span class="day-number">1.12</span>
+            <span class="day-theme">Révocabilité des méthodes d'authentification</span>
+          </div>
+          <div class="day-content">
+            <p>Comparer les méthodes d'authentification revient à mesurer le coût en requêtes et la rapidité de révocation en cas de compromission :</p>
+            <ul>
+              <li><strong>Sessions DB / API Keys / OAuth</strong> : Révocables nativement car chaque validation interroge la base. Coût : 1 requête DB au login, puis 1 requête par appel protégé.</li>
+              <li><strong>JWT pur (stateless)</strong> : Non révocable par conception. Après la vérification initiale (1 requête DB au login), la validation repose uniquement sur la signature. 0 requête DB par appel, mais impossible de couper l'accès avant l'expiration.</li>
+              <li><strong>JWT + Blacklist</strong> : Révocabilité possible mais l'avantage stateless disparaît : il faut consulter la liste noire à chaque requête (même coût que les sessions).</li>
+              <li><strong>JWT + Refresh Token</strong> : Compromis recommandé. L'access token reste court et stateless, le refresh token est stocké en DB. Coût : 1 requête au login + vérification périodique (~4 requêtes/heure) pour le renouvellement et révocation effective sous 15 minutes.</li>
+              <li><strong>JWT + Vérification au renouvellement</strong> : Variante simplifiée sans table dédiée. On contrôle l'état utilisateur lors du login et de chaque refresh. Coût identique au modèle précédent, architecture plus légère.</li>
+            </ul>
+            <div class="highlight-box" style="background: #e8f4fd; border-left: 4px solid #0066cc; margin-top: 1.5rem;">
+              <h6>Règle d'or</h6>
+              <p>Toutes les stratégies exigent une requête DB au login. La différence réside dans les requêtes suivantes : JWT stateless = 0 requête, sessions/API keys = 1 requête. La révocabilité dépend du stockage côté serveur (session store, clés ou refresh tokens) et du délai accepté entre la révocation et son effet.</p>
+            </div>
+          </div>
+        </div>
+
         <!-- Récapitulatif -->
         <div class="day-card expanded" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
           <div class="day-header" style="border-bottom: 2px solid rgba(255,255,255,0.3);">

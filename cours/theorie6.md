@@ -222,16 +222,16 @@ Message SOAP = Enveloppe
 
 ```xml
 <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
-  <soap:Header>
-    <Authentication>
-      <Token>abc123xyz</Token>
-    </Authentication>
-  </soap:Header>
-  <soap:Body>
-    <GetEventDetails>
-      <EventID>550e8400</EventID>
-    </GetEventDetails>
-  </soap:Body>
+    <soap:Header>
+        <Authentication>
+            <Token>abc123xyz</Token>
+        </Authentication>
+    </soap:Header>
+    <soap:Body>
+        <GetEventDetails>
+            <EventID>550e8400</EventID>
+        </GetEventDetails>
+    </soap:Body>
 </soap:Envelope>
 ```
 
@@ -239,16 +239,16 @@ Réponse possible :
 
 ```xml
 <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
-  <soap:Body>
-    <GetEventDetailsResponse>
-      <Event>
-        <ID>550e8400</ID>
-        <Title>Jazz sous les étoiles</Title>
-        <Date>2025-07-15T20:00:00Z</Date>
-        <Price>15.00</Price>
-      </Event>
-    </GetEventDetailsResponse>
-  </soap:Body>
+    <soap:Body>
+        <GetEventDetailsResponse>
+            <Event>
+                <ID>550e8400</ID>
+                <Title>Jazz sous les étoiles</Title>
+                <Date>2025-07-15T20:00:00Z</Date>
+                <Price>15.00</Price>
+            </Event>
+        </GetEventDetailsResponse>
+    </soap:Body>
 </soap:Envelope>
 ```
 
@@ -302,41 +302,41 @@ SOAP s'accompagne d'un vaste ensemble de spécifications nommées **WS-*** (*Web
 ```xml
 <definitions name="EventService">
   <!-- 1. Types -->
-  <types>
-    <Event>
-      <ID>string</ID>
-      <Title>string</Title>
-      <Price>decimal</Price>
-    </Event>
-  </types>
-
+    <types>
+        <Event>
+            <ID>string</ID>
+            <Title>string</Title>
+            <Price>decimal</Price>
+        </Event>
+    </types>
+    
   <!-- 2. Messages -->
-  <message name="GetEventRequest">
+    <message name="GetEventRequest">
     <part name="eventID" type="string" />
-  </message>
-  <message name="GetEventResponse">
+    </message>
+    <message name="GetEventResponse">
     <part name="event" type="Event" />
-  </message>
-
+    </message>
+    
   <!-- 3. PortType -->
-  <portType name="EventServicePort">
-    <operation name="GetEvent">
+    <portType name="EventServicePort">
+        <operation name="GetEvent">
       <input message="GetEventRequest" />
       <output message="GetEventResponse" />
-    </operation>
-  </portType>
-
+        </operation>
+    </portType>
+    
   <!-- 4. Binding -->
-  <binding name="EventServiceBinding" type="EventServicePort">
+    <binding name="EventServiceBinding" type="EventServicePort">
     <soap:binding style="document" transport="http" />
-  </binding>
-
+    </binding>
+    
   <!-- 5. Service -->
-  <service name="EventService">
-    <port name="EventPort" binding="EventServiceBinding">
+    <service name="EventService">
+        <port name="EventPort" binding="EventServiceBinding">
       <soap:address location="https://api.smartcity.local/soap/events" />
-    </port>
-  </service>
+        </port>
+    </service>
 </definitions>
 ```
 
