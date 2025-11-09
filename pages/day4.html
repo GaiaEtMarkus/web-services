@@ -290,7 +290,7 @@ app.get('/api/events', basicAuth, (req, res) => {
           </div>
           <div class="day-content">
             <h4 class="mt-5"><i class="fas fa-cog"></i> Principe de fonctionnement</h4>
-            <p>Au lieu d'envoyer username/password, le serveur génère une longue clé aléatoire unique par client. Cette clé sert d'identifiant pour toutes les requêtes futures.</p>
+            <p>Au lieu que le client renvoie username/password à chaque requête, le serveur délivre une clé aléatoire unique lors de la première authentification. Cette clé sert ensuite d'identifiant pour toutes les requêtes futures.</p>
 
             <h5 class="mt-4">Format de la requête :</h5>
             <pre><code class="http">GET /api/events HTTP/1.1
