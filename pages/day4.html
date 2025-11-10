@@ -1140,41 +1140,41 @@ const decoded = jwt.verify(token, process.env.JWT_SECRET, {
             
             <div class="highlight-box" style="background: #e8f4fd; border-left: 4px solid #0066cc; margin-top: 1.5rem;">
               <pre><code class="text">┌──────────────┐
-│    Marie     │  Resource Owner (utilisateur final)
+│    Marie     │  Resource Owner (utilisatrice finale)
 └──────────────┘
        ↓
 ┌──────────────┐
-│ EventFinder  │  Client (application tierce)
+│ SmartCity    │  Client (application qui veut se connecter via Google)
 └──────────────┘
        ↓
 ┌──────────────┐
-│ Auth Server  │  Authorization Server (délivre tokens)
+│ Google OAuth │  Authorization Server (délivre tokens)
 └──────────────┘
        ↓
 ┌──────────────┐
-│     API      │  Resource Server (données protégées)
+│ Google APIs  │  Resource Server (profile, email, etc.)
 └──────────────┘</code></pre>
             </div>
 
             <h5 class="mt-4">1. Resource Owner (Propriétaire de la ressource)</h5>
-            <p><strong>Exemple :</strong> Marie</p>
-            <p>C'est l'utilisateur final qui possède les données. C'est elle qui autorise (ou refuse) l'accès à ses ressources.</p>
+            <p><strong>Exemple :</strong> Marie, utilisatrice qui souhaite créer un compte SmartCity avec son identité Google.</p>
+            <p>C'est elle qui possède la ressource (ses informations Google) et qui autorise le partage via le consentement OAuth.</p>
 
             <h5 class="mt-4">2. Client (Application tierce)</h5>
-            <p><strong>Exemple :</strong> EventFinder</p>
-            <p>L'application qui veut accéder aux ressources de l'utilisateur. Elle demande l'autorisation et utilise les tokens pour accéder à l'API.</p>
+            <p><strong>Exemple :</strong> SmartCity</p>
+            <p>L'application SmartCity souhaite importer les informations de Marie depuis Google pour accélérer l'inscription. Elle redirige Marie vers Google, récupère le code d'autorisation puis échange ce code contre un access token.</p>
 
             <h5 class="mt-4">3. Authorization Server (Serveur d'autorisation)</h5>
-            <p><strong>Exemple :</strong> Le serveur d'authentification SmartCity</p>
-            <p>Le serveur qui authentifie l'utilisateur et délivre les tokens d'accès après autorisation. C'est lui qui gère la page de consentement et génère les tokens.</p>
+            <p><strong>Exemple :</strong> Google OAuth 2.0</p>
+            <p>Google authentifie Marie, lui affiche l'écran de consentement, puis délivre à SmartCity un code d'autorisation, un access token et éventuellement un refresh token.</p>
 
             <h5 class="mt-4">4. Resource Server (Serveur de ressources)</h5>
-            <p><strong>Exemple :</strong> L'API SmartCity qui expose les événements</p>
-            <p>Le serveur qui héberge les données protégées. Il accepte et valide les tokens d'accès pour servir les ressources demandées.</p>
+            <p><strong>Exemple :</strong> Google People API</p>
+            <p>Ce serveur expose les données protégées (profil, email). SmartCity l'appelle avec l'access token pour récupérer les informations de Marie et compléter son inscription.</p>
 
             <div class="highlight-box" style="background: #e8f5e9; border-left: 4px solid #4caf50; margin-top: 1.5rem;">
               <h6>💡 En pratique</h6>
-              <p>Dans beaucoup d'implémentations, l'<strong>Authorization Server</strong> et le <strong>Resource Server</strong> sont le même serveur (comme dans notre exemple SmartCity). Mais ils peuvent être séparés pour une architecture plus distribuée.</p>
+              <p>Selon les besoins, l'<strong>Authorization Server</strong> et le <strong>Resource Server</strong> peuvent être distincts (comme Google OAuth + Google People API) ou combinés au sein d'un même fournisseur d'identité.</p>
             </div>
           </div>
         </div>
