@@ -1070,26 +1070,6 @@ const decoded = jwt.verify(token, process.env.JWT_SECRET, {
 // Exemple : un token créé pour 'smartcity-mobile-app' sera rejeté</code></pre>
 
             <h4 class="mt-5"><i class="fas fa-balance-scale"></i> Résumé des avantages/inconvénients JWT</h4>
-            
-            <div class="comparison-box" style="margin-top: 1.5rem;">
-              <div class="good-example">
-                <h6>✅ Avantages :</h6>
-                <ul>
-                  <li><strong>Stateless</strong> : Pas de requête DB pour valider (performance)</li>
-                  <li><strong>Scalable</strong> : Fonctionne en load balancing sans session partagée</li>
-                  <li><strong>Cross-domain</strong> : Utilisable sur plusieurs domaines</li>
-                  <li><strong>Mobile-friendly</strong> : Juste un header, pas de cookies</li>
-                </ul>
-              </div>
-              <div class="bad-example">
-                <h6>❌ Inconvénients :</h6>
-                <ul>
-                  <li><strong>Impossible à révoquer instantanément</strong> (sauf avec refresh tokens + blacklist)</li>
-                  <li><strong>Plus gros</strong> qu'un ID de session (300-500 bytes vs 20 bytes)</li>
-                  <li><strong>Pas de gestion d'état</strong> : Si le rôle change, les tokens existants gardent l'ancien</li>
-                </ul>
-              </div>
-            </div>
 
             <div class="highlight-box" style="background: #e8f5e9; border-left: 4px solid #4caf50; margin-top: 1.5rem;">
               <h6>✅ Checklist de sécurité JWT</h6>
