@@ -1176,6 +1176,11 @@ const decoded = jwt.verify(token, process.env.JWT_SECRET, {
               <h6>💡 En pratique</h6>
               <p>Selon les besoins, l'<strong>Authorization Server</strong> et le <strong>Resource Server</strong> peuvent être distincts (comme Google OAuth + Google People API) ou combinés au sein d'un même fournisseur d'identité.</p>
             </div>
+
+            <div class="highlight-box" style="background: #fff4e6; border-left: 4px solid #ff9800; margin-top: 1.5rem;">
+              <h6>⚠️ Clarification essentielle</h6>
+              <p>OAuth 2.0 encadre <strong>l'autorisation déléguée</strong> : il délivre à SmartCity un droit d'accès limité aux données de Marie. L'<strong>authentification</strong> de Marie est réalisée par Google. Pour récupérer de façon standardisée l'identité vérifiée (nom, email, photo), on ajoute souvent <strong>OpenID Connect</strong> au-dessus d'OAuth 2.0.</p>
+            </div>
           </div>
         </div>
 
@@ -1197,213 +1202,132 @@ const decoded = jwt.verify(token, process.env.JWT_SECRET, {
 │  Marie  │                                    │  SmartCity   │
 └────┬────┘                                    └──────┬───────┘
      │                                                │
-     │  1. Clique "Se connecter avec SmartCity"      │
+     │  1. Clique "Se connecter avec Google"         │
      │──────────────────────────────────────────────>│
      │                                                │
-     │  2. Redirigée vers page login SmartCity       │
+     │  2. Redirection vers Google OAuth             │
      │<──────────────────────────────────────────────│
      │                                                │
-     │  3. Entre credentials et clique "Autoriser"   │
+┌────▼──────────┐                                    │
+│   Google      │  3. Marie s'authentifie et consent │
+│ Authorization │<───────────────────────────────────│
+│    Server     │                                    │
+└────┬──────────┘                                    │
+     │ 4. Google renvoie CODE + state                │
      │──────────────────────────────────────────────>│
-     │                                                │
-     │  4. Redirigée vers EventFinder avec CODE      │
-     │<──────────────────────────────────────────────│
      │                                                │
 ┌────▼──────────┐                              ┌─────▼────────┐
-│ EventFinder   │  5. Échange CODE contre TOKEN│  SmartCity   │
-│  (Backend)    │─────────────────────────────>│     API      │
+│ SmartCity     │  5. Échange CODE ↔ TOKEN     │  Google APIs │
+│   Backend     │─────────────────────────────>│ (UserInfo)   │
 └───────────────┘                              └──────────────┘</code></pre>
             </div>
 
-            <h5 class="mt-4">Implémentation du serveur d'autorisation</h5>
-            <p>Voici comment implémenter le serveur OAuth avec les 3 étapes principales :</p>
+            <h5 class="mt-4">Implémentation côté SmartCity (client OAuth)</h5>
+            <p>Notre objectif pédagogique : apprendre à intégrer un fournisseur (Google, LinkedIn…) pour offrir “Se connecter avec …”. Nous restons <strong>consommateur</strong> du service OAuth 2.0, sans implémenter notre propre autorisation.</p>
+            <div class="highlight-box" style="background: #e8f4fd; border-left: 4px solid #0066cc; margin-top: 1rem;">
+              <h6>Étapes côté SmartCity</h6>
+              <ol>
+                <li><strong>/auth/google</strong> : rediriger l’utilisateur vers Google avec <code>client_id</code>, <code>redirect_uri</code>, <code>scope</code> et un <code>state</code> anti-CSRF.</li>
+                <li><strong>/auth/google/callback</strong> : valider le <code>state</code>, échanger le <code>code</code> contre des tokens, récupérer le profil, puis créer la session locale.</li>
+              </ol>
+              <p>Cette logique est identique pour GitHub, LinkedIn ou Microsoft : seules les URLs et les scopes changent.</p>
+            </div>
 
-            <h6 class="mt-3">ÉTAPE 1 : Page de consentement</h6>
-            <pre><code class="javascript">// Route GET /oauth/authorize
-// L'utilisateur arrive ici depuis EventFinder
-app.get('/oauth/authorize', (req, res) => {
-  // 1. Récupérer les paramètres de la requête
-  const { client_id, redirect_uri, scope, state } = req.query;
-  
-  // 2. Valider le client (vérifier qu'il existe et que redirect_uri est autorisé)
-  const client = clients.get(client_id);
-  if (!client || !client.redirect_uris.includes(redirect_uri)) {
-    return res.status(400).json({ error: 'Invalid client' });
-  }
-  
-  // 3. Afficher page HTML de consentement
-  // L'utilisateur voit : "EventFinder veut accéder à vos événements"
-  res.send(`
-    <h1>${client.name} veut accéder à votre compte SmartCity</h1>
-    <p>Permissions demandées :</p>
-    <ul>
-      ${scope.split(' ').map(s => `<li>${s}</li>`).join('')}
-    </ul>
-    <form method="POST" action="/oauth/authorize/approve">
-      <input type="hidden" name="client_id" value="${client_id}">
-      <input type="hidden" name="redirect_uri" value="${redirect_uri}">
-      <input type="hidden" name="scope" value="${scope}">
-      <input type="hidden" name="state" value="${state}">
-      <button type="submit">Autoriser</button>
-    </form>
-  `);
-});</code></pre>
+            <div class="highlight-box" style="background: #fff4e6; border-left: 4px solid #ff9800; margin-top: 1.5rem;">
+              <h6>Pré-requis console Google</h6>
+              <ul>
+                <li>Créer un projet OAuth et récupérer <code>client_id</code>/<code>client_secret</code>.</li>
+                <li>Déclarer les <strong>redirect URI</strong> autorisées (ex : <code>https://smartcity.fr/auth/google/callback</code>).</li>
+                <li>Choisir les <strong>scopes</strong> nécessaires : <code>openid email profile</code> pour l’identité.</li>
+              </ul>
+            </div>
 
-            <h6 class="mt-3">ÉTAPE 2 : Génération du code après consentement</h6>
-            <pre><code class="javascript">// Route POST /oauth/authorize/approve
-// L'utilisateur a cliqué "Autoriser"
-app.post('/oauth/authorize/approve', (req, res) => {
-  const { client_id, redirect_uri, scope, state } = req.body;
-  
-  // 1. Récupérer l'utilisateur connecté (depuis session)
-  // L'utilisateur doit être authentifié pour arriver ici
-  const user = req.session.user;
-  
-  // 2. Générer un authorization code aléatoire et sécurisé
-  // Ce code est temporaire et expire rapidement (10 minutes)
-  const code = crypto.randomBytes(32).toString('hex');
-  
-  // 3. Stocker temporairement le code avec ses métadonnées
-  // En production : utiliser Redis au lieu d'une Map
-  authCodes.set(code, {
-    clientId: client_id,        // Pour quel client
-    redirectUri: redirect_uri,   // Où rediriger
-    scope: scope,                // Quelles permissions
-    userId: user.id,             // Pour quel utilisateur
-    expiresAt: Date.now() + 10 * 60 * 1000  // Expire dans 10 minutes
+            <h6 class="mt-3">Route 1 — redirection vers Google</h6>
+            <pre><code class="javascript">import express from 'express';
+import crypto from 'crypto';
+
+const router = express.Router();
+const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
+
+const config = {
+  clientId: process.env.GOOGLE_CLIENT_ID,
+  redirectUri: 'https://smartcity.fr/auth/google/callback',
+  scope: ['openid', 'email', 'profile']
+};
+
+router.get('/auth/google', (req, res) => {
+  const state = crypto.randomBytes(16).toString('hex');
+  req.session.oauthState = state;
+
+  const params = new URLSearchParams({
+    client_id: config.clientId,
+    redirect_uri: config.redirectUri,
+    response_type: 'code',
+    scope: config.scope.join(' '),
+    state,
+    access_type: 'offline', // refresh token
+    prompt: 'consent'
   });
-  
-  // 4. Rediriger vers l'app avec le code dans l'URL
-  // Le code est dans l'URL, pas le token (plus sécurisé)
-  const redirectUrl = new URL(redirect_uri);
-  redirectUrl.searchParams.set('code', code);      // Le code d'autorisation
-  redirectUrl.searchParams.set('state', state);     // Le state pour vérifier l'intégrité
-  
-  res.redirect(redirectUrl.toString());
+
+  res.redirect(`${GOOGLE_AUTH_URL}?${params.toString()}`);
 });</code></pre>
 
-            <h6 class="mt-3">ÉTAPE 3 : Échanger le code contre un access token</h6>
-            <pre><code class="javascript">// Route POST /oauth/token
-// Le backend d'EventFinder appelle cette route avec le code
-app.post('/oauth/token', express.urlencoded({ extended: true }), async (req, res) => {
-  const { grant_type, code, client_id, client_secret, redirect_uri } = req.body;
-  
-  // 1. Valider le client (vérifier client_id et client_secret)
-  const client = clients.get(client_id);
-  if (!client || client.secret !== client_secret) {
-    return res.status(401).json({
-      error: 'invalid_client',
-      error_description: 'Client authentication failed'
-    });
-  }
-  
-  if (grant_type === 'authorization_code') {
-    // 2. Récupérer les données du code depuis le stockage temporaire
-    const codeData = authCodes.get(code);
-    
-    if (!codeData) {
-      return res.status(400).json({
-        error: 'invalid_grant',
-        error_description: 'Authorization code not found or expired'
-      });
+            <h6 class="mt-3">Route 2 — callback, échange du code et login local</h6>
+            <pre><code class="javascript">import axios from 'axios';
+
+const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
+const GOOGLE_USERINFO_URL = 'https://openidconnect.googleapis.com/v1/userinfo';
+
+router.get('/auth/google/callback', async (req, res, next) => {
+  try {
+    const { code, state } = req.query;
+
+    if (!code || state !== req.session.oauthState) {
+      return res.status(400).send('Invalid OAuth state');
     }
-    
-    // 3. Vérifications de sécurité
-    // - Le client_id correspond
-    // - Le redirect_uri correspond
-    // - Le code n'est pas expiré
-    if (codeData.clientId !== client_id || 
-        codeData.redirectUri !== redirect_uri ||
-        Date.now() > codeData.expiresAt) {
-      authCodes.delete(code);  // Supprimer le code invalide
-      return res.status(400).json({ error: 'invalid_grant' });
-    }
-    
-    // 4. Code valide, le supprimer (usage unique)
-    // Un code ne peut être utilisé qu'une seule fois
-    authCodes.delete(code);
-    
-    // 5. Générer les tokens (access token + refresh token)
-    const accessToken = jwt.sign(
-      {
-        sub: codeData.userId,      // ID utilisateur
-        client_id: client_id,       // Pour quel client
-        scope: codeData.scope       // Quelles permissions
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }           // Expire dans 1 heure
+
+    const tokenResponse = await axios.post(
+      GOOGLE_TOKEN_URL,
+      new URLSearchParams({
+        code,
+        client_id: config.clientId,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET,
+        redirect_uri: config.redirectUri,
+        grant_type: 'authorization_code'
+      }),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
     );
-    
-    const refreshToken = crypto.randomBytes(32).toString('hex');
-    
-    // 6. Stocker le refresh token en DB pour pouvoir le révoquer
-    await prisma.oauthToken.create({
-      data: {
-        refreshToken: refreshToken,
-        userId: codeData.userId,
-        clientId: client_id,
-        scope: codeData.scope,
-        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)  // 30 jours
-      }
+
+    const { access_token, refresh_token } = tokenResponse.data;
+
+    const profileResponse = await axios.get(GOOGLE_USERINFO_URL, {
+      headers: { Authorization: `Bearer ${access_token}` }
     });
-    
-    // 7. Renvoyer les tokens au client
-    res.json({
-      access_token: accessToken,     // Pour les requêtes API
-      token_type: 'Bearer',
-      expires_in: 3600,              // 1 heure en secondes
-      refresh_token: refreshToken,   // Pour obtenir un nouveau access token
-      scope: codeData.scope
-    });
-  }
-  else if (grant_type === 'refresh_token') {
-    // Flow pour renouveler un access token avec un refresh token
-    const { refresh_token } = req.body;
-    
-    // Récupérer le refresh token depuis la DB
-    const tokenData = await prisma.oauthToken.findFirst({
-      where: {
-        refreshToken: refresh_token,
-        clientId: client_id,
-        revoked: false,              // Non révoqué
-        expiresAt: { gt: new Date() } // Pas expiré
-      }
-    });
-    
-    if (!tokenData) {
-      return res.status(400).json({ error: 'invalid_grant' });
-    }
-    
-    // Générer un nouveau access token
-    const accessToken = jwt.sign(
-      {
-        sub: tokenData.userId,
-        client_id: client_id,
-        scope: tokenData.scope
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }
-    );
-    
-    res.json({
-      access_token: accessToken,
-      token_type: 'Bearer',
-      expires_in: 3600
-    });
-  }
-  else {
-    res.status(400).json({ error: 'unsupported_grant_type' });
+
+    const profile = profileResponse.data; // { sub, email, name, picture }
+
+    const user = await upsertUserFromGoogle(profile, { refresh_token });
+
+    req.session.userId = user.id;
+    res.redirect('/dashboard');
+  } catch (error) {
+    next(error);
   }
 });</code></pre>
 
             <div class="highlight-box" style="background: #e8f5e9; border-left: 4px solid #4caf50; margin-top: 1.5rem;">
-              <h6>✅ Pourquoi ce flow est le plus sécurisé ?</h6>
+              <h6>✅ Bonnes pratiques côté client OAuth</h6>
               <ul>
-                <li>Le code d'autorisation est éphémère (10 minutes max)</li>
-                <li>Le code est échangé contre un token par le backend (pas accessible au frontend)</li>
-                <li>Le client_secret reste sur le serveur (jamais exposé au navigateur)</li>
-                <li>Le code est à usage unique (supprimé après utilisation)</li>
+                <li>Le <code>state</code> empêche les attaques CSRF sur le callback.</li>
+                <li>Le <code>client_secret</code> reste sur le backend (jamais dans le navigateur).</li>
+                <li>On stocke le <code>refresh_token</code> pour re-synchroniser le profil sans redemander le consentement.</li>
+                <li>On crée une session/application token locale après le login OAuth (souvent un JWT maison).</li>
               </ul>
+            </div>
+
+            <div class="highlight-box" style="background: #eef9ff; border-left: 4px solid #2196f3; margin-top: 1.5rem;">
+              <h6>🌍 Adapter avec d’autres providers</h6>
+              <p>Pour LinkedIn, GitHub, Microsoft, etc. : gardez exactement la même structure de routes et remplacez simplement les URLs (<code>AUTH_URL</code>, <code>TOKEN_URL</code>, <code>USERINFO_URL</code>) et les scopes attendus. Chaque provider fournit ces paramètres dans sa documentation.</p>
             </div>
 
             <h4 class="mt-5"><i class="fas fa-server"></i> Flow 2 : Client Credentials (Machine-to-Machine)</h4>
@@ -1707,52 +1631,12 @@ app.post('/oauth/token', (req, res) => {
           </div>
         </div>
 
+
+
         <!-- Partie 1.10 -->
         <div class="day-card expanded">
           <div class="day-header">
             <span class="day-number">1.10</span>
-            <span class="day-theme">Recommandations pour SmartCity</span>
-          </div>
-          <div class="day-content">
-            <p>Recommandations concrètes pour implémenter l'authentification dans le projet SmartCity selon les différents cas d'usage :</p>
-
-            <h4 class="mt-5"><i class="fas fa-globe"></i> Pour l'API publique (utilisée par apps tierces)</h4>
-            <ul>
-              <li>✅ <strong>OAuth 2.0 Authorization Code + PKCE</strong> : Le flow le plus sécurisé pour les applications tierces</li>
-              <li>✅ <strong>Access tokens courts (15min) + Refresh tokens (7j)</strong> : Équilibre entre sécurité et UX</li>
-              <li>✅ <strong>Scopes granulaires</strong> : <code>read:events</code>, <code>write:favorites</code>, <code>read:profile</code>, etc. pour un contrôle fin des permissions</li>
-            </ul>
-
-            <h4 class="mt-5"><i class="fas fa-mobile-alt"></i> Pour l'application mobile officielle</h4>
-            <ul>
-              <li>✅ <strong>JWT avec refresh tokens</strong> : Solution simple et performante pour une app native</li>
-              <li>✅ <strong>Stockage dans cookies httpOnly ou KeyChain/KeyStore</strong> : Protection contre les attaques XSS et accès non autorisé</li>
-              <li>✅ <strong>Certificat pinning</strong> : Prévenir les attaques MITM (Man-In-The-Middle) en validant le certificat SSL du serveur</li>
-            </ul>
-
-            <h4 class="mt-5"><i class="fas fa-server"></i> Pour les services backend internes</h4>
-            <ul>
-              <li>✅ <strong>API Keys ou OAuth Client Credentials</strong> : Communication machine-to-machine sans utilisateur</li>
-              <li>✅ <strong>Communication sur réseau privé</strong> : Les services backend ne doivent pas être exposés publiquement</li>
-            </ul>
-
-            <h4 class="mt-5"><i class="fas fa-tools"></i> Pour les scripts admin/DevOps</h4>
-            <ul>
-              <li>✅ <strong>API Keys avec permissions restreintes</strong> : Limiter les permissions au strict nécessaire</li>
-              <li>✅ <strong>Rotation tous les 90 jours</strong> : Changer régulièrement les clés pour limiter l'impact d'une compromission</li>
-            </ul>
-
-            <div class="highlight-box" style="background: #e8f5e9; border-left: 4px solid #4caf50; margin-top: 1.5rem;">
-              <h6>✅ Architecture recommandée</h6>
-              <p>Une architecture hybride est souvent la meilleure approche : utilisez OAuth 2.0 pour les apps tierces, JWT pour votre app officielle, et API Keys pour les services internes. Chaque méthode est adaptée à son contexte.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Partie 1.11 -->
-        <div class="day-card expanded">
-          <div class="day-header">
-            <span class="day-number">1.11</span>
             <span class="day-theme">Checklist sécurité authentification</span>
           </div>
           <div class="day-content">
@@ -1809,10 +1693,10 @@ app.post('/oauth/token', (req, res) => {
           </div>
         </div>
 
-        <!-- Partie 1.12 -->
+        <!-- Partie 1.11 -->
         <div class="day-card expanded">
           <div class="day-header">
-            <span class="day-number">1.12</span>
+            <span class="day-number">1.11</span>
             <span class="day-theme">Révocabilité des méthodes d'authentification</span>
           </div>
           <div class="day-content">
