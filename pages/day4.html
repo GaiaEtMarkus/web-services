@@ -38,8 +38,8 @@
             <a href="day2FilRouge.html" class="dropdown-item">Jour 2 - Fil Rouge</a>
             <a href="day3.html" class="dropdown-item">Jour 3 - Théorie</a>
             <a href="day3FilRouge.html" class="dropdown-item">Jour 3 - Fil Rouge</a>
-            <a href="day4.html" class="dropdown-item">Jour 4/5 - Théorie</a>
-            <a href="day6.html" class="dropdown-item">Jour 6 - Théorie</a>
+            <a href="day4.html" class="dropdown-item">Jour 4 - Théorie</a>
+            <a href="day5.html" class="dropdown-item">Jour 5 - Théorie</a>
           </div>
         </li>
         <li class="nav-item">
@@ -62,7 +62,7 @@
     <div class="container">
       <div class="hero-content">
         <div class="hero-text">
-          <h1 class="hero-title">Jour 4 & 5</h1>
+          <h1 class="hero-title">Jour 4</h1>
           <h2 class="hero-subtitle">Sécurité des Web Services (Partie 1)</h2>
           <p class="hero-description">
             Authentification : comprendre les différentes méthodes pour sécuriser vos APIs et protéger les données.
@@ -1700,17 +1700,76 @@ app.post('/oauth/token', (req, res) => {
             <span class="day-theme">Révocabilité des méthodes d'authentification</span>
           </div>
           <div class="day-content">
-            <p>Comparer les méthodes d'authentification revient à mesurer le coût en requêtes et la rapidité de révocation en cas de compromission :</p>
-            <ul>
-              <li><strong>Sessions DB / API Keys / OAuth</strong> : Révocables nativement car chaque validation interroge la base. Coût : 1 requête DB au login, puis 1 requête par appel protégé.</li>
-              <li><strong>JWT pur (stateless)</strong> : Non révocable par conception. Après la vérification initiale (1 requête DB au login), la validation repose uniquement sur la signature. 0 requête DB par appel, mais impossible de couper l'accès avant l'expiration.</li>
-              <li><strong>JWT + Blacklist</strong> : Révocabilité possible mais l'avantage stateless disparaît : il faut consulter la liste noire à chaque requête (même coût que les sessions).</li>
-              <li><strong>JWT + Refresh Token</strong> : Compromis recommandé. L'access token reste court et stateless, le refresh token est stocké en DB. Coût : 1 requête au login + vérification périodique (~4 requêtes/heure) pour le renouvellement et révocation effective sous 15 minutes.</li>
-              <li><strong>JWT + Vérification au renouvellement</strong> : Variante simplifiée sans table dédiée. On contrôle l'état utilisateur lors du login et de chaque refresh. Coût identique au modèle précédent, architecture plus légère.</li>
-            </ul>
-            <div class="highlight-box" style="background: #e8f4fd; border-left: 4px solid #0066cc; margin-top: 1.5rem;">
-              <h6>Règle d'or</h6>
-              <p>Toutes les stratégies exigent une requête DB au login. La différence réside dans les requêtes suivantes : JWT stateless = 0 requête, sessions/API keys = 1 requête. La révocabilité dépend du stockage côté serveur (session store, clés ou refresh tokens) et du délai accepté entre la révocation et son effet.</p>
+            <p>Révoquer un accès consiste à empêcher un utilisateur ou une application de continuer à consommer l’API après compromission ou retrait d’autorisation. Chaque méthode implique un compromis entre rapidité de révocation et coût en requêtes :</p>
+
+            <div class="highlight-box" style="background: #f5f5f5; border-left: 4px solid #9e9e9e; margin-top: 1.5rem;">
+              <h6>🔐 Basic Auth (username/password envoyés à chaque requête)</h6>
+              <ul>
+                <li>Révocation : changer ou désactiver le mot de passe dans la base.</li>
+                <li>Délai : immédiat après modification (car chaque requête vérifie la DB).</li>
+                <li>Coût : 1 requête DB par appel.</li>
+                <li>Limites : aucune granularité (toutes les requêtes sont coupées d’un coup), UX médiocre.</li>
+              </ul>
+            </div>
+
+            <div class="highlight-box" style="background: #f5f5f5; border-left: 4px solid #9e9e9e; margin-top: 1.5rem;">
+              <h6>🔑 API Keys (clé opaque stockée côté serveur)</h6>
+              <ul>
+                <li>Révocation : supprimer ou désactiver la clé dans la base.</li>
+                <li>Délai : immédiat (validation en base à chaque requête ou via cache court).</li>
+                <li>Coût : 1 requête DB/cache par appel.</li>
+                <li>Bonnes pratiques : clés multiples par client pour révoquer finement.</li>
+              </ul>
+            </div>
+
+            <div class="highlight-box" style="background: #f5f5f5; border-left: 4px solid #9e9e9e; margin-top: 1.5rem;">
+              <h6>🎟 Sessions serveurs (cookies + store)</h6>
+              <ul>
+                <li>Révocation : supprimer la session du store (Redis, base).</li>
+                <li>Délai : immédiat (toutes les requêtes vérifient la session).</li>
+                <li>Coût : 1 requête store par appel (souvent redis, mémoire).</li>
+                <li>Atout : expiration contrôlée côté serveur, logout simple.</li>
+              </ul>
+            </div>
+
+            <div class="highlight-box" style="background: #f5f5f5; border-left: 4px solid #9e9e9e; margin-top: 1.5rem;">
+              <h6>🤝 OAuth 2.0 / OpenID Connect (provider externe)</h6>
+              <ul>
+                <li>Révocation : côté provider (Google, LinkedIn) via leurs endpoints.</li>
+                <li>Délai : immédiat côté provider, nécessite parfois de révoquer aussi la session locale.</li>
+                <li>Coût : dépend du provider (révocation d’un refresh token, invalidation d’un consentement).</li>
+                <li>Point clé : conserver la capacité de désactiver le compte côté SmartCity si nécessaire.</li>
+              </ul>
+            </div>
+
+            <div class="highlight-box" style="background: #fff4e6; border-left: 4px solid #ff9800; margin-top: 1.5rem;">
+              <h6>🚫 JWT pur (stateless)</h6>
+              <ul>
+                <li>Révocation : impossible avant expiration naturelle du token.</li>
+                <li>Délai : dépend uniquement de <code>exp</code> (ex : 1h, 24h).</li>
+                <li>Coût : 0 requête DB par validation (signature cryptographique).</li>
+                <li>Usage : accélère les lectures mais ne convient pas aux contextes exigeant une coupure immédiate.</li>
+              </ul>
+            </div>
+
+            <div class="highlight-box" style="background: #fff4e6; border-left: 4px solid #ff9800; margin-top: 1.5rem;">
+              <h6>📝 JWT + Blacklist</h6>
+              <ul>
+                <li>Révocation : ajouter le token compromis dans une liste noire côté serveur.</li>
+                <li>Délai : immédiat, mais nécessite de vérifier la blacklist à chaque requête (retour au coût d’une requête DB/cache).</li>
+                <li>Compromis : permet la coupure rapide mais supprime l’intérêt “stateless”.</li>
+                <li>Bonnes pratiques : TTL court, purge des tokens expirés.</li>
+              </ul>
+            </div>
+
+            <div class="highlight-box" style="background: #e8f5e9; border-left: 4px solid #4caf50; margin-top: 1.5rem;">
+              <h6>✅ Synthèse opérationnelle</h6>
+              <ul>
+                <li>Identifier les accès qui nécessitent une révocation instantanée (admin, partenaires sensibles) → préférer API keys, sessions, OAuth avec store.</li>
+                <li>Pour les appels très fréquents et peu risqués → JWT stateless + expiration courte, éventuellement couplé à un refresh token.</li>
+                <li>Ne jamais oublier la révocation côté provider lorsqu’on délègue l’authentification (Google, GitHub).</li>
+                <li>Documenter la procédure de rotation des clés/tokens et l’automatiser autant que possible.</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -2723,7 +2782,7 @@ app.delete('/api/events/:id',
             <span class="day-theme">Gestion des permissions en base de données</span>
           </div>
           <div class="day-content">
-            <p>Pour des applications complexes, stocker les permissions en base de données permet plus de flexibilité et de dynamisme.</p>
+            <p>Même sur une application de taille modeste, externaliser rôles et permissions dans un stockage persistant évite de redéployer au moindre ajustement. On peut certes démarrer avec un simple fichier de configuration, mais l'intérêt reste limité : pas de synchronisation multi-serveurs, pas d'audit et un risque d’oubli lors des déploiements. Très vite, la base de données devient la solution naturelle pour centraliser et faire évoluer ces règles.</p>
 
             <div class="highlight-box" style="background: #e8f4fd; border-left: 4px solid #0066cc; margin-top: 1.5rem;">
               <h6>💡 Pourquoi stocker en base ?</h6>
@@ -3151,10 +3210,17 @@ function authorize(...requiredPermissions) {
             <i class="fas fa-chevron-down collapsible-icon" id="partie3-icon"></i>
             Partie 3 : HTTPS et chiffrement
           </h3>
-          <span class="collapsible-badge">10 sous-parties</span>
+          <span class="collapsible-badge">8 sous-parties</span>
         </div>
         <div class="collapsible-content" id="partie3-content">
           <div class="days-container">
+
+        <div class="alert-card" style="background:#f2f7ff; border-left:4px solid #1e88e5; padding:1.5rem; margin-bottom:2rem;">
+          <h4 style="margin-bottom:0.5rem;"><i class="fas fa-graduation-cap"></i> Lecture guidée</h4>
+          <p style="margin:0;">- <strong>À implémenter dans le projet :</strong> activer HTTPS via l’infra (proxy, cloud), comprendre le handshake, appliquer les headers de base.<br>
+          - <strong>À connaître pour la culture :</strong> génération manuelle de certificats, configuration fine d’un reverse proxy, catalogues d’attaques.<br>
+          Utilisez cette section comme un guide de décision : choisissez la solution adaptée à votre contexte plutôt que de recopier tout le code.</p>
+        </div>
 
         <!-- Partie 3.1 -->
         <div class="day-card expanded">
@@ -3275,47 +3341,47 @@ function authorize(...requiredPermissions) {
             <span class="day-theme">Les certificats SSL/TLS</span>
           </div>
           <div class="day-content">
-            <h4 class="mt-5"><i class="fas fa-id-card"></i> Qu'est-ce qu'un certificat ?</h4>
-            <p>Un certificat est un fichier signé par une autorité de certification (CA) qui garantit l'identité d'un serveur :</p>
+            <h4 class="mt-5"><i class="fas fa-id-card"></i> Comprendre un certificat TLS</h4>
+            <p>Un certificat est une carte d’identité numérique signée par une autorité de certification (CA). On y trouve :</p>
             <ul>
-              <li>Nom de domaine couvert (ex. <code>api.smartcity.local</code>).</li>
-              <li>Clé publique du serveur.</li>
-              <li>Signature de la CA (preuve de confiance).</li>
-              <li>Date de début et d'expiration.</li>
+              <li>Les <strong>noms de domaine</strong> couverts (ex. <code>api.smartcity.fr</code>).</li>
+              <li>La <strong>clé publique</strong> du serveur.</li>
+              <li>La <strong>signature</strong> de la CA qui atteste l’authenticité.</li>
+              <li>Les <strong>dates de validité</strong> (début / expiration).</li>
             </ul>
 
-            <h4 class="mt-5"><i class="fas fa-list-alt"></i> Types de validation possibles</h4>
+            <div class="highlight-box" style="background: #e8f4fd; border-left: 4px solid #0066cc; margin-top: 1.5rem;">
+              <h6>Qui vérifie quoi ?</h6>
+              <p><strong>DV (Domain Validation)</strong> : la CA vérifie que vous contrôlez le domaine (challenge DNS/HTTP). Automatisable et gratuit.</p>
+              <p><strong>OV (Organization Validation)</strong> : contrôle administratif de l’entreprise (documents légaux, appel téléphonique).</p>
+              <p><strong>EV (Extended Validation)</strong> : audit poussé (existence juridique, adresse, dirigeants). Réservé aux banques/grandes organisations.</p>
+              <p>Dans tous les cas, c’est la CA qui mène les vérifications avant de signer votre certificat.</p>
+            </div>
+
+            <h4 class="mt-5"><i class="fas fa-list-alt"></i> Types de validation</h4>
             <div class="table-responsive" style="margin-top: 1.5rem;">
               <table class="table" style="width: 100%; border-collapse: collapse;">
                 <thead>
                   <tr style="background: #f5f5f5;">
                     <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Type</th>
                     <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Validation</th>
-                    <th style="padding: 12px; border: 1px solid #ddd;">Prix</th>
-                    <th style="padding: 12px; border: 1px solid #ddd;">Délai</th>
-                    <th style="padding: 12px; border: 1px solid #ddd;">Usage recommandé</th>
+                    <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Usage typique</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td style="padding: 12px; border: 1px solid #ddd;"><strong>DV</strong> (Domain Validation)</td>
-                    <td style="padding: 12px; border: 1px solid #ddd;">Contrôle du domaine (DNS, HTTP challenge)</td>
-                    <td style="padding: 12px; border: 1px solid #ddd;">Gratuit</td>
-                    <td style="padding: 12px; border: 1px solid #ddd;">Minutes</td>
-                    <td style="padding: 12px; border: 1px solid #ddd;">Sites standards, APIs</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;"><strong>DV</strong></td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Preuve de contrôle du domaine (DNS, HTTP challenge)</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">APIs, sites web standards (Let's Encrypt)</td>
                   </tr>
                   <tr>
-                    <td style="padding: 12px; border: 1px solid #ddd;"><strong>OV</strong> (Organization Validation)</td>
-                    <td style="padding: 12px; border: 1px solid #ddd;">Vérification de l'entreprise (documents juridiques)</td>
-                    <td style="padding: 12px; border: 1px solid #ddd;">50–200 € / an</td>
-                    <td style="padding: 12px; border: 1px solid #ddd;">Quelques jours</td>
-                    <td style="padding: 12px; border: 1px solid #ddd;">Sites corporate</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;"><strong>OV</strong></td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Validation de l’organisation (documents juridiques)</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Sites corporate, B2B</td>
                   </tr>
                   <tr>
-                    <td style="padding: 12px; border: 1px solid #ddd;"><strong>EV</strong> (Extended Validation)</td>
-                    <td style="padding: 12px; border: 1px solid #ddd;">Audit juridique complet, vérifications physiques</td>
-                    <td style="padding: 12px; border: 1px solid #ddd;">200–1000 € / an</td>
-                    <td style="padding: 12px; border: 1px solid #ddd;">Plusieurs semaines</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;"><strong>EV</strong></td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Audit complet + vérifications physiques</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">Banques, fintech, e-commerce critique</td>
                   </tr>
                 </tbody>
@@ -3323,16 +3389,21 @@ function authorize(...requiredPermissions) {
             </div>
 
             <div class="highlight-box" style="background: #e8f5e9; border-left: 4px solid #4caf50; margin-top: 1.5rem;">
-              <h6>✅ Recommandation SmartCity</h6>
-              <p><strong>Let's Encrypt (DV)</strong> : gratuit, automatisé, renouvellement tous les 90 jours. Idéal pour les APIs et environnements de production modernes.</p>
+              <h6>Let's Encrypt & co</h6>
+              <ul>
+                <li><strong>Let's Encrypt</strong> : CA libre et gratuite. Certificats DV valables 90 jours, renouvellement automatique.</li>
+                <li><strong>Services managés</strong> (Cloudflare, AWS ACM, GCP Certificate Manager) : génèrent et renouvellent les certificats pour vous.</li>
+                <li><strong>Certificats locaux</strong> : en développement, utilisez <strong>mkcert</strong> pour créer un certificat de test sans alertes navigateur.</li>
+              </ul>
             </div>
 
             <div class="highlight-box" style="background: #fff4e6; border-left: 4px solid #ff9800; margin-top: 1.5rem;">
-              <h6>⚠️ Bonnes pratiques</h6>
+              <h6>Glossaire express</h6>
               <ul>
-                <li>Protéger la clé privée (droits UNIX, coffre-fort de secrets).</li>
-                <li>Automatiser le renouvellement (Certbot, Traefik, Caddy).</li>
-                <li>Surveiller les dates d'expiration (alertes monitoring).</li>
+                <li><strong>CA (Certificate Authority)</strong> : tiers de confiance qui signe les certificats.</li>
+                <li><strong>CSR (Certificate Signing Request)</strong> : fichier contenant votre clé publique et vos infos, envoyé à la CA.</li>
+                <li><strong>Chaîne de confiance</strong> : certificat serveur + certificats intermédiaires + certificat racine.</li>
+                <li><strong>Wildcard</strong> : certificat couvrant tous les sous-domaines d’un domaine (ex. <code>*.smartcity.fr</code>).</li>
               </ul>
             </div>
           </div>
@@ -3342,49 +3413,61 @@ function authorize(...requiredPermissions) {
         <div class="day-card expanded">
           <div class="day-header">
             <span class="day-number">3.4</span>
-            <span class="day-theme">Obtenir un certificat avec Let's Encrypt</span>
+            <span class="day-theme">Obtenir un certificat</span>
           </div>
           <div class="day-content">
-            <h4 class="mt-5"><i class="fas fa-download"></i> Installation</h4>
-            <pre><code class="bash"># Ubuntu/Debian
-sudo apt install certbot python3-certbot-nginx
+            <p>L’objectif n’est pas de réciter une configuration Nginx par cœur, mais de savoir <strong>où activer HTTPS</strong> et <strong>quels outils utiliser</strong> selon le contexte.</p>
 
-# Ou avec snap (recommandé)
-sudo snap install --classic certbot</code></pre>
+            <div class="highlight-box" style="background: #e8f4fd; border-left: 4px solid #0066cc; margin-top: 1.5rem;">
+              <h6>Scénarios courants</h6>
+              <ul>
+                <li><strong>Plateformes cloud</strong> (Vercel, Netlify, Render, Heroku, Cloud Run) : HTTPS est activé automatiquement, certificats renouvelés par la plateforme.</li>
+                <li><strong>Reverse proxy / load balancer</strong> (Traefik, Caddy, Nginx, AWS ALB, Cloudflare) : ces services terminent TLS et renouvellent souvent les certificats (Let's Encrypt intégré).</li>
+                <li><strong>Kubernetes</strong> : un ingress controller (Traefik = reverse proxy orienté microservices, Nginx Ingress Controller, Istio) + <code>cert-manager</code> gèrent l’ensemble.</li>
+              </ul>
+            </div>
 
-            <h4 class="mt-5"><i class="fas fa-key"></i> Obtenir le certificat</h4>
-            <pre><code class="bash"># Automatique avec Nginx
-sudo certbot --nginx -d api.smartcity.local
-
-# Questions :
-# - Email (notifications)
-# - Accepter termes
-# - Rediriger HTTP → HTTPS ? → Oui</code></pre>
-
-            <p><strong>Résultat</strong> : Certificats dans <code>/etc/letsencrypt/live/api.smartcity.local/</code></p>
-            <ul>
-              <li><code>fullchain.pem</code> : Certificat complet</li>
-              <li><code>privkey.pem</code> : Clé privée ⚠️</li>
-              <li><code>cert.pem</code> : Certificat seul</li>
-              <li><code>chain.pem</code> : Chaîne intermédiaire</li>
-            </ul>
-
-            <h4 class="mt-5"><i class="fas fa-sync-alt"></i> Renouvellement automatique</h4>
-            <p>Les certificats expirent après 90 jours. Certbot (outil de gestion automatique de certificats Let's Encrypt) installe un cron job (tâche planifiée exécutée automatiquement) pour le renouvellement.</p>
-
-            <pre><code class="bash"># Tester le renouvellement
-sudo certbot renew --dry-run
-
-# Vérifier le timer
-sudo systemctl list-timers | grep certbot</code></pre>
+            <div class="highlight-box" style="background: #fff4e6; border-left: 4px solid #ff9800; margin-top: 1.5rem;">
+              <h6>Quand générer soi-même ?</h6>
+              <ul>
+                <li><strong>Auto-hébergement simple</strong> : <code>certbot</code> + Nginx/Apache pour obtenir un DV Let's Encrypt.</li>
+                <li><strong>Environnement local</strong> : <strong>mkcert</strong> crée un certificat signé par votre machine (zéro alerte navigateur).</li>
+                <li><strong>Besoins avancés</strong> : certificats wildcard ou multi-domaines via challenge DNS automatisé.</li>
+              </ul>
+              <p>Dans tous les cas, automatisez le renouvellement (cron, GitHub Actions, chart Helm…).</p>
+            </div>
 
             <div class="highlight-box" style="background: #e8f5e9; border-left: 4px solid #4caf50; margin-top: 1.5rem;">
-              <h6>✅ Avantages de Let's Encrypt</h6>
+              <h6>Checklist HTTPS</h6>
+              <ol>
+                <li>Terminer TLS via votre plateforme cloud ou, en auto-hébergement, via un reverse proxy.</li>
+                <li>Rediriger systématiquement HTTP → HTTPS (code 301).</li>
+                <li>Limiter les protocoles à TLS 1.2+ et utiliser une liste d’algorithmes recommandée (profil Mozilla “intermediate”).</li>
+                <li>Ajouter les principaux headers de sécurité (cf. glossaire ci-dessous).</li>
+                <li>Tester la configuration (SSL Labs, <code>curl -I https://...</code>, monitoring d’expiration).</li>
+              </ol>
+            </div>
+
+            <div class="highlight-box" style="background: #f2f7ff; border-left: 4px solid #1e88e5; margin-top: 1.5rem;">
+              <h6>Glossaire express</h6>
               <ul>
-                <li><strong>Gratuit</strong> : Pas de coût pour les certificats DV</li>
-                <li><strong>Automatisé</strong> : Renouvellement automatique via cron</li>
-                <li><strong>Rapide</strong> : Obtention en quelques minutes</li>
-                <li><strong>Standard</strong> : Reconnu par tous les navigateurs</li>
+                <li><strong>Reverse proxy</strong> : point d’entrée réseau qui reçoit les requêtes, termine TLS, applique des règles (headers, cache, load balancing) puis les transmet à votre application (ex : Nginx, Traefik, Caddy).</li>
+                <li><strong>Traefik</strong> : reverse proxy open-source pensé pour les microservices et Kubernetes.</li>
+                <li><strong>Caddy</strong> : serveur web qui gère automatiquement les certificats Let's Encrypt.</li>
+                <li><strong>HSTS</strong> (Strict-Transport-Security) : indique au navigateur de n’utiliser que HTTPS pendant X temps.</li>
+                <li><strong>X-Frame-Options</strong> : empêche le site d’être chargé dans une iframe (anti clickjacking).</li>
+                <li><strong>Content-Security-Policy (CSP)</strong> : définit les sources autorisées pour scripts, CSS, images… (anti XSS).</li>
+                <li><strong>Helmet.js</strong> : middleware Express qui configure ces headers automatiquement.</li>
+              </ul>
+            </div>
+
+            <div class="highlight-box" style="background: #fff4e6; border-left: 4px solid #ff9800; margin-top: 1.5rem;">
+              <h6>Focus TP SmartCity</h6>
+              <ul>
+                <li>En développement : utilisez <strong>mkcert</strong> + Helmet pour tester en HTTPS local.</li>
+                <li>En déploiement managé (Vercel, Netlify, Render, Cloud Run, etc.) : laissez la plateforme gérer HTTPS automatiquement.</li>
+                <li>En auto-hébergement : installez un <strong>reverse proxy (Traefik / Nginx)</strong> qui récupère automatiquement un certificat Let's Encrypt.</li>
+                <li>Le code Bash détaillé vu en cours est pour la culture : à vous de choisir la solution la plus simple dans votre environnement.</li>
               </ul>
             </div>
           </div>
@@ -3394,173 +3477,6 @@ sudo systemctl list-timers | grep certbot</code></pre>
         <div class="day-card expanded">
           <div class="day-header">
             <span class="day-number">3.5</span>
-            <span class="day-theme">Configuration Nginx sécurisée</span>
-          </div>
-          <div class="day-content">
-            <h4 class="mt-5"><i class="fas fa-redo"></i> Redirection HTTP → HTTPS</h4>
-            <p>Forcer toutes les requêtes HTTP à être redirigées vers HTTPS :</p>
-            <pre><code class="nginx"># Redirection HTTP → HTTPS
-server {
-    listen 80;
-    server_name api.smartcity.local;
-    return 301 https://$server_name$request_uri;
-}</code></pre>
-
-            <h4 class="mt-5"><i class="fas fa-server"></i> Serveur HTTPS</h4>
-            <p>Configuration complète du serveur HTTPS avec sécurité renforcée :</p>
-            <pre><code class="nginx"># Serveur HTTPS
-server {
-    listen 443 ssl http2;
-    server_name api.smartcity.local;
-    
-    # Certificats
-    ssl_certificate /etc/letsencrypt/live/api.smartcity.local/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/api.smartcity.local/privkey.pem;
-    
-    # Protocoles modernes uniquement (TLS 1.2 et 1.3)
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256';
-    ssl_prefer_server_ciphers off;
-    
-    # Session SSL (performance)
-    ssl_session_cache shared:SSL:10m;
-    ssl_session_timeout 10m;
-    
-    # OCSP Stapling (améliore les performances)
-    ssl_stapling on;
-    ssl_stapling_verify on;
-    
-    # Headers de sécurité
-    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-    add_header X-Frame-Options "DENY" always;
-    add_header X-Content-Type-Options "nosniff" always;
-    add_header X-XSS-Protection "1; mode=block" always;
-    
-    # Proxy vers Node.js
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}</code></pre>
-
-            <h4 class="mt-5"><i class="fas fa-code"></i> Configuration Node.js (derrière Nginx)</h4>
-            <p>Quand votre application Node.js est derrière Nginx, il faut configurer Express pour faire confiance au proxy :</p>
-            <pre><code class="javascript">const express = require('express');
-const app = express();
-
-// Faire confiance au proxy (Nginx)
-// Permet à Express de détecter correctement les requêtes HTTPS
-app.set('trust proxy', 1);
-
-// Forcer HTTPS (redirection si requête HTTP)
-app.use((req, res, next) => {
-  // Vérifier si la requête est sécurisée (HTTPS)
-  // req.secure = true si HTTPS direct
-  // req.headers['x-forwarded-proto'] = 'https' si derrière proxy HTTPS
-  if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
-    return next();  // Requête HTTPS, continuer
-  }
-  // Requête HTTP, rediriger vers HTTPS
-  res.redirect(301, `https://${req.headers.host}${req.url}`);
-});</code></pre>
-
-            <div class="highlight-box" style="background: #e8f4fd; border-left: 4px solid #0066cc; margin-top: 1.5rem;">
-              <h6>💡 Explications des paramètres Nginx</h6>
-              <ul>
-                <li><strong>ssl_protocols</strong> : Utilise uniquement TLS 1.2 et 1.3 (versions sécurisées)</li>
-                <li><strong>ssl_ciphers</strong> : Liste des algorithmes de chiffrement autorisés (modernes et sécurisés)</li>
-                <li><strong>ssl_session_cache</strong> : Cache les sessions SSL pour améliorer les performances</li>
-                <li><strong>OCSP Stapling</strong> : Vérifie la validité du certificat sans requête supplémentaire</li>
-                <li><strong>proxy_set_header X-Forwarded-Proto</strong> : Indique à Node.js que la requête originale était HTTPS</li>
-              </ul>
-            </div>
-
-            <div class="highlight-box" style="background: #fff4e6; border-left: 4px solid #ff9800; margin-top: 1.5rem;">
-              <h6>⚠️ Points d'attention</h6>
-              <ul>
-                <li><strong>trust proxy</strong> : Nécessaire pour que Express détecte correctement HTTPS derrière Nginx</li>
-                <li><strong>Headers de sécurité</strong> : HSTS force le navigateur à utiliser HTTPS pendant 1 an</li>
-                <li><strong>Test après configuration</strong> : Vérifier avec <code>curl -I https://api.smartcity.local</code></li>
-                <li><strong>Renouvellement</strong> : Nginx doit être rechargé après renouvellement du certificat</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Partie 3.6 -->
-        <div class="day-card expanded">
-          <div class="day-header">
-            <span class="day-number">3.6</span>
-            <span class="day-theme">Headers de sécurité essentiels</span>
-          </div>
-          <div class="day-content">
-            <h4 class="mt-5"><i class="fas fa-shield-alt"></i> 1. Strict-Transport-Security (HSTS)</h4>
-            <p>Force le navigateur à TOUJOURS utiliser HTTPS pendant une période donnée.</p>
-            <pre><code class="nginx">add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;</code></pre>
-            <div class="highlight-box" style="background: #fff4e6; border-left: 4px solid #ff9800; margin-top: 1rem;">
-              <h6>⚠️ Attention</h6>
-              <p>Impossible de revenir à HTTP pendant max-age. Tester avec <code>max-age=300</code> (5 min) d'abord.</p>
-            </div>
-
-            <h4 class="mt-5"><i class="fas fa-file-code"></i> 2. X-Content-Type-Options</h4>
-            <p>Empêche le navigateur de deviner le type MIME (standard définissant le type de contenu d'un fichier) - prévient le MIME sniffing (analyse automatique du contenu pour deviner son type).</p>
-            <pre><code class="nginx">add_header X-Content-Type-Options "nosniff" always;</code></pre>
-
-            <h4 class="mt-5"><i class="fas fa-window-restore"></i> 3. X-Frame-Options</h4>
-            <p>Empêche le chargement dans une iframe (élément HTML permettant d'intégrer une page web dans une autre) - protection contre le clickjacking (attaque où l'utilisateur clique sur un élément invisible).</p>
-            <pre><code class="nginx">add_header X-Frame-Options "DENY" always;</code></pre>
-
-            <h4 class="mt-5"><i class="fas fa-lock"></i> 4. Content-Security-Policy (CSP)</h4>
-            <p>Définit d'où peuvent provenir les ressources - protection contre XSS (Cross-Site Scripting - injection de scripts malveillants).</p>
-            <pre><code class="nginx"># Pour une API REST (pas de frontend)
-add_header Content-Security-Policy "default-src 'none'; frame-ancestors 'none'" always;</code></pre>
-
-            <h4 class="mt-5"><i class="fas fa-link"></i> 5. Referrer-Policy</h4>
-            <p>Contrôle les informations envoyées dans le header Referer (indique l'URL de la page précédente).</p>
-            <pre><code class="nginx">add_header Referrer-Policy "strict-origin-when-cross-origin" always;</code></pre>
-
-            <h4 class="mt-5"><i class="fas fa-helmet-safety"></i> Avec Helmet.js (Node.js)</h4>
-            <p>Helmet.js configure automatiquement tous ces headers de sécurité pour Express :</p>
-            <pre><code class="bash">npm install helmet</code></pre>
-            <pre><code class="javascript">const helmet = require('helmet');
-
-// Configuration automatique (recommandé pour démarrer)
-app.use(helmet());
-
-// Ou personnalisé (pour plus de contrôle)
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      imgSrc: ["'self'", "https://cdn.smartcity.local"]
-    }
-  },
-  hsts: {
-    maxAge: 31536000,
-    includeSubDomains: true
-  }
-}));</code></pre>
-
-            <div class="highlight-box" style="background: #e8f5e9; border-left: 4px solid #4caf50; margin-top: 1.5rem;">
-              <h6>✅ Avantages de Helmet.js</h6>
-              <ul>
-                <li><strong>Configuration automatique</strong> : Tous les headers de sécurité configurés en une ligne</li>
-                <li><strong>Mise à jour automatique</strong> : Helmet suit les meilleures pratiques et se met à jour</li>
-                <li><strong>Personnalisable</strong> : Possibilité de configurer chaque header individuellement</li>
-                <li><strong>Standard de l'industrie</strong> : Utilisé par des milliers de projets Node.js</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Partie 3.7 -->
-        <div class="day-card expanded">
-          <div class="day-header">
-            <span class="day-number">3.7</span>
             <span class="day-theme">Attaques courantes et protections</span>
           </div>
           <div class="day-content">
@@ -3770,7 +3686,7 @@ app.use(mongoSanitize());</code></pre>
         <!-- Partie 3.8 -->
         <div class="day-card expanded">
           <div class="day-header">
-            <span class="day-number">3.8</span>
+            <span class="day-number">3.6</span>
             <span class="day-theme">Checklist sécurité complète</span>
           </div>
           <div class="day-content">
@@ -3875,7 +3791,7 @@ app.use(mongoSanitize());</code></pre>
         <!-- Partie 3.9 -->
         <div class="day-card expanded">
           <div class="day-header">
-            <span class="day-number">3.9</span>
+            <span class="day-number">3.7</span>
             <span class="day-theme">Outils de sécurité recommandés</span>
           </div>
           <div class="day-content">
@@ -3895,11 +3811,13 @@ dependency-check --project "SmartCity" --scan .</code></pre>
 
             <div class="highlight-box" style="background: #e8f4fd; border-left: 4px solid #0066cc; margin-top: 1.5rem;">
               <h6>💡 Quand utiliser ces outils ?</h6>
+              <p style="margin-bottom:1rem;">Chaque outil couvre un périmètre différent. Combinez-les selon votre stack :</p>
               <ul>
-                <li><strong>npm audit</strong> : À chaque installation de dépendances, avant chaque commit</li>
-                <li><strong>Snyk</strong> : Intégration CI/CD pour scan automatique à chaque build</li>
-                <li><strong>OWASP Dependency-Check</strong> : Scan complet mensuel de toutes les dépendances</li>
+                <li><strong>npm audit</strong> (Node.js uniquement) : lancer après chaque installation/maj de dépendance et avant un commit critique.</li>
+                <li><strong>Snyk</strong> (Node, Java, Python, Go, .NET…) : intégrer en CI/CD pour scanner automatiquement chaque build et surveiller les projets en continu.</li>
+                <li><strong>OWASP Dependency-Check</strong> (multi-langages) : planifier un scan complet (hebdo ou mensuel) pour détecter les vulnérabilités laissées par les audits rapides.</li>
               </ul>
+              <p style="margin-top:1rem;">En résumé : `npm audit` = contrôle rapide local ; Snyk = surveillance continue multi-langages ; Dependency-Check = audit périodique exhaustif.</p>
             </div>
 
             <h4 class="mt-5"><i class="fas fa-bug"></i> Tests de sécurité</h4>
@@ -3938,7 +3856,7 @@ dependency-check --project "SmartCity" --scan .</code></pre>
         <!-- Partie 3.10 -->
         <div class="day-card expanded">
           <div class="day-header">
-            <span class="day-number">3.10</span>
+            <span class="day-number">3.8</span>
             <span class="day-theme">Configuration complète sécurisée</span>
           </div>
           <div class="day-content">
@@ -4138,57 +4056,67 @@ process.on('SIGTERM', () => {
           </div>
           <div class="day-content">
             <div class="table-responsive" style="margin-top: 1rem;">
-              <table class="table" style="width: 100%; border-collapse: collapse;">
+              <table class="table" style="width: 100%; border-collapse: collapse; color: #111;">
                 <thead>
-                  <tr style="background: #f5f5f5;">
+                  <tr style="background: #f5f5f5; color: #111;">
                     <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Attaque</th>
+                    <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Définition</th>
                     <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Protection principale</th>
                     <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Protection secondaire</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr style="color: #111;">
                     <td style="padding: 12px; border: 1px solid #ddd;">MITM</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Interception du trafic pour lire ou modifier les messages à la volée.</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">HTTPS/TLS</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">Certificate Pinning, HSTS</td>
                   </tr>
-                  <tr>
+                  <tr style="color: #111;">
                     <td style="padding: 12px; border: 1px solid #ddd;">Replay</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Réutilisation d’une requête capturée pour refaire l’opération (ex : paiement).</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">Nonce + Timestamp</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">Idempotency Keys</td>
                   </tr>
-                  <tr>
+                  <tr style="color: #111;">
                     <td style="padding: 12px; border: 1px solid #ddd;">Token Theft</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Vol de tokens d’authentification pour usurper la session d’un utilisateur.</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">Cookie httpOnly</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">Rotation tokens, Détection anomalies</td>
                   </tr>
-                  <tr>
+                  <tr style="color: #111;">
                     <td style="padding: 12px; border: 1px solid #ddd;">Brute Force</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Essais massifs de mots de passe jusqu’à trouver le bon.</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">Rate Limiting</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">Blocage progressif, CAPTCHA</td>
                   </tr>
-                  <tr>
+                  <tr style="color: #111;">
                     <td style="padding: 12px; border: 1px solid #ddd;">SQL Injection</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Insertion de code SQL malveillant pour exfiltrer ou modifier des données.</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">ORM/Requêtes paramétrées</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">Validation inputs</td>
                   </tr>
-                  <tr>
+                  <tr style="color: #111;">
                     <td style="padding: 12px; border: 1px solid #ddd;">NoSQL Injection</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Exploitation des opérateurs NoSQL dans les champs pour manipuler la requête.</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">Sanitization</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">Validation de types</td>
                   </tr>
-                  <tr>
+                  <tr style="color: #111;">
                     <td style="padding: 12px; border: 1px solid #ddd;">XSS</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Injection de scripts dans une page pour exécuter du code malveillant côté client.</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">CSP, Sanitization</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">Escaping, httpOnly cookies</td>
                   </tr>
-                  <tr>
+                  <tr style="color: #111;">
                     <td style="padding: 12px; border: 1px solid #ddd;">CSRF</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Forcer un utilisateur authentifié à envoyer une requête sans son consentement.</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">sameSite cookies</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">CSRF tokens</td>
                   </tr>
-                  <tr>
+                  <tr style="color: #111;">
                     <td style="padding: 12px; border: 1px solid #ddd;">DDoS</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">Saturation d’un service par un flot massif de requêtes distribuées.</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">CDN/WAF</td>
                     <td style="padding: 12px; border: 1px solid #ddd;">Rate limiting, Load balancing</td>
                   </tr>
@@ -4473,10 +4401,11 @@ process.on('SIGTERM', () => {
 
             <h4 class="mt-5"><i class="fas fa-exclamation-triangle"></i> Après un incident</h4>
             <ul>
-              <li>Analyse post-mortem</li>
-              <li>Mise à jour des procédures</li>
-              <li>Communication transparente</li>
-              <li>Amélioration continue</li>
+              <li>Analyse post-mortem : investigation détaillée des causes et actions correctives.</li>
+              <li>Consentement explicite : conserver la preuve d’autorisation de l’utilisateur pour chaque usage de ses données.</li>
+              <li>Droit à l'oubli : supprimer les données d’un utilisateur sur demande, dans tous les systèmes.</li>
+              <li>Portabilité des données : fournir un export lisible des données personnelles sur demande.</li>
+              <li>DPO (Data Protection Officer) si nécessaire : désigner un référent RGPD dans les organisations soumises à l’obligation.</li>
             </ul>
           </div>
         </div>

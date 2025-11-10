@@ -102,19 +102,32 @@ document.querySelectorAll('.sprint-card').forEach(card => {
 document.querySelectorAll('.day-card').forEach(card => {
     const header = card.querySelector('.day-header');
     const content = card.querySelector('.day-content');
-    
-    header.addEventListener('click', () => {
-        const isExpanded = content.style.maxHeight;
-        
-        // Close all other cards
-        document.querySelectorAll('.day-content').forEach(otherContent => {
-            if (otherContent !== content) {
-                otherContent.style.maxHeight = null;
-                otherContent.parentElement.classList.remove('expanded');
-            }
-        });
-        
-        // Toggle current card
+
+    if (!header || !content) {
+        return;
+    }
+
+    card.classList.remove('expanded');
+    content.style.maxHeight = null;
+
+    header.addEventListener('click', event => {
+        event.stopPropagation();
+
+        const isExpanded = !!content.style.maxHeight;
+        const container = card.parentElement;
+
+        if (container) {
+            Array.from(container.children)
+                .filter(child => child !== card && child.classList?.contains('day-card'))
+                .forEach(otherCard => {
+                    const otherContent = otherCard.querySelector('.day-content');
+                    if (otherContent) {
+                        otherContent.style.maxHeight = null;
+                        otherCard.classList.remove('expanded');
+                    }
+                });
+        }
+
         if (isExpanded) {
             content.style.maxHeight = null;
             card.classList.remove('expanded');
