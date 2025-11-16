@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet Fil Rouge - SmartCity</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="../assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+                <span class="logo-text">Web Services</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html#accueil" class="nav-link">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../index.html#programme" class="nav-link">Programme</a>
+                </li>
+                <li class="nav-item">
+                    <a href="./filerouge.html" class="nav-link active">Projet SmartCity</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <i class="fas fa-calendar-alt"></i> Journées
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="./day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+                        <a href="./day2.html" class="dropdown-item">Jour 2 - Théorie</a>
+                        <a href="./day3.html" class="dropdown-item">Jour 3 - Théorie</a>
+                        <a href="./day4-5.html" class="dropdown-item">Jour 4 & 5 - Théorie</a>
+                        <a href="./day6.html" class="dropdown-item">Jour 6 - Théorie</a>
+                        <a href="./day7.html" class="dropdown-item">Jour 7 - Théorie</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="../index.html#ressources" class="nav-link">Ressources</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../index.html#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" style="min-height: 280px;">
+        <div class="hero-background">
+            <img src="../assets/home.jpg" alt="SmartCity" class="hero-image">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Projet Fil Rouge — SmartCity</h1>
+                <h2 class="hero-subtitle">Mise en pratique des Web Services</h2>
+                <p class="hero-description">Objectifs, consignes, livrables, barème et jalons pour réussir la soutenance.</p>
+                <div class="hero-buttons">
+                    <a href="../index.html" class="btn btn-primary">
+                        <i class="fas fa-arrow-left"></i> Retour à l'accueil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container" style="padding: 40px 0;">
+        <section class="content-section" style="margin-bottom: 24px;">
+            <div class="section-header">
+                <h2 class="section-title">Backend du Frontend (BFF) — requis</h2>
+                <p class="section-subtitle">Le frontend doit s’appuyer sur un petit backend dédié pour la sécurité et l’orchestration.</p>
+            </div>
+            <ul>
+                <li>Proxy des appels vers les 4 APIs (le navigateur n’envoie jamais les API Keys directement).</li>
+                <li>Stockage et injection des API Keys côté serveur (secrets hors du navigateur).</li>
+                <li>Gestion de l’auth utilisateurs (JWT/OAuth 2.0), sessions si nécessaire.</li>
+                <li>Centralisation: CORS, rate limiting, logs, gestion des erreurs.</li>
+                <li>Agrégation d’appels (un endpoint pour plusieurs services côté front).</li>
+            </ul>
+            <p class="muted">Bénéfices: sécurité, contrôle, simplification du client et meilleure observabilité.</p>
+        </section>
+        <section class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Projet Fil Rouge — Contenu intégral (Markdown)</h2>
+                <p class="section-subtitle">Copie intégrale de <code>cours/filerouge.md</code>, caractère pour caractère.</p>
+            </div>
+            <pre class="markdown-source" style="white-space: pre-wrap; word-wrap: break-word; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;">
+📘 PROJET FIL ROUGE - WEB SERVICES SMARTCITY
+Formation Mastère 2 - Web Services
+Durée totale : 9 jours
+Évaluation finale : Jour 9
+Note : /40 points
+Modalité : Projets en groupe de 3-4 personnes
+
+🎯 OBJECTIFS PÉDAGOGIQUES
+Ce projet fil rouge a pour objectif de vous faire mettre en pratique les principaux concepts vus en cours sur les Web Services, dans un contexte professionnel réaliste.
+Vous devrez démontrer votre maîtrise de :
+
+Conception et développement d'APIs REST
+Sécurité des Web Services (authentification, autorisation, API Keys)
+Documentation technique (OpenAPI/Swagger)
+Choix architecturaux justifiés
+Bonnes pratiques professionnelles
+
+
+📋 DESCRIPTION DU PROJET
+Contexte
+Dans le cadre d'un écosystème SmartCity, plusieurs services indépendants doivent coexister et être accessibles via une application frontend centralisée.
+La formation est divisée en 5 groupes :
+🔧 4 Groupes Backend (4 personnes/groupe)
+Chaque groupe développe un Web Service REST sur un thème SmartCity :
+
+Groupe 1 : Service de diététique et nutrition
+Groupe 2 : Service de diététique et nutrition (approche différente)
+Groupe 3 : Service de gestion de parking et stationnement
+Groupe 4 : Service d'alertes citoyennes
+
+🎨 1 Groupe Frontend (3 personnes)
+Développe une application frontend qui consomme les 4 APIs backend et gère l'authentification des utilisateurs finaux.
+
+🔐 ARCHITECTURE DE SÉCURITÉ
+Pour les groupes Backend
+Authentification B2B (Backend ↔ Frontend) :
+
+Utilisation d'API Keys pour authentifier le frontend (client de l'API)
+Chaque groupe backend génère et fournit une API Key au groupe frontend
+Les requêtes du frontend vers les backends doivent inclure cette API Key
+
+Pourquoi des API Keys ?
+C'est la pratique standard professionnelle pour les intégrations entre services (ex: Stripe, SendGrid, Google Maps API, etc.). Lorsqu'une application souscrit à une API tierce, elle reçoit une clé unique qui l'identifie.
+Pour le groupe Frontend
+Double authentification à implémenter :
+
+Authentification des utilisateurs finaux (B2C) :
+
+Implémentation de JWT (JSON Web Tokens)
+Implémentation d'OAuth 2.0 (Google, GitHub, etc.)
+L'utilisateur doit pouvoir choisir sa méthode d'authentification
+
+
+Authentification vers les backends (B2B) :
+
+Utilisation des API Keys fournies par chaque groupe backend
+Envoi de l'API Key dans les headers des requêtes vers les backends
+
+
+
+Schéma d'authentification Frontend :
+Utilisateur Final
+    │
+    ├─ Option 1 : Login/Password → JWT généré par le Frontend
+    └─ Option 2 : OAuth 2.0 (Google, GitHub...) → Token OAuth
+    
+    ↓ (utilisateur authentifié)
+    
+Frontend (possède le JWT ou OAuth Token)
+    │
+    └─ Appels vers les 4 backends avec API Key dans les headers
+        
+        Backend 1 → Vérifie API Key → Répond
+        Backend 2 → Vérifie API Key → Répond
+        Backend 3 → Vérifie API Key → Répond
+        Backend 4 → Vérifie API Key → Répond
+
+📦 LIVRABLES ATTENDUS
+Pour chaque groupe Backend
+
+Code source
+
+Repository Git (GitHub/GitLab) avec historique de commits
+Code propre, commenté, structuré
+.env.example avec les variables d'environnement
+
+
+Documentation technique
+
+README.md complet :
+
+Description du service
+Technologies utilisées
+Instructions d'installation et de lancement
+Structure du projet
+Exemples d'utilisation
+
+
+Contrat API (OpenAPI/Swagger)
+
+Toutes les routes documentées
+Modèles de données (schemas)
+Codes de réponse HTTP
+Exemples de requêtes/réponses
+
+
+Collection Postman pour tester l'API
+
+
+Documentation des choix architecturaux
+
+Document expliquant vos choix techniques :
+
+Pourquoi cette stack ?
+Architecture de la base de données (diagramme)
+Stratégie de versioning
+Gestion des API Keys
+Gestion des erreurs
+Patterns utilisés
+
+
+Justification de vos décisions
+
+
+Présentation
+
+Support de présentation (PowerPoint, Google Slides, PDF)
+Démonstration live fonctionnelle
+
+
+
+Pour le groupe Frontend
+
+Code source
+
+Repository Git avec historique de commits
+Code propre, commenté, structuré
+.env.example avec les variables d'environnement
+
+
+Documentation technique
+
+README.md complet :
+
+Description de l'application
+Technologies utilisées
+Instructions d'installation et de lancement
+Intégration avec les 4 backends
+
+
+Diagramme de base de données (si gestion utilisateurs en DB)
+Documentation de l'authentification :
+
+Schéma du flow JWT
+Schéma du flow OAuth 2.0
+Gestion des tokens
+Stratégie de rafraîchissement
+
+
+
+
+Documentation des intégrations
+
+Comment sont consommées les 4 APIs backend
+Gestion des API Keys
+Gestion des erreurs réseau
+Stratégies de retry et fallback
+Données mock utilisées (si applicable)
+
+
+Présentation
+
+Support de présentation
+Démonstration live fonctionnelle
+
+
+
+
+📊 BARÈME D'ÉVALUATION (Total : /40)
+1. Code et Implémentation (/10 points)
+Pour les groupes Backend :
+
+Qualité du code (2 pts)
+
+Code propre, structuré, lisible
+Nommage cohérent (variables, fonctions, fichiers)
+Pas de duplication de code
+Commentaires pertinents
+
+
+Architecture (2 pts)
+
+Séparation des responsabilités (routes, controllers, services, models)
+Structure de dossiers logique
+Modularité
+
+
+Fonctionnalités (3 pts)
+
+API fonctionnelle et complète
+Gestion des API Keys implémentée
+CRUD complet (si applicable)
+Valeur ajoutée du service
+
+
+Base de données (2 pts)
+
+Schéma cohérent
+Relations bien définies
+Migrations/seeds (bonus)
+
+
+Gestion des erreurs (1 pt)
+
+Try/catch appropriés
+Messages d'erreur clairs
+Codes HTTP corrects
+
+
+
+Pour le groupe Frontend :
+
+Qualité du code (2 pts)
+
+Code propre, structuré, lisible
+Composants réutilisables
+Gestion de l'état (state management)
+
+
+Architecture (2 pts)
+
+Structure de dossiers logique
+Séparation des concerns
+
+
+Fonctionnalités (3 pts)
+
+Authentification JWT fonctionnelle
+Authentification OAuth 2.0 fonctionnelle
+Intégration avec les 4 backends réussie
+Gestion du choix utilisateur (JWT vs OAuth)
+
+
+Base de données / Gestion utilisateurs (2 pts)
+
+Stockage des utilisateurs
+Gestion des tokens
+Sécurité (hash passwords)
+
+
+Gestion des erreurs (1 pt)
+
+Gestion des erreurs réseau
+Feedback utilisateur clair
+Fallbacks appropriés
+
+
+
+
+2. Documentation et Contrat API (/10 points)
+Pour les groupes Backend :
+
+README.md (2 pts)
+
+Complet et clair
+Instructions de setup fonctionnelles
+Exemples d'utilisation
+
+
+Contrat API OpenAPI/Swagger (4 pts)
+
+Toutes les routes documentées
+Modèles de données (schemas) définis
+Exemples de requêtes/réponses
+Codes HTTP documentés
+Accessible via /api-docs
+
+
+Collection Postman (1 pt)
+
+Toutes les routes testables
+Variables d'environnement configurées
+Exemples de données
+
+
+Documentation des API Keys (2 pts)
+
+Comment obtenir une API Key
+Comment l'utiliser
+Format attendu (header, query param, etc.)
+Exemples concrets
+
+
+Git (1 pt)
+
+Historique de commits cohérent
+Messages de commit clairs
+.gitignore approprié
+
+
+
+Pour le groupe Frontend :
+
+README.md (3 pts)
+
+Complet et clair
+Instructions de setup
+Documentation des deux modes d'authentification
+
+
+Documentation de l'authentification (4 pts)
+
+Diagrammes de flow JWT
+Diagrammes de flow OAuth 2.0
+Schéma de base de données utilisateurs
+Gestion des tokens et refresh
+
+
+Documentation des intégrations (2 pts)
+
+Explication de la consommation des 4 APIs
+Gestion des API Keys par backend
+Stratégies de gestion d'erreurs
+
+
+Git (1 pt)
+
+Historique de commits cohérent
+Messages clairs
+
+
+
+
+3. Choix Architecturaux (/10 points)
+Pour les groupes Backend :
+
+Justification des choix techniques (3 pts)
+
+Pourquoi cette stack ?
+Pourquoi cette architecture ?
+Trade-offs assumés
+
+
+Respect des principes REST (3 pts)
+
+Nommage des URLs cohérent
+Utilisation correcte des verbes HTTP
+Statelessness
+Codes de statut HTTP appropriés
+
+
+Sécurité (2 pts)
+
+Implémentation des API Keys sécurisée
+Validation des entrées
+HTTPS (en production)
+CORS configuré correctement
+
+
+Fonctionnalités avancées (2 pts)
+
+Versioning de l'API (/v1, /v2...)
+Pagination (si listes de données)
+Filtrage/Recherche
+Rate limiting (bonus)
+
+
+
+Pour le groupe Frontend :
+
+Justification des choix techniques (3 pts)
+
+Pourquoi cette stack ?
+Pourquoi cette approche d'authentification ?
+Trade-offs
+
+
+Architecture d'authentification (4 pts)
+
+Implémentation JWT correcte (génération, vérification, expiration)
+Implémentation OAuth 2.0 correcte (flow, tokens)
+Gestion du choix utilisateur
+Sécurité (storage des tokens, refresh)
+
+
+Intégration des backends (2 pts)
+
+Stratégie de gestion des 4 APIs
+Gestion des API Keys sécurisée
+Gestion des timeouts et erreurs réseau
+
+
+Gestion des erreurs (1 pt)
+
+Stratégie de fallback
+Retry avec exponential backoff (bonus)
+Feedback utilisateur
+
+
+
+
+4. Présentation Orale et Démo Live (/10 points)
+Durée : 20-30 minutes par groupe
+Structure imposée :
+
+Présentation du thème et contexte (2-3 min) - /2 pts
+
+Problématique adressée
+Valeur ajoutée du service
+Public cible
+
+
+Architecture et choix techniques (5-7 min) - /3 pts
+
+Schéma d'architecture
+Stack technique et justification
+Modèle de données (diagramme BDD)
+Stratégie de sécurité (API Keys / JWT / OAuth 2.0)
+Patterns utilisés
+
+
+Démonstration live (8-10 min) - /3 pts
+
+Fonctionnement de l'API :
+
+Démonstration des endpoints principaux
+Utilisation de Postman ou équivalent
+Gestion des API Keys
+Gestion des erreurs (codes HTTP)
+
+
+Pour le Frontend :
+
+Démonstration des deux modes d'authentification
+Consommation des 4 APIs backend
+Gestion des erreurs réseau
+
+
+
+
+Difficultés rencontrées et solutions (3-5 min) - /1 pt
+
+Problèmes techniques
+Solutions apportées
+Apprentissages
+
+
+Améliorations futures (2-3 min) - /1 pt
+
+Ce qui manque
+Prochaines étapes
+Scalabilité
+
+
+
+Questions/Réponses (5-10 min) - Évaluation transversale
+Critères d'évaluation de la présentation :
+
+Clarté de l'expression
+Maîtrise du sujet
+Capacité à justifier les choix
+Qualité du support visuel
+Respect du timing
+Réponses aux questions du jury
+
+
+🎁 POINTS BONUS (Maximum +5 points)
+Les points bonus s'ajoutent à la note finale (plafonnée à 40/40).
+Pour tous les groupes :
+
+CI/CD implémenté (+2 pts)
+
+GitHub Actions, GitLab CI, ou équivalent
+Tests automatisés qui passent
+Déploiement automatique
+
+
+Docker / Docker Compose (+1 pt)
+
+Dockerfile fonctionnel
+docker-compose.yml avec tous les services
+Instructions claires dans le README
+
+
+Tests automatisés (+1 pt)
+
+Tests unitaires (Jest, Mocha, Pytest...)
+Tests d'intégration
+Coverage > 50%
+
+
+Rate Limiting (+0.5 pt)
+
+Implémentation du rate limiting sur l'API
+Configuration documentée
+
+
+Monitoring / Logs (+0.5 pt)
+
+Logs structurés
+Système de monitoring (Prometheus, Grafana, Winston...)
+
+
+
+Pour les groupes Backend uniquement :
+
+HATEOAS (+1 pt)
+
+Liens hypermedia dans les réponses
+Navigation découvrable
+
+
+GraphQL en plus de REST (+2 pts)
+
+API GraphQL fonctionnelle en parallèle de REST
+Documentation GraphQL
+
+
+
+Pour le groupe Frontend uniquement :
+
+PWA (Progressive Web App) (+1 pt)
+
+Service Worker
+Fonctionne offline (cache)
+Installable
+
+
+Internationalisation (i18n) (+0.5 pt)
+
+Support de plusieurs langues
+FR + EN minimum
+
+
+
+
+⚠️ PÉNALITÉS
+
+API non fonctionnelle le jour de la présentation : -10 pts
+Absence de documentation : -5 pts
+Codes HTTP incorrects : -2 pts
+Pas de contrat API (Swagger/OpenAPI) : -5 pts (Backend)
+Pas de collection Postman : -2 pts (Backend)
+API Keys non implémentées : -5 pts (Backend)
+JWT ou OAuth 2.0 non fonctionnel : -5 pts chacun (Frontend)
+Intégration avec moins de 3 backends : -3 pts par backend manquant (Frontend)
+Retard de livraison : -2 pts par jour
+Plagiat / Code copié : 0/40 + exclusion
+
+
+📅 CALENDRIER ET JALONS
+JourActivitéLivrableJ1-J4Développement et implémentation-J5-J7Finalisation et tests-J8Préparation des présentations-J9SOUTENANCES FINALESTous les livrables
+Remise finale : Jour 9 avant les soutenances
+À remettre (lien Git + documents) :
+
+Repository Git (public ou accès donné)
+README.md complet
+Documentation technique
+Support de présentation
+Collection Postman (Backend)
+
+
+💡 CONSEILS ET BONNES PRATIQUES
+Pour les groupes Backend
+
+Commencez par le contrat API
+
+Définissez vos endpoints avant de coder
+Utilisez Swagger Editor en ligne
+Faites valider par le groupe Frontend
+
+
+Adoptez une architecture claire
+
+   src/
+   ├── routes/       # Définition des endpoints
+   ├── controllers/  # Logique de traitement
+   ├── services/     # Logique métier
+   ├── models/       # Modèles de données
+   ├── middlewares/  # Auth, validation, etc.
+   └── utils/        # Fonctions utilitaires
+
+Sécurisez vos API Keys
+
+Ne jamais commit les clés en dur
+Utilisez des variables d'environnement
+Hashez les clés en base de données
+Permettez la régénération
+
+
+Gérez les erreurs proprement
+
+javascript   try {
+     // logique
+   } catch (error) {
+     return res.status(500).json({
+       error: 'Internal Server Error',
+       message: error.message,
+       timestamp: new Date().toISOString()
+     });
+   }
+```
+
+5. **Codes HTTP corrects**
+   - 200 : OK
+   - 201 : Created
+   - 400 : Bad Request
+   - 401 : Unauthorized
+   - 403 : Forbidden
+   - 404 : Not Found
+   - 500 : Internal Server Error
+
+6. **Testez avec Postman**
+   - Créez une collection complète
+   - Utilisez des variables d'environnement
+   - Testez tous les cas d'erreur
+
+### Pour le groupe Frontend
+
+1. **Architecture de l'authentification**
+```
+   src/
+   ├── auth/
+   │   ├── JWTAuth.js      # Gestion JWT
+   │   ├── OAuth2Auth.js   # Gestion OAuth 2.0
+   │   └── AuthContext.js  # Context global
+   ├── services/
+   │   ├── api1Service.js  # Appels API Backend 1
+   │   ├── api2Service.js  # Appels API Backend 2
+   │   ├── api3Service.js  # Appels API Backend 3
+   │   └── api4Service.js  # Appels API Backend 4
+   └── utils/
+       └── apiKeyManager.js # Gestion des API Keys
+
+Sécurisez le stockage des tokens
+
+Utilisez httpOnly cookies pour JWT (meilleur que localStorage)
+Ou localStorage avec précautions (XSS)
+Implémentez le refresh token
+
+
+Gérez les erreurs réseau
+
+javascript   try {
+     const response = await fetch(API_URL, {
+       headers: { 'X-API-Key': API_KEY }
+     });
+     
+     if (!response.ok) {
+       throw new Error(`HTTP ${response.status}`);
+     }
+     
+     return await response.json();
+   } catch (error) {
+     // Afficher un message utilisateur
+     // Logger l'erreur
+     // Retry si pertinent
+   }
+
+Communiquez avec les groupes Backend
+
+Demandez leurs contrats API tôt
+Testez les endpoints avec Postman d'abord
+Signalez les bugs rapidement
+Proposez des améliorations
+
+
+Utilisez des données mock
+
+Pour développer sans dépendre des backends
+Pour les démos si un backend est down
+json-server, MSW, ou fichiers JSON statiques
+
+
+
+Pour tous les groupes
+
+Git : Bonnes pratiques
+
+Commits fréquents avec messages clairs
+Branches feature pour les nouvelles fonctionnalités
+Pull Requests pour la revue de code
+.gitignore complet (node_modules, .env, etc.)
+
+
+Documentation continue
+
+Documentez au fur et à mesure
+README à jour
+Commentez le code complexe
+
+
+Communication
+
+Consultez le formateur en cas de blocage
+Partagez vos difficultés avec les autres groupes
+Sessions de questions/déblocage disponibles
+
+
+Démo live
+
+Préparez un plan B (vidéo screencast)
+Testez votre démo avant le jour J
+Ayez des données de test prêtes
+
+
+
+
+🔗 RESSOURCES UTILES
+Documentation officielle
+
+OpenAPI/Swagger : https://swagger.io/docs/
+JWT : https://jwt.io/
+OAuth 2.0 : https://oauth.net/2/
+REST API Best Practices : https://restfulapi.net/
+
+Outils
+
+Swagger Editor : https://editor.swagger.io/
+Postman : https://www.postman.com/
+JWT Debugger : https://jwt.io/
+Markdown to PDF : https://www.markdowntopdf.com/
+
+Bibliothèques populaires
+Node.js :
+
+express : Framework web
+jsonwebtoken : Gestion JWT
+passport : Authentification (OAuth 2.0)
+bcrypt : Hash de passwords
+swagger-jsdoc + swagger-ui-express : Documentation API
+express-rate-limit : Rate limiting
+helmet : Sécurité headers HTTP
+cors : Gestion CORS
+
+Python (Flask/FastAPI) :
+
+flask-jwt-extended ou pyjwt
+authlib : OAuth 2.0
+flask-swagger-ui ou flasgger
+flask-limiter : Rate limiting
+
+Frontend (React) :
+
+react-router-dom : Routing
+axios : HTTP client
+react-oauth/google : OAuth Google
+jwt-decode : Décodage JWT
+
+
+🎯 CRITÈRES DE RÉUSSITE
+Pour valider le projet, vous devez :
+Groupes Backend :
+
+✅ API REST fonctionnelle avec au moins 5 endpoints
+✅ Gestion des API Keys implémentée
+✅ Base de données structurée
+✅ Contrat API OpenAPI/Swagger accessible
+✅ Collection Postman fonctionnelle
+✅ README complet
+✅ Démo live réussie
+
+Groupe Frontend :
+
+✅ Authentification JWT fonctionnelle
+✅ Authentification OAuth 2.0 fonctionnelle
+✅ Choix utilisateur entre les deux méthodes
+✅ Intégration avec au moins 3 backends sur 4
+✅ Gestion des API Keys pour chaque backend
+✅ Gestion des erreurs réseau
+✅ Documentation de l'authentification complète
+✅ Démo live réussie
+
+
+📞 CONTACT ET SUPPORT
+Pendant le projet :
+
+Sessions de questions/déblocage en début et fin de chaque séance
+Consultations possibles par email/Slack/Discord entre les séances
+N'hésitez pas à demander de l'aide rapidement en cas de blocage
+
+Le jour de la soutenance :
+
+Arrivez 15 minutes avant votre passage
+Préparez votre environnement de démo
+Ayez un plan B (vidéo) en cas de problème technique
+
+
+🏆 BARÈME RÉCAPITULATIF
+CritèrePointsCode et Implémentation/10Documentation et Contrat API/10Choix Architecturaux/10Présentation Orale et Démo/10TOTAL/40Bonus (optionnel)+5 max
+
+✅ CHECKLIST FINALE (Jour 9)
+Avant la soutenance, vérifiez que vous avez :
+Tous les groupes :
+
+ Repository Git accessible (lien fourni)
+ README.md complet et à jour
+ Code propre et commenté
+ .env.example fourni
+ Support de présentation prêt
+ Démo testée et fonctionnelle
+
+Groupes Backend uniquement :
+
+ Contrat API OpenAPI/Swagger accessible (ex: /api-docs)
+ Collection Postman exportée et fournie
+ Documentation des API Keys
+ Exemples de requêtes/réponses
+
+Groupe Frontend uniquement :
+
+ Deux modes d'authentification fonctionnels (JWT + OAuth 2.0)
+ Diagrammes d'authentification
+ Documentation des intégrations avec les 4 backends
+ Gestion des API Keys par backend
+
+
+🎓 BON COURAGE !
+Ce projet est l'occasion de mettre en pratique tout ce que vous avez appris et de créer un portfolio professionnel. Donnez le meilleur de vous-mêmes !
+Rappel : L'objectif n'est pas la perfection, mais la démonstration de votre compréhension des concepts de Web Services et votre capacité à les appliquer dans un contexte réel.
+Bonne chance à tous ! 🚀
+            </pre>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="../assets/logo.jpeg" alt="YNOV Campus" class="footer-logo-img">
+                        <span class="footer-logo-text">Web Services</span>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Programme</h3>
+                    <ul>
+                        <li><a href="../index.html#programme">Planning détaillé</a></li>
+                        <li><a href="./filerouge.html">Projet SmartCity</a></li>
+                        <li><a href="../index.html#ressources">Ressources</a></li>
+                        <li><a href="../index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Technologies</h3>
+                    <ul>
+                        <li>REST & SOAP</li>
+                        <li>OAuth 2.0 & JWT</li>
+                        <li>API Gateway & Microservices</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> contact@ynov.com</p>
+                        <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Campus Ynov</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 YNOV Campus. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js?v=counter-fix-1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        try { hljs.highlightAll(); } catch(e) {}
+      });
+    </script>
+</body>
+</html>
+
+
