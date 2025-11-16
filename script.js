@@ -231,16 +231,16 @@ document.querySelectorAll('.badge-item').forEach(badge => {
 });
 
 // Statistics counter animation
-function animateCounter(element, target, duration = 2000) {
+function animateCounter(element, target, duration = 2000, suffix = '') {
     let start = 0;
     const increment = target / (duration / 16);
     
     const timer = setInterval(() => {
         start += increment;
-        element.textContent = Math.floor(start);
+        element.textContent = Math.floor(start) + suffix;
         
         if (start >= target) {
-            element.textContent = target;
+            element.textContent = target + suffix;
             clearInterval(timer);
         }
     }, 16);
@@ -252,9 +252,14 @@ const statsObserver = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             const statNumbers = entry.target.querySelectorAll('.stat-number');
             statNumbers.forEach(stat => {
-                const target = parseInt(stat.textContent);
-                if (!isNaN(target)) {
-                    animateCounter(stat, target);
+                const raw = stat.textContent; // conserver espaces/retours
+                const match = raw.match(/^\s*(\d+)([\s\S]*)$/); // autorise espaces en tête et capture tout suffixe (ex: " h")
+                if (match) {
+                    const target = parseInt(match[1], 10);
+                    const suffix = match[2] ? match[2] : '';
+                    if (!isNaN(target)) {
+                        animateCounter(stat, target, 2000, suffix);
+                    }
                 }
             });
             statsObserver.unobserve(entry.target);

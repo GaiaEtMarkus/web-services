@@ -1,169 +1,168 @@
-📚 JOUR 7 - MICROSERVICES ET ARCHITECTURE DISTRIBUÉE
-Cours Théorique - Mastère 2 (Durée : 3h30)
-🎯 OBJECTIFS PÉDAGOGIQUES
+## 📚 Jour 7 — Microservices et architecture distribuée
+
+**Cours théorique — Mastère 2 (Durée : 3h30)**
+
+## 🎯 Objectifs pédagogiques
+
 À la fin de cette journée, vous serez capables de :
 
-Comprendre l'architecture microservices et ses différences avec le monolithe
-Maîtriser le rôle et l'implémentation d'une API Gateway
-Mettre en œuvre la découverte de services (Service Discovery)
-Appliquer les patterns essentiels : Circuit Breaker et Saga
+- Comprendre l'architecture microservices et ses différences avec le monolithe
+- Maîtriser le rôle et l'implémentation d'une API Gateway
+- Mettre en œuvre la découverte de services (Service Discovery)
+- Appliquer les patterns essentiels : Circuit Breaker et Saga
 
+---
 
-📖 PARTIE 1 : ARCHITECTURE MICROSERVICES (50 min)
-1.1 Du monolithe aux microservices
-Le monolithe : Simple mais limité
-Qu'est-ce qu'un monolithe ?
-Une application où tout le code est dans un seul projet, déployé comme une seule unité.
-Application SmartCity Monolithe
-    ┌─────────────────────────────────┐
-    │  Un seul projet Node.js         │
-    │  ├─ routes/events.js            │
-    │  ├─ routes/users.js             │
-    │  ├─ routes/payments.js          │
-    │  ├─ routes/notifications.js     │
-    │  └─ routes/auth.js              │
-    │                                 │
-    │  Une seule base de données      │
-    │  Un seul déploiement            │
-    │  Un seul serveur                │
-    └─────────────────────────────────┘
-Avantages du monolithe :
+## 📖 Partie 1 — Architecture microservices (50 min)
 
-✅ Simple à développer : Un repo, une technologie
-✅ Simple à déployer : npm start, c'est tout
-✅ Simple à tester : Tests d'intégration faciles
-✅ Performance : Pas d'appels réseau, tout est local
-✅ Parfait pour démarrer : MVP, petites équipes (< 10 personnes)
+### 1.1 Du monolithe aux microservices
 
-Inconvénients à grande échelle :
+#### Le monolithe : simple mais limité
 
-❌ Scalabilité limitée : Scaler tout ou rien
-❌ Déploiements risqués : Un bug dans Payments → toute l'app plante
-❌ Équipes bloquées : Tout le monde travaille sur le même code
-❌ Technologie figée : Difficile de changer de stack
-❌ Build lent : 20-30 min pour un gros monolithe
+- **Définition** : une application où tout le code est regroupé dans un seul projet, déployé comme une seule unité.
+- Exemple SmartCity :
 
+```text
+┌─────────────────────────────────┐
+│  Projet Node.js unique          │
+│  ├─ routes/events.js            │
+│  ├─ routes/users.js             │
+│  ├─ routes/payments.js          │
+│  ├─ routes/notifications.js     │
+│  └─ routes/auth.js              │
+│  Une seule base de données      │
+│  Un seul déploiement / serveur  │
+└─────────────────────────────────┘
+```
 
-L'histoire Netflix : La transition vers les microservices
-2008 : Netflix est un monolithe Java. Tout fonctionne bien.
-2009 : Corruption de la base de données. 3 jours d'indisponibilité totale.
-Netflix perd des millions. Leçon : Un seul point de défaillance peut tout détruire.
-2010-2012 : Netflix migre vers les microservices.
+**Avantages**
 
-De 1 monolithe à 700+ microservices (2000+ en 2025)
-Chaque service : une seule responsabilité
-Résilience : Si Recommendations tombe, Streaming continue
+- ✅ Simple à développer : un repo, une stack
+- ✅ Déploiement rapide : `npm start`
+- ✅ Tests d'intégration faciles
+- ✅ Performant (pas d'appels réseau)
+- ✅ Idéal pour MVP / petites équipes (&lt;10)
 
-Résultat : Netflix déploie 4000 fois par jour sans interruption de service.
+**Limites**
 
-Qu'est-ce qu'un microservice ?
-Définition : Un service petit, autonome, avec une seule responsabilité, déployable indépendamment.
-Les 5 caractéristiques clés :
+- ❌ Scalabilité « tout ou rien »
+- ❌ Déploiements risqués : un bug = tout plante
+- ❌ Équipes bloquées sur le même code
+- ❌ Stack technologique figée, builds lents
 
-Une seule responsabilité : Gestion des événements, point final
-Base de données propre : Pas de DB partagée avec d'autres services
-API bien définie : REST, gRPC, ou messaging
-Déployable indépendamment : Sans toucher aux autres services
-Équipe autonome : 2-8 personnes (Two Pizza Team)
+#### L'exemple Netflix
 
-Architecture SmartCity Microservices
+- 2008 : monolithe Java stable
+- 2009 : corruption de la base → 3 jours d'indisponibilité (pannes critiques)
+- 2010-2012 : migration vers les microservices
+- 2025 : 2000+ microservices, 4000 déploiements/jour
+- Résilience : si `Recommendations` tombe, `Streaming` continue
 
-┌─────────────┐   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐
-│   Events    │   │    Users    │   │  Payments   │   │Notification │
-│   Service   │   │   Service   │   │   Service   │   │   Service   │
-│   :3001     │   │   :3002     │   │   :3003     │   │   :3004     │
-│             │   │             │   │             │   │             │
-│ DB Events   │   │  DB Users   │   │ DB Payment  │   │    Redis    │
-└──────┬──────┘   └──────┬──────┘   └──────┬──────┘   └──────┬──────┘
-       │                 │                 │                 │
-       └─────────────────┴─────────────────┴─────────────────┘
-                                │
-                        ┌───────▼────────┐
-                        │  API Gateway   │
-                        │     :8080      │
-                        └───────┬────────┘
-                                │
-                        ┌───────▼────────┐
-                        │    Clients     │
-                        │ (Web, Mobile)  │
-                        └────────────────┘
+#### Qu'est-ce qu'un microservice ?
 
-1.2 Comparaison : Monolithe vs Microservices
-CritèreMonolitheMicroservicesComplexité initiale✅ Simple❌ ComplexeTemps de setup1 jour1-2 semainesDéploiementUn seul (npm start)Multiple (Docker, K8s)ScalabilitéVerticale (+ RAM/CPU)Horizontale par serviceRésilience❌ Point unique de défaillance✅ Isolation des pannesÉquipesUne seuleÉquipes autonomes par serviceTechnologieUne stackLiberté par serviceBase de donnéesUne seuleUne par servicePerformance✅ Appels locaux rapides⚠️ Latence réseauDebugging✅ Facile (un seul log)❌ Difficile (logs distribués)Taille équipe< 10 personnes10-100+ personnesCoût infrastructure💰 Faible💰💰 Élevé
+- Service **petit, autonome** avec une seule responsabilité, déployable indépendamment.
+- Caractéristiques :
+  - Une seule responsabilité (Events, Users, Payments…)
+  - Base de données propre
+  - API explicite (REST, gRPC, events)
+  - Déploiement indépendant
+  - Équipe autonome (Two Pizza Team)
 
-1.3 Quand utiliser les microservices ?
-✅ Utilisez les microservices si :
+```text
+┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+│   Events    │ │    Users    │ │  Payments   │ │ Notification│
+│  Service    │ │  Service    │ │  Service    │ │   Service   │
+│   :3001     │ │   :3002     │ │   :3003     │ │   :3004     │
+└─────┬───────┘ └────┬────────┘ └────┬────────┘ └────┬────────┘
+      │              │               │               │
+      └──────────────┴───────────────┴───────────────┘
+                     │
+             ┌───────▼────────┐
+             │   API Gateway  │
+             └───────┬────────┘
+                     │
+             ┌───────▼────────┐
+             │    Clients     │
+             └────────────────┘
+```
 
-Équipe > 15 personnes : Besoin d'autonomie
-Application complexe : Multiples domaines métier distincts
-Scale différencié : Events a 1000 req/s, Users a 10 req/s
-Déploiements fréquents : Besoin de CI/CD avancé
-Innovation technologique : Tester Go ou Rust sur un service
-Haute disponibilité : Isolation des pannes critique
+---
 
-❌ Restez en monolithe si :
+### 1.2 Comparaison : monolithe vs microservices
 
-Startup/MVP : Rapidité > Architecture
-Petite équipe (< 10 personnes) : Overhead trop important
-Budget limité : Infrastructure microservices = $$
-Domaine simple : Pas besoin de découper
-Pas d'expertise DevOps : Nécessite Kubernetes, CI/CD, monitoring
+| Critère                | Monolithe                       | Microservices                          |
+|------------------------|---------------------------------|----------------------------------------|
+| Complexité initiale    | ✅ Simple                        | ❌ Complexe (infra, CI/CD)             |
+| Temps de setup         | 1 jour                          | 1-2 semaines                           |
+| Déploiement            | Un artefact                     | Multiples (Docker, K8s)                |
+| Scalabilité            | Verticale (+CPU/RAM)            | Horizontale par service                |
+| Résilience             | ❌ Point unique de défaillance  | ✅ Isolation des pannes                |
+| Organisation           | Une équipe                      | Équipes autonomes                      |
+| Technologies           | Stack unique                    | Liberté par service                    |
+| Base de données        | Unique                          | Une par service                        |
+| Performance            | ✅ Appels locaux rapides        | ⚠️ Latence réseau                      |
+| Debugging              | ✅ Un seul log                  | ❌ Logs distribués                     |
+| Taille d'équipe        | &lt; 10 personnes                | 10-100+                                |
+| Coût infrastructure    | 💰 Faible                       | 💰💰 Plus élevé                        |
 
-Citation de Martin Fowler :
+---
 
-"Don't start with microservices. Start with a monolith and split when the pain is real."
+### 1.3 Quand (ne pas) utiliser les microservices ?
 
-Conseil pratique : Commencez monolithe, migrez vers microservices quand :
+**Adoptez les microservices si :**
 
-Le déploiement prend > 30 min
-Les équipes se marchent dessus
-Impossible de scaler finement
-La base de données est saturée
+- Équipe &gt; 15 personnes, besoin d'autonomie
+- Domaines métier multiples
+- Charges très différentes (Events 1000 req/s vs Users 10 req/s)
+- Déploiements fréquents (CI/CD avancé)
+- Besoin d'expérimenter de nouvelles technologies
+- Haute disponibilité critique
 
+**Restez monolithe si :**
 
-1.4 Les défis des microservices
-Défi 1 : Complexité opérationnelle
-Problème : 50 services = 50 repos, 50 déploiements, 50 bases de données, 50 logs.
-Solution :
+- Startup / MVP (rapidité avant tout)
+- Petite équipe (&lt;10) ou budget limité
+- Domaine simple
+- Pas (encore) d'expertise DevOps
 
-Kubernetes : Orchestration automatique
-Docker : Conteneurisation
-CI/CD : GitLab CI, GitHub Actions, Jenkins
-Infrastructure as Code : Terraform, Ansible
+> Martin Fowler : « Don’t start with microservices. Start with a monolith and split when the pain is real. »
 
-Défi 2 : Communication inter-services
-Problème : Latence réseau. Service A → Service B → Service C = 300ms.
-Solution :
+**Signaux de migration :**
 
-Caching : Redis pour données fréquentes
-Async : Message queues (RabbitMQ, Kafka)
-API Gateway : Point d'entrée unique
+- Déploiement &gt; 30 min
+- Conflits inter-équipes sur le même code
+- Scalabilité fine impossible
+- Base de données saturée
 
-Défi 3 : Données distribuées
-Problème : Pas de transactions ACID entre services. Comment garantir la cohérence ?
-Solution :
+---
 
-Saga Pattern : Transactions distribuées avec compensation
-Eventual Consistency : Accepter la cohérence à terme
-Event Sourcing : Historique complet des événements
+### 1.4 Les défis des microservices
 
-Défi 4 : Monitoring et debugging
-Problème : Une requête passe par 5 services. Où est le bug ?
-Solution :
+1. **Complexité opérationnelle**  
+   50 services = 50 repos, déploiements, bases, logs.  
+   _Solutions_ : Kubernetes, Docker, CI/CD (GitHub Actions, GitLab CI, Jenkins), IaC (Terraform, Ansible).
 
-Distributed Tracing : Jaeger, Zipkin
-Centralized Logging : ELK Stack (Elasticsearch, Logstash, Kibana)
-Correlation ID : Un ID unique par requête
+2. **Communication inter-services**  
+   Latence cumulée A → B → C = 300 ms.  
+   _Solutions_ : Caching (Redis), messaging asynchrone (RabbitMQ, Kafka), API Gateway.
 
-Exemple de Correlation ID :
-javascript// API Gateway génère un ID
+3. **Données distribuées**  
+   Pas de transactions ACID multi-services.  
+   _Solutions_ : Saga Pattern (compensation), eventual consistency, event sourcing.
+
+4. **Monitoring & debugging**  
+   Une requête traverse 5 services : où est l’erreur ?  
+   _Solutions_ : Distributed tracing (Jaeger, Zipkin), centralized logging (ELK), correlation ID.
+
+```javascript
+// API Gateway génère un ID
 const correlationId = uuidv4();
 req.headers['x-correlation-id'] = correlationId;
 
 // Chaque service log avec cet ID
 logger.info(`[${req.headers['x-correlation-id']}] Processing event`);
 
-// Dans les logs, on peut tracer toute la requête
+// Dans les logs :
 // [abc-123] Gateway: Received request
 // [abc-123] Events Service: Fetching event
 // [abc-123] Payment Service: Processing payment
@@ -173,48 +172,45 @@ logger.info(`[${req.headers['x-correlation-id']}] Processing event`);
 ---
 
 ### 1.5 Architecture cible SmartCity
-```
+
+```text
 ┌─────────────────────────────────────────────────────────┐
-│                     CLIENTS                             │
-│              (Web, Mobile, Partenaires)                 │
+│                     CLIENTS (Web, Mobile, Partenaires)  │
 └────────────────────┬────────────────────────────────────┘
                      │ HTTPS
         ┌────────────▼────────────┐
-        │     API GATEWAY         │  :8080
-        │  - Authentification     │
-        │  - Rate Limiting        │
-        │  - Routage              │
+        │        API GATEWAY      │ :8080
+        │  - Auth, Rate limiting  │
+        │  - Routage, agrégation  │
         └────────────┬────────────┘
                      │
          ┌───────────┼───────────┬───────────┐
          │           │           │           │
     ┌────▼────┐ ┌───▼────┐ ┌───▼────┐ ┌────▼────┐
     │ Events  │ │ Users  │ │Payment │ │  Notif  │
-    │Service  │ │Service │ │Service │ │ Service │
-    │:3001    │ │:3002   │ │:3003   │ │ :3004   │
+    │ Service │ │Service │ │Service │ │ Service │
+    │ :3001   │ │ :3002  │ │ :3003  │ │ :3004   │
     └────┬────┘ └───┬────┘ └───┬────┘ └────┬────┘
          │          │          │           │
     ┌────▼────┐┌───▼────┐┌───▼────┐  ┌───▼────┐
-    │PostgreSQL││Postgres││Postgres│  │ Redis  │
-    │DB Events ││DB Users││DBPaymt │  │        │
-    └──────────┘└────────┘└────────┘  └────────┘
-         │          │          │           │
-         └──────────┼──────────┴───────────┘
+    │Postgres ││Postgres││Postgres│  │ Redis  │
+    │Events   ││Users   ││Payments│  │ Cache  │
+    └─────────┘└────────┘└────────┘  └────────┘
                     │
             ┌───────▼────────┐
-            │  MESSAGE QUEUE │
-            │   (RabbitMQ)   │
+            │  MESSAGE QUEUE │ (RabbitMQ)
             └────────────────┘
 ```
 
-**Flux typique** : Créer un événement
-```
+**Flux typique — Création d’un événement**
+
+```text
 1. Client POST /api/events → API Gateway
-2. Gateway vérifie JWT → OK
-3. Gateway route → Events Service :3001
-4. Events Service crée l'événement en DB
-5. Events Service publie "EventCreated" dans RabbitMQ
-6. Notification Service écoute → Envoie email
+2. Gateway vérifie le JWT → OK
+3. Gateway route vers Events Service (:3001)
+4. Events Service écrit l’événement en DB
+5. Events Service publie `EventCreated` dans RabbitMQ
+6. Notification Service consomme l’événement et envoie un email
 ```
 
 ---
@@ -223,187 +219,159 @@ logger.info(`[${req.headers['x-correlation-id']}] Processing event`);
 
 ### 2.1 Qu'est-ce qu'une API Gateway ?
 
-**Définition** : Un **reverse proxy intelligent** qui sert de point d'entrée unique pour tous les microservices.
+- **Définition** : reverse proxy intelligent qui centralise l'accès aux microservices (sécurité, routage, observabilité).
+- **Analogie** : la réception d’un hôtel – on passe toujours par elle avant toute interaction.
 
-**Analogie** : La réception d'un hôtel. Au lieu d'aller directement dans les chambres, vous passez par la réception.
+```text
+❌ Sans Gateway (couplage fort)
+Client ──► http://events-service:3001/events
+      └──► http://users-service:3002/users
+      └──► http://payments-service:3003/payments
+• Le client connaît tous les services
+• Authentification/CORS à dupliquer
+• URLs internes exposées
+
+✅ Avec Gateway (propre)
+Client ──► https://api.smartcity.fr (Gateway)
+                 └──► Services internes (Events, Users, Payments…)
+• Une seule URL publique
+• Authentification centralisée
+• Observabilité, rate limiting, caching
 ```
-❌ Sans API Gateway (chaos)
-┌──────┐
-│Client├────► http://events-service:3001/events
-│      ├────► http://users-service:3002/users
-│      ├────► http://payments-service:3003/payments
-└──────┘
-Problèmes :
-- Client connaît tous les services (couplage)
-- CORS configuré 3 fois
-- Authentification dupliquée 3 fois
 
+---
 
-✅ Avec API Gateway (propre)
-┌──────┐     ┌───────────┐     ┌──────────┐
-│Client├────►│  Gateway  ├────►│Service A │
-└──────┘     │   :8080   ├────►│Service B │
-             │           ├────►│Service C │
-             └───────────┘     └──────────┘
-Avantages :
-- Client connaît 1 seule URL
-- Authentification centralisée
-- CORS géré une fois
+### 2.2 Responsabilités clés
 
-2.2 Responsabilités de l'API Gateway
-1. Routage
-Rediriger les requêtes vers le bon service.
-javascriptconst routes = {
-  '/api/events': 'http://events-service:3001',
-  '/api/users': 'http://users-service:3002',
-  '/api/payments': 'http://payments-service:3003'
-};
+1. **Routage**
 
-app.use('/api/*', (req, res) => {
-  const service = findService(req.path);
-  httpProxy.web(req, res, { target: service });
-});
-2. Authentification centralisée
-Vérifier le JWT une seule fois au Gateway.
-javascript// Gateway vérifie l'authentification
-app.use('/api/*', async (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
-  if (!token) {
-    return res.status(401).json({ error: 'No token' });
-  }
-  
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    
-    // Transmettre l'info au service backend
-    req.headers['x-user-id'] = decoded.sub;
-    req.headers['x-user-role'] = decoded.role;
-    
-    next();
-  } catch {
-    return res.status(401).json({ error: 'Invalid token' });
-  }
-});
+   ```javascript
+   const routes = {
+     '/api/events': 'http://events-service:3001',
+     '/api/users' : 'http://users-service:3002',
+     '/api/payments': 'http://payments-service:3003'
+   };
 
-// Les services backend n'ont plus besoin de vérifier JWT
-// Ils lisent juste x-user-id et x-user-role
-3. Rate Limiting
-Limiter le nombre de requêtes par client.
-javascriptconst rateLimit = require('express-rate-limit');
+   app.use('/api/*', (req, res) => {
+     const target = routes[match(req.path)];
+     proxy.web(req, res, { target });
+   });
+   ```
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Max 100 requêtes par IP
-  message: 'Too many requests, please try again later'
-});
+2. **Authentification centralisée**
 
-app.use('/api/', limiter);
-4. Load Balancing
-Répartir la charge entre plusieurs instances.
-javascriptconst instances = {
-  events: [
-    'http://events-1:3001',
-    'http://events-2:3001',
-    'http://events-3:3001'
-  ]
-};
+   Vérifier le JWT une seule fois, propager l’identité.
 
-let currentIndex = 0;
+   ```javascript
+   app.use('/api/*', async (req, res, next) => {
+     const token = req.headers.authorization?.split(' ')[1];
+     if (!token) return res.status(401).json({ error: 'No token' });
+     try {
+       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+       req.headers['x-user-id'] = decoded.sub;
+       req.headers['x-user-role'] = decoded.role;
+       next();
+     } catch {
+       return res.status(401).json({ error: 'Invalid token' });
+     }
+   });
+   ```
 
-function getNextInstance(service) {
-  const serviceInstances = instances[service];
-  const instance = serviceInstances[currentIndex % serviceInstances.length];
-  currentIndex++;
-  return instance;
-}
+3. **Rate limiting**
 
-app.use('/api/events', (req, res) => {
-  const target = getNextInstance('events');
-  httpProxy.web(req, res, { target });
-});
-5. Agrégation de réponses
-Combiner des données de plusieurs services.
-javascript// GET /api/dashboard
-app.get('/api/dashboard', authenticateJWT, async (req, res) => {
-  try {
-    // Appeler 3 services en parallèle
-    const [events, user, stats] = await Promise.all([
-      fetch('http://events-service:3001/events/upcoming'),
-      fetch(`http://users-service:3002/users/${req.user.id}`),
-      fetch('http://analytics-service:3005/stats')
-    ]);
-    
-    // Agréger les réponses
-    res.json({
-      events: await events.json(),
-      user: await user.json(),
-      stats: await stats.json()
-    });
-  } catch (error) {
-    res.status(500).json({ error: 'Dashboard unavailable' });
-  }
-});
-6. Transformation et cache
-javascriptconst redis = require('redis');
-const client = redis.createClient();
+   ```javascript
+   const limiter = rateLimit({
+     windowMs: 15 * 60 * 1000,
+     max: 100,
+     message: 'Too many requests, please try again later'
+   });
+   app.use('/api/', limiter);
+   ```
 
-app.get('/api/events', async (req, res) => {
-  // Vérifier le cache
-  const cached = await client.get('events:all');
-  
-  if (cached) {
-    return res.json(JSON.parse(cached));
-  }
-  
-  // Si pas en cache, appeler le service
-  const response = await fetch('http://events-service:3001/events');
-  const data = await response.json();
-  
-  // Mettre en cache 5 minutes
-  await client.setex('events:all', 300, JSON.stringify(data));
-  
-  res.json(data);
-});
+4. **Load balancing**
 
-2.3 Implémentation d'une API Gateway simple
-javascriptconst express = require('express');
-const httpProxy = require('http-proxy-middleware');
+   ```javascript
+   const instances = {
+     events: [
+       'http://events-1:3001',
+       'http://events-2:3001',
+       'http://events-3:3001'
+     ]
+   };
+
+   let currentIndex = 0;
+   function getNextInstance(service) {
+     const list = instances[service];
+     return list[(currentIndex++) % list.length];
+   }
+
+   app.use('/api/events', (req, res) => {
+     proxy.web(req, res, { target: getNextInstance('events') });
+   });
+   ```
+
+5. **Agrégation**
+
+   ```javascript
+   app.get('/api/dashboard', authenticateJWT, async (req, res) => {
+     try {
+       const [events, user, stats] = await Promise.all([
+         fetch('http://events-service:3001/events/upcoming'),
+         fetch(`http://users-service:3002/users/${req.user.id}`),
+         fetch('http://analytics-service:3005/stats')
+       ]);
+       res.json({
+         events: await events.json(),
+         user: await user.json(),
+         stats: await stats.json()
+       });
+     } catch {
+       res.status(500).json({ error: 'Dashboard unavailable' });
+     }
+   });
+   ```
+
+6. **Transformation & cache**
+
+   ```javascript
+   const redis = require('redis');
+   const client = redis.createClient();
+
+   app.get('/api/events', async (req, res) => {
+     const cached = await client.get('events:all');
+     if (cached) return res.json(JSON.parse(cached));
+
+     const response = await fetch('http://events-service:3001/events');
+     const data = await response.json();
+     await client.setEx('events:all', 300, JSON.stringify(data));
+     res.json(data);
+   });
+   ```
+
+---
+
+### 2.3 Implémentation Express (extrait)
+
+```javascript
+const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const rateLimit = require('express-rate-limit');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 
 const app = express();
-const proxy = httpProxy.createProxyMiddleware;
+app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:3000', credentials: true }));
+app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
 
-// CORS
-app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
-  credentials: true
-}));
-
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100
-});
-app.use(limiter);
-
-// Services registry
 const services = {
   events: process.env.EVENTS_SERVICE || 'http://localhost:3001',
   users: process.env.USERS_SERVICE || 'http://localhost:3002',
   payments: process.env.PAYMENTS_SERVICE || 'http://localhost:3003'
 };
 
-// Middleware d'authentification
 function authenticateJWT(req, res, next) {
   const token = req.headers.authorization?.split(' ')[1];
-  
-  if (!token) {
-    return res.status(401).json({ error: 'Authentication required' });
-  }
-  
+  if (!token) return res.status(401).json({ error: 'Authentication required' });
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.headers['x-user-id'] = decoded.sub;
@@ -414,56 +382,40 @@ function authenticateJWT(req, res, next) {
   }
 }
 
-// Routes
-app.use('/api/events', authenticateJWT, proxy({
+app.use('/api/events', authenticateJWT, createProxyMiddleware({
   target: services.events,
   changeOrigin: true,
   pathRewrite: { '^/api/events': '' }
 }));
 
-app.use('/api/users', authenticateJWT, proxy({
-  target: services.users,
-  changeOrigin: true,
-  pathRewrite: { '^/api/users': '' }
-}));
+// ... idem pour /api/users et /api/payments
 
-app.use('/api/payments', authenticateJWT, proxy({
-  target: services.payments,
-  changeOrigin: true,
-  pathRewrite: { '^/api/payments': '' }
-}));
-
-// Health check
 app.get('/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    services,
-    timestamp: new Date().toISOString()
-  });
+  res.json({ status: 'ok', services, timestamp: new Date().toISOString() });
 });
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`API Gateway running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`API Gateway running on port ${PORT}`));
 ```
+
+> **Astuce** : exposez toujours un `/health` détaillé (statut, dépendances) pour l’intégration avec Service Discovery et la supervision.
 
 ---
 
 ### 2.4 Solutions du marché
 
-| Solution | Type | Cas d'usage |
+| Solution | Type | Cas d’usage |
 |----------|------|-------------|
-| **Kong** | Open-source | Production, extensible via plugins |
-| **Traefik** | Open-source | Kubernetes, auto-configuration |
-| **AWS API Gateway** | Managed | Infrastructure AWS |
-| **Azure API Management** | Managed | Infrastructure Azure |
-| **Express Gateway** | Open-source | Node.js, simple |
-| **Nginx** | Open-source | Léger, performant |
+| **Kong** | Open-source / Enterprise | Production, plugins (auth, rate-limit, observabilité) |
+| **Traefik** | Open-source | Kubernetes natif, auto-discovery |
+| **AWS API Gateway** | Managed | Intégration serverless, écosystème AWS |
+| **Azure API Management** | Managed | Écosystème Azure, monitoring intégré |
+| **Express Gateway / Nginx** | Open-source léger | POC, environnements Node.js simples |
 
-**Recommandation SmartCity** :
-- **Dev/Test** : Express Gateway (simple)
-- **Production** : Kong ou Traefik (mature)
+**Recommandation SmartCity**
+
+- Dev / Test : Express Gateway (mise en route rapide)
+- Production : Kong ou Traefik (observabilité, plugins, support Kubernetes)
 
 ---
 
@@ -471,41 +423,40 @@ app.listen(PORT, () => {
 
 ### 3.1 Le problème : Où sont mes services ?
 
-**Scénario** : Vous avez 20 services qui démarrent/s'arrêtent dynamiquement (auto-scaling).
+**Scénario** : 20 microservices démarrent/s’arrêtent en fonction de l’auto-scaling. Les IP changent à chaque déploiement.
 
-**Problème** : Comment l'API Gateway sait où router ?
-```
-❌ Configuration statique (ne marche pas)
+**Problème** : comment l’API Gateway (ou un autre service) sait vers quelle instance router ?
+
+```text
+❌ Configuration statique
 const services = {
   events: 'http://192.168.1.10:3001'
 };
-// Et si cette instance meurt ?
-// Et si on scale à 3 instances ?
+// L’instance change d’IP ou tombe → indisponibilité
 
-
-✅ Service Discovery (dynamique)
-const eventsInstances = serviceRegistry.getInstances('events');
-// Retourne : ['192.168.1.10:3001', '192.168.1.11:3001', '192.168.1.12:3001']
+✅ Service Discovery
+const instances = registry.getInstances('events');
+// → ['192.168.1.10:3001','192.168.1.11:3001']
 ```
 
 ---
 
 ### 3.2 Comment fonctionne Service Discovery ?
 
-**Principe** : Un **registre central** où les services s'enregistrent.
-```
-1. Service Events démarre
-2. Service s'enregistre : "Je suis Events à 192.168.1.10:3001"
-3. Gateway interroge le registre : "Où est Events ?"
-4. Registre répond : "192.168.1.10:3001, 192.168.1.11:3001"
-5. Gateway choisit une instance (load balancing)
-6. Gateway route la requête
+1. Le service démarre → s’enregistre dans un registre (nom, IP, port, métadonnées)
+2. Le registre exécute des health-checks réguliers
+3. Les clients interrogent le registre pour connaître les instances disponibles
+4. Si une instance tombe, le registre la marque <em>unhealthy</em> et ne la renvoie plus
 
-3.3 Solutions de Service Discovery
-Consul (HashiCorp)
-javascriptconst consul = require('consul')({ host: 'consul-server', port: 8500 });
+---
 
-// Service s'enregistre au démarrage
+### 3.3 Solutions (Consul, Kubernetes)
+
+#### Consul (HashiCorp)
+
+```javascript
+const consul = require('consul')({ host: 'consul-server', port: 8500 });
+
 async function registerService() {
   await consul.agent.service.register({
     id: 'events-service-1',
@@ -518,26 +469,18 @@ async function registerService() {
       timeout: '5s'
     }
   });
-  console.log('Service registered in Consul');
 }
 
-// Gateway découvre les instances
-async function getEventsService() {
-  const result = await consul.health.service({
-    service: 'events',
-    passing: true // Seulement les instances healthy
-  });
-  
-  const instances = result.map(r => ({
-    address: r.Service.Address,
-    port: r.Service.Port
-  }));
-  
-  return instances;
-  // [{address: '192.168.1.10', port: 3001}, ...]
+async function getEventsInstances() {
+  const result = await consul.health.service({ service: 'events', passing: true });
+  return result.map(r => ({ address: r.Service.Address, port: r.Service.Port }));
 }
-Kubernetes (Service Discovery natif)
-yaml# events-service.yaml
+```
+
+#### Kubernetes (Service Discovery natif)
+
+```yaml
+# events-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -549,18 +492,21 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 3001
-javascript// Dans le Gateway, simplement :
-fetch('http://events-service/events')
-// Kubernetes résout automatiquement vers une instance disponible
+```
 
-3.4 Health Checks : Détecter les pannes
-Principe : Le registre vérifie périodiquement si les services sont vivants.
-javascript// Endpoint health dans chaque service
+```javascript
+// Dans le code
+fetch('http://events-service/events'); // DNS interne K8s → load balancing auto
+```
+
+---
+
+### 3.4 Health checks
+
+```javascript
 app.get('/health', async (req, res) => {
   try {
-    // Vérifier la DB
     await db.query('SELECT 1');
-    
     res.status(200).json({
       status: 'healthy',
       service: 'events-service',
@@ -573,11 +519,11 @@ app.get('/health', async (req, res) => {
     });
   }
 });
-
-// Consul vérifie toutes les 10s
-// Si 3 échecs consécutifs → Service marqué "unhealthy"
-// Gateway ne route plus vers cette instance
 ```
+
+> Consul / Eureka : après 3 checks échoués → instance marquée <em>unhealthy</em>. Les clients reçoivent uniquement des instances saines.
+
+---
 
 ---
 
@@ -713,62 +659,43 @@ app.post('/api/orders', async (req, res) => {
 
 ---
 
-### 4.2 Saga Pattern : Transactions distribuées
+### 4.2 Saga Pattern : transactions distribuées
 
-#### Le problème : Pas de ACID entre microservices
+#### Le problème
 
-**Scénario** : Commander un billet d'événement
-```
+Commande SmartCity :
+
 1. Créer la commande (Order Service)
 2. Débiter 50€ (Payment Service)
 3. Réserver la place (Event Service)
 4. Envoyer confirmation (Notification Service)
 
-❌ Si l'étape 3 échoue (plus de places), comment annuler 1 et 2 ?
-Pas de ROLLBACK cross-services !
-La solution : Saga Pattern
-Principe : Une série de transactions locales avec des compensations en cas d'échec.
+❌ Si l’étape 3 échoue, comment annuler les étapes 1 et 2 ? Il n’existe pas de ROLLBACK global.
 
-Approche 1 : Choreography (Chorégraphie)
+> **Rappel ACID** — Atomicité, Cohérence, Isolation, Durabilité. Ces propriétés sont garanties par un seul moteur de base de données. Dans une architecture microservices où chaque service possède sa propre DB, on ne peut pas faire un commit global atomique : on orchestre des transactions locales + des actions de compensation.
+
+#### Principe
+
+Saga = enchaînement de transactions locales + opérations de compensation si une étape échoue.
+
+##### Approche 1 : Chorégraphie (events)
+
 Chaque service écoute des événements et réagit.
-Order Service
-  ├─ Crée commande (transaction locale)
-  └─ Publie "OrderCreated" dans RabbitMQ
-      ↓
-Payment Service écoute "OrderCreated"
-  ├─ Tente de débiter
-  │   ├─ Succès → Publie "PaymentProcessed"
-  │   └─ Échec → Publie "PaymentFailed"
-      ↓
-Event Service écoute "PaymentProcessed"
-  ├─ Tente de réserver
-  │   ├─ Succès → Publie "SeatReserved"
-  │   └─ Échec → Publie "ReservationFailed"
-      ↓
-Si "ReservationFailed" → Compensation
-  Payment Service écoute → Rembourse
-  Order Service écoute → Annule commande
-      ↓
-Notification Service écoute "SeatReserved"
-  └─ Envoie email de confirmation
-Implémentation avec RabbitMQ :
-javascript// Order Service
+
+```text
+Order Service  → publie "OrderCreated"
+Payment Service → débite, publie "PaymentProcessed"/"PaymentFailed"
+Event Service → réserve, publie "SeatReserved"/"ReservationFailed"
+Notification Service → écoute "SeatReserved"
+
+En cas de "ReservationFailed" → Payment rembourse, Order annule.
+```
+
+```javascript
 const amqp = require('amqplib');
 
-async function createOrder(orderData) {
-  // 1. Transaction locale : créer la commande
-  const order = await db.orders.create({
-    userId: orderData.userId,
-    eventId: orderData.eventId,
-    amount: orderData.amount,
-    status: 'PENDING'
-  });
-  
-  // 2. Publier l'événement
-  const connection = await amqp.connect('amqp://localhost');
-  const channel = await connection.createChannel();
-  await channel.assertQueue('order-events');
-  
+async function createOrder(data) {
+  const order = await db.orders.create({ ...data, status: 'PENDING' });
   channel.sendToQueue('order-events', Buffer.from(JSON.stringify({
     type: 'OrderCreated',
     orderId: order.id,
@@ -776,339 +703,93 @@ async function createOrder(orderData) {
     eventId: order.eventId,
     amount: order.amount
   })));
-  
-  return order;
-}
-
-// Payment Service - Écoute les événements
-async function listenOrderEvents() {
-  const connection = await amqp.connect('amqp://localhost');
-  const channel = await connection.createChannel();
-  await channel.assertQueue('order-events');
-  
-  channel.consume('order-events', async (msg) => {
-    const event = JSON.parse(msg.content.toString());
-    
-    if (event.type === 'OrderCreated') {
-      try {
-        // Traiter le paiement
-        const payment = await processPayment({
-          userId: event.userId,
-          amount: event.amount
-        });
-        
-        // Publier succès
-        channel.sendToQueue('payment-events', Buffer.from(JSON.stringify({
-          type: 'PaymentProcessed',
-          orderId: event.orderId,
-          paymentId: payment.id
-        })));
-        
-      } catch (error) {
-        // Publier échec
-        channel.sendToQueue('payment-events', Buffer.from(JSON.stringify({
-          type: 'PaymentFailed',
-          orderId: event.orderId,
-          reason: error.message
-        })));
-      }
-    }
-    
-    channel.ack(msg);
-  });
-}
-
-// Event Service - Écoute les paiements
-async function listenPaymentEvents() {
-  const connection = await amqp.connect('amqp://localhost');
-  const channel = await connection.createChannel();
-  await channel.assertQueue('payment-events');
-  
-  channel.consume('payment-events', async (msg) => {
-    const event = JSON.parse(msg.content.toString());
-    
-    if (event.type === 'PaymentProcessed') {
-      try {
-        // Réserver la place
-        const reservation = await reserveSeat({
-          orderId: event.orderId,
-          eventId: event.eventId
-        });
-        
-        // Publier succès
-        channel.sendToQueue('reservation-events', Buffer.from(JSON.stringify({
-          type: 'SeatReserved',
-          orderId: event.orderId,
-          reservationId: reservation.id
-        })));
-        
-      } catch (error) {
-        // Publier échec (ex: plus de places)
-        channel.sendToQueue('reservation-events', Buffer.from(JSON.stringify({
-          type: 'ReservationFailed',
-          orderId: event.orderId,
-          paymentId: event.paymentId,
-          reason: error.message
-        })));
-      }
-    }
-    
-    channel.ack(msg);
-  });
-}
-
-// Payment Service - Compensation (écoute les échecs)
-async function listenReservationFailures() {
-  const connection = await amqp.connect('amqp://localhost');
-  const channel = await connection.createChannel();
-  await channel.assertQueue('reservation-events');
-  
-  channel.consume('reservation-events', async (msg) => {
-    const event = JSON.parse(msg.content.toString());
-    
-    if (event.type === 'ReservationFailed') {
-      console.log(`Compensating: Refunding payment ${event.paymentId}`);
-      
-      // Compensation : rembourser
-      await refundPayment(event.paymentId);
-      
-      // Publier compensation effectuée
-      channel.sendToQueue('payment-events', Buffer.from(JSON.stringify({
-        type: 'PaymentRefunded',
-        orderId: event.orderId,
-        paymentId: event.paymentId
-      })));
-    }
-    
-    channel.ack(msg);
-  });
 }
 ```
 
-**Avantages** :
-- ✅ Décentralisé, pas de point unique de défaillance
-- ✅ Services autonomes
-- ✅ Résilient
+✅ Décentralisé, scalable — ❌ tracing/debugging difficiles.
 
-**Inconvénients** :
-- ❌ Difficile à suivre (pas de vue globale)
-- ❌ Debugging complexe
-- ❌ Risque de boucles infinies
+##### Approche 2 : Orchestration
 
----
+Un orchestrateur central pilote chaque étape et déclenche les compensations.
 
-#### Approche 2 : Orchestration
-
-Un orchestrateur central coordonne toutes les étapes.
-```
-Saga Orchestrator
-    │
-    ├─ 1. Appelle Order Service → Créer commande
-    │    ├─ Succès → Continue
-    │    └─ Échec → Abort
-    │
-    ├─ 2. Appelle Payment Service → Débiter
-    │    ├─ Succès → Continue
-    │    └─ Échec → Compense : Annuler commande
-    │
-    ├─ 3. Appelle Event Service → Réserver
-    │    ├─ Succès → Continue
-    │    └─ Échec → Compense : Rembourser + Annuler commande
-    │
-    └─ 4. Appelle Notification Service → Envoyer email
-Implémentation :
-javascriptclass OrderSaga {
-  async execute(orderData) {
-    let orderId, paymentId, reservationId;
-    
+```javascript
+class OrderSaga {
+  async execute(payload) {
+    let orderId, paymentId;
     try {
-      // Étape 1 : Créer la commande
-      console.log('Saga: Creating order...');
-      const orderResponse = await fetch('http://order-service:3001/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData)
-      });
-      
-      if (!orderResponse.ok) throw new Error('Order creation failed');
-      const order = await orderResponse.json();
+      const order = await http.post('http://order-service/orders', payload);
       orderId = order.id;
-      console.log(`Saga: Order created ${orderId}`);
-      
-      // Étape 2 : Traiter le paiement
-      console.log('Saga: Processing payment...');
-      const paymentResponse = await fetch('http://payment-service:3003/payments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          orderId,
-          userId: orderData.userId,
-          amount: orderData.amount
-        })
+
+      const payment = await http.post('http://payment-service/payments', {
+        orderId,
+        userId: payload.userId,
+        amount: payload.amount
       });
-      
-      if (!paymentResponse.ok) throw new Error('Payment failed');
-      const payment = await paymentResponse.json();
       paymentId = payment.id;
-      console.log(`Saga: Payment processed ${paymentId}`);
-      
-      // Étape 3 : Réserver la place
-      console.log('Saga: Reserving seat...');
-      const reservationResponse = await fetch('http://event-service:3002/reservations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          orderId,
-          eventId: orderData.eventId
-        })
-      });
-      
-      if (!reservationResponse.ok) throw new Error('Reservation failed');
-      const reservation = await reservationResponse.json();
-      reservationId = reservation.id;
-      console.log(`Saga: Seat reserved ${reservationId}`);
-      
-      // Étape 4 : Envoyer notification
-      console.log('Saga: Sending notification...');
-      await fetch('http://notification-service:3004/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: orderData.userId,
-          type: 'order_confirmation',
-          orderId
-        })
-      });
-      
-      console.log('Saga: SUCCESS - Order completed');
-      return { success: true, orderId, paymentId, reservationId };
-      
+
+      await http.post('http://event-service/reservations', { orderId, eventId: payload.eventId });
+      await http.post('http://notification-service/send', { userId: payload.userId, type: 'order_confirmation', orderId });
+
+      return { success: true, orderId, paymentId };
     } catch (error) {
-      console.error(`Saga: FAILURE - ${error.message}`);
-      console.log('Saga: Starting compensation...');
-      
-      // Compensation dans l'ordre inverse
-      
-      // Si la réservation a échoué mais paiement effectué
-      if (paymentId && !reservationId) {
-        console.log(`Saga: Refunding payment ${paymentId}`);
-        await fetch(`http://payment-service:3003/payments/${paymentId}/refund`, {
-          method: 'POST'
-        });
-      }
-      
-      // Si la commande a été créée
-      if (orderId) {
-        console.log(`Saga: Cancelling order ${orderId}`);
-        await fetch(`http://order-service:3001/orders/${orderId}/cancel`, {
-          method: 'POST'
-        });
-      }
-      
-      console.log('Saga: Compensation completed');
+      await compensate({ orderId, paymentId });
       return { success: false, error: error.message };
     }
   }
 }
-
-// Utilisation
-app.post('/api/bookings', async (req, res) => {
-  const saga = new OrderSaga();
-  const result = await saga.execute(req.body);
-  
-  if (result.success) {
-    res.status(201).json(result);
-  } else {
-    res.status(400).json(result);
-  }
-});
 ```
 
-**Avantages** :
-- ✅ Vue globale du processus
-- ✅ Facile à debugger
-- ✅ Contrôle centralisé
+✅ Vue globale, debugging simple — ❌ orchestrateur = point central de défaillance.
 
-**Inconvénients** :
-- ❌ Point central de défaillance (l'orchestrateur)
-- ❌ Couplage (orchestrateur connaît tous les services)
+##### Comparaison
+
+| Aspect            | Chorégraphie         | Orchestration            |
+|-------------------|----------------------|--------------------------|
+| Complexité        | ⚠️ Élevée             | ✅ Plus simple            |
+| Couplage          | ✅ Faible             | ⚠️ Moyen (orchestrateur) |
+| Point de panne    | ✅ Aucun              | ❌ Orchestrateur         |
+| Debugging         | ❌ Difficile          | ✅ Facile                |
+| Vue globale       | ❌ Non                | ✅ Oui                   |
+| Scalabilité       | ✅ Excellente         | ⚠️ Limitée par orchestrateur |
+
+**SmartCity** : Orchestration (taille d’équipe moyenne, besoin de visibilité). Chorégraphie réservée aux très grandes architectures (Netflix, Uber).
 
 ---
 
-#### Comparaison
+### 4.3 Event-Driven Architecture : communication asynchrone
 
-| Aspect | Choreography | Orchestration |
-|--------|--------------|---------------|
-| **Complexité** | ⚠️ Élevée | ✅ Plus simple |
-| **Couplage** | ✅ Faible | ⚠️ Moyen |
-| **Point de défaillance** | ✅ Aucun | ❌ Orchestrateur |
-| **Debugging** | ❌ Difficile | ✅ Facile |
-| **Vue globale** | ❌ Non | ✅ Oui |
-| **Scalabilité** | ✅ Excellente | ⚠️ Limitée par orchestrateur |
+#### Pourquoi l’asynchrone ?
 
-**Recommandation** :
-- **Orchestration** pour SmartCity (plus simple, équipe de taille moyenne)
-- **Choreography** pour grandes architectures (Netflix, Uber)
+```text
+❌ Synchrone
+Client → Gateway → Order Service (2s)
+                     ↳ Payment Service (1s)
+                     ↳ Notification Service (3s)
+= 6s de latence et tout échoue si Notification est down.
 
----
-
-### 4.3 Event-Driven Architecture : Communication asynchrone
-
-#### Pourquoi l'asynchrone ?
-
-**Problème synchrone** :
-```
-Client → Gateway → Order Service (attend 2s)
-                       ↓
-                   Payment Service (attend 1s)
-                       ↓
-                   Notification Service (attend 3s)
-                       ↓
-         Latence totale : 6 secondes ❌
-         Si Notification est down → tout échoue
+✅ Asynchrone
+Client → Gateway → Order Service (réponse 200ms)
+Order Service publie "OrderCreated" dans RabbitMQ/Kafka
+Payment / Notification / Analytics consomment en parallèle
 ```
 
-**Solution asynchrone** :
-```
-Client → Gateway → Order Service
-                       ↓
-                   Répond immédiatement (200ms) ✅
-                       ↓
-                   Publie "OrderCreated" dans queue
-                       ↓
-En arrière-plan (parallèle) :
-    Payment Service écoute → Traite (1s)
-    Notification Service écoute → Envoie email (3s)
-    Analytics Service écoute → Enregistre stats (500ms)
+#### Message queue vs Event stream
 
-Message Queue vs Event Stream
-Message Queue (RabbitMQ, AWS SQS) :
+- **RabbitMQ / AWS SQS** : un message → un seul consommateur, message supprimé après consommation, garantie de livraison, FIFO.
+- **Kafka / AWS Kinesis** : un événement → plusieurs consommateurs, log persistant, rejouable (event sourcing).
 
-Un message → un seul consommateur
-Le message est supprimé après consommation
-Garantie de livraison
-FIFO (First In First Out)
+#### Exemple RabbitMQ
 
-Event Stream (Kafka, AWS Kinesis) :
+```javascript
+const amqp = require('amqplib');
 
-Un événement → plusieurs consommateurs
-Les événements sont conservés (log distribué)
-Rejouable (event sourcing)
-Permet le replay
-
-
-Implémentation avec RabbitMQ
-javascriptconst amqp = require('amqplib');
-
-// Publisher : Order Service
 async function publishOrderCreated(order) {
   const connection = await amqp.connect(process.env.RABBITMQ_URL);
   const channel = await connection.createChannel();
-  
   const exchange = 'events';
   await channel.assertExchange(exchange, 'fanout', { durable: true });
-  
-  const message = {
+
+  channel.publish(exchange, '', Buffer.from(JSON.stringify({
     type: 'OrderCreated',
     data: {
       orderId: order.id,
@@ -1117,111 +798,67 @@ async function publishOrderCreated(order) {
       amount: order.amount,
       timestamp: new Date().toISOString()
     }
-  };
-  
-  channel.publish(exchange, '', Buffer.from(JSON.stringify(message)));
-  console.log('Published: OrderCreated');
-  
+  })));
+
   await channel.close();
   await connection.close();
 }
 
-// Consumer 1 : Payment Service
 async function listenForOrders() {
   const connection = await amqp.connect(process.env.RABBITMQ_URL);
   const channel = await connection.createChannel();
-  
   const exchange = 'events';
   await channel.assertExchange(exchange, 'fanout', { durable: true });
-  
   const queue = await channel.assertQueue('payment-queue', { durable: true });
   await channel.bindQueue(queue.queue, exchange, '');
-  
-  console.log('Payment Service: Waiting for orders...');
-  
+
   channel.consume(queue.queue, async (msg) => {
     const event = JSON.parse(msg.content.toString());
-    
     if (event.type === 'OrderCreated') {
-      console.log(`Payment Service: Processing order ${event.data.orderId}`);
-      
       try {
         await processPayment(event.data);
         channel.ack(msg);
       } catch (error) {
-        console.error('Payment failed:', error);
-        // Rejeter le message (sera retenté)
-        channel.nack(msg, false, true);
+        channel.nack(msg, false, true); // retry
       }
     }
   });
 }
+```
 
-// Consumer 2 : Notification Service
-async function listenForOrders() {
-  const connection = await amqp.connect(process.env.RABBITMQ_URL);
-  const channel = await connection.createChannel();
-  
-  const exchange = 'events';
-  await channel.assertExchange(exchange, 'fanout', { durable: true });
-  
-  const queue = await channel.assertQueue('notification-queue', { durable: true });
-  await channel.bindQueue(queue.queue, exchange, '');
-  
-  console.log('Notification Service: Waiting for orders...');
-  
-  channel.consume(queue.queue, async (msg) => {
-    const event = JSON.parse(msg.content.toString());
-    
-    if (event.type === 'OrderCreated') {
-      console.log(`Notification Service: Sending email for order ${event.data.orderId}`);
-      
-      await sendEmail({
-        to: event.data.userId,
-        subject: 'Commande confirmée',
-        body: `Votre commande ${event.data.orderId} a été créée.`
-      });
-      
-      channel.ack(msg);
-    }
-  });
-}
-Avantages :
-
-✅ Découplage total
-✅ Résilience (si un consumer est down, les autres continuent)
-✅ Scalabilité (ajouter des consumers facilement)
-✅ Performance (réponse immédiate au client)
+✅ Découplage total — ✅ Résilience (si un consumer est down, les autres continuent) — ✅ Scalabilité (ajout de consumers) — ✅ Performance (réponse immédiate).
 
 
-4.4 Patterns de résilience supplémentaires
-Timeout
+### 4.4 Patterns de résilience supplémentaires
+
+#### Timeout
+
 Ne jamais attendre indéfiniment.
-javascriptasync function callServiceWithTimeout(url, timeout = 5000) {
+
+```javascript
+async function callServiceWithTimeout(url, timeout = 5000) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
-  
   try {
-    const response = await fetch(url, {
-      signal: controller.signal
-    });
+    const response = await fetch(url, { signal: controller.signal });
     clearTimeout(timeoutId);
     return response;
   } catch (error) {
-    if (error.name === 'AbortError') {
-      throw new Error('Request timeout');
-    }
+    if (error.name === 'AbortError') throw new Error('Request timeout');
     throw error;
   }
 }
-Retry avec Exponential Backoff
-javascriptasync function retryWithBackoff(fn, maxRetries = 3) {
+```
+
+#### Retry avec exponential backoff
+
+```javascript
+async function retryWithBackoff(fn, maxRetries = 3) {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       return await fn();
     } catch (error) {
       if (attempt === maxRetries) throw error;
-      
       const delay = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
       console.log(`Attempt ${attempt} failed. Retrying in ${delay}ms...`);
       await new Promise(resolve => setTimeout(resolve, delay));
@@ -1229,24 +866,24 @@ javascriptasync function retryWithBackoff(fn, maxRetries = 3) {
   }
 }
 
-// Utilisation
-const data = await retryWithBackoff(() => 
+const data = await retryWithBackoff(() =>
   fetch('http://payment-service:3003/process')
 );
-Bulkhead Pattern
-Isoler les ressources pour éviter qu'une défaillance consomme tout.
-javascriptconst pLimit = require('p-limit');
+```
 
-// Limiter à 10 requêtes simultanées vers Payment Service
-const paymentLimit = pLimit(10);
+#### Bulkhead Pattern
+
+Isoler les ressources pour éviter qu'une défaillance consomme toutes les connexions.
+
+```javascript
+const pLimit = require('p-limit');
+const paymentLimit = pLimit(10); // max 10 requêtes simultanées
 
 app.post('/api/orders', async (req, res) => {
   try {
-    // Cette requête attendra si 10 autres sont déjà en cours
-    const payment = await paymentLimit(() => 
+    const payment = await paymentLimit(() =>
       fetch('http://payment-service:3003/process')
     );
-    
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: error.message });

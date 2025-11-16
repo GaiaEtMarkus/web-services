@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jour 7 — Microservices & Architecture distribuée</title>
+  <link rel="stylesheet" href="../styles/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="../assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+        <span class="logo-text">Web Services</span>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="../index.html" class="nav-link">Accueil</a></li>
+        <li class="nav-item"><a href="../index.html#programme" class="nav-link">Programme</a></li>
+        <li class="nav-item"><a href="../index.html#projet" class="nav-link">Projet SmartCity</a></li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle">
+            <i class="fas fa-calendar-alt"></i> Journées
+            <i class="fas fa-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+            <!-- <a href="day1FilRouge.html" class="dropdown-item">Jour 1 - Fil Rouge</a> -->
+            <a href="day2.html" class="dropdown-item">Jour 2 - Théorie</a>
+            <!-- <a href="day2FilRouge.html" class="dropdown-item">Jour 2 - Fil Rouge</a> -->
+            <a href="day3.html" class="dropdown-item">Jour 3 - Théorie</a>
+            <!-- <a href="day3FilRouge.html" class="dropdown-item">Jour 3 - Fil Rouge</a> -->
+            <a href="day4-5.html" class="dropdown-item">Jour 4 & 5 - Théorie</a>
+            <a href="day6.html" class="dropdown-item">Jour 6 - Théorie</a>
+            <a href="day7.html" class="dropdown-item">Jour 7 - Théorie</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="../index.html#ressources" class="nav-link">Ressources</a></li>
+        <li class="nav-item"><a href="../index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" style="min-height: 60vh;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">Jour 7</h1>
+          <h2 class="hero-subtitle">Microservices & architecture distribuée</h2>
+          <p class="hero-description">
+            Du monolithe aux microservices : principes, limites, patterns de résilience
+            (API Gateway, Service Discovery, Circuit Breaker, Saga) appliqués au projet SmartCity.
+          </p>
+          <div class="hero-buttons">
+            <a href="../index.html#programme" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Retour au programme</a>
+          </div>
+        </div>
+        <div class="hero-image-container">
+          <img src="../assets/home.jpg" alt="Jour 7" class="hero-image">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Objectifs -->
+  <section class="introduction">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Objectifs d'apprentissage</h2>
+      </div>
+      <div class="intro-grid">
+        <div class="intro-card">
+          <div class="card-icon"><i class="fas fa-cubes"></i></div>
+          <h3>Comprendre les microservices</h3>
+          <p>Différences clefs avec le monolithe, avantages/inconvénients, critères de choix.</p>
+        </div>
+        <div class="intro-card">
+          <div class="card-icon"><i class="fas fa-network-wired"></i></div>
+          <h3>Maîtriser l'infrastructure</h3>
+          <p>API Gateway, Service Discovery, messaging et données distribuées.</p>
+        </div>
+        <div class="intro-card">
+          <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>Appliquer les patterns</h3>
+          <p>Circuits de résilience (Circuit Breaker, Saga, retry/backoff) dans SmartCity.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenu principal -->
+  <section class="programme">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">PARTIE 1 : ARCHITECTURE MICROSERVICES</h2>
+        <p class="section-subtitle">Du monolithe aux microservices – motivations, limites, architecture cible.</p>
+      </div>
+
+      <div class="collapsible-section">
+        <div class="collapsible-header" onclick="togglePartie1()">
+          <h3 class="collapsible-title">
+            <i class="fas fa-chevron-down collapsible-icon" id="partie1-icon"></i>
+            Partie 1 : Architecture microservices (50 min)
+          </h3>
+          <span class="collapsible-badge">5 sous-parties</span>
+        </div>
+        <div class="collapsible-content" id="partie1-content">
+          <div class="days-container">
+
+            <!-- 1.1 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">1.1</span>
+                <span class="day-theme">Du monolithe aux microservices</span>
+              </div>
+              <div class="day-content">
+                <p>Les SI sont longtemps restés <strong>monolithiques</strong> : mainframes, applications client-serveur, puis gros WAR/EAR Java ou applis .NET uniques. Cette approche a évolué vers des <strong>monolithes modulaires</strong> ou des architectures orientées services (SOA) avec ESB, avant que les microservices ne popularisent la découpe fine et le déploiement indépendant. Aujourd'hui, on combine souvent plusieurs styles (monolithe + microservices, micro-frontends, évènementiel) selon la maturité et la taille du projet. Les microservices ne sont pas réservés aux « Big Tech » :</p>
+                <div class="highlight-box" style="margin-top:1rem; background:#fff8e1; border-left:4px solid #ffb300;">
+                  <h6>🌍 Qui utilise les microservices ? Pourquoi ?</h6>
+                  <p><strong>Big Tech & plateformes mondiales</strong> (Netflix, Amazon, Uber, Airbnb, Spotify, Doctolib, Back Market…)</p>
+                  <ul>
+                    <li>Trafic massif → scalabilité par domaine (ex : seulement “streaming” ou “paiement”).</li>
+                    <li>Équipes nombreuses → organisation par domaines indépendants.</li>
+                    <li>Déploiements continus → chaque service évolue sans couper les autres.</li>
+                  </ul>
+                  <p class="mt-3"><strong>Scale-up / SaaS en forte croissance</strong> (marketplaces, plateformes de réservation, outils B2B…)</p>
+                  <ul>
+                    <li>Besoin de livrer très vite de nouvelles fonctionnalités.</li>
+                    <li>Équipes qui grossissent → architecture modulaire indispensable.</li>
+                    <li>Domaines métier multiples (facturation, utilisateurs, notifications…) → découpe naturelle.</li>
+                  </ul>
+                  <p class="mt-3"><strong>Secteurs riches en domaines métier</strong> (Banque, Assurance, Transport, Télécom, e-commerce…)</p>
+                  <ul>
+                    <li>Domaines très différenciés (sinistres, contrats, clients, logistique…).</li>
+                    <li>Approche Domain-Driven Design facilitée (un microservice = un sous-domaine).</li>
+                  </ul>
+                </div>
+                <div class="highlight-box" style="margin-top:0; background:#e8f4fd; border-left:4px solid #0066cc; margin-bottom:1.25rem;">
+                  <h6>🔍 Le monolithe : simple mais limité</h6>
+                  <p><strong>Monolithe</strong> = un seul projet, un seul déploiement, un seul serveur.</p>
+                  <pre><code class="language-text">Application SmartCity Monolithe
+┌─────────────────────────────────┐
+│  Un projet Node.js unique       │
+│  ├─ routes/events.js            │
+│  ├─ routes/users.js             │
+│  ├─ routes/payments.js          │
+│  ├─ routes/notifications.js     │
+│  └─ routes/auth.js              │
+│  Une seule DB – Un seul déploiement
+└─────────────────────────────────┘</code></pre>
+                  <div class="comparison-box" style="margin-top:1rem;">
+                    <div class="good-example">
+                      <h6>✅ Avantages</h6>
+                      <ul>
+                        <li>Développement simple : un repo, une stack</li>
+                        <li>Déploiement rapide : <code>npm start</code></li>
+                        <li>Tests d'intégration faciles</li>
+                        <li>Excellentes performances (pas d'appels réseau)</li>
+                        <li>Parfait pour MVP / petites équipes (&lt;10)</li>
+                      </ul>
+                    </div>
+                    <div class="bad-example">
+                      <h6>❌ Limites à l'échelle</h6>
+                      <ul>
+                        <li>Scalabilité « tout ou rien »</li>
+                        <li>Déploiements risqués (un bug = tout plante)</li>
+                        <li>Équipes bloquées sur le même code</li>
+                        <li>Technologie figée, build lent</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="highlight-box" style="background:#fff8e1; border-left:4px solid #ffb300;">
+                  <h6>📺 Retour d'expérience : Netflix</h6>
+                  <ul>
+                    <li>2008 : Monolithe Java « ok »</li>
+                    <li>2009 : Corruption DB → 3 jours down → pertes majeures</li>
+                    <li>2010-2012 : Migration microservices</li>
+                    <li>2025 : 2000+ microservices, 4000 déploiements/jour</li>
+                  </ul>
+                  <p class="mt-3"><strong>Leçon</strong> : multiplier les services permet d'isoler les pannes (si <em>Recommendations</em> tombe, <em>Streaming</em> continue).</p>
+                </div>
+
+                <div class="highlight-box" style="margin-top:1.25rem; background:#eef9ff; border-left:4px solid #2196f3;">
+                  <h6>🧱 Qu'est-ce qu'un microservice ?</h6>
+                  <p>Un service <strong>petit, autonome, fortement encapsulé</strong>.</p>
+                  <ul>
+                    <li>Single responsibility (Events, Users, Payments...)</li>
+                    <li>Base de données privée</li>
+                    <li>API explicite (REST, gRPC, messages)</li>
+                    <li>Déploiement indépendant</li>
+                    <li>Équipe autonome (Two Pizza Team)</li>
+                  </ul>
+                  <pre><code class="language-text">Architecture SmartCity Microservices
+┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+│   Events    │ │    Users    │ │  Payments   │ │ Notification│
+│  Service    │ │  Service    │ │  Service    │ │  Service    │
+│   :3001     │ │   :3002     │ │   :3003     │ │   :3004     │
+└─────┬───────┘ └────┬────────┘ └────┬────────┘ └────┬────────┘
+      │              │               │               │
+      └──────────────┴───────────────┴───────────────┘
+                     │
+             ┌───────▼────────┐
+             │   API Gateway  │
+             └───────┬────────┘
+                     │
+             ┌───────▼────────┐
+             │    Clients     │
+             └────────────────┘</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1.2 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">1.2</span>
+                <span class="day-theme">Comparaison Monolithe vs Microservices</span>
+              </div>
+              <div class="day-content">
+                <div class="table-wrapper">
+                  <table class="comparison-table">
+                    <thead>
+                      <tr>
+                        <th>Critère</th>
+                        <th>Monolithe</th>
+                        <th>SOA (classique)</th>
+                        <th>Microservices</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Complexité initiale</td>
+                        <td>✅ Simple</td>
+                        <td>⚠️ élevée (ESB, gouvernance)</td>
+                        <td>❌ Complexe (infra, CI/CD)</td>
+                      </tr>
+                      <tr>
+                        <td>Temps de setup</td>
+                        <td>1 jour</td>
+                        <td>Plusieurs semaines (ESB, contrats)</td>
+                        <td>1-2 semaines</td>
+                      </tr>
+                      <tr>
+                        <td>Déploiement</td>
+                        <td>Un artefact</td>
+                        <td>Services SOAP + ESB central</td>
+                        <td>Plusieurs (Docker, K8s)</td>
+                      </tr>
+                      <tr>
+                        <td>Scalabilité</td>
+                        <td>Verticale (+CPU/RAM)</td>
+                        <td>Horizontal mais via ESB</td>
+                        <td>Horizontale par service</td>
+                      </tr>
+                      <tr>
+                        <td>Résilience</td>
+                        <td>❌ Point unique de défaillance</td>
+                        <td>⚠️ ESB = SPOF si mal dimensionné</td>
+                        <td>✅ Isolation des pannes</td>
+                      </tr>
+                      <tr>
+                        <td>Équipes</td>
+                        <td>Une seule</td>
+                        <td>Centres de compétences + gouvernance</td>
+                        <td>Équipes autonomes</td>
+                      </tr>
+                      <tr>
+                        <td>Technologies</td>
+                        <td>Stack unique</td>
+                        <td>Standards WS-*, SOAP, ESB propriétaires</td>
+                        <td>Liberté par service</td>
+                      </tr>
+                      <tr>
+                        <td>Base de données</td>
+                        <td>Unique</td>
+                        <td>Souvent partagée / modèle canonique</td>
+                        <td>Une par service</td>
+                      </tr>
+                      <tr>
+                        <td>Performance</td>
+                        <td>✅ Appels locaux rapides</td>
+                        <td>⚠️ SOAP + ESB verbeux</td>
+                        <td>⚠️ Latence réseau</td>
+                      </tr>
+                      <tr>
+                        <td>Debugging</td>
+                        <td>✅ Un seul log</td>
+                        <td>Logs ESB + services (lourd)</td>
+                        <td>❌ Logs distribués</td>
+                      </tr>
+                      <tr>
+                        <td>Taille équipe</td>
+                        <td>&lt; 10 personnes</td>
+                        <td>Grandes DSI (plusieurs dizaines)</td>
+                        <td>10-100+</td>
+                      </tr>
+                      <tr>
+                        <td>Coût infra</td>
+                        <td>💰 faible</td>
+                        <td>💰💰💰 très élevé (licences ESB)</td>
+                        <td>💰💰 plus élevé</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1.3 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">1.3</span>
+                <span class="day-theme">Quand (ne pas) utiliser les microservices ?</span>
+              </div>
+              <div class="day-content">
+                <div class="comparison-box">
+                  <div class="good-example">
+                    <h6>✅ Adoptez les microservices si :</h6>
+                    <ul>
+                      <li>Équipe &gt; 15 personnes, besoin d'autonomie</li>
+                      <li>Domaines métier multiples (Events, Users, Billing...)</li>
+                      <li>Charges différentes (Events 1000 req/s vs Users 10 req/s)</li>
+                      <li>Déploiements fréquents (CI/CD avancé)</li>
+                      <li>Innovation technologique (Go, Rust...)</li>
+                      <li>Haute disponibilité (isolation des pannes critique)</li>
+                    </ul>
+                  </div>
+                  <div class="bad-example">
+                    <h6>❌ Restez monolithe si :</h6>
+                    <ul>
+                      <li>Startup/MVP : vitesse &gt; architecture</li>
+                      <li>Petite équipe (&lt;10) ou budget limité</li>
+                      <li>Domaine simple (peu de fonctionnalités)</li>
+                      <li>Pas d'expertise DevOps (K8s, observabilité)</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="highlight-box" style="margin-top:1.25rem; background:#fff8e1; border-left:4px solid #ffb300;">
+                  <h6>💬 Martin Fowler</h6>
+                  <blockquote>« Don't start with microservices. Start with a monolith and split when the pain is real. »</blockquote>
+                  <p class="mt-2"><strong>Signaux de migration :</strong></p>
+                  <ul>
+                    <li>Déploiement &gt; 30 min</li>
+                    <li>Équipes qui se marchent dessus</li>
+                    <li>Scalabilité fine impossible</li>
+                    <li>Base de données saturée</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1.4 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">1.4</span>
+                <span class="day-theme">Les défis des microservices</span>
+              </div>
+              <div class="day-content">
+                <div class="principles-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+                  <div class="principle-card">
+                    <h5>1. Complexité opérationnelle</h5>
+                    <p>50 services = 50 repos, déploiements, bases, pipelines.</p>
+                    <p><strong>Solutions :</strong></p>
+                    <ul>
+                      <li>Kubernetes (orchestration)</li>
+                      <li>Docker (conteneurs)</li>
+                      <li>CI/CD (GitHub Actions, GitLab CI, Jenkins)</li>
+                      <li>Infra as Code (Terraform, Ansible)</li>
+                    </ul>
+                    <p class="principle-note">On passe d’un déploiement unique à une plateforme complète (registry, observabilité, pipelines). Sans automatisation, la dette explose.</p>
+                  </div>
+                  <div class="principle-card">
+                    <h5>2. Communication inter-services</h5>
+                    <p>Latence réseau cumulée (A → B → C).</p>
+                    <p><strong>Solutions :</strong></p>
+                    <ul>
+                      <li>Caching (Redis)</li>
+                      <li>Messaging asynchrone (RabbitMQ, Kafka)</li>
+                      <li>API Gateway (routage unique)</li>
+                    </ul>
+                    <p class="principle-note">Chaque appel devient un appel réseau : il faut compenser avec du cache, de l’asynchrone et un point d’entrée cohérent.</p>
+                    <p class="principle-note"><strong>RabbitMQ</strong> est un broker AMQP : chaque message est placé dans une file et consommé par un seul service (garantie de livraison, ack/nack, retries). <strong>Kafka</strong> est une plateforme d’event streaming : les événements sont stockés dans un log distribué, plusieurs consumers peuvent lire le même flux, et on peut rejouer l’historique pour de l’analytics ou de l’event sourcing.</p>
+                  </div>
+                  <div class="principle-card">
+                    <h5>3. Données distribuées</h5>
+                    <p>Pas de transactions ACID multi-services : chaque service possède sa base, la cohérence se fait à terme.</p>
+                    <ul>
+                      <li><strong>Saga Pattern</strong> : enchaîner des transactions locales puis déclencher des actions de compensation si une étape échoue.</li>
+                      <li><strong>Eventual Consistency</strong> : accepter que les données convergent après coup (notifications, recalcul, délais de propagation).</li>
+                      <li><strong>Event Sourcing</strong> : stocker les événements plutôt que l’état final, pour reconstruire ou rejouer l’historique.</li>
+                    </ul>
+                    <p class="principle-note"><strong>Saga</strong> = workflow fiable sans transaction globale : on découpe “Commander un produit” en mini transactions (commande, paiement, stock…). Si “stock” échoue, on déclenche les compensations (rembourser, annuler la commande) pour revenir à un état cohérent.</p>
+                    <p class="principle-note"><strong>Eventual consistency</strong> = les services ne sont pas synchro instantanément (ex : Stock reçoit l’événement 50 ms après Commande, Notification 200 ms plus tard) mais ils convergent. On accepte ce délai pour bénéficier d’échanges asynchrones (Kafka, RabbitMQ) et d’une meilleure scalabilité.</p>
+                    <p class="principle-note"><strong>Event sourcing</strong> = on garde tous les événements (“+200€”, “-50€”, “+300€”) plutôt que l’état final (“solde = 450€”). L’état est la somme des événements. Idéal pour l’audit, la réparation par replay, et les architectures CQRS/bancaires.</p>
+                    <p class="principle-note">Chaque service possède sa base : on raisonne donc en cohérence à terme et en transactions orchestrées plutôt qu’en commit global.</p>
+                  </div>
+                  <div class="principle-card">
+                    <h5>4. Monitoring & debugging</h5>
+                    <p>Une requête traverse 5 services : où se situe l'erreur ?</p>
+                    <ul>
+                      <li>Distributed Tracing (Jaeger, Zipkin)</li>
+                      <li>Centralized Logging (ELK)</li>
+                      <li>Correlation ID (propagation d'un identifiant unique)</li>
+                    </ul>
+                    <p class="principle-note">Les logs locaux ne suffisent plus : il faut corréler les requêtes d’un bout à l’autre (traces distribuées), centraliser les logs pour les requêter (ELK), et propager un identifiant unique (Correlation ID) pour suivre tout le parcours d’une requête.</p>
+                  </div>
+                </div>
+                <div class="highlight-box" style="margin-top:1.25rem; background:#e8f4fd; border-left:4px solid #0066cc;">
+                  <h6>🆔 Exemple de Correlation ID</h6>
+                  <pre><code class="language-javascript">// API Gateway génère un ID unique
+const correlationId = uuidv4();
+req.headers['x-correlation-id'] = correlationId;
+
+// Chaque service logge avec cet ID
+logger.info(`[${req.headers['x-correlation-id']}] Processing event`);
+
+// Dans les logs :
+// [abc-123] Gateway: Received request
+// [abc-123] Events Service: Fetching event
+// [abc-123] Payment Service: Processing payment
+// [abc-123] Notification Service: Sending email</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1.5 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">1.5</span>
+                <span class="day-theme">Architecture cible SmartCity</span>
+              </div>
+              <div class="day-content">
+                <div class="highlight-box" style="margin-top:0; background:#eef9ff; border-left:4px solid #2196f3;">
+                  <h6>🗺️ Vue d'ensemble</h6>
+                  <pre><code class="language-text">┌─────────────────────────────────────────────────────────┐
+│                     CLIENTS (Web, Mobile, Partenaires)  │
+└────────────────────┬────────────────────────────────────┘
+                     │ HTTPS
+        ┌────────────▼────────────┐
+        │        API GATEWAY      │ :8080
+        │  - Auth, Rate limit     │
+        │  - Routage, agrégation  │
+        └────────────┬────────────┘
+                     │
+        ┌────────────┼────────────┬────────────┐
+        │            │            │            │
+   ┌────▼────┐ ┌────▼────┐ ┌────▼────┐ ┌────▼────┐
+   │ Events  │ │  Users  │ │Payment  │ │ Notif   │
+   │ Service │ │ Service │ │ Service │ │ Service │
+   │ :3001   │ │ :3002   │ │ :3003   │ │ :3004   │
+   └───┬─────┘ └────┬────┘ └────┬────┘ └────┬────┘
+       │            │           │           │
+  ┌────▼────┐ ┌────▼────┐ ┌────▼────┐ ┌────▼────┐
+  │Postgres │ │Postgres │ │Postgres │ │ Redis   │
+  │ Events  │ │ Users   │ │ Payments│ │ Cache   │
+  └─────────┘ └─────────┘ └─────────┘ └─────────┘
+             │
+     ┌───────▼────────┐
+     │ MESSAGE QUEUE  │ (RabbitMQ)
+     └────────────────┘</code></pre>
+                </div>
+                <div class="highlight-box" style="margin-top:1.25rem; background:#fff8e1; border-left:4px solid #ffb300;">
+                  <h6>🚀 Flux typique : créer un événement</h6>
+                  <pre><code class="language-text">1. Client POST /api/events → API Gateway
+2. Gateway vérifie JWT
+3. Gateway route vers Events Service (:3001)
+4. Events Service crée l'événement (Postgres Events)
+5. Events Service publie EventCreated dans RabbitMQ
+6. Notification Service consomme l'événement et envoie un email</code></pre>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Partie 2 -->
+    <section class="programme">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">PARTIE 2 : API GATEWAY</h2>
+          <p class="section-subtitle">Point d'entrée unique : sécurité, routage, agrégation et performances.</p>
+        </div>
+  
+        <div class="collapsible-section">
+          <div class="collapsible-header" onclick="togglePartie2()">
+            <h3 class="collapsible-title">
+              <i class="fas fa-chevron-down collapsible-icon" id="partie2-icon"></i>
+              Partie 2 : API Gateway (45 min)
+            </h3>
+            <span class="collapsible-badge">4 sous-parties</span>
+          </div>
+          <div class="collapsible-content" id="partie2-content">
+            <div class="days-container">
+  
+              <!-- 2.1 -->
+              <div class="day-card expanded">
+                <div class="day-header">
+                  <span class="day-number">2.1</span>
+                  <span class="day-theme">Qu'est-ce qu'une API Gateway ?</span>
+                </div>
+                <div class="day-content">
+                <p>Une API Gateway est le <strong>point d’entrée officiel</strong> de tous les clients (web, mobile, partenaires) vers votre système. Contrairement à un simple reverse proxy, elle comprend les notions métier (ex : “/api/events” → Events Service) et applique une politique uniforme : authentification, rate limiting, observabilité, transformation des payloads. Elle permet également de masquer la topologie interne (routage, protocoles, versions) et de présenter une API cohérente même quand les microservices évoluent indépendamment.</p>
+                <p class="mt-3">Sans Gateway, chaque client devrait connaître toutes les URLs internes, gérer CORS, répéter l’authentification et supporter les changements d’infrastructure. Avec une Gateway, on centralise la sécurité, la traduction des formats, l’agrégation de données et l’accès aux services privés. C’est aussi un point stratégique pour déployer des fonctionnalités transverses (observabilité, A/B testing, mise en cache, failover).</p>
+                  <div class="highlight-box" style="margin-top:0; background:#e8f4fd; border-left:4px solid #0066cc;">
+                    <h6>💡 Définition</h6>
+                    <p>Reverse proxy intelligent et sécurisé qui centralise l'accès aux microservices.</p>
+                    <p class="mt-2"><strong>Analogie :</strong> la réception d'un hôtel : on passe toujours par elle avant d’accéder aux chambres.</p>
+                  </div>
+                  <div class="comparison-box" style="margin-top:1.25rem;">
+                    <div class="bad-example">
+                      <h6>❌ Sans Gateway (chaos)</h6>
+                      <pre><code class="language-text">Client → http://events-service:3001/events
+        ↳ http://users-service:3002/users
+        ↳ http://payments-service:3003/payments
+  
+  • Couplage fort (le client connaît tout)
+  • Authentification/CORS répétés
+  • Impossible de cacher les URLs internes</code></pre>
+                    </div>
+                    <div class="good-example">
+                      <h6>✅ Avec Gateway (propre)</h6>
+                      <pre><code class="language-text">Client → https://api.smartcity.fr (Gateway)
+                       ↳ Events / Users / Payments (routage interne)
+  
+  • Une seule URL publique
+  • Authentification centralisée
+  • Observabilité et politiques globales</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- 2.2 -->
+              <div class="day-card expanded">
+                <div class="day-header">
+                  <span class="day-number">2.2</span>
+                  <span class="day-theme">Responsabilités clés</span>
+                </div>
+                <div class="day-content">
+                  <div class="principles-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+                    <div class="principle-card">
+                      <h5>1. Routage</h5>
+                      <p>Rediriger chaque endpoint vers le service cible.</p>
+                      <pre><code class="language-javascript">const routes = {
+    '/api/events': 'http://events:3001',
+    '/api/users' : 'http://users:3002'
+  };
+  
+  proxy(req, res, routes[match(req.path)]);</code></pre>
+                    </div>
+                    <div class="principle-card">
+                      <h5>2. Authentification</h5>
+                      <p>Vérifier le JWT une seule fois puis propager l'identité.</p>
+                      <pre><code class="language-javascript">const token = req.headers.authorization?.split(' ')[1];
+  const decoded = jwt.verify(token, SECRET);
+  req.headers['x-user-id'] = decoded.sub;</code></pre>
+                    </div>
+                    <div class="principle-card">
+                      <h5>3. Rate limiting</h5>
+                      <p>Limiter les abus (DDOS, bots).</p>
+                      <pre><code class="language-javascript">app.use('/api/', rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100
+  }));</code></pre>
+                    </div>
+                    <div class="principle-card">
+                      <h5>4. Load balancing</h5>
+                      <p>Répartir la charge sur plusieurs instances.</p>
+                      <pre><code class="language-javascript">const instances = ['events-1','events-2'];
+  const target = roundRobin(instances);
+  proxy(req, res, target);</code></pre>
+                    </div>
+                    <div class="principle-card">
+                      <h5>5. Agrégation</h5>
+                      <p>Composer un dashboard en un appel.</p>
+                      <pre><code class="language-javascript">const [events, user] = await Promise.all([...]);
+  res.json({ events, user });</code></pre>
+                    </div>
+                    <div class="principle-card">
+                      <h5>6. Cache & transformation</h5>
+                      <p>Réduire la charge des services.</p>
+                      <pre><code class="language-javascript">const cached = await redis.get('events:all');
+  if (cached) return res.json(JSON.parse(cached));</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- 2.3 -->
+              <div class="day-card expanded">
+                <div class="day-header">
+                  <span class="day-number">2.3</span>
+                  <span class="day-theme">Implémentation Node.js (Express)</span>
+                </div>
+                <div class="day-content">
+                  <p>Base pour une Gateway SmartCity (dev/test) :</p>
+                  <pre><code class="language-javascript">const express = require('express');
+  const { createProxyMiddleware } = require('http-proxy-middleware');
+  const jwt = require('jsonwebtoken');
+  const rateLimit = require('express-rate-limit');
+  
+  const services = {
+    events: process.env.EVENTS_URL || 'http://localhost:3001',
+    users: process.env.USERS_URL || 'http://localhost:3002',
+    payments: process.env.PAYMENTS_URL || 'http://localhost:3003'
+  };
+  
+  function authenticate(req, res, next) {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) return res.status(401).json({ error: 'No token' });
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.headers['x-user-id'] = decoded.sub;
+      req.headers['x-user-role'] = decoded.role;
+      next();
+    } catch {
+      res.status(401).json({ error: 'Invalid token' });
+    }
+  }
+  
+  const app = express();
+  app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
+  
+  app.use('/api/events', authenticate, createProxyMiddleware({
+    target: services.events,
+    changeOrigin: true,
+    pathRewrite: { '^/api/events': '' }
+  }));
+  // ... idem pour users / payments
+  
+  app.listen(process.env.PORT || 8080);</code></pre>
+                  <div class="highlight-box" style="margin-top:1rem; background:#fff8e1; border-left:4px solid #ffb300;">
+                    <p><strong>Health-check :</strong> exposez <code>/health</code> (statut, versions, dépendances) pour l'observabilité et le Service Discovery.</p>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- 2.4 -->
+              <div class="day-card expanded">
+                <div class="day-header">
+                  <span class="day-number">2.4</span>
+                  <span class="day-theme">Solutions du marché</span>
+                </div>
+                <div class="day-content">
+                  <div class="table-wrapper">
+                    <table class="comparison-table">
+                      <thead>
+                        <tr>
+                          <th>Solution</th>
+                          <th>Type</th>
+                          <th>Cas d'usage</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><strong>Kong</strong></td>
+                          <td>Open-source / Entreprise</td>
+                          <td>Production, plugins (auth, rate-limit, observabilité)</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Traefik</strong></td>
+                          <td>Open-source</td>
+                          <td>Kubernetes native, auto-discovery</td>
+                        </tr>
+                        <tr>
+                          <td><strong>AWS API Gateway</strong></td>
+                          <td>Managed</td>
+                          <td>Intégration serverless, limites automatiques</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Azure API Management</strong></td>
+                          <td>Managed</td>
+                          <td>Écosystème Azure, monitoring intégré</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Express Gateway / Nginx</strong></td>
+                          <td>Open-source léger</td>
+                          <td>POC, environnements Node.js simples</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="highlight-box" style="margin-top:1.25rem; background:#e8f4fd; border-left:4px solid #0066cc;">
+                    <p><strong>Recommandation SmartCity :</strong></p>
+                    <ul>
+                      <li><strong>Dev/Test</strong> : Express Gateway (dev rapide)</li>
+                      <li><strong>Production</strong> : Kong ou Traefik (observabilité, plugins, support K8s)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- Partie 3 -->
+  <section class="programme">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">PARTIE 3 : SERVICE DISCOVERY</h2>
+        <p class="section-subtitle">Comment localiser dynamiquement les services dans une architecture distribuée.</p>
+      </div>
+
+      <div class="collapsible-section">
+        <div class="collapsible-header" onclick="togglePartie3()">
+          <h3 class="collapsible-title">
+            <i class="fas fa-chevron-down collapsible-icon" id="partie3-icon"></i>
+            Partie 3 : Service Discovery (30 min)
+          </h3>
+          <span class="collapsible-badge">4 sous-parties</span>
+        </div>
+        <div class="collapsible-content" id="partie3-content">
+          <div class="days-container">
+
+            <!-- 3.1 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">3.1</span>
+                <span class="day-theme">Pourquoi le Service Discovery ?</span>
+              </div>
+              <div class="day-content">
+                <p><strong>Problème</strong> : avec des services qui scalent automatiquement (nouvelles instances, IPs dynamiques), comment l’API Gateway ou les autres services savent où envoyer les requêtes ? Impossible de maintenir un fichier de configuration manuel si les IPs changent toutes les minutes.</p>
+                <p class="mt-2"><strong>Service Discovery</strong> = un annuaire dynamique. Chaque service s’y enregistre au démarrage avec son nom (“events”), son adresse (IP + port) et des métadonnées. Les autres services interrogent cet annuaire pour savoir où contacter “events”. Si une instance tombe, l’annuaire la retire automatiquement. C’est le “DNS (Domain Name System)” intelligent des microservices.</p>
+                <div class="comparison-box" style="margin-top:1rem;">
+                  <div class="bad-example">
+                    <h6>❌ Configuration statique</h6>
+                    <pre><code class="language-javascript">const services = {
+  events: 'http://192.168.1.10:3001'
+}; // Et si cette instance tombe ?</code></pre>
+                    <ul>
+                      <li>Maintenance manuelle (erreurs, oublis)</li>
+                      li>Impossible de supporter le scaling horizontal</li>
+                      <li>Downtime dès qu’une IP change</li>
+                    </ul>
+                  </div>
+                  <div class="good-example">
+                    <h6>✅ Service Discovery dynamique</h6>
+                    <pre><code class="language-javascript">const eventsInstances = registry.getInstances('events');
+// → ['192.168.1.10:3001','192.168.1.11:3001']</code></pre>
+                    <ul>
+                      <li>Enregistrement et retrait automatiques</li>
+                      <li>Health-checks pour ne router que vers les instances saines</li>
+                      <li>Support du scaling et des déploiements rolling</li>
+                      <li>Clients et services n’ont plus besoin de connaître les IPs/ports en dur</li>
+                      <li>Peut exposer l’info via API REST, DNS, ou drivers dédiés</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="highlight-box" style="margin-top:1.25rem; background:#eef9ff; border-left:4px solid #2196f3;">
+                  <h6>🧱 Architecture type</h6>
+                  <pre><code class="language-text">1. Service Events démarre → s'enregistre ("events", 10.0.1.5:3001)
+2. Le registre (Consul, Eureka, K8s) vérifie periodiquement /health
+3. La Gateway demande : "Donne-moi une instance de events"
+4. Le registre renvoie la liste healthy
+5. La Gateway choisit une instance (round-robin) et route l'appel
+6. Si l'instance ne répond plus, elle est retirée automatiquement</code></pre>
+                  <p class="mt-2">Le même mécanisme permet aussi aux services de se contacter entre eux (Service A interroge le registre pour trouver Service B).</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3.2 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">3.2</span>
+                <span class="day-theme">Comment ça fonctionne ?</span>
+              </div>
+              <div class="day-content">
+                <div class="highlight-box" style="margin-top:0; background:#eef9ff; border-left:4px solid #2196f3;">
+                  <h6>🔁 Cycle d’enregistrement / découverte</h6>
+                  <ol>
+                    <li>Le service démarre → s’enregistre dans le registre (nom, IP, port, tags)</li>
+                    <li>Le registre exécute des health-checks (<code>/health</code>) pour vérifier la disponibilité</li>
+                    <li>Les clients (gateway, autres services) interrogent le registre pour obtenir les instances valides</li>
+                    <li>En cas de panne, le registre retire l’instance et renvoie uniquement les nœuds healthy</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3.3 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">3.3</span>
+                <span class="day-theme">Solutions : Consul & Kubernetes</span>
+              </div>
+              <div class="day-content">
+                <div class="principles-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+                  <div class="principle-card">
+                    <h5>Consul (HashiCorp)</h5>
+                    <p>Registre distribué + DNS + KV store. Consul s’installe comme un cluster de serveurs auquel chaque service s’enregistre via un agent local ou une API HTTP. Il expose l’inventaire des services via HTTP, DNS ou un client officiel. On peut y stocker des métadonnées (tags, version, datacenter) et définir des health-checks très fins.</p>
+                    <pre><code class="language-javascript">const consul = require('consul')({ host: 'consul', port: 8500 });
+
+async function register() {
+  await consul.agent.service.register({
+    id: 'events-1',
+    name: 'events',
+    address: '192.168.1.10',
+    port: 3001,
+    check: {
+      http: 'http://192.168.1.10:3001/health',
+      interval: '10s',
+      timeout: '5s'
+    }
+  });
+}</code></pre>
+                    <p class="principle-note"><em>Gateway → <code>consul.health.service('events')</code> → liste des instances healthy. Consul maintient aussi un KV store et peut déclencher des événements (watch) lorsqu’une instance change d’état.</em></p>
+                  </div>
+                  <div class="principle-card">
+                    <h5>Kubernetes (Service Discovery natif)</h5>
+                    <p>Chaque “Service” K8s possède un DNS interne (`http://events-service`). Le DNS est mis à jour automatiquement quand les pods scalent ou se redéploient. Les probes (liveness/readiness) déterminent si un pod est routable.</p>
+                    <pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: events-service
+spec:
+  selector:
+    app: events
+  ports:
+    - port: 80
+      targetPort: 3001</code></pre>
+                    <pre><code class="language-javascript">// Gateway
+fetch('http://events-service/events'); // Kubernetes résout</code></pre>
+                    <p class="principle-note"><em>K8s se charge du load balancing et du health-check via les probes. Pour un déploiement Cloud-native, on n’a donc pas besoin d’outil externe (Consul/Eureka).</em></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3.4 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">3.4</span>
+                <span class="day-theme">Health checks & résilience</span>
+              </div>
+              <div class="day-content">
+                <p>Chaque service expose un endpoint simple qui vérifie ses dépendances (DB, cache, file). Le registre ou l’orchestrateur l’appelle régulièrement pour savoir si l’instance est “healthy”. On peut distinguer :</p>
+                <ul>
+                  <li><strong>Liveness</strong> : est-ce que le processus tourne encore ?</li>
+                  <li><strong>Readiness</strong> : est-ce que le service est prêt à accepter des requêtes (DB connectée, cache warm) ?</li>
+                  <li><strong>Startup</strong> (K8s) : délai avant que le service soit considéré alive.</li>
+                </ul>
+                <pre><code class="language-javascript">app.get('/health', async (req, res) => {
+  try {
+    await db.query('SELECT 1');
+    res.status(200).json({
+      status: 'healthy',
+      service: 'events-service',
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(503).json({
+      status: 'unhealthy',
+      error: error.message
+    });
+  }
+});</code></pre>
+                <div class="highlight-box" style="margin-top:1rem; background:#fff4e6; border-left:4px solid #ff9800;">
+                  <p><strong>Consul / Eureka</strong> : si plusieurs checks échouent, le service est marqué <em>unhealthy</em>. La Gateway et les autres services ne l’utilisent plus jusqu’à ce qu’il redevienne sain.</p>
+                  <p class="mt-2"><strong>Kubernetes</strong> : les probes <em>liveness/readiness</em> sont natives. Si un pod échoue, K8s le redémarre ou cesse d’y router le trafic.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partie 4 -->
+  <section class="programme">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">PARTIE 4 : PATTERNS ESSENTIELS</h2>
+        <p class="section-subtitle">Résilience et transactions distribuées dans une architecture microservices.</p>
+      </div>
+
+      <div class="collapsible-section">
+        <div class="collapsible-header" onclick="togglePartie4()">
+          <h3 class="collapsible-title">
+            <i class="fas fa-chevron-down collapsible-icon" id="partie4-icon"></i>
+            Partie 4 : Patterns essentiels (50 min)
+          </h3>
+          <span class="collapsible-badge">4 sous-parties</span>
+        </div>
+        <div class="collapsible-content" id="partie4-content">
+          <div class="days-container">
+
+            <!-- 4.1 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">4.1</span>
+                <span class="day-theme">Circuit Breaker</span>
+              </div>
+              <div class="day-content">
+                <div class="comparison-box">
+                  <div class="bad-example">
+                    <h6>❌ Problème (effet domino)</h6>
+                    <p>Service A appelle Service B (timeout 5s). Si B est down :</p>
+                    <ul>
+                      <li>100 requêtes/s × 5s = 500 threads bloqués</li>
+                      <li>A finit par tomber (cascade)</li>
+                    </ul>
+                  </div>
+                  <div class="good-example">
+                    <h6>✅ Solution : Circuit Breaker</h6>
+                    <p>Disjoncteur logiciel : coupe les appels après N échecs, fail fast, retente plus tard.</p>
+                  </div>
+                </div>
+                <div class="highlight-box" style="margin-top:1.25rem; background:#eef9ff; border-left:4px solid #2196f3;">
+                  <h6>Les 3 états</h6>
+                  <pre><code class="language-text">CLOSED → fonctionnement normal
+   ↓ (N échecs)
+OPEN  → toutes les requêtes échouent instantanément
+   ↓ (délai, ex : 60s)
+HALF-OPEN → on teste 1 requête
+   → succès → CLOSED
+   → échec  → OPEN</code></pre>
+                </div>
+                <pre><code class="language-javascript">class CircuitBreaker {
+  constructor(threshold = 5, timeout = 60000) {
+    this.state = 'CLOSED';
+    this.failureCount = 0;
+    this.threshold = threshold;
+    this.timeout = timeout;
+    this.nextAttempt = Date.now();
+  }
+  async call(fn) {
+    if (this.state === 'OPEN') {
+      if (Date.now() < this.nextAttempt) {
+        throw new Error('Circuit breaker OPEN');
+      }
+      this.state = 'HALF-OPEN';
+    }
+    try {
+      const result = await fn();
+      this.success();
+      return result;
+    } catch (error) {
+      this.failure();
+      throw error;
+    }
+  }
+  success() {
+    this.failureCount = 0;
+    this.state = 'CLOSED';
+  }
+  failure() {
+    this.failureCount++;
+    if (this.failureCount >= this.threshold) {
+      this.state = 'OPEN';
+      this.nextAttempt = Date.now() + this.timeout;
+    }
+  }
+}</code></pre>
+                <p><strong>Libraries :</strong> Node.js – <code>opossum</code>, Java – Resilience4j, Python – <code>pybreaker</code>.</p>
+              </div>
+            </div>
+
+            <!-- 4.2 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">4.2</span>
+                <span class="day-theme">Saga Pattern</span>
+              </div>
+              <div class="day-content">
+                <h6>Problème : pas de transaction ACID cross-services</h6>
+                <div class="highlight-box" style="margin-bottom:1rem; background:#fff4e6; border-left:4px solid #ff9800;">
+                  <p><strong>ACID</strong> = Atomicité, Cohérence, Isolation, Durabilité. Ces garanties sont assurées par un moteur de base de données unique. Dans une architecture microservices, chaque service a sa DB : il est donc impossible d’avoir un commit global atomique couvrant Order + Payment + Reservation. Il faut orchestrer des transactions locales et, en cas d’échec, déclencher des opérations de compensation.</p>
+                </div>
+                <p>Créer une commande = Order + Payment + Reservation + Notification. Comment garantir la cohérence ?</p>
+                <div class="highlight-box" style="background:#fff8e1; border-left:4px solid #ffb300;">
+                  <h6>Approche 1 : Chorégraphie (event-driven)</h6>
+                  <pre><code class="language-text">Order Service  → publie "OrderCreated"
+Payment Service → écoute, tente le débit
+   ↳ succès : publie "PaymentProcessed"
+   ↳ échec  : publie "PaymentFailed"
+Event Service → écoute "PaymentProcessed"
+   ↳ succès : publie "SeatReserved"
+   ↳ échec  : publie "ReservationFailed" (→ refund)
+Notification Service → écoute "SeatReserved"</code></pre>
+                  <p>✅ Décentralisé, scalable — ❌ difficile à tracer/debugger.</p>
+                </div>
+                <div class="highlight-box" style="margin-top:1.25rem; background:#e8f4fd; border-left:4px solid #0066cc;">
+                  <h6>Approche 2 : Orchestration</h6>
+                  <pre><code class="language-javascript">class OrderSaga {
+  async execute(payload) {
+    let orderId, paymentId;
+    try {
+      const order = await http.post('order-service/orders', payload);
+      orderId = order.id;
+
+      const payment = await http.post('payment-service/payments', { orderId, amount: payload.amount });
+      paymentId = payment.id;
+
+      await http.post('event-service/reservations', { orderId, eventId: payload.eventId });
+      await http.post('notification-service/send', { userId: payload.userId, type: 'order_confirmation' });
+      return { success: true, orderId, paymentId };
+    } catch (error) {
+      await compensate({ orderId, paymentId });
+      return { success: false, error: error.message };
+    }
+  }
+}</code></pre>
+                  <p>✅ Vue globale, debugging facile — ❌ orchestrateur = point central.</p>
+                </div>
+                <div class="table-wrapper" style="margin-top:1rem;">
+                  <table class="comparison-table">
+                    <thead>
+                      <tr>
+                        <th>Critère</th>
+                        <th>Chorégraphie</th>
+                        <th>Orchestration</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Complexité</td>
+                        <td>⚠️ élevée</td>
+                        <td>✅ plus simple</td>
+                      </tr>
+                      <tr>
+                        <td>Couplage</td>
+                        <td>✅ faible</td>
+                        <td>⚠️ moyen (orchestrateur connaît tout)</td>
+                      </tr>
+                      <tr>
+                        <td>Point de défaillance</td>
+                        <td>✅ aucun</td>
+                        <td>❌ orchestrateur</td>
+                      </tr>
+                      <tr>
+                        <td>Debugging</td>
+                        <td>❌ difficile</td>
+                        <td>✅ facile</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p><strong>Recommandation SmartCity :</strong> Orchestration (équipe moyenne, besoin de visibilité).</p>
+              </div>
+            </div>
+
+            <!-- 4.3 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">4.3</span>
+                <span class="day-theme">Event-Driven Architecture</span>
+              </div>
+              <div class="day-content">
+                <div class="comparison-box">
+                  <div class="bad-example">
+                    <h6>❌ Synchrone</h6>
+                    <pre><code class="language-text">Client → Gateway → Order Service (attend 2s)
+                     → Payment Service (attend 1s)
+                     → Notification Service (attend 3s)
+= 6s de latence, tout échoue si Notification down</code></pre>
+                  </div>
+                  <div class="good-example">
+                    <h6>✅ Asynchrone (events)</h6>
+                    <pre><code class="language-text">Client → Gateway → Order Service (réponse 200ms)
+Order Service publie "OrderCreated" dans RabbitMQ
+Payment / Notification / Analytics consomment en parallèle</code></pre>
+                  </div>
+                </div>
+                <div class="highlight-box" style="margin-top:1.25rem; background:#eef9ff; border-left:4px solid #2196f3;">
+                  <h6>Message queue vs Event stream</h6>
+                  <ul>
+                    <li><strong>RabbitMQ / SQS</strong> : message → 1 consumer, supprimé après consommation.</li>
+                    <li><strong>Kafka / Kinesis</strong> : événement → plusieurs consumers, log persistant (replay possible).</li>
+                  </ul>
+                </div>
+                <pre><code class="language-javascript">// Publisher (Order Service)
+const exchange = 'events';
+channel.publish(exchange, '', Buffer.from(JSON.stringify({
+  type: 'OrderCreated',
+  data: { orderId: order.id, userId: order.userId }
+})));
+
+// Consumer (Payment)
+channel.consume('payment-queue', async (msg) => {
+  const event = JSON.parse(msg.content.toString());
+  if (event.type === 'OrderCreated') {
+    try {
+      await processPayment(event.data);
+      channel.ack(msg);
+    } catch (error) {
+      channel.nack(msg, false, true); // retry
+    }
+  }
+});</code></pre>
+                <p><strong>Avantages</strong> : découplage total, résilience (si un consumer est down, les autres continuent), scalabilité horizontale, performance.</p>
+              </div>
+            </div>
+
+            <!-- 4.4 -->
+            <div class="day-card expanded">
+              <div class="day-header">
+                <span class="day-number">4.4</span>
+                <span class="day-theme">Autres patterns de résilience</span>
+              </div>
+              <div class="day-content">
+                <div class="principles-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+                  <div class="principle-card">
+                    <h5>Timeout</h5>
+                    <p>Ne jamais attendre indéfiniment.</p>
+                    <pre><code class="language-javascript">async function callWithTimeout(url, timeout = 5000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    clearTimeout(id);
+    return response;
+  } catch (error) {
+    if (error.name === 'AbortError') throw new Error('Request timeout');
+    throw error;
+  }
+}</code></pre>
+                  </div>
+                  <div class="principle-card">
+                    <h5>Retry + Backoff</h5>
+                    <pre><code class="language-javascript">async function retry(fn, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (attempt === maxRetries) throw error;
+      const delay = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+}</code></pre>
+                  </div>
+                  <div class="principle-card">
+                    <h5>Bulkhead</h5>
+                    <p>Isoler les ressources pour éviter qu’un service saturé consomme toutes les connexions.</p>
+                    <pre><code class="language-javascript">const pLimit = require('p-limit');
+const paymentLimit = pLimit(10); // max 10 requêtes simultanées
+
+app.post('/api/orders', async (req, res) => {
+  try {
+    const payment = await paymentLimit(() => fetch('http://payment-service:3003/process'));
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="../assets/logo.jpeg" alt="YNOV Campus" class="footer-logo-img">
+            <span class="footer-logo-text">Web Services</span>
+          </div>
+          <p class="footer-description">Jour 7 — Microservices & architecture distribuée.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="day1.html">Jour 1 - Théorie</a></li>
+            <li><a href="day2.html">Jour 2 - Théorie</a></li>
+            <li><a href="day3.html">Jour 3 - Théorie</a></li>
+            <li><a href="day4-5.html">Jour 4 & 5 - Théorie</a></li>
+            <li><a href="day6.html">Jour 6 - Théorie</a></li>
+            <li><a href="day7.html">Jour 7 - Théorie</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Ressources</h3>
+          <ul>
+            <li><a href="../index.html#ressources">Documentation</a></li>
+            <li><a href="../index.html#programme">Programme</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>Formation Web Services</p>
+          <p>YNOV Campus</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 YNOV Campus. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      hljs.highlightAll();
+
+      const content = document.getElementById('partie1-content');
+      const icon = document.getElementById('partie1-icon');
+      const header = content?.closest('.collapsible-section')?.querySelector('.collapsible-header');
+
+      if (content && icon && header) {
+        content.style.display = 'none';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+        header.classList.add('collapsed');
+      }
+
+      const content2 = document.getElementById('partie2-content');
+      const icon2 = document.getElementById('partie2-icon');
+      const header2 = content2?.closest('.collapsible-section')?.querySelector('.collapsible-header');
+
+      if (content2 && icon2 && header2) {
+        content2.style.display = 'none';
+        icon2.classList.remove('fa-chevron-down');
+        icon2.classList.add('fa-chevron-right');
+        header2.classList.add('collapsed');
+      }
+
+      const content3 = document.getElementById('partie3-content');
+      const icon3 = document.getElementById('partie3-icon');
+      const header3 = content3?.closest('.collapsible-section')?.querySelector('.collapsible-header');
+
+      if (content3 && icon3 && header3) {
+        content3.style.display = 'none';
+        icon3.classList.remove('fa-chevron-down');
+        icon3.classList.add('fa-chevron-right');
+        header3.classList.add('collapsed');
+      }
+
+      const content4 = document.getElementById('partie4-content');
+      const icon4 = document.getElementById('partie4-icon');
+      const header4 = content4?.closest('.collapsible-section')?.querySelector('.collapsible-header');
+
+      if (content4 && icon4 && header4) {
+        content4.style.display = 'none';
+        icon4.classList.remove('fa-chevron-down');
+        icon4.classList.add('fa-chevron-right');
+        header4.classList.add('collapsed');
+      }
+    });
+
+    function togglePartie1() {
+      const content = document.getElementById('partie1-content');
+      const icon = document.getElementById('partie1-icon');
+      const header = content.closest('.collapsible-section').querySelector('.collapsible-header');
+
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+        header.classList.remove('collapsed');
+      } else {
+        content.style.display = 'none';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+        header.classList.add('collapsed');
+      }
+    }
+
+    function togglePartie2() {
+      const content = document.getElementById('partie2-content');
+      const icon = document.getElementById('partie2-icon');
+      const header = content.closest('.collapsible-section').querySelector('.collapsible-header');
+
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+        header.classList.remove('collapsed');
+      } else {
+        content.style.display = 'none';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+        header.classList.add('collapsed');
+      }
+    }
+
+    function togglePartie3() {
+      const content = document.getElementById('partie3-content');
+      const icon = document.getElementById('partie3-icon');
+      const header = content.closest('.collapsible-section').querySelector('.collapsible-header');
+
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+        header.classList.remove('collapsed');
+      } else {
+        content.style.display = 'none';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+        header.classList.add('collapsed');
+      }
+    }
+
+    function togglePartie4() {
+      const content = document.getElementById('partie4-content');
+      const icon = document.getElementById('partie4-icon');
+      const header = content.closest('.collapsible-section').querySelector('.collapsible-header');
+
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+        header.classList.remove('collapsed');
+      } else {
+        content.style.display = 'none';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
+        header.classList.add('collapsed');
+      }
+    }
+  </script>
+
+  <style>
+    .collapsible-section {
+      margin: 2rem 0;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .collapsible-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: linear-gradient(135deg, #00a8ff 0%, #9c88ff 100%);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .collapsible-header:hover {
+      background: linear-gradient(135deg, #9c88ff 0%, #00a8ff 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 168, 255, 0.3);
+    }
+
+    .collapsible-header.collapsed {
+      background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+    }
+
+    .collapsible-title {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: white;
+    }
+
+    .collapsible-icon {
+      transition: transform 0.3s ease;
+      font-size: 1.2rem;
+    }
+
+    .collapsible-badge {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .collapsible-content {
+      padding: 0;
+      transition: all 0.3s ease;
+    }
+
+    .collapsible-content .days-container {
+      padding: 1rem;
+    }
+
+    .principle-card {
+      background: #f7f9fc;
+      border: 1px solid #dfe6f0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 6px 18px rgba(15, 76, 129, 0.08);
+    }
+
+    .principle-card h5 {
+      margin-bottom: 0.75rem;
+      color: #0f4c81;
+    }
+
+    .principle-note {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 1.5rem;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      border: 1px solid #dde4ee;
+      padding: 0.9rem 1.1rem;
+      text-align: left;
+    }
+
+    .comparison-table thead {
+      background: #0f4c81;
+      color: #fff;
+    }
+
+    .comparison-table tbody tr:nth-child(even) {
+      background: #f7f9fc;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .summary-card {
+      background: #ffffff;
+      border: 1px solid #dde4ee;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 6px 18px rgba(15, 76, 129, 0.08);
+    }
+
+    .summary-card.warning {
+      background: #fff4e6;
+      border-color: #ffb300;
+    }
+
+    .summary-card .quote {
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+  </style>
+</body>
+</html>
+
