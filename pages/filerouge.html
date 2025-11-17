@@ -40,6 +40,16 @@
                         <a href="./day7.html" class="dropdown-item">Jour 7 - Théorie</a>
                     </div>
                 </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <i class="fas fa-question-circle"></i> Quiz
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="quiz.html" class="dropdown-item">Quiz Jours 1-2-3</a>
+                        <a href="quiz-4-5.html" class="dropdown-item">Quiz Jours 4-5</a>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a href="../index.html#ressources" class="nav-link">Ressources</a>
                 </li>
@@ -90,15 +100,803 @@
             </ul>
             <p class="muted">Bénéfices: sécurité, contrôle, simplification du client et meilleure observabilité.</p>
         </section>
-        <section class="content-section">
+        <!-- Informations générales -->
+        <section class="content-section" style="margin-bottom: 3rem;">
             <div class="section-header">
-                <h2 class="section-title">Projet Fil Rouge — Contenu intégral (Markdown)</h2>
-                <p class="section-subtitle">Copie intégrale de <code>cours/filerouge.md</code>, caractère pour caractère.</p>
+                <h2 class="section-title">📘 Informations générales</h2>
             </div>
-            <pre class="markdown-source" style="white-space: pre-wrap; word-wrap: break-word; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;">
-📘 PROJET FIL ROUGE - WEB SERVICES SMARTCITY
-Formation Mastère 2 - Web Services
-Durée totale : 9 jours
+            <div style="background: var(--gray-100); padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 1.5rem;">
+                <p><strong>Formation :</strong> Mastère 2 - Web Services</p>
+                <p><strong>Durée totale :</strong> 9 jours</p>
+                <p><strong>Évaluation finale :</strong> Jour 9</p>
+                <p><strong>Note :</strong> /40 points</p>
+                <p><strong>Modalité :</strong> Projets en groupe de 3-4 personnes</p>
+            </div>
+        </section>
+
+        <!-- Objectifs pédagogiques -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">🎯 Objectifs pédagogiques</h2>
+            </div>
+            <p style="margin-bottom: 1rem;">Ce projet fil rouge a pour objectif de vous faire mettre en pratique les principaux concepts vus en cours sur les Web Services, dans un contexte professionnel réaliste.</p>
+            <p style="margin-bottom: 1rem;"><strong>Vous devrez démontrer votre maîtrise de :</strong></p>
+            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li>Conception et développement d'APIs REST</li>
+                <li>Sécurité des Web Services (authentification, autorisation, API Keys)</li>
+                <li>Documentation technique (OpenAPI/Swagger)</li>
+                <li>Choix architecturaux justifiés</li>
+                <li>Bonnes pratiques professionnelles</li>
+            </ul>
+        </section>
+
+        <!-- Description du projet -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">📋 Description du projet</h2>
+            </div>
+            <h3 style="color: var(--logo-color); margin-top: 1.5rem; margin-bottom: 1rem;">Contexte</h3>
+            <p style="margin-bottom: 1.5rem;">Dans le cadre d'un écosystème SmartCity, plusieurs services indépendants doivent coexister et être accessibles via une application frontend centralisée.</p>
+            <p style="margin-bottom: 1rem;"><strong>La formation est divisée en 5 groupes :</strong></p>
+            
+            <div style="background: #e3f2fd; padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 1.5rem; border-left: 4px solid #2196f3;">
+                <h4 style="color: var(--logo-color); margin-bottom: 1rem;">🔧 4 Groupes Backend (4 personnes/groupe)</h4>
+                <p style="margin-bottom: 0.5rem;">Chaque groupe développe un Web Service REST sur un thème SmartCity :</p>
+                <ul style="margin-left: 2rem;">
+                    <li><strong>Groupe 1 :</strong> Service de diététique et nutrition</li>
+                    <li><strong>Groupe 2 :</strong> Service de diététique et nutrition (approche différente)</li>
+                    <li><strong>Groupe 3 :</strong> Service de gestion de parking et stationnement</li>
+                    <li><strong>Groupe 4 :</strong> Service d'alertes citoyennes</li>
+                </ul>
+            </div>
+
+            <div style="background: #f3e5f5; padding: 1.5rem; border-radius: var(--radius-lg); border-left: 4px solid #9c27b0;">
+                <h4 style="color: var(--logo-color); margin-bottom: 1rem;">🎨 1 Groupe Frontend (3 personnes)</h4>
+                <p>Développe une application frontend qui consomme les 4 APIs backend et gère l'authentification des utilisateurs finaux.</p>
+            </div>
+        </section>
+
+        <!-- Architecture de sécurité -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">🔐 Architecture de sécurité</h2>
+            </div>
+            
+            <h3 style="color: var(--logo-color); margin-top: 1.5rem; margin-bottom: 1rem;">Pour les groupes Backend</h3>
+            <p style="margin-bottom: 0.5rem;"><strong>Authentification B2B (Backend ↔ Frontend) :</strong></p>
+            <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                <li>Utilisation d'API Keys pour authentifier le frontend (client de l'API)</li>
+                <li>Chaque groupe backend génère et fournit une API Key au groupe frontend</li>
+                <li>Les requêtes du frontend vers les backends doivent inclure cette API Key</li>
+            </ul>
+            <div style="background: #fff3e0; padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; border-left: 4px solid #ff9800;">
+                <p><strong>Pourquoi des API Keys ?</strong></p>
+                <p style="margin-top: 0.5rem;">C'est la pratique standard professionnelle pour les intégrations entre services (ex: Stripe, SendGrid, Google Maps API, etc.). Lorsqu'une application souscrit à une API tierce, elle reçoit une clé unique qui l'identifie.</p>
+            </div>
+
+            <h3 style="color: var(--logo-color); margin-top: 1.5rem; margin-bottom: 1rem;">Pour le groupe Frontend</h3>
+            <p style="margin-bottom: 0.5rem;"><strong>Double authentification à implémenter :</strong></p>
+            
+            <div style="background: var(--gray-100); padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 1rem;">
+                <p style="margin-bottom: 0.5rem;"><strong>1. Authentification des utilisateurs finaux (B2C) :</strong></p>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>Implémentation de JWT (JSON Web Tokens)</li>
+                    <li>Implémentation d'OAuth 2.0 (Google, GitHub, etc.)</li>
+                    <li>L'utilisateur doit pouvoir choisir sa méthode d'authentification</li>
+                </ul>
+            </div>
+
+            <div style="background: var(--gray-100); padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 1.5rem;">
+                <p style="margin-bottom: 0.5rem;"><strong>2. Authentification vers les backends (B2B) :</strong></p>
+                <ul style="margin-left: 2rem;">
+                    <li>Utilisation des API Keys fournies par chaque groupe backend</li>
+                    <li>Envoi de l'API Key dans les headers des requêtes vers les backends</li>
+                </ul>
+            </div>
+
+            <div style="background: #e8f5e9; padding: 1.5rem; border-radius: var(--radius-lg); border-left: 4px solid #4caf50;">
+                <p style="margin-bottom: 0.5rem;"><strong>Schéma d'authentification Frontend :</strong></p>
+                <pre style="background: var(--white); padding: 1rem; border-radius: var(--radius-md); overflow-x: auto; margin-top: 0.5rem;"><code>Utilisateur Final
+    │
+    ├─ Option 1 : Login/Password → JWT généré par le Frontend
+    └─ Option 2 : OAuth 2.0 (Google, GitHub...) → Token OAuth
+    
+    ↓ (utilisateur authentifié)
+    
+Frontend (possède le JWT ou OAuth Token)
+    │
+    └─ Appels vers les 4 backends avec API Key dans les headers
+        
+        Backend 1 → Vérifie API Key → Répond
+        Backend 2 → Vérifie API Key → Répond
+        Backend 3 → Vérifie API Key → Répond
+        Backend 4 → Vérifie API Key → Répond</code></pre>
+            </div>
+        </section>
+
+        <!-- Livrables attendus -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">📦 Livrables attendus</h2>
+            </div>
+            
+            <h3 style="color: var(--logo-color); margin-top: 1.5rem; margin-bottom: 1rem;">Pour chaque groupe Backend</h3>
+            
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Code source</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Repository Git (GitHub/GitLab) avec historique de commits</li>
+                    <li>Code propre, commenté, structuré</li>
+                    <li>.env.example avec les variables d'environnement</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Documentation technique</h4>
+                <p style="margin-bottom: 0.5rem;"><strong>README.md complet :</strong></p>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>Description du service</li>
+                    <li>Technologies utilisées</li>
+                    <li>Instructions d'installation et de lancement</li>
+                    <li>Structure du projet</li>
+                    <li>Exemples d'utilisation</li>
+                </ul>
+                <p style="margin-bottom: 0.5rem;"><strong>Contrat API (OpenAPI/Swagger) :</strong></p>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>Toutes les routes documentées</li>
+                    <li>Modèles de données (schemas)</li>
+                    <li>Codes de réponse HTTP</li>
+                    <li>Exemples de requêtes/réponses</li>
+                </ul>
+                <p style="margin-bottom: 0.5rem;"><strong>Collection Postman</strong> pour tester l'API</p>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Documentation des choix architecturaux</h4>
+                <p style="margin-bottom: 0.5rem;">Document expliquant vos choix techniques :</p>
+                <ul style="margin-left: 2rem;">
+                    <li>Pourquoi cette stack ?</li>
+                    <li>Architecture de la base de données (diagramme)</li>
+                    <li>Stratégie de versioning</li>
+                    <li>Gestion des API Keys</li>
+                    <li>Gestion des erreurs</li>
+                    <li>Patterns utilisés</li>
+                    <li>Justification de vos décisions</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Présentation</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Support de présentation (PowerPoint, Google Slides, PDF)</li>
+                    <li>Démonstration live fonctionnelle</li>
+                </ul>
+            </div>
+
+            <h3 style="color: var(--logo-color); margin-top: 2rem; margin-bottom: 1rem;">Pour le groupe Frontend</h3>
+            
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Code source</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Repository Git avec historique de commits</li>
+                    <li>Code propre, commenté, structuré</li>
+                    <li>.env.example avec les variables d'environnement</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Documentation technique</h4>
+                <p style="margin-bottom: 0.5rem;"><strong>README.md complet :</strong></p>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>Description de l'application</li>
+                    <li>Technologies utilisées</li>
+                    <li>Instructions d'installation et de lancement</li>
+                    <li>Intégration avec les 4 backends</li>
+                </ul>
+                <p style="margin-bottom: 0.5rem;"><strong>Diagramme de base de données</strong> (si gestion utilisateurs en DB)</p>
+                <p style="margin-bottom: 0.5rem;"><strong>Documentation de l'authentification :</strong></p>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>Schéma du flow JWT</li>
+                    <li>Schéma du flow OAuth 2.0</li>
+                    <li>Gestion des tokens</li>
+                    <li>Stratégie de rafraîchissement</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Documentation des intégrations</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Comment sont consommées les 4 APIs backend</li>
+                    <li>Gestion des API Keys</li>
+                    <li>Gestion des erreurs réseau</li>
+                    <li>Stratégies de retry et fallback</li>
+                    <li>Données mock utilisées (si applicable)</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Présentation</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Support de présentation</li>
+                    <li>Démonstration live fonctionnelle</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Barème d'évaluation -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">📊 Barème d'évaluation (Total : /40)</h2>
+            </div>
+            
+            <div style="background: var(--gray-100); padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 2rem;">
+                <h3 style="color: var(--logo-color); margin-bottom: 1rem;">1. Code et Implémentation (/10 points)</h3>
+                
+                <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; color: var(--gray-700);">Pour les groupes Backend :</h4>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li><strong>Qualité du code (2 pts)</strong> : Code propre, structuré, lisible, nommage cohérent, pas de duplication, commentaires pertinents</li>
+                    <li><strong>Architecture (2 pts)</strong> : Séparation des responsabilités, structure logique, modularité</li>
+                    <li><strong>Fonctionnalités (3 pts)</strong> : API fonctionnelle, gestion des API Keys, CRUD complet, valeur ajoutée</li>
+                    <li><strong>Base de données (2 pts)</strong> : Schéma cohérent, relations bien définies, migrations/seeds (bonus)</li>
+                    <li><strong>Gestion des erreurs (1 pt)</strong> : Try/catch appropriés, messages clairs, codes HTTP corrects</li>
+                </ul>
+
+                <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; color: var(--gray-700);">Pour le groupe Frontend :</h4>
+                <ul style="margin-left: 2rem;">
+                    <li><strong>Qualité du code (2 pts)</strong> : Code propre, composants réutilisables, gestion de l'état</li>
+                    <li><strong>Architecture (2 pts)</strong> : Structure logique, séparation des concerns</li>
+                    <li><strong>Fonctionnalités (3 pts)</strong> : Authentification JWT/OAuth fonctionnelle, intégration avec 4 backends, choix utilisateur</li>
+                    <li><strong>Base de données / Gestion utilisateurs (2 pts)</strong> : Stockage utilisateurs, gestion tokens, sécurité</li>
+                    <li><strong>Gestion des erreurs (1 pt)</strong> : Erreurs réseau, feedback utilisateur, fallbacks</li>
+                </ul>
+            </div>
+
+            <div style="background: var(--gray-100); padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 2rem;">
+                <h3 style="color: var(--logo-color); margin-bottom: 1rem;">2. Documentation et Contrat API (/10 points)</h3>
+                
+                <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; color: var(--gray-700);">Pour les groupes Backend :</h4>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li><strong>README.md (2 pts)</strong> : Complet, instructions fonctionnelles, exemples</li>
+                    <li><strong>Contrat API OpenAPI/Swagger (4 pts)</strong> : Routes documentées, schémas, exemples, accessible via /api-docs</li>
+                    <li><strong>Collection Postman (1 pt)</strong> : Routes testables, variables configurées</li>
+                    <li><strong>Documentation des API Keys (2 pts)</strong> : Comment obtenir/utiliser, format, exemples</li>
+                    <li><strong>Git (1 pt)</strong> : Historique cohérent, messages clairs, .gitignore approprié</li>
+                </ul>
+
+                <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; color: var(--gray-700);">Pour le groupe Frontend :</h4>
+                <ul style="margin-left: 2rem;">
+                    <li><strong>README.md (3 pts)</strong> : Complet, setup, documentation authentification</li>
+                    <li><strong>Documentation de l'authentification (4 pts)</strong> : Diagrammes JWT/OAuth, schéma BDD, gestion tokens</li>
+                    <li><strong>Documentation des intégrations (2 pts)</strong> : Consommation des 4 APIs, gestion API Keys, stratégies erreurs</li>
+                    <li><strong>Git (1 pt)</strong> : Historique cohérent, messages clairs</li>
+                </ul>
+            </div>
+
+            <div style="background: var(--gray-100); padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 2rem;">
+                <h3 style="color: var(--logo-color); margin-bottom: 1rem;">3. Choix Architecturaux (/10 points)</h3>
+                
+                <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; color: var(--gray-700);">Pour les groupes Backend :</h4>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li><strong>Justification des choix techniques (3 pts)</strong> : Stack, architecture, trade-offs</li>
+                    <li><strong>Respect des principes REST (3 pts)</strong> : Nommage URLs, verbes HTTP, statelessness, codes HTTP</li>
+                    <li><strong>Sécurité (2 pts)</strong> : API Keys sécurisées, validation, HTTPS, CORS</li>
+                    <li><strong>Fonctionnalités avancées (2 pts)</strong> : Versioning, pagination, filtrage, rate limiting (bonus)</li>
+                </ul>
+
+                <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; color: var(--gray-700);">Pour le groupe Frontend :</h4>
+                <ul style="margin-left: 2rem;">
+                    <li><strong>Justification des choix techniques (3 pts)</strong> : Stack, approche authentification, trade-offs</li>
+                    <li><strong>Architecture d'authentification (4 pts)</strong> : JWT/OAuth corrects, choix utilisateur, sécurité tokens</li>
+                    <li><strong>Intégration des backends (2 pts)</strong> : Stratégie 4 APIs, API Keys sécurisées, gestion timeouts</li>
+                    <li><strong>Gestion des erreurs (1 pt)</strong> : Stratégie fallback, retry (bonus), feedback utilisateur</li>
+                </ul>
+            </div>
+
+            <div style="background: var(--gray-100); padding: 1.5rem; border-radius: var(--radius-lg);">
+                <h3 style="color: var(--logo-color); margin-bottom: 1rem;">4. Présentation Orale et Démo Live (/10 points)</h3>
+                <p style="margin-bottom: 0.5rem;"><strong>Durée :</strong> 20-30 minutes par groupe</p>
+                <p style="margin-bottom: 1rem;"><strong>Structure imposée :</strong></p>
+                <ul style="margin-left: 2rem;">
+                    <li><strong>Présentation du thème et contexte (2-3 min) - /2 pts</strong> : Problématique, valeur ajoutée, public cible</li>
+                    <li><strong>Architecture et choix techniques (5-7 min) - /3 pts</strong> : Schéma architecture, stack, BDD, sécurité, patterns</li>
+                    <li><strong>Démonstration live (8-10 min) - /3 pts</strong> : Endpoints principaux, Postman, API Keys, erreurs (Backend) / Authentification, consommation APIs, erreurs réseau (Frontend)</li>
+                    <li><strong>Difficultés rencontrées et solutions (3-5 min) - /1 pt</strong> : Problèmes, solutions, apprentissages</li>
+                    <li><strong>Améliorations futures (2-3 min) - /1 pt</strong> : Ce qui manque, prochaines étapes, scalabilité</li>
+                    <li><strong>Questions/Réponses (5-10 min)</strong> : Évaluation transversale</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Points bonus -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">🎁 Points Bonus (Maximum +5 points)</h2>
+            </div>
+            <p style="margin-bottom: 1rem;">Les points bonus s'ajoutent à la note finale (plafonnée à 40/40).</p>
+            
+            <div style="background: #e8f5e9; padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 1.5rem; border-left: 4px solid #4caf50;">
+                <h4 style="color: var(--logo-color); margin-bottom: 1rem;">Pour tous les groupes :</h4>
+                <ul style="margin-left: 2rem;">
+                    <li><strong>CI/CD implémenté (+2 pts)</strong> : GitHub Actions, GitLab CI, tests automatisés, déploiement automatique</li>
+                    <li><strong>Docker / Docker Compose (+1 pt)</strong> : Dockerfile fonctionnel, docker-compose.yml, instructions claires</li>
+                    <li><strong>Tests automatisés (+1 pt)</strong> : Tests unitaires, tests d'intégration, coverage > 50%</li>
+                    <li><strong>Rate Limiting (+0.5 pt)</strong> : Implémentation, configuration documentée</li>
+                    <li><strong>Monitoring / Logs (+0.5 pt)</strong> : Logs structurés, système de monitoring</li>
+                </ul>
+            </div>
+
+            <div style="background: #e3f2fd; padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 1.5rem; border-left: 4px solid #2196f3;">
+                <h4 style="color: var(--logo-color); margin-bottom: 1rem;">Pour les groupes Backend uniquement :</h4>
+                <ul style="margin-left: 2rem;">
+                    <li><strong>HATEOAS (+1 pt)</strong> : Liens hypermedia, navigation découvrable</li>
+                    <li><strong>GraphQL en plus de REST (+2 pts)</strong> : API GraphQL fonctionnelle, documentation</li>
+                </ul>
+            </div>
+
+            <div style="background: #f3e5f5; padding: 1.5rem; border-radius: var(--radius-lg); border-left: 4px solid #9c27b0;">
+                <h4 style="color: var(--logo-color); margin-bottom: 1rem;">Pour le groupe Frontend uniquement :</h4>
+                <ul style="margin-left: 2rem;">
+                    <li><strong>PWA (Progressive Web App) (+1 pt)</strong> : Service Worker, fonctionne offline, installable</li>
+                    <li><strong>Internationalisation (i18n) (+0.5 pt)</strong> : Support plusieurs langues, FR + EN minimum</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Pénalités -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">⚠️ Pénalités</h2>
+            </div>
+            <div style="background: #ffebee; padding: 1.5rem; border-radius: var(--radius-lg); border-left: 4px solid #f44336;">
+                <ul style="margin-left: 2rem;">
+                    <li>API non fonctionnelle le jour de la présentation : <strong>-10 pts</strong></li>
+                    <li>Absence de documentation : <strong>-5 pts</strong></li>
+                    <li>Codes HTTP incorrects : <strong>-2 pts</strong></li>
+                    <li>Pas de contrat API (Swagger/OpenAPI) : <strong>-5 pts</strong> (Backend)</li>
+                    <li>Pas de collection Postman : <strong>-2 pts</strong> (Backend)</li>
+                    <li>API Keys non implémentées : <strong>-5 pts</strong> (Backend)</li>
+                    <li>JWT ou OAuth 2.0 non fonctionnel : <strong>-5 pts chacun</strong> (Frontend)</li>
+                    <li>Intégration avec moins de 3 backends : <strong>-3 pts par backend manquant</strong> (Frontend)</li>
+                    <li>Retard de livraison : <strong>-2 pts par jour</strong></li>
+                    <li>Plagiat / Code copié : <strong>0/40 + exclusion</strong></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Calendrier et jalons -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">📅 Calendrier et jalons</h2>
+            </div>
+            <div class="table-wrapper" style="margin-bottom: 1.5rem;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Jour</th>
+                            <th>Activité</th>
+                            <th>Livrable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>J1-J4</td>
+                            <td>Développement et implémentation</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>J5-J7</td>
+                            <td>Finalisation et tests</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>J8</td>
+                            <td>Préparation des présentations</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>J9</td>
+                            <td><strong>SOUTENANCES FINALES</strong></td>
+                            <td><strong>Tous les livrables</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="margin-bottom: 0.5rem;"><strong>Remise finale :</strong> Jour 9 avant les soutenances</p>
+            <p style="margin-bottom: 0.5rem;"><strong>À remettre (lien Git + documents) :</strong></p>
+            <ul style="margin-left: 2rem;">
+                <li>Repository Git (public ou accès donné)</li>
+                <li>README.md complet</li>
+                <li>Documentation technique</li>
+                <li>Support de présentation</li>
+                <li>Collection Postman (Backend)</li>
+            </ul>
+        </section>
+
+        <!-- Conseils et bonnes pratiques -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">💡 Conseils et bonnes pratiques</h2>
+            </div>
+            
+            <h3 style="color: var(--logo-color); margin-top: 1.5rem; margin-bottom: 1rem;">Pour les groupes Backend</h3>
+            
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">1. Commencez par le contrat API</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Définissez vos endpoints avant de coder</li>
+                    <li>Utilisez Swagger Editor en ligne</li>
+                    <li>Faites valider par le groupe Frontend</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">2. Adoptez une architecture claire</h4>
+                <pre style="background: var(--gray-100); padding: 1rem; border-radius: var(--radius-md); overflow-x: auto;"><code>src/
+├── routes/       # Définition des endpoints
+├── controllers/  # Logique de traitement
+├── services/     # Logique métier
+├── models/       # Modèles de données
+├── middlewares/  # Auth, validation, etc.
+└── utils/        # Fonctions utilitaires</code></pre>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">3. Sécurisez vos API Keys</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Ne jamais commit les clés en dur</li>
+                    <li>Utilisez des variables d'environnement</li>
+                    <li>Hashez les clés en base de données</li>
+                    <li>Permettez la régénération</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">4. Gérez les erreurs proprement</h4>
+                <pre style="background: var(--gray-100); padding: 1rem; border-radius: var(--radius-md); overflow-x: auto;"><code class="language-javascript">try {
+  // logique
+} catch (error) {
+  return res.status(500).json({
+    error: 'Internal Server Error',
+    message: error.message,
+    timestamp: new Date().toISOString()
+  });
+}</code></pre>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">5. Codes HTTP corrects</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>200 : OK</li>
+                    <li>201 : Created</li>
+                    <li>400 : Bad Request</li>
+                    <li>401 : Unauthorized</li>
+                    <li>403 : Forbidden</li>
+                    <li>404 : Not Found</li>
+                    <li>500 : Internal Server Error</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">6. Testez avec Postman</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Créez une collection complète</li>
+                    <li>Utilisez des variables d'environnement</li>
+                    <li>Testez tous les cas d'erreur</li>
+                </ul>
+            </div>
+
+            <h3 style="color: var(--logo-color); margin-top: 2rem; margin-bottom: 1rem;">Pour le groupe Frontend</h3>
+            
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">1. Architecture de l'authentification</h4>
+                <pre style="background: var(--gray-100); padding: 1rem; border-radius: var(--radius-md); overflow-x: auto;"><code>src/
+├── auth/
+│   ├── JWTAuth.js      # Gestion JWT
+│   ├── OAuth2Auth.js   # Gestion OAuth 2.0
+│   └── AuthContext.js  # Context global
+├── services/
+│   ├── api1Service.js  # Appels API Backend 1
+│   ├── api2Service.js  # Appels API Backend 2
+│   ├── api3Service.js  # Appels API Backend 3
+│   └── api4Service.js  # Appels API Backend 4
+└── utils/
+    └── apiKeyManager.js # Gestion des API Keys</code></pre>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">2. Sécurisez le stockage des tokens</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Utilisez httpOnly cookies pour JWT (meilleur que localStorage)</li>
+                    <li>Ou localStorage avec précautions (XSS)</li>
+                    <li>Implémentez le refresh token</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">3. Gérez les erreurs réseau</h4>
+                <pre style="background: var(--gray-100); padding: 1rem; border-radius: var(--radius-md); overflow-x: auto;"><code class="language-javascript">try {
+  const response = await fetch(API_URL, {
+    headers: { 'X-API-Key': API_KEY }
+  });
+  
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+  
+  return await response.json();
+} catch (error) {
+  // Afficher un message utilisateur
+  // Logger l'erreur
+  // Retry si pertinent
+}</code></pre>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">4. Communiquez avec les groupes Backend</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Demandez leurs contrats API tôt</li>
+                    <li>Testez les endpoints avec Postman d'abord</li>
+                    <li>Signalez les bugs rapidement</li>
+                    <li>Proposez des améliorations</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">5. Utilisez des données mock</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Pour développer sans dépendre des backends</li>
+                    <li>Pour les démos si un backend est down</li>
+                    <li>json-server, MSW, ou fichiers JSON statiques</li>
+                </ul>
+            </div>
+
+            <h3 style="color: var(--logo-color); margin-top: 2rem; margin-bottom: 1rem;">Pour tous les groupes</h3>
+            
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Git : Bonnes pratiques</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Commits fréquents avec messages clairs</li>
+                    <li>Branches feature pour les nouvelles fonctionnalités</li>
+                    <li>Pull Requests pour la revue de code</li>
+                    <li>.gitignore complet (node_modules, .env, etc.)</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Documentation continue</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Documentez au fur et à mesure</li>
+                    <li>README à jour</li>
+                    <li>Commentez le code complexe</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Communication</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Consultez le formateur en cas de blocage</li>
+                    <li>Partagez vos difficultés avec les autres groupes</li>
+                    <li>Sessions de questions/déblocage disponibles</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Démo live</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Préparez un plan B (vidéo screencast)</li>
+                    <li>Testez votre démo avant le jour J</li>
+                    <li>Ayez des données de test prêtes</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Ressources utiles -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">🔗 Ressources utiles</h2>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Documentation officielle</h4>
+                <ul style="margin-left: 2rem;">
+                    <li><a href="https://swagger.io/docs/" target="_blank">OpenAPI/Swagger</a></li>
+                    <li><a href="https://jwt.io/" target="_blank">JWT</a></li>
+                    <li><a href="https://oauth.net/2/" target="_blank">OAuth 2.0</a></li>
+                    <li><a href="https://restfulapi.net/" target="_blank">REST API Best Practices</a></li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Outils</h4>
+                <ul style="margin-left: 2rem;">
+                    <li><a href="https://editor.swagger.io/" target="_blank">Swagger Editor</a></li>
+                    <li><a href="https://www.postman.com/" target="_blank">Postman</a></li>
+                    <li><a href="https://jwt.io/" target="_blank">JWT Debugger</a></li>
+                    <li><a href="https://www.markdowntopdf.com/" target="_blank">Markdown to PDF</a></li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Bibliothèques populaires</h4>
+                <p style="margin-bottom: 0.5rem;"><strong>Node.js :</strong></p>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>express : Framework web</li>
+                    <li>jsonwebtoken : Gestion JWT</li>
+                    <li>passport : Authentification (OAuth 2.0)</li>
+                    <li>bcrypt : Hash de passwords</li>
+                    <li>swagger-jsdoc + swagger-ui-express : Documentation API</li>
+                    <li>express-rate-limit : Rate limiting</li>
+                    <li>helmet : Sécurité headers HTTP</li>
+                    <li>cors : Gestion CORS</li>
+                </ul>
+                <p style="margin-bottom: 0.5rem;"><strong>Python (Flask/FastAPI) :</strong></p>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>flask-jwt-extended ou pyjwt</li>
+                    <li>authlib : OAuth 2.0</li>
+                    <li>flask-swagger-ui ou flasgger</li>
+                    <li>flask-limiter : Rate limiting</li>
+                </ul>
+                <p style="margin-bottom: 0.5rem;"><strong>Frontend (React) :</strong></p>
+                <ul style="margin-left: 2rem;">
+                    <li>react-router-dom : Routing</li>
+                    <li>axios : HTTP client</li>
+                    <li>react-oauth/google : OAuth Google</li>
+                    <li>jwt-decode : Décodage JWT</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Critères de réussite -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">🎯 Critères de réussite</h2>
+            </div>
+            <p style="margin-bottom: 1rem;"><strong>Pour valider le projet, vous devez :</strong></p>
+            
+            <div style="background: #e8f5e9; padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 1.5rem; border-left: 4px solid #4caf50;">
+                <h4 style="color: var(--logo-color); margin-bottom: 1rem;">Groupes Backend :</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>✅ API REST fonctionnelle avec au moins 5 endpoints</li>
+                    <li>✅ Gestion des API Keys implémentée</li>
+                    <li>✅ Base de données structurée</li>
+                    <li>✅ Contrat API OpenAPI/Swagger accessible</li>
+                    <li>✅ Collection Postman fonctionnelle</li>
+                    <li>✅ README complet</li>
+                    <li>✅ Démo live réussie</li>
+                </ul>
+            </div>
+
+            <div style="background: #e3f2fd; padding: 1.5rem; border-radius: var(--radius-lg); border-left: 4px solid #2196f3;">
+                <h4 style="color: var(--logo-color); margin-bottom: 1rem;">Groupe Frontend :</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>✅ Authentification JWT fonctionnelle</li>
+                    <li>✅ Authentification OAuth 2.0 fonctionnelle</li>
+                    <li>✅ Choix utilisateur entre les deux méthodes</li>
+                    <li>✅ Intégration avec au moins 3 backends sur 4</li>
+                    <li>✅ Gestion des API Keys pour chaque backend</li>
+                    <li>✅ Gestion des erreurs réseau</li>
+                    <li>✅ Documentation de l'authentification complète</li>
+                    <li>✅ Démo live réussie</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Contact et support -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">📞 Contact et support</h2>
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Pendant le projet :</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Sessions de questions/déblocage en début et fin de chaque séance</li>
+                    <li>Consultations possibles par email/Slack/Discord entre les séances</li>
+                    <li>N'hésitez pas à demander de l'aide rapidement en cas de blocage</li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 0.5rem; color: var(--gray-700);">Le jour de la soutenance :</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Arrivez 15 minutes avant votre passage</li>
+                    <li>Préparez votre environnement de démo</li>
+                    <li>Ayez un plan B (vidéo) en cas de problème technique</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Barème récapitulatif -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">🏆 Barème récapitulatif</h2>
+            </div>
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Critère</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Code et Implémentation</td>
+                            <td>/10</td>
+                        </tr>
+                        <tr>
+                            <td>Documentation et Contrat API</td>
+                            <td>/10</td>
+                        </tr>
+                        <tr>
+                            <td>Choix Architecturaux</td>
+                            <td>/10</td>
+                        </tr>
+                        <tr>
+                            <td>Présentation Orale et Démo</td>
+                            <td>/10</td>
+                        </tr>
+                        <tr style="background: var(--gray-100); font-weight: 600;">
+                            <td>TOTAL</td>
+                            <td>/40</td>
+                        </tr>
+                        <tr>
+                            <td>Bonus (optionnel)</td>
+                            <td>+5 max</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Checklist finale -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title">✅ Checklist finale (Jour 9)</h2>
+            </div>
+            <p style="margin-bottom: 1rem;"><strong>Avant la soutenance, vérifiez que vous avez :</strong></p>
+            
+            <div style="background: var(--gray-100); padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 1.5rem;">
+                <h4 style="color: var(--logo-color); margin-bottom: 1rem;">Tous les groupes :</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Repository Git accessible (lien fourni)</li>
+                    <li>README.md complet et à jour</li>
+                    <li>Code propre et commenté</li>
+                    <li>.env.example fourni</li>
+                    <li>Support de présentation prêt</li>
+                    <li>Démo testée et fonctionnelle</li>
+                </ul>
+            </div>
+
+            <div style="background: #e3f2fd; padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 1.5rem; border-left: 4px solid #2196f3;">
+                <h4 style="color: var(--logo-color); margin-bottom: 1rem;">Groupes Backend uniquement :</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Contrat API OpenAPI/Swagger accessible (ex: /api-docs)</li>
+                    <li>Collection Postman exportée et fournie</li>
+                    <li>Documentation des API Keys</li>
+                    <li>Exemples de requêtes/réponses</li>
+                </ul>
+            </div>
+
+            <div style="background: #f3e5f5; padding: 1.5rem; border-radius: var(--radius-lg); border-left: 4px solid #9c27b0;">
+                <h4 style="color: var(--logo-color); margin-bottom: 1rem;">Groupe Frontend uniquement :</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Deux modes d'authentification fonctionnels (JWT + OAuth 2.0)</li>
+                    <li>Diagrammes d'authentification</li>
+                    <li>Documentation des intégrations avec les 4 backends</li>
+                    <li>Gestion des API Keys par backend</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Message final -->
+        <section class="content-section" style="margin-bottom: 3rem;">
+            <div style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--logo-color) 100%); padding: 2rem; border-radius: var(--radius-xl); text-align: center; color: white;">
+                <h2 style="color: white; margin-bottom: 1rem;">🎓 Bon courage !</h2>
+                <p style="margin-bottom: 1rem; font-size: 1.1rem;">Ce projet est l'occasion de mettre en pratique tout ce que vous avez appris et de créer un portfolio professionnel. Donnez le meilleur de vous-mêmes !</p>
+                <p style="font-size: 1rem; opacity: 0.9;">Rappel : L'objectif n'est pas la perfection, mais la démonstration de votre compréhension des concepts de Web Services et votre capacité à les appliquer dans un contexte réel.</p>
+                <p style="margin-top: 1.5rem; font-size: 1.2rem; font-weight: 600;">Bonne chance à tous ! 🚀</p>
+            </div>
+        </section>
+    </main>
 Évaluation finale : Jour 9
 Note : /40 points
 Modalité : Projets en groupe de 3-4 personnes

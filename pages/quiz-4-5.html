@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz de Révision - Jours 4 & 5</title>
+  <link rel="stylesheet" href="../styles/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .quiz-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-top: 90px;
+    }
+
+    .quiz-header h1 {
+      font-size: 2.5rem;
+      color: var(--logo-color);
+      margin-bottom: 1rem;
+    }
+
+    .quiz-header p {
+      font-size: 1.1rem;
+      color: var(--gray-600);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .quiz-section {
+      margin-bottom: 3rem;
+    }
+
+    .quiz-section-title {
+      font-size: 1.8rem;
+      color: var(--logo-color);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--primary-color);
+    }
+
+    .quiz-level {
+      margin-bottom: 2.5rem;
+    }
+
+    .quiz-level-title {
+      font-size: 1.3rem;
+      color: var(--gray-700);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .question-item {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      transition: var(--transition-normal);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .question-item:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .question-header {
+      padding: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--gray-100);
+      transition: var(--transition-fast);
+    }
+
+    .question-header:hover {
+      background: var(--gray-200);
+    }
+
+    .question-header.active {
+      background: var(--primary-color);
+      color: var(--white);
+    }
+
+    .question-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gray-800);
+      flex: 1;
+      margin-right: 1rem;
+    }
+
+    .question-header.active .question-text {
+      color: var(--white);
+    }
+
+    .question-toggle {
+      font-size: 1.2rem;
+      transition: transform var(--transition-fast);
+      color: var(--gray-600);
+    }
+
+    .question-header.active .question-toggle {
+      color: var(--white);
+      transform: rotate(180deg);
+    }
+
+    .question-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+      padding: 0 1.5rem;
+    }
+
+    .question-answer.open {
+      max-height: 5000px;
+      padding: 1.5rem;
+    }
+
+    .answer-content {
+      background: var(--gray-50);
+      border-left: 4px solid var(--primary-color);
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+    }
+
+    .answer-content h4 {
+      color: var(--logo-color);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .answer-content p,
+    .answer-content ul,
+    .answer-content ol {
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .answer-content ul,
+    .answer-content ol {
+      padding-left: 2rem;
+    }
+
+    .answer-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .answer-content code {
+      background: var(--gray-200);
+      padding: 0.2rem 0.4rem;
+      border-radius: var(--radius-sm);
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    .answer-content pre {
+      background: var(--gray-900);
+      color: var(--white);
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    .answer-content pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+
+    .answer-content strong {
+      color: var(--logo-color);
+    }
+
+    .answer-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+
+    .answer-content table th,
+    .answer-content table td {
+      padding: 0.75rem;
+      border: 1px solid var(--gray-300);
+      text-align: left;
+    }
+
+    .answer-content table th {
+      background: var(--gray-200);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="../assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+        <span class="logo-text">Web Services</span>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="../index.html" class="nav-link">Accueil</a>
+        </li>
+        <li class="nav-item">
+          <a href="../index.html#programme" class="nav-link">Programme</a>
+        </li>
+        <li class="nav-item">
+          <a href="filerouge.html" class="nav-link">Projet SmartCity</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle">
+            <i class="fas fa-calendar-alt"></i> Journées
+            <i class="fas fa-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+            <a href="day2.html" class="dropdown-item">Jour 2 - Théorie</a>
+            <a href="day3.html" class="dropdown-item">Jour 3 - Théorie</a>
+            <a href="day4-5.html" class="dropdown-item">Jour 4 & 5 - Théorie</a>
+            <a href="day6.html" class="dropdown-item">Jour 6 - Théorie</a>
+            <a href="day7.html" class="dropdown-item">Jour 7 - Théorie</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle">
+            <i class="fas fa-question-circle"></i> Quiz
+            <i class="fas fa-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="quiz.html" class="dropdown-item">Quiz Jours 1-2-3</a>
+            <a href="quiz-4-5.html" class="dropdown-item active">Quiz Jours 4-5</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="ressources.html" class="nav-link">Ressources</a>
+        </li>
+        <li class="nav-item">
+          <a href="../index.html#contact" class="nav-link">Contact</a>
+        </li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Quiz Content -->
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h1>📋 Quiz de Révision - Jours 4 & 5</h1>
+      <p>Ce quiz contient des questions de révision organisées par jour et par niveau de difficulté. Cliquez sur une question pour afficher la réponse.</p>
+    </div>
+
+    <!-- Questions sur l'Authentification -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">🔐 Questions sur l'Authentification</h2>
+      
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 1: Quelle est la principale faiblesse de Basic Authentication ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p>Les credentials sont encodés en Base64 (pas du chiffrement !). N'importe qui peut les décoder instantanément. De plus, ils sont envoyés à chaque requête, multipliant les risques d'interception. HTTPS est obligatoire, mais cette méthode reste déconseillée en production.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 2: Quelle est la différence principale entre API Keys et Basic Authentication en termes de révocabilité ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>API Keys :</strong></p>
+            <ul>
+              <li>Révocables instantanément (supprimer en DB)</li>
+              <li>Révocation granulaire (une clé sans affecter les autres)</li>
+              <li>Traçables (savoir quelle app a été révoquée)</li>
+              <li>Sans impact utilisateur</li>
+            </ul>
+            <p><strong>Basic Authentication :</strong></p>
+            <ul>
+              <li>Révocation = changer le mot de passe</li>
+              <li>Coupe TOUS les accès simultanément</li>
+              <li>L'utilisateur doit se reconnecter partout</li>
+              <li>Pas de traçabilité</li>
+            </ul>
+            <p><strong>Conclusion :</strong> Les API Keys offrent une bien meilleure révocabilité.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 3: Expliquez la structure d'un JWT (JSON Web Token) et ses trois parties.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p>Un JWT a 3 parties séparées par des points :</p>
+            <ul>
+              <li><strong>Header :</strong> Algorithme de signature (HS256, RS256) et type (JWT)</li>
+              <li><strong>Payload :</strong> Données utilisateur (ID, email, rôle, expiration)</li>
+              <li><strong>Signature :</strong> HMACSHA256(header + payload + secret) - garantit l'intégrité</li>
+            </ul>
+            <p>⚠️ <strong>Point critique :</strong> Le payload est en Base64, pas chiffré. Jamais de données sensibles dedans !</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 4: Expliquez le cycle complet d'utilisation des Refresh Tokens avec les JWT.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Le cycle en 7 étapes :</strong></p>
+            <ol>
+              <li><strong>Login :</strong> Email + password → Access Token (15min) + Refresh Token (7j)</li>
+              <li><strong>Utilisation :</strong> Client envoie Access Token à chaque requête</li>
+              <li><strong>Expiration :</strong> Access Token expire après 15min → erreur 401</li>
+              <li><strong>Renouvellement :</strong> Client envoie Refresh Token → nouveau Access Token</li>
+              <li><strong>Répétition :</strong> Cycle 2-4 pendant 7 jours</li>
+              <li><strong>Expiration finale :</strong> Refresh Token expire → re-login obligatoire</li>
+              <li><strong>Logout :</strong> Refresh Token révoqué en DB</li>
+            </ol>
+            <p><strong>Avantages :</strong> Sécurité (token court) + UX (pas de reconnexion fréquente) + Révocation possible</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 5: Quelles sont les 5 règles d'or pour sécuriser un JWT ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <ol>
+              <li>Jamais de données sensibles dans le payload (visible en Base64)</li>
+              <li>Secret fort (256 bits minimum, en variable d'environnement)</li>
+              <li>Liste blanche des algorithmes (algorithms: ['HS256'] contre attaque "none")</li>
+              <li>Toujours une expiration (15min-1h pour access token)</li>
+              <li>Issuer et Audience (vérifier qui a créé le token et pour qui)</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 6: Quelle est la différence entre OAuth 2.0 et les autres méthodes d'authentification ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>OAuth 2.0 N'EST PAS une authentification, c'est de la délégation d'autorisation.</strong></p>
+            <ul>
+              <li><strong>Authentification (Basic, JWT) :</strong> Prouve qui vous êtes</li>
+              <li><strong>OAuth 2.0 :</strong> Permet à une app tierce d'accéder à vos ressources sans votre mot de passe</li>
+            </ul>
+            <p><strong>Exemple :</strong> EventFinder veut vos événements SmartCity → Vous autorisez via OAuth, sans donner votre password.</p>
+            <p><strong>Les 4 acteurs :</strong></p>
+            <ul>
+              <li>Resource Owner (vous)</li>
+              <li>Client (EventFinder)</li>
+              <li>Authorization Server (SmartCity OAuth)</li>
+              <li>Resource Server (SmartCity API)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 7: Expliquez les différents flows OAuth 2.0 et leurs cas d'usage.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>1. Authorization Code (le plus sécurisé)</strong></p>
+            <ul>
+              <li><strong>Pour :</strong> Apps web avec backend</li>
+              <li><strong>Principe :</strong> Code temporaire échangé contre token (avec client_secret)</li>
+              <li>Le token n'est jamais exposé au navigateur</li>
+            </ul>
+            <p><strong>2. Client Credentials (Machine-to-Machine)</strong></p>
+            <ul>
+              <li><strong>Pour :</strong> Communication entre services backend</li>
+              <li><strong>Principe :</strong> Service s'authentifie avec client_id + client_secret</li>
+              <li>Pas d'utilisateur impliqué</li>
+            </ul>
+            <p><strong>3. Authorization Code + PKCE (apps publiques)</strong></p>
+            <ul>
+              <li><strong>Pour :</strong> Apps mobiles, SPAs</li>
+              <li><strong>Problème :</strong> Pas de client_secret sécurisable</li>
+              <li><strong>Solution :</strong> code_verifier + code_challenge (SHA256)</li>
+            </ul>
+            <p><strong>Comment choisir :</strong></p>
+            <ul>
+              <li>Backend disponible → Authorization Code</li>
+              <li>Services backend → Client Credentials</li>
+              <li>Mobile/SPA → PKCE</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions sur l'Autorisation -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">🛡️ Questions sur l'Autorisation</h2>
+      
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 8: Expliquez les 5 niveaux de vérification d'autorisation sur une ressource.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Exemple :</strong> DELETE /api/events/:id</p>
+            <ol>
+              <li><strong>Niveau 1 - Authentification :</strong> Qui fait la requête ? (middleware JWT)</li>
+              <li><strong>Niveau 2 - Existence :</strong> La ressource existe ? (404 si non)</li>
+              <li><strong>Niveau 3 - Autorisation multi-critères :</strong>
+                <ul>
+                  <li>Admin → permission 'manage:all' → Autorisé</li>
+                  <li>Moderator → permission 'delete:any_events' → Autorisé</li>
+                  <li>Organizer → permission 'delete:own_events' + ownership + événement futur + moins de 50 inscriptions → Autorisé si tout OK</li>
+                </ul>
+              </li>
+              <li><strong>Niveau 4 - Logging :</strong> Tracer qui a fait quoi et quand</li>
+              <li><strong>Niveau 5 - Exécution :</strong> Seulement si tout passe</li>
+            </ol>
+            <p><strong>Erreurs à éviter :</strong></p>
+            <ul>
+              <li>❌ Vérifier seulement l'authentification</li>
+              <li>❌ Vérifier seulement le rôle</li>
+              <li>✅ Combiner rôle + ownership + règles métier</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 9: Expliquez le fonctionnement du RBAC (Role-Based Access Control).</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>RBAC = Permissions attachées à des rôles</strong></p>
+            <p><strong>Exemple SmartCity :</strong></p>
+            <ul>
+              <li><strong>Citizen :</strong> read:events, create:registration</li>
+              <li><strong>Organizer :</strong> create:events, update:own_events, delete:own_events</li>
+              <li><strong>Moderator :</strong> update:any_events, delete:any_events, suspend:users</li>
+              <li><strong>Admin :</strong> manage:all (tout)</li>
+            </ul>
+            <p><strong>Avantages :</strong> Simple, facile à auditer, bon pour 80% des apps</p>
+            <p><strong>Inconvénients :</strong> Rigide avec beaucoup de cas particuliers</p>
+            <p><strong>Quand utiliser :</strong> Rôles stables et bien définis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 10: Qu'est-ce que l'ABAC et quand l'utiliser plutôt que le RBAC ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>ABAC = Décisions basées sur des attributs</strong></p>
+            <p><strong>4 types d'attributs :</strong></p>
+            <ul>
+              <li><strong>Utilisateur :</strong> rôle, département, ancienneté</li>
+              <li><strong>Ressource :</strong> type, statut, propriétaire, date</li>
+              <li><strong>Action :</strong> read, write, delete</li>
+              <li><strong>Contexte :</strong> heure, localisation, appareil</li>
+            </ul>
+            <p><strong>Exemple de règle :</strong> "Supprimer un événement SI : propriétaire + futur + moins de 50 inscriptions + entre 9h-18h"</p>
+            <p><strong>Quand utiliser :</strong></p>
+            <ul>
+              <li><strong>RBAC :</strong> Rôles simples et stables (80% des cas)</li>
+              <li><strong>ABAC :</strong> Logiques métier complexes, règles contextuelles</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 11: Pourquoi combiner rôles et scopes OAuth ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Double protection = Sécurité renforcée</strong></p>
+            <p><strong>Avantages côté SERVEUR :</strong></p>
+            <ul>
+              <li>Deux barrières (scope + rôle)</li>
+              <li>Révocation automatique si rôle change</li>
+              <li>Protection contre erreurs</li>
+            </ul>
+            <p><strong>Avantages côté CLIENT :</strong></p>
+            <ul>
+              <li>Connaissance claire des capacités</li>
+              <li>Adaptation de l'UI (afficher/cacher fonctionnalités)</li>
+              <li>Gestion d'erreur proactive</li>
+              <li>Meilleure expérience développeur</li>
+            </ul>
+            <p><strong>Exemple :</strong></p>
+            <ul>
+              <li>Token avec scope read:events mais user citizen → Autorisé</li>
+              <li>Token avec scope delete:events mais user citizen → Refusé (rôle insuffisant)</li>
+            </ul>
+            <p><strong>Résumé :</strong> Le scope dit ce que l'app peut demander, le rôle dit ce que l'user peut vraiment faire.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions sur HTTPS et Sécurité -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">🔒 Questions sur HTTPS et Sécurité</h2>
+      
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 12: Pourquoi HTTPS est-il obligatoire pour toute API en production ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Sans HTTPS, un attaquant intercepte :</strong></p>
+            <ul>
+              <li>Passwords et tokens</li>
+              <li>Données personnelles</li>
+              <li>Contenu des requêtes/réponses</li>
+            </ul>
+            <p><strong>Conséquences :</strong></p>
+            <ul>
+              <li>Navigateurs marquent "Non sécurisé"</li>
+              <li>Impact SEO négatif</li>
+              <li>Non-conformité RGPD/PCI-DSS</li>
+              <li>Perte de confiance utilisateur</li>
+            </ul>
+            <p><strong>2024 :</strong> 95%+ du web en HTTPS. C'est un prérequis absolu.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 13: Expliquez les 3 objectifs de TLS.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>1. CONFIDENTIALITÉ</strong></p>
+            <ul>
+              <li>Chiffrement AES avec clé de session unique</li>
+              <li>Contenu illisible sans la clé</li>
+            </ul>
+            <p><strong>2. INTÉGRITÉ</strong></p>
+            <ul>
+              <li>Hash (HMAC) de chaque message</li>
+              <li>Toute modification détectée → message rejeté</li>
+            </ul>
+            <p><strong>3. AUTHENTIFICATION</strong></p>
+            <ul>
+              <li>Certificat SSL/TLS signé par une CA</li>
+              <li>Prouve l'identité du serveur</li>
+              <li>Client vérifie : CA confiance + domaine + expiration</li>
+            </ul>
+            <p><strong>Le Handshake :</strong> Client Hello → Server Hello + Certificat → Vérification → Échange de clés → Communication chiffrée</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 14: Quels sont les 3 types de certificats SSL/TLS ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>1. DV (Domain Validation)</strong></p>
+            <ul>
+              <li><strong>Vérifie :</strong> contrôle du domaine (challenge DNS/HTTP)</li>
+              <li><strong>Durée :</strong> quelques minutes</li>
+              <li><strong>Coût :</strong> gratuit (Let's Encrypt)</li>
+              <li><strong>Pour :</strong> 95% des sites web</li>
+            </ul>
+            <p><strong>2. OV (Organization Validation)</strong></p>
+            <ul>
+              <li><strong>Vérifie :</strong> domaine + existence entreprise</li>
+              <li><strong>Durée :</strong> 1-3 jours</li>
+              <li><strong>Coût :</strong> 50-200€/an</li>
+              <li><strong>Pour :</strong> sites corporate</li>
+            </ul>
+            <p><strong>3. EV (Extended Validation)</strong></p>
+            <ul>
+              <li><strong>Vérifie :</strong> audit complet de l'organisation</li>
+              <li><strong>Durée :</strong> 1-2 semaines</li>
+              <li><strong>Coût :</strong> 300-1500€/an</li>
+              <li><strong>Pour :</strong> banques, fintech</li>
+            </ul>
+            <p><strong>Recommandation SmartCity :</strong> Let's Encrypt (DV gratuit et automatique)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 15: Décrivez 5 attaques courantes et leurs protections.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>1. MITM (Man-in-the-Middle)</strong></p>
+            <ul>
+              <li><strong>Attaque :</strong> Interception du trafic</li>
+              <li><strong>Protection :</strong> HTTPS + HSTS + Certificate Pinning</li>
+            </ul>
+            <p><strong>2. SQL Injection</strong></p>
+            <ul>
+              <li><strong>Attaque :</strong> Injection de code SQL malveillant</li>
+              <li><strong>Protection :</strong> ORM + Requêtes paramétrées + Validation</li>
+            </ul>
+            <p><strong>3. XSS (Cross-Site Scripting)</strong></p>
+            <ul>
+              <li><strong>Attaque :</strong> Injection de scripts JavaScript</li>
+              <li><strong>Protection :</strong> CSP + Sanitization + Escaping + httpOnly cookies</li>
+            </ul>
+            <p><strong>4. CSRF (Cross-Site Request Forgery)</strong></p>
+            <ul>
+              <li><strong>Attaque :</strong> Actions non désirées avec session active</li>
+              <li><strong>Protection :</strong> sameSite cookies + CSRF tokens</li>
+            </ul>
+            <p><strong>5. Brute Force</strong></p>
+            <ul>
+              <li><strong>Attaque :</strong> Essais massifs de passwords</li>
+              <li><strong>Protection :</strong> Rate limiting + Blocage progressif + bcrypt + CAPTCHA</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 16: Comment protéger une API contre les attaques brute force ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Protection multi-niveaux :</strong></p>
+            <ul>
+              <li><strong>Rate limiting :</strong> 5 tentatives max / 15min</li>
+              <li><strong>Blocage progressif :</strong> 5 échecs = 15min, 10 échecs = 1h</li>
+              <li><strong>CAPTCHA :</strong> Après 3 échecs</li>
+              <li><strong>Slow hash (bcrypt) :</strong>
+                <ul>
+                  <li>rounds = 12 → 2^12 = 4096 itérations</li>
+                  <li>~250ms par hash</li>
+                  <li>Rend le brute force très coûteux en temps</li>
+                </ul>
+              </li>
+              <li><strong>Monitoring :</strong> Logger + alertes sur patterns suspects</li>
+              <li><strong>MFA/2FA :</strong> Pour comptes admin</li>
+            </ul>
+            <p><strong>Résultat :</strong> Brute force devient impraticable (années nécessaires)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 17: Pourquoi ne jamais stocker les JWT dans localStorage ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Le problème :</strong> localStorage accessible via JavaScript → vulnérable XSS</p>
+            <p><strong>Scénario d'attaque :</strong></p>
+            <ol>
+              <li>Attaquant injecte script XSS</li>
+              <li>Script lit localStorage.getItem('token')</li>
+              <li>Token envoyé au serveur attaquant</li>
+              <li>Usurpation d'identité</li>
+            </ol>
+            <p><strong>La solution : Cookie httpOnly</strong></p>
+            <ul>
+              <li>Pas accessible en JavaScript</li>
+              <li>Protection XSS automatique</li>
+              <li>Protection CSRF avec sameSite</li>
+              <li>Gestion automatique par navigateur</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 18: Qu'est-ce que le principe du moindre privilège ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Principe :</strong> Donner uniquement les permissions nécessaires, rien de plus.</p>
+            <p><strong>Application :</strong></p>
+            <ul>
+              <li><strong>Utilisateurs :</strong> Accès minimal (citizen &lt; organizer &lt; moderator &lt; admin)</li>
+              <li><strong>API Keys :</strong> Scopes granulaires par clé</li>
+              <li><strong>OAuth :</strong> Demander seulement les scopes nécessaires</li>
+              <li><strong>Base de données :</strong> Compte avec permissions minimales</li>
+              <li><strong>Systèmes :</strong> Containers sans root</li>
+            </ul>
+            <p><strong>Bénéfice :</strong> Limiter les dégâts en cas de compromission</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 19: Expliquez la défense en profondeur (Defense in Depth).</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Principe :</strong> Plusieurs couches de sécurité. Si une échoue, les autres protègent.</p>
+            <p><strong>Les 7 couches (exemple DELETE /api/events/:id) :</strong></p>
+            <ol>
+              <li>HTTPS/TLS → Protège le transport</li>
+              <li>WAF/Rate Limiting → Filtre trafic malveillant</li>
+              <li>Authentication (JWT) → Vérifie l'identité</li>
+              <li>Authorization (RBAC) → Vérifie les permissions</li>
+              <li>Validation/Sanitization → Nettoie les inputs</li>
+              <li>Application Logic → Traite la requête</li>
+              <li>Logging/Monitoring → Trace et alerte</li>
+            </ol>
+            <p><strong>Résultat :</strong> Une faille sur une couche ne compromet pas tout le système</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 20: Créez une checklist de déploiement sécurisé pour une API.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Transport :</strong></p>
+            <ul>
+              <li>☐ HTTPS activé (Let's Encrypt)</li>
+              <li>☐ TLS 1.2+ uniquement</li>
+              <li>☐ Redirect HTTP → HTTPS (redirection automatique avec code 301)</li>
+              <li>☐ HSTS activé (force HTTPS pendant X temps)</li>
+            </ul>
+            <p><strong>Headers :</strong></p>
+            <ul>
+              <li>☐ Helmet.js (configure automatiquement tous les headers de sécurité)</li>
+              <li>☐ CSP (limite les sources de scripts/CSS/images)</li>
+              <li>☐ X-Frame-Options: DENY (anti-clickjacking)</li>
+              <li>☐ X-Content-Type-Options: nosniff (anti-MIME sniffing)</li>
+            </ul>
+            <p><strong>Auth :</strong></p>
+            <ul>
+              <li>☐ Passwords hashés (bcrypt rounds &gt;= 12)</li>
+              <li>☐ JWT expiration courte (15min-1h)</li>
+              <li>☐ Refresh tokens en DB</li>
+              <li>☐ Tokens en cookies httpOnly</li>
+              <li>☐ Rate limiting sur /login (5 max)</li>
+            </ul>
+            <p><strong>Data :</strong></p>
+            <ul>
+              <li>☐ Validation inputs stricte</li>
+              <li>☐ ORM ou requêtes paramétrées</li>
+              <li>☐ Pas de données sensibles dans logs/JWT</li>
+            </ul>
+            <p><strong>Monitoring :</strong></p>
+            <ul>
+              <li>☐ Logs centralisés</li>
+              <li>☐ Alertes sur activités suspectes</li>
+            </ul>
+            <p><strong>Tests :</strong></p>
+            <ul>
+              <li>☐ npm audit dans CI/CD</li>
+              <li>☐ OWASP Top 10 vérifié</li>
+            </ul>
+            <p><strong>Secrets :</strong></p>
+            <ul>
+              <li>☐ Variables d'environnement</li>
+              <li>☐ .env dans .gitignore</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer id="contact" class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="../assets/logo.jpeg" alt="YNOV Campus" class="footer-logo-img">
+            <span class="footer-logo-text">Web Services</span>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Programme</h3>
+          <ul>
+            <li><a href="../index.html#programme">Planning détaillé</a></li>
+            <li><a href="filerouge.html">Projet SmartCity</a></li>
+            <li><a href="ressources.html">Ressources</a></li>
+            <li><a href="../index.html#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Technologies</h3>
+          <ul>
+            <li>REST & SOAP</li>
+            <li>WSDL & UDDI</li>
+            <li>OAuth 2.0 & JWT</li>
+            <li>Architecture SOA</li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> contact@ynov.com</p>
+            <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+            <p><i class="fas fa-map-marker-alt"></i> Campus Ynov</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 YNOV Campus. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+  <script>
+    // Gestion de l'affichage des réponses au clic
+    document.addEventListener('DOMContentLoaded', function() {
+      const questionHeaders = document.querySelectorAll('.question-header');
+      
+      questionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+          const questionItem = this.closest('.question-item');
+          const answer = questionItem.querySelector('.question-answer');
+          const isOpen = answer.classList.contains('open');
+          
+          // Toggle de l'état
+          if (isOpen) {
+            answer.classList.remove('open');
+            this.classList.remove('active');
+          } else {
+            answer.classList.add('open');
+            this.classList.add('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+

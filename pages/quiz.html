@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz de Révision - Jours 1, 2 & 3</title>
+  <link rel="stylesheet" href="../styles/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .quiz-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-top: 90px;
+    }
+
+    .quiz-header h1 {
+      font-size: 2.5rem;
+      color: var(--logo-color);
+      margin-bottom: 1rem;
+    }
+
+    .quiz-header p {
+      font-size: 1.1rem;
+      color: var(--gray-600);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .quiz-section {
+      margin-bottom: 3rem;
+    }
+
+    .quiz-section-title {
+      font-size: 1.8rem;
+      color: var(--logo-color);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--primary-color);
+    }
+
+    .quiz-level {
+      margin-bottom: 2.5rem;
+    }
+
+    .quiz-level-title {
+      font-size: 1.3rem;
+      color: var(--gray-700);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .question-item {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      transition: var(--transition-normal);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .question-item:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .question-header {
+      padding: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--gray-100);
+      transition: var(--transition-fast);
+    }
+
+    .question-header:hover {
+      background: var(--gray-200);
+    }
+
+    .question-header.active {
+      background: var(--primary-color);
+      color: var(--white);
+    }
+
+    .question-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gray-800);
+      flex: 1;
+      margin-right: 1rem;
+    }
+
+    .question-header.active .question-text {
+      color: var(--white);
+    }
+
+    .question-toggle {
+      font-size: 1.2rem;
+      transition: transform var(--transition-fast);
+      color: var(--gray-600);
+    }
+
+    .question-header.active .question-toggle {
+      color: var(--white);
+      transform: rotate(180deg);
+    }
+
+    .question-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+      padding: 0 1.5rem;
+    }
+
+    .question-answer.open {
+      max-height: 5000px;
+      padding: 1.5rem;
+    }
+
+    .answer-content {
+      background: var(--gray-50);
+      border-left: 4px solid var(--primary-color);
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+    }
+
+    .answer-content h4 {
+      color: var(--logo-color);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .answer-content p,
+    .answer-content ul,
+    .answer-content ol {
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .answer-content ul,
+    .answer-content ol {
+      padding-left: 2rem;
+    }
+
+    .answer-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .answer-content code {
+      background: var(--gray-200);
+      padding: 0.2rem 0.4rem;
+      border-radius: var(--radius-sm);
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    .answer-content pre {
+      background: var(--gray-900);
+      color: var(--white);
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    .answer-content pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+
+    .answer-content strong {
+      color: var(--logo-color);
+    }
+
+    .answer-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+
+    .answer-content table th,
+    .answer-content table td {
+      padding: 0.75rem;
+      border: 1px solid var(--gray-300);
+      text-align: left;
+    }
+
+    .answer-content table th {
+      background: var(--gray-200);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="../assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+        <span class="logo-text">Web Services</span>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="../index.html" class="nav-link">Accueil</a>
+        </li>
+        <li class="nav-item">
+          <a href="../index.html#programme" class="nav-link">Programme</a>
+        </li>
+        <li class="nav-item">
+          <a href="filerouge.html" class="nav-link">Projet SmartCity</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle">
+            <i class="fas fa-calendar-alt"></i> Journées
+            <i class="fas fa-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+            <a href="day2.html" class="dropdown-item">Jour 2 - Théorie</a>
+            <a href="day3.html" class="dropdown-item">Jour 3 - Théorie</a>
+            <a href="day4-5.html" class="dropdown-item">Jour 4 & 5 - Théorie</a>
+            <a href="day6.html" class="dropdown-item">Jour 6 - Théorie</a>
+            <a href="day7.html" class="dropdown-item">Jour 7 - Théorie</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle">
+            <i class="fas fa-question-circle"></i> Quiz
+            <i class="fas fa-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="quiz.html" class="dropdown-item active">Quiz Jours 1-2-3</a>
+            <a href="quiz-4-5.html" class="dropdown-item">Quiz Jours 4-5</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="ressources.html" class="nav-link">Ressources</a>
+        </li>
+        <li class="nav-item">
+          <a href="../index.html#contact" class="nav-link">Contact</a>
+        </li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Quiz Content -->
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h1>📋 Quiz de Révision - Jours 1, 2 & 3</h1>
+    </div>
+
+    <!-- JOUR 1 -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">🌐 JOUR 1 - Fondamentaux des Web Services</h2>
+      
+      <div class="quiz-level">
+        
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q1: Qu'est-ce qu'un web service et quel problème résout-il ?</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p>Un web service est un système logiciel qui permet à deux applications de communiquer entre elles via un réseau en utilisant des standards ouverts.</p>
+              <p><strong>Problème résolu :</strong> Permettre à des applications écrites dans différents langages (Java, PHP, Python, etc.) de communiquer ensemble sans avoir à tout réécrire.</p>
+              <p><strong>Exemple concret :</strong> Une application météo sur smartphone qui interroge un service météorologique pour obtenir les prévisions. L'app ne mesure rien elle-même, elle consomme un web service.</p>
+              <p><strong>Les 3 composants :</strong></p>
+              <ul>
+                <li><strong>Provider (fournisseur) :</strong> expose les fonctionnalités</li>
+                <li><strong>Consumer (consommateur) :</strong> utilise les fonctionnalités</li>
+                <li><strong>Contract (contrat) :</strong> les règles du jeu</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q2: Citez les 5 méthodes HTTP principales et leur rôle.</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <ul>
+                <li><strong>GET :</strong> Récupérer une ressource (lecture, safe, idempotent)</li>
+                <li><strong>POST :</strong> Créer une nouvelle ressource (ni safe ni idempotent)</li>
+                <li><strong>PUT :</strong> Remplacer complètement une ressource (idempotent)</li>
+                <li><strong>PATCH :</strong> Modifier partiellement une ressource</li>
+                <li><strong>DELETE :</strong> Supprimer une ressource (idempotent)</li>
+              </ul>
+              <p><strong>Règle importante :</strong> Le verbe HTTP exprime l'action, pas l'URL.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q3: Quelle est la différence entre JSON et XML ? Lequel utilise-t-on aujourd'hui et pourquoi ?</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>JSON :</strong></p>
+              <ul>
+                <li>Format léger et compact (30-50% plus petit que XML)</li>
+                <li>Facile à lire pour les humains</li>
+                <li>Natif en JavaScript</li>
+                <li>80% des nouvelles APIs publiques</li>
+              </ul>
+              <p><strong>XML :</strong></p>
+              <ul>
+                <li>Format plus verbeux avec balises</li>
+                <li>Validation stricte possible (XSD)</li>
+                <li>Utilisé dans systèmes legacy, finance, santé</li>
+                <li>Standard SOAP</li>
+              </ul>
+              <p><strong>Aujourd'hui on préfère JSON pour :</strong></p>
+              <ul>
+                <li>Simplicité et légèreté</li>
+                <li>Performance supérieure</li>
+                <li>Adoption universelle</li>
+              </ul>
+              <p><strong>XML reste pour :</strong></p>
+              <ul>
+                <li>Systèmes legacy obligatoires</li>
+                <li>Domaines réglementés (banque, santé)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q4: Expliquez la différence entre une méthode HTTP "safe" et "idempotente".</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>Safe (sûre) :</strong></p>
+              <ul>
+                <li>Ne modifie JAMAIS l'état du serveur</li>
+                <li>Peut être appelée autant de fois qu'on veut sans danger</li>
+                <li>Exemple : GET est safe</li>
+              </ul>
+              <p><strong>Idempotente :</strong></p>
+              <ul>
+                <li>Peut être appelée plusieurs fois avec le même résultat final</li>
+                <li>L'état du serveur sera identique après 1 ou 100 appels</li>
+                <li>Exemples :</li>
+                <ul>
+                  <li>PUT est idempotent (remplacer 10 fois = même résultat)</li>
+                  <li>DELETE est idempotent (supprimer 10 fois = supprimé)</li>
+                  <li>POST N'EST PAS idempotent (10 appels = 10 ressources)</li>
+                </ul>
+              </ul>
+              <p><strong>Tableau récapitulatif :</strong></p>
+              <table>
+                <tr>
+                  <th>Méthode</th>
+                  <th>Safe</th>
+                  <th>Idempotent</th>
+                </tr>
+                <tr>
+                  <td>GET</td>
+                  <td>✅</td>
+                  <td>✅</td>
+                </tr>
+                <tr>
+                  <td>POST</td>
+                  <td>❌</td>
+                  <td>❌</td>
+                </tr>
+                <tr>
+                  <td>PUT</td>
+                  <td>❌</td>
+                  <td>✅</td>
+                </tr>
+                <tr>
+                  <td>DELETE</td>
+                  <td>❌</td>
+                  <td>✅</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-level">
+        
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q5: Quels codes de statut HTTP utiliseriez-vous pour ces situations ?</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <ul>
+                <li><strong>422 Unprocessable Entity</strong> - Email déjà utilisé
+                  <ul>
+                    <li>Requête syntaxiquement correcte mais sémantiquement incorrecte</li>
+                    <li>Règle métier violée</li>
+                  </ul>
+                </li>
+                <li><strong>401 Unauthorized</strong> - Token JWT expiré
+                  <ul>
+                    <li>Authentification manquante ou invalide</li>
+                    <li>Le client doit se ré-authentifier</li>
+                  </ul>
+                </li>
+                <li><strong>403 Forbidden</strong> - Droits insuffisants
+                  <ul>
+                    <li>Utilisateur authentifié mais sans permission</li>
+                    <li>Manque le rôle requis (ex: admin)</li>
+                  </ul>
+                </li>
+                <li><strong>500 Internal Server Error</strong> - Exception non gérée
+                  <ul>
+                    <li>Erreur serveur imprévue</li>
+                    <li>NE JAMAIS révéler les détails techniques au client</li>
+                    <li>Inclure correlation_id pour le debugging</li>
+                  </ul>
+                </li>
+              </ul>
+              <p><strong>Règle clé :</strong> 4xx = faute du client | 5xx = faute du serveur</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q6: Pourquoi utiliser le format ISO 8601 pour les dates ? (ex: 2025-10-24T14:30:00Z) Donnez un exemple.</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>Raisons d'utiliser ISO 8601 :</strong></p>
+              <ul>
+                <li><strong>Évite l'ambiguïté internationale</strong>
+                  <ul>
+                    <li>02/03/2025 = 2 mars ou 3 février ?</li>
+                    <li>ISO : 2025-03-02 = toujours le 2 mars</li>
+                  </ul>
+                </li>
+                <li><strong>Inclut le fuseau horaire</strong>
+                  <ul>
+                    <li>14:30:00Z = 14h30 UTC</li>
+                    <li>14:30:00+02:00 = 14h30 heure de Paris</li>
+                  </ul>
+                </li>
+                <li><strong>Tri naturel</strong>
+                  <ul>
+                    <li>Les dates ISO se trient alphabétiquement</li>
+                  </ul>
+                </li>
+                <li><strong>Support universel</strong>
+                  <ul>
+                    <li>Tous les langages parsent ISO 8601 nativement</li>
+                  </ul>
+                </li>
+              </ul>
+              <p><strong>Format complet :</strong> <code>2025-10-24T14:30:00Z</code></p>
+              <ul>
+                <li>Date : 2025-10-24</li>
+                <li>Heure : 14:30:00</li>
+                <li>Z = UTC (Zulu)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q7: Qu'est-ce que la RFC 7807 et pourquoi l'utiliser pour les erreurs ?</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>RFC 7807 :</strong> "Problem Details for HTTP APIs"</p>
+              <p>Standard qui définit un format JSON uniforme pour décrire les erreurs HTTP.</p>
+              <p><strong>Avant RFC 7807 :</strong> Chaque API inventait son format d'erreur</p>
+              <ul>
+                <li>API A : <code>{"error": "Bad things"}</code></li>
+                <li>API B : <code>{"message": "Nope", "code": 123}</code></li>
+                <li>→ Impossible d'écrire un client robuste</li>
+              </ul>
+              <p><strong>Avec RFC 7807 (structure) :</strong></p>
+              <ul>
+                <li><strong>type :</strong> URI qui identifie le type d'erreur</li>
+                <li><strong>title :</strong> Titre générique du problème</li>
+                <li><strong>status :</strong> Code HTTP</li>
+                <li><strong>detail :</strong> Explication spécifique</li>
+                <li><strong>instance :</strong> URI de la requête qui a causé l'erreur</li>
+                <li><strong>Champs custom :</strong> errors, correlation_id...</li>
+              </ul>
+              <p><strong>Pourquoi l'utiliser ?</strong></p>
+              <ul>
+                <li>Standardisation entre tous les endpoints</li>
+                <li>Meilleure expérience développeur</li>
+                <li>Debugging facilité avec correlation_id</li>
+                <li>Documentation claire</li>
+                <li>Parsing uniforme côté client</li>
+              </ul>
+              <p><strong>Content-Type important :</strong> <code>application/problem+json</code></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-level">
+        
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q8: Expliquez la différence entre PUT et PATCH avec un exemple concret.</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>PUT - Remplacement COMPLET :</strong></p>
+              <ul>
+                <li>TOUS les champs doivent être fournis</li>
+                <li>Remplace complètement la ressource</li>
+                <li>Idempotent (répéter = même résultat)</li>
+                <li>Si vous oubliez un champ, il sera supprimé/null</li>
+              </ul>
+              <p><strong>PATCH - Modification PARTIELLE :</strong></p>
+              <ul>
+                <li>Seuls les champs à modifier</li>
+                <li>Les autres champs restent inchangés</li>
+                <li>Plus économe en bande passante</li>
+              </ul>
+              <p><strong>Exemple concret :</strong></p>
+              <p>Scénario : Changer juste l'email d'un utilisateur</p>
+              <p><strong>PUT (obligé de tout renvoyer) :</strong></p>
+              <pre><code>PUT /users/123
+{
+  "name": "Marie Dubois",
+  "email": "nouveau@example.com",  // ce qu'on veut changer
+  "phone": "+33612345678",
+  "address": "10 rue...",
+  "bio": "..."
+  // tous les autres champs obligatoires
+}</code></pre>
+              <p><strong>PATCH (seulement ce qui change) :</strong></p>
+              <pre><code>PATCH /users/123
+{
+  "email": "nouveau@example.com"
+}</code></pre>
+              <p><strong>Quand utiliser quoi ?</strong></p>
+              <ul>
+                <li><strong>PUT :</strong> Formulaire complet avec tous les champs</li>
+                <li><strong>PATCH :</strong> Toggle, changement d'un seul champ</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q9: Expliquez le principe "Stateless" de REST. Pourquoi est-ce crucial pour la scalabilité ?</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>Définition Stateless :</strong></p>
+              <p>Chaque requête du client doit contenir TOUTES les informations nécessaires pour la traiter. Le serveur ne stocke AUCUN contexte de session entre les requêtes.</p>
+              <p><strong>Approche Stateful (ancienne - problématique) :</strong></p>
+              <ul>
+                <li>Client se connecte → serveur crée session en mémoire</li>
+                <li>Session stockée sur UN serveur spécifique</li>
+                <li>Nécessite "sticky sessions" (toujours parler au même serveur)</li>
+                <li>Si serveur crash → sessions perdues</li>
+                <li>Scaling difficile</li>
+              </ul>
+              <p><strong>Approche Stateless (moderne - REST) :</strong></p>
+              <ul>
+                <li>Client envoie JWT token dans chaque requête</li>
+                <li>Serveur décode le token → sait qui est le client</li>
+                <li>Aucune mémoire de session</li>
+                <li>N'importe quel serveur peut traiter la requête</li>
+              </ul>
+              <p><strong>Pourquoi crucial pour la scalabilité ?</strong></p>
+              <ul>
+                <li><strong>Scaling horizontal trivial</strong>
+                  <ul>
+                    <li>Ajoutez 100 serveurs, ça fonctionne immédiatement</li>
+                    <li>Pas de synchronisation de sessions</li>
+                    <li>Pas de sticky sessions</li>
+                  </ul>
+                </li>
+                <li><strong>Résilience améliorée</strong>
+                  <ul>
+                    <li>Serveur crash → aucune session perdue</li>
+                    <li>Pas de point de défaillance unique</li>
+                  </ul>
+                </li>
+                <li><strong>Microservices friendly</strong>
+                  <ul>
+                    <li>Tous les services valident le JWT indépendamment</li>
+                    <li>Pas de session partagée</li>
+                  </ul>
+                </li>
+                <li><strong>Infrastructure simplifiée</strong>
+                  <ul>
+                    <li>Pas besoin de Redis pour les sessions</li>
+                    <li>Moins de latence réseau</li>
+                  </ul>
+                </li>
+              </ul>
+              <p><strong>Exemple concret :</strong> Netflix gère 230M+ utilisateurs avec stateless</p>
+              <ul>
+                <li>Peuvent déployer 100 fois par jour sans casser les sessions</li>
+                <li>N'importe quel datacenter peut traiter n'importe quelle requête</li>
+              </ul>
+              <p><strong>Trade-off :</strong> Token plus gros qu'un cookie, mais bénéfices >> coûts</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JOUR 2 -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">🎨 JOUR 2 - Introduction aux API REST</h2>
+      
+      <div class="quiz-level">
+        
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q10: Citez au moins 4 des 6 contraintes architecturales REST.</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>Les 6 contraintes REST :</strong></p>
+              <ol>
+                <li><strong>Client-Serveur</strong>
+                  <ul>
+                    <li>Séparation des responsabilités</li>
+                    <li>Évolution indépendante</li>
+                  </ul>
+                </li>
+                <li><strong>Stateless (Sans état)</strong>
+                  <ul>
+                    <li>Chaque requête contient tout le contexte</li>
+                    <li>Pas de session serveur</li>
+                  </ul>
+                </li>
+                <li><strong>Cacheable</strong>
+                  <ul>
+                    <li>Réponses indiquent si elles peuvent être cachées</li>
+                    <li>Code 304 Not Modified</li>
+                  </ul>
+                </li>
+                <li><strong>Interface uniforme</strong>
+                  <ul>
+                    <li>URIs pour identifier les ressources</li>
+                    <li>Manipulation via représentations</li>
+                    <li>Messages auto-descriptifs</li>
+                  </ul>
+                </li>
+                <li><strong>Système en couches</strong>
+                  <ul>
+                    <li>Client ne sait pas s'il parle au serveur final ou à un proxy</li>
+                    <li>Permet CDN, load balancer transparent</li>
+                  </ul>
+                </li>
+                <li><strong>Code on demand (optionnel)</strong>
+                  <ul>
+                    <li>Serveur peut envoyer du code exécutable</li>
+                  </ul>
+                </li>
+              </ol>
+              <p><strong>Les 2 plus importantes :</strong> Stateless + Interface uniforme</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q11: Quelle est la différence entre une collection et une ressource unique dans une URL REST ?</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>Collection (pluriel) :</strong></p>
+              <ul>
+                <li>Ensemble de ressources</li>
+                <li>Toujours au pluriel</li>
+                <li>Sans identifiant spécifique</li>
+                <li><strong>Exemples :</strong>
+                  <ul>
+                    <li><code>GET /users</code> → liste tous les utilisateurs</li>
+                    <li><code>POST /users</code> → crée un utilisateur</li>
+                    <li><code>GET /events</code> → liste les événements</li>
+                  </ul>
+                </li>
+              </ul>
+              <p><strong>Ressource unique :</strong></p>
+              <ul>
+                <li>UNE ressource spécifique</li>
+                <li>Avec identifiant unique</li>
+                <li><strong>Exemples :</strong>
+                  <ul>
+                    <li><code>GET /users/123</code> → récupère l'utilisateur 123</li>
+                    <li><code>PATCH /users/123</code> → modifie l'utilisateur 123</li>
+                    <li><code>DELETE /events/550e8400</code> → supprime l'événement</li>
+                  </ul>
+                </li>
+              </ul>
+              <p><strong>Ressources imbriquées :</strong></p>
+              <ul>
+                <li><code>GET /users/123/orders</code> → commandes de l'utilisateur 123</li>
+                <li><code>GET /events/789/attendees</code> → participants de l'événement</li>
+              </ul>
+              <p><strong>Erreur fréquente à éviter :</strong></p>
+              <ul>
+                <li>❌ <code>GET /user/123</code> (singulier)</li>
+                <li>✅ <code>GET /users/123</code> (pluriel même pour 1 ressource)</li>
+              </ul>
+              <p><strong>Règle d'or :</strong> Toujours pluriel pour la collection !</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q12: Pourquoi ne devrait-on JAMAIS renvoyer un tableau nu au top-level d'une réponse JSON ?</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>Problèmes d'un tableau nu :</strong></p>
+              <ul>
+                <li><strong>Pas de métadonnées possibles</strong>
+                  <ul>
+                    <li>Impossible d'ajouter pagination, total, etc.</li>
+                  </ul>
+                </li>
+                <li><strong>Breaking change futur</strong>
+                  <ul>
+                    <li>Ajouter des métadonnées casse tous les clients</li>
+                    <li><code>response[0]</code> ne pointe plus sur le premier élément</li>
+                  </ul>
+                </li>
+                <li><strong>Pas d'extensibilité</strong>
+                  <ul>
+                    <li>Impossible d'ajouter des champs sans breaking change</li>
+                  </ul>
+                </li>
+              </ul>
+              <p><strong>Solution : Enveloppe objet</strong></p>
+              <pre><code>{
+  "data": [...],
+  "meta": {
+    "total": 156,
+    "page": 1,
+    "per_page": 20
+  },
+  "links": {
+    "next": "/products?page=2"
+  }
+}</code></pre>
+              <p><strong>Avantages :</strong></p>
+              <ul>
+                <li>Métadonnées immédiates</li>
+                <li>Extensible sans breaking change</li>
+                <li>Structure cohérente partout</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-level">
+        
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q13: Expliquez la différence entre pagination offset-based et cursor-based.</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>OFFSET-BASED (classique)</strong></p>
+              <p><strong>Principe :</strong></p>
+              <ul>
+                <li><code>GET /products?page=1&per_page=20</code> (éléments 1-20)</li>
+                <li><code>GET /products?offset=20&limit=20</code> (sauter 20, prendre 20)</li>
+              </ul>
+              <p><strong>Avantages :</strong></p>
+              <ul>
+                <li>Simple à comprendre</li>
+                <li>Permet de sauter directement à n'importe quelle page</li>
+                <li>Facile de calculer le nombre total de pages</li>
+              </ul>
+              <p><strong>Inconvénients :</strong></p>
+              <ul>
+                <li>Performance dégradée sur grandes tables (offset 10000 est lent)</li>
+                <li>Problème de cohérence si données ajoutées/supprimées pendant pagination</li>
+              </ul>
+              <p><strong>Exemple du problème :</strong></p>
+              <ol>
+                <li>Client demande page 1 (éléments 1-20)</li>
+                <li>100 nouveaux produits ajoutés en tête</li>
+                <li>Client demande page 2</li>
+                <li>→ Obtient des produits déjà vus ! 😱</li>
+              </ol>
+              <p><strong>CURSOR-BASED (moderne)</strong></p>
+              <p><strong>Principe :</strong></p>
+              <ul>
+                <li><code>GET /products?cursor=eyJpZCI6MTIzfQ==&limit=20</code></li>
+                <li>Cursor = pointeur opaque (base64) vers la position</li>
+              </ul>
+              <p><strong>Avantages :</strong></p>
+              <ul>
+                <li>Performance constante (utilise les index)</li>
+                <li>Cohérence garantie même si données changent</li>
+                <li>Parfait pour feeds infinis (scroll Instagram/Twitter)</li>
+              </ul>
+              <p><strong>Inconvénients :</strong></p>
+              <ul>
+                <li>Impossible de sauter à la page 5 directement</li>
+                <li>Plus complexe à implémenter</li>
+                <li>Pas de "total de pages"</li>
+              </ul>
+              <p><strong>QUAND UTILISER QUOI ?</strong></p>
+              <p><strong>Offset-based pour :</strong></p>
+              <ul>
+                <li>Backoffice admin avec pages numérotées</li>
+                <li>Tableaux avec navigation claire</li>
+                <li>Petits datasets (&lt;10k éléments)</li>
+              </ul>
+              <p><strong>Cursor-based pour :</strong></p>
+              <ul>
+                <li>Feeds sociaux (scroll infini)</li>
+                <li>Messagerie/chat</li>
+                <li>Grands datasets (&gt;10k éléments)</li>
+                <li>APIs publiques haute performance</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q14: Quelles sont les conventions de nommage pour les URLs REST ?</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>RÈGLES FONDAMENTALES</strong></p>
+              <p><strong>1. Toujours PLURIEL</strong></p>
+              <ul>
+                <li>✅ <code>GET /users/123</code></li>
+                <li>❌ <code>GET /user/123</code></li>
+              </ul>
+              <p><strong>2. NOMS, pas VERBES</strong></p>
+              <ul>
+                <li>✅ <code>GET /users</code>, <code>POST /orders</code></li>
+                <li>❌ <code>GET /getUsers</code>, <code>POST /createOrder</code></li>
+                <li>Le verbe est déjà dans la méthode HTTP !</li>
+              </ul>
+              <p><strong>3. Kebab-case en minuscules</strong></p>
+              <ul>
+                <li>✅ <code>/users/123/order-history</code></li>
+                <li>❌ <code>/users/123/orderHistory</code> (camelCase)</li>
+                <li>❌ <code>/users/123/order_history</code> (snake_case)</li>
+              </ul>
+              <p><strong>4. Hiérarchie max 2-3 niveaux</strong></p>
+              <ul>
+                <li>✅ <code>GET /users/123/orders</code></li>
+                <li>✅ <code>GET /orders/456/items</code></li>
+                <li>❌ <code>GET /users/123/orders/456/items/789/options/012</code> (trop profond)</li>
+              </ul>
+              <p><strong>5. Actions complexes</strong></p>
+              <p><em>Approche 1 : Sous-ressource (préférée)</em></p>
+              <ul>
+                <li>✅ <code>POST /orders/123/payment</code> (créer un paiement)</li>
+                <li>✅ <code>POST /users/456/activation</code></li>
+              </ul>
+              <p><em>Approche 2 : Verbe explicite (dernier recours)</em></p>
+              <ul>
+                <li>⚠️ <code>POST /orders/123/cancel</code></li>
+                <li>⚠️ <code>POST /users/456/reset-password</code></li>
+              </ul>
+              <p><strong>Pattern SmartCity :</strong></p>
+              <pre><code>GET    /events
+POST   /events
+GET    /events/{id}
+PATCH  /events/{id}
+DELETE /events/{id}
+POST   /events/{id}/register
+GET    /events?type=concert&city=Paris&sort=-date</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-level">
+        
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q15: Comment structurer une réponse de collection avec pagination ?</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>STRUCTURE COMPLÈTE RECOMMANDÉE</strong></p>
+              <p><strong>3 sections principales :</strong></p>
+              <p><strong>1. Section data (obligatoire)</strong></p>
+              <ul>
+                <li>Toujours un tableau</li>
+                <li>Contient les ressources de la page actuelle</li>
+                <li>Même vide : <code>"data": []</code></li>
+              </ul>
+              <p><strong>2. Section meta (fortement recommandée)</strong></p>
+              <p>Métadonnées de pagination :</p>
+              <ul>
+                <li><strong>total :</strong> Nombre TOTAL d'éléments (toutes pages)</li>
+                <li><strong>count :</strong> Nombre d'éléments dans CETTE page</li>
+                <li><strong>page :</strong> Numéro de page actuelle</li>
+                <li><strong>per_page :</strong> Éléments par page</li>
+                <li><strong>total_pages :</strong> Nombre total de pages</li>
+                <li><strong>has_more :</strong> Y a-t-il une page suivante ?</li>
+              </ul>
+              <p><strong>3. Section links (recommandée)</strong></p>
+              <p>Liens HATEOAS pour la navigation :</p>
+              <ul>
+                <li><strong>self :</strong> Page actuelle</li>
+                <li><strong>first :</strong> Première page</li>
+                <li><strong>prev :</strong> Page précédente (null si première)</li>
+                <li><strong>next :</strong> Page suivante (null si dernière)</li>
+                <li><strong>last :</strong> Dernière page</li>
+              </ul>
+              <p><strong>Exemple complet :</strong></p>
+              <pre><code>{
+  "data": [
+    {"id": "550e8400", "title": "Concert de Jazz", ...}
+  ],
+  "meta": {
+    "total": 156,
+    "count": 20,
+    "page": 1,
+    "per_page": 20,
+    "total_pages": 8,
+    "has_more": true
+  },
+  "links": {
+    "self": "/events?page=1&per_page=20",
+    "first": "/events?page=1&per_page=20",
+    "prev": null,
+    "next": "/events?page=2&per_page=20",
+    "last": "/events?page=8&per_page=20"
+  }
+}</code></pre>
+              <p><strong>Pour cursor-based :</strong></p>
+              <pre><code>{
+  "data": [...],
+  "meta": {
+    "count": 20,
+    "has_more": true,
+    "next_cursor": "eyJpZCI6MTQzfQ=="
+  },
+  "links": {
+    "next": "/events?cursor=eyJpZCI6MTQzfQ==&limit=20"
+  }
+}</code></pre>
+              <p><strong>Cohérence = 🔑</strong> Utilisez la même structure partout !</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JOUR 3 -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">🚀 JOUR 3 - Développement d'API REST Avancé</h2>
+      
+      <div class="quiz-level">
+        
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q16: Quand devrait-on créer une nouvelle version d'API ? Donnez 3 exemples de breaking changes.</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p>On crée une nouvelle version uniquement pour des <strong>breaking changes</strong> (changements incompatibles).</p>
+              <p><strong>BREAKING CHANGES (nécessitent v2)</strong></p>
+              <p><strong>1. Renommer un champ</strong></p>
+              <ul>
+                <li>v1 : <code>"customer_name": "Marie"</code></li>
+                <li>v2 : <code>"customer": {"name": "Marie"}</code></li>
+                <li>Les clients qui lisent <code>customer_name</code> ne le trouveront plus</li>
+              </ul>
+              <p><strong>2. Changer le type d'un champ</strong></p>
+              <ul>
+                <li>v1 : <code>"price": 99.99</code> (number)</li>
+                <li>v2 : <code>"price": "99.99 EUR"</code> (string)</li>
+                <li>Les clients qui parsent un number crasheront</li>
+              </ul>
+              <p><strong>3. Supprimer un champ</strong></p>
+              <ul>
+                <li>v1 : <code>{"id": 123, "legacy_field": "data"}</code></li>
+                <li>v2 : <code>{"id": 123}</code> (legacy_field supprimé)</li>
+                <li>Les clients qui dépendent de ce champ cassent</li>
+              </ul>
+              <p><strong>4. Rendre un champ optionnel obligatoire</strong></p>
+              <ul>
+                <li>v1 : email optionnel</li>
+                <li>v2 : email obligatoire</li>
+                <li>Les clients qui n'envoient pas d'email auront des 422</li>
+              </ul>
+              <p><strong>5. Changer la structure</strong></p>
+              <ul>
+                <li>v1 : <code>"items": ["Pizza", "Pasta"]</code></li>
+                <li>v2 : <code>"items": [{"name": "Pizza", "price": 12.50}]</code></li>
+                <li>Les clients qui itèrent sur strings crasheront</li>
+              </ul>
+              <p><strong>NON-BREAKING CHANGES (pas besoin de v2)</strong></p>
+              <ul>
+                <li><strong>1. Ajouter un nouveau champ optionnel</strong> - Les clients l'ignorent simplement</li>
+                <li><strong>2. Ajouter un nouvel endpoint</strong> - Pas d'impact sur les clients existants</li>
+                <li><strong>3. Ajouter une valeur enum</strong> - <code>"status": "pending" | "completed" | "cancelled"</code> (nouveau)</li>
+                <li><strong>4. Rendre obligatoire → optionnel</strong> - Les clients qui l'envoient toujours fonctionnent</li>
+              </ul>
+              <p><strong>Règle d'or :</strong> En cas de doute → nouvelle version !</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q17: Quelles sont les 3 stratégies principales de versioning d'API ? Laquelle est la plus courante ?</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>1. VERSIONING DANS L'URI</strong> 🏆 (90% des APIs)</p>
+              <p><strong>Exemple :</strong> <code>https://api.example.com/v1/users</code></p>
+              <p><strong>Avantages :</strong></p>
+              <ul>
+                <li>Visible et explicite</li>
+                <li>Cache-friendly</li>
+                <li>Simple à tester</li>
+                <li>Compatible navigateur</li>
+              </ul>
+              <p><strong>Inconvénients :</strong></p>
+              <ul>
+                <li>Pas très "RESTful pur"</li>
+                <li>URLs multiples pour même ressource</li>
+              </ul>
+              <p><strong>Qui l'utilise :</strong> Google, Twitter, Facebook, Amazon, Netflix, Stripe...</p>
+              <p><strong>2. VERSIONING PAR HEADER</strong></p>
+              <p><strong>Exemple :</strong></p>
+              <pre><code>GET /users/123
+Accept: application/vnd.example.v2+json</code></pre>
+              <p><strong>Avantages :</strong></p>
+              <ul>
+                <li>RESTful pur</li>
+                <li>URL unique</li>
+              </ul>
+              <p><strong>Inconvénients :</strong></p>
+              <ul>
+                <li>Moins visible</li>
+                <li>Difficile à tester dans navigateur</li>
+                <li>Complexité du caching</li>
+              </ul>
+              <p><strong>Qui l'utilise :</strong> GitHub API (partiellement)</p>
+              <p><strong>3. VERSIONING PAR QUERY PARAMETER</strong></p>
+              <p><strong>Exemple :</strong> <code>GET /users/123?version=2</code></p>
+              <p><strong>Avantages :</strong></p>
+              <ul>
+                <li>Visible dans l'URL</li>
+                <li>Facile à tester</li>
+              </ul>
+              <p><strong>Inconvénients :</strong></p>
+              <ul>
+                <li>Mélange version et filtres</li>
+                <li>Moins propre</li>
+                <li>Rarement utilisé</li>
+              </ul>
+              <p><strong>RECOMMANDATION</strong></p>
+              <p><strong>Pour 90% des cas : VERSIONING URI</strong></p>
+              <pre><code>GET /api/v1/events
+GET /api/v2/events</code></pre>
+              <p>C'est le standard de l'industrie. Simple, clair, tout le monde comprend.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q18: À quoi sert OpenAPI (Swagger) ? Citez 3 bénéfices concrets.</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>OpenAPI Specification (OAS)</strong> = Standard pour décrire des APIs REST en YAML/JSON machine-readable.</p>
+              <p><strong>3 BÉNÉFICES CONCRETS</strong></p>
+              <p><strong>1. Documentation interactive automatique</strong> 📚</p>
+              <p>Swagger UI génère une interface web où les développeurs peuvent :</p>
+              <ul>
+                <li>Voir tous les endpoints</li>
+                <li>Voir les schémas avec exemples</li>
+                <li>Tester les endpoints directement (Try it out)</li>
+                <li>Copier des exemples</li>
+              </ul>
+              <p><strong>Impact :</strong></p>
+              <ul>
+                <li>Développeurs explorent l'API immédiatement</li>
+                <li>Économise des heures de documentation manuelle</li>
+                <li>Toujours à jour</li>
+              </ul>
+              <p><strong>2. Validation automatique</strong> ✅</p>
+              <p>Bibliothèques comme express-openapi-validator valident automatiquement :</p>
+              <ul>
+                <li>Format des requêtes</li>
+                <li>Types de données</li>
+                <li>Champs obligatoires</li>
+                <li>Réponses (en dev)</li>
+              </ul>
+              <p><strong>Impact :</strong></p>
+              <ul>
+                <li>Plus besoin de coder la validation manuellement</li>
+                <li>Détecte les bugs avant production</li>
+                <li>Validation ultra-rapide</li>
+              </ul>
+              <p><strong>3. Génération automatique de clients</strong> 🤖</p>
+              <p>À partir d'OpenAPI, générez des SDKs dans 50+ langages :</p>
+              <ul>
+                <li>TypeScript avec auto-complétion</li>
+                <li>Python avec types</li>
+                <li>Java, Go, Swift...</li>
+              </ul>
+              <p><strong>Impact :</strong></p>
+              <ul>
+                <li>Clients ont un SDK type-safe immédiatement</li>
+                <li>Regénération à chaque changement d'API</li>
+                <li>Support multi-langages</li>
+              </ul>
+              <p><strong>BONUS :</strong></p>
+              <ul>
+                <li>Contrat entre équipes (Frontend/Backend)</li>
+                <li>Mocking d'API pour développement parallèle</li>
+                <li>Tests de contrat automatisés</li>
+              </ul>
+              <p>OpenAPI transforme votre API en contrat explicite, testable et documenté.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-level">
+        
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q19: Qu'est-ce que HATEOAS ? Donnez un exemple concret.</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>HATEOAS</strong> = Hypermedia As The Engine Of Application State</p>
+              <p><strong>Principe :</strong> Une API devrait être découvrable. Le serveur envoie des liens vers les actions possibles, et le client suit ces liens.</p>
+              <p><strong>Analogie :</strong> Comme Wikipedia - vous cliquez sur des liens, vous ne connaissez pas toutes les URLs à l'avance.</p>
+              <p><strong>EXEMPLE CONCRET</strong></p>
+              <p><strong>Sans HATEOAS :</strong></p>
+              <pre><code>{
+  "id": "550e8400",
+  "title": "Concert de Jazz",
+  "status": "open",
+  "current_attendees": 45,
+  "max_attendees": 200
+}</code></pre>
+              <p>Le client doit connaître la logique :</p>
+              <ul>
+                <li>"Si open ET places disponibles → POST /events/{id}/register"</li>
+                <li>Logique codée en dur côté client</li>
+              </ul>
+              <p><strong>Avec HATEOAS :</strong></p>
+              <pre><code>{
+  "id": "550e8400",
+  "title": "Concert de Jazz",
+  "status": "open",
+  "current_attendees": 45,
+  "max_attendees": 200,
+  "_links": {
+    "self": "/events/550e8400",
+    "attendees": "/events/550e8400/attendees",
+    "register": {
+      "href": "/events/550e8400/register",
+      "method": "POST",
+      "title": "S'inscrire"
+    },
+    "update": {
+      "href": "/events/550e8400",
+      "method": "PATCH",
+      "title": "Modifier"
+    }
+  }
+}</code></pre>
+              <p>Le serveur dit : "Voici les actions possibles"</p>
+              <p>Si événement COMPLET :</p>
+              <pre><code>{
+  "status": "full",
+  "_links": {
+    "self": "/events/550e8400",
+    "attendees": "/events/550e8400/attendees"
+    // Pas de "register" → inscription impossible
+  }
+}</code></pre>
+              <p><strong>AVANTAGES</strong></p>
+              <ul>
+                <li><strong>Découvrabilité :</strong> Client explore l'API en suivant les liens</li>
+                <li><strong>Logique métier côté serveur :</strong> Pas de code en dur côté client</li>
+                <li><strong>Évolution sans breaking change :</strong> Nouveaux liens ignorés par anciens clients</li>
+              </ul>
+              <p><strong>INCONVÉNIENTS</strong></p>
+              <ul>
+                <li>Verbosité (réponses plus grosses)</li>
+                <li>Complexité d'implémentation</li>
+                <li>Adoption faible (peu d'APIs l'implémentent complètement)</li>
+              </ul>
+              <p><strong>APPROCHE PRAGMATIQUE</strong></p>
+              <p>Niveau minimal : Au moins self et liens vers ressources liées</p>
+              <pre><code>{
+  "_links": {
+    "self": "/events/550e8400",
+    "attendees": "/events/550e8400/attendees"
+  }
+}</code></pre>
+              <p>Pas besoin d'aller full HAL/JSON:API pour avoir les bénéfices !</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-header">
+            <div class="question-text">Q20: Comment gérer la dépréciation d'une version d'API ? Décrivez le processus.</div>
+            <i class="fas fa-chevron-down question-toggle"></i>
+          </div>
+          <div class="question-answer">
+            <div class="answer-content">
+              <h4>Réponse attendue</h4>
+              <p><strong>TIMELINE RECOMMANDÉE (12 MOIS)</strong></p>
+              <p><strong>T-12 mois : Annonce publique</strong> 📢</p>
+              <ul>
+                <li>Blog officiel</li>
+                <li>Newsletter développeurs</li>
+                <li>Documentation avec banner</li>
+                <li>Changelog avec date de sunset</li>
+              </ul>
+              <p><strong>Contenu :</strong></p>
+              <ul>
+                <li>Date de retrait</li>
+                <li>Raisons du changement</li>
+                <li>Guide de migration</li>
+                <li>Timeline détaillée</li>
+              </ul>
+              <p><strong>T-6 mois : Headers de dépréciation</strong> ⚠️</p>
+              <p>Ajouter dans toutes les réponses v1 :</p>
+              <pre><code>Deprecation: Sat, 01 Jan 2025 00:00:00 GMT
+Sunset: Mon, 31 Dec 2025 23:59:59 GMT
+Link: <https://api.example.com/docs/migration>; rel="deprecation"</code></pre>
+              <p><strong>Impact :</strong> Clients bien conçus loggent ces headers automatiquement</p>
+              <p><strong>T-3 mois : Contact direct</strong> 📞</p>
+              <ul>
+                <li>Identifier les gros clients encore sur v1</li>
+                <li>Email personnalisé aux top 100</li>
+                <li>Offrir support de migration gratuit</li>
+                <li>Session 1-on-1 si nécessaire</li>
+              </ul>
+              <p><strong>T-1 mois : Derniers rappels</strong> 🚨</p>
+              <ul>
+                <li>Email hebdomadaire aux clients v1</li>
+                <li>Banner rouge dans documentation</li>
+                <li>Message dans les réponses API (optionnel)</li>
+              </ul>
+              <p><strong>T-0 : Jour J - Sunset</strong> ☠️</p>
+              <p>Arrêter v1 et renvoyer <code>410 Gone</code></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer id="contact" class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="../assets/logo.jpeg" alt="YNOV Campus" class="footer-logo-img">
+            <span class="footer-logo-text">Web Services</span>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Programme</h3>
+          <ul>
+            <li><a href="../index.html#programme">Planning détaillé</a></li>
+            <li><a href="filerouge.html">Projet SmartCity</a></li>
+            <li><a href="ressources.html">Ressources</a></li>
+            <li><a href="../index.html#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Technologies</h3>
+          <ul>
+            <li>REST & SOAP</li>
+            <li>WSDL & UDDI</li>
+            <li>OAuth 2.0 & JWT</li>
+            <li>Architecture SOA</li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> contact@ynov.com</p>
+            <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+            <p><i class="fas fa-map-marker-alt"></i> Campus Ynov</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 YNOV Campus. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+  <script>
+    // Gestion de l'affichage des réponses au clic
+    document.addEventListener('DOMContentLoaded', function() {
+      const questionHeaders = document.querySelectorAll('.question-header');
+      
+      questionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+          const questionItem = this.closest('.question-item');
+          const answer = questionItem.querySelector('.question-answer');
+          const isOpen = answer.classList.contains('open');
+          
+          // Toggle de l'état
+          if (isOpen) {
+            answer.classList.remove('open');
+            this.classList.remove('active');
+          } else {
+            answer.classList.add('open');
+            this.classList.add('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+
