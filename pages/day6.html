@@ -45,6 +45,7 @@
           <div class="dropdown-menu">
             <a href="quiz.html" class="dropdown-item">Quiz Jours 1-2-3</a>
             <a href="quiz-4-5.html" class="dropdown-item">Quiz Jours 4-5</a>
+            <a href="quiz6.html" class="dropdown-item">Quiz Jours 6</a>
           </div>
         </li>
         <li class="nav-item"><a href="ressources.html" class="nav-link">Ressources</a></li>
@@ -201,7 +202,11 @@
                     <ul style="margin-bottom:0;">
                       <li><strong>Paradigme</strong> : Programmation orientée services</li>
                       <li><strong>Architecture</strong> : SOA (Service-Oriented Architecture)</li>
-                      <li><strong>Style</strong> : RPC (Remote Procedure Call) via SOAP</li>
+                      <li><strong>Style</strong> : RPC (Remote Procedure Call) via SOAP
+                        <ul style="margin-top:0.5rem; margin-left:1.5rem; font-size:0.9em; color:#666;">
+                          <li><strong>RPC</strong> (Remote Procedure Call) : Style de communication où on appelle une fonction/méthode distante comme si elle était locale. Au lieu d'écrire <code>getUser(123)</code> sur un objet local, on appelle <code>getUser(123)</code> sur un service distant via le réseau. SOAP implémente RPC en encapsulant l'appel de fonction dans un message XML.</li>
+                        </ul>
+                      </li>
                       <li><strong>Protocole applicatif</strong> : SOAP (messages XML structurés)</li>
                       <li><strong>Protocole de transport</strong> : HTTP/HTTPS (ou SMTP, JMS)</li>
                       <li><strong>Format</strong> : XML</li>
@@ -223,9 +228,101 @@
                 </ul>
                 <p>Chaque système possède ses propres protocoles, formats de données, cycles de vie. L'intégration devient un cauchemar.</p>
 
+                <div class="highlight-box" style="background:#e8f4fd; border-left:4px solid #0066cc; margin-top:1.5rem;">
+                  <h6>🕰️ Timeline précise : SOA et REST</h6>
+                  
+                  <h6 style="margin-top:1rem; margin-bottom:0.75rem;">📅 SOA : Des prémices aux années 2000</h6>
+                  <div style="margin-left:1rem;">
+                    <p><strong>Années 1990 (prémices) :</strong></p>
+                    <ul>
+                      <li>Le concept de "services distribués" existe déjà</li>
+                      <li>Technologies pré-SOA : <strong>CORBA</strong> (1991), <strong>DCOM</strong> (1996), <strong>RMI</strong> (1997)</li>
+                      <li>On parle d'architecture orientée services, mais SOA comme terme n'est pas encore formalisé</li>
+                      <li>➡️ <em>SOA existe en idée, mais ce n'est pas encore une architecture formelle</em></li>
+                    </ul>
+                    
+                    <p class="mt-3"><strong>2000-2003 (formalisation) :</strong></p>
+                    <ul>
+                      <li>Apparition et standardisation de <strong>SOAP</strong> (1998-2000), <strong>WSDL</strong> (2001), <strong>UDDI</strong> (2000-2001), <strong>WS-*</strong></li>
+                      <li>Les organismes de standardisation (W3C, OASIS) promeuvent l'idée d'exposer des services réutilisables via des standards ouverts (XML, HTTP)</li>
+                      <li>➡️ <em>SOA devient une architecture officielle et standardisée</em></li>
+                    </ul>
+                    
+                    <p class="mt-3"><strong>2003-2010 (adoption massive) :</strong></p>
+                    <ul>
+                      <li>Les grandes entreprises adoptent SOA via ESB + SOAP</li>
+                      <li>Les éditeurs majeurs se positionnent : <strong>IBM WebSphere</strong>, <strong>Microsoft WCF</strong>, <strong>Oracle SOA Suite</strong>, <strong>SAP NetWeaver</strong></li>
+                      <li>➡️ <em>SOA devient populaire dans les grandes organisations</em></li>
+                    </ul>
+                  </div>
+
+                  <h6 style="margin-top:1.5rem; margin-bottom:0.75rem;">📅 REST : Création vs Adoption</h6>
+                  <div style="margin-left:1rem;">
+                    <p><strong>2000 (création) :</strong></p>
+                    <ul>
+                      <li><strong>REST</strong> est défini par Roy Fielding dans sa thèse de doctorat (2000)</li>
+                      <li>REST est un <em>style architectural</em>, pas un protocole</li>
+                      <li>➡️ <em>REST existe théoriquement, mais peu d'applications concrètes</em></li>
+                    </ul>
+                    
+                    <p class="mt-3"><strong>2000-2010 (adoption progressive) :</strong></p>
+                    <ul>
+                      <li>Quelques APIs REST apparaissent (Flickr API 2004, Amazon S3 2006)</li>
+                      <li>Mais SOAP reste dominant dans les entreprises</li>
+                      <li>➡️ <em>REST est connu mais pas encore massivement utilisé</em></li>
+                    </ul>
+                    
+                    <p class="mt-3"><strong>2010-2015 (adoption massive) :</strong></p>
+                    <ul>
+                      <li>Explosion des APIs REST : Twitter API (2010), GitHub API (2011), etc.</li>
+                      <li>Les frameworks facilitent REST : Spring MVC, Express.js, Django REST</li>
+                      <li>Le mobile (iOS/Android) adopte massivement REST/JSON</li>
+                      <li>➡️ <em>REST devient le standard dominant pour les APIs web/mobile</em></li>
+                    </ul>
+                  </div>
+
+                  <div class="mt-4" style="padding-top:1rem; border-top:1px solid #b3d9ff;">
+                    <h6 style="margin-bottom:0.75rem;">💡 Comparaison : SOA vs REST</h6>
+                    <div class="table-wrapper" style="margin-top:1rem;">
+                      <table class="comparison-table">
+                        <thead>
+                          <tr>
+                            <th>Aspect</th>
+                            <th>SOA</th>
+                            <th>REST</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td><strong>Prémices</strong></td>
+                            <td>Années 1990 (CORBA, DCOM, RMI)</td>
+                            <td>Années 2000 (théorie de Fielding)</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Formalisation</strong></td>
+                            <td>2000-2003 (SOAP, WSDL, UDDI)</td>
+                            <td>2000 (thèse de Fielding)</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Adoption massive</strong></td>
+                            <td>2003-2010 (grandes entreprises)</td>
+                            <td>2010-2015 (APIs web/mobile)</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Délai création → adoption</strong></td>
+                            <td>~3-5 ans (2000 → 2003-2005)</td>
+                            <td>~10 ans (2000 → 2010)</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="mt-3" style="font-size:0.9em;"><strong>Pourquoi ce délai pour REST ?</strong> REST était une théorie avant d'être une pratique. Il a fallu attendre l'explosion du web 2.0, des smartphones, et des frameworks modernes pour que REST devienne dominant. SOAP avait l'avantage d'être un protocole concret dès le départ, promu par les grands éditeurs.</p>
+                  </div>
+                </div>
+
                 <div class="comparison-box" style="margin-top: 1.5rem;">
                   <div class="bad-example">
-                    <h6>❌ Les tentatives ratées</h6>
+                    <h6>❌ Les tentatives ratées (années 1990)</h6>
                     <ul>
                       <li><strong>CORBA</strong> (1991) : <em>Common Object Request Broker Architecture</em> — standard de communication inter-applications en langages différents. Trop complexe, adoption limitée.</li>
                       <li><strong>DCOM</strong> (1996) : <em>Distributed Component Object Model</em> — technologie Microsoft pour la communication distribuée entre composants. Enfermé dans l'écosystème Microsoft.</li>
@@ -234,23 +331,24 @@
                     </ul>
                   </div>
                   <div class="good-example">
-                    <h6>✅ L’émergence de SOA (2000-2005)</h6>
-                    <p>Les organismes de standardisation (W3C, OASIS) promeuvent l’idée d’exposer des services réutilisables via des standards ouverts (XML, HTTP).</p>
+                    <h6>✅ L'émergence de SOA (2000-2005)</h6>
+                    <p>Les organismes de standardisation (W3C, OASIS) promeuvent l'idée d'exposer des services réutilisables via des standards ouverts (XML, HTTP).</p>
                     <p>Les éditeurs majeurs se positionnent : IBM WebSphere, Microsoft WCF, Oracle SOA Suite, SAP NetWeaver…</p>
                   </div>
                 </div>
 
                 <div class="highlight-box" style="background:#fff4e6; border-left:4px solid #ff9800; margin-top:1.5rem;">
-                  <h6>⚠️ La désillusion (2010-2015)</h6>
+                  <h6>⚠️ La désillusion SOA (2010-2015)</h6>
                   <ul>
                     <li>Budgets dépassés de 200-300 %.</li>
                     <li>Projets livrés en 2-3 ans au lieu de 6 mois.</li>
                     <li>Architecture devenue incontrôlable et gourmande en expertise.</li>
+                    <li>Pendant ce temps, REST explose et devient dominant pour les nouvelles APIs.</li>
                   </ul>
                 </div>
 
-                <p>Pendant ce temps, le cloud AWS (2006), REST (2010) et plus tard les microservices (2014) offrent des alternatives plus agiles.</p>
-                <p class="mt-5"><strong>Verdict :</strong> SOA n’a pas échoué techniquement, mais a souvent été mal vendu et mal mis en œuvre. Les principes restent pertinents, l’exécution l’était moins.</p>
+                <p>Pendant ce temps, le cloud AWS (2006), REST (adoption massive 2010+) et plus tard les microservices (2014) offrent des alternatives plus agiles.</p>
+                <p class="mt-5"><strong>Verdict :</strong> SOA n'a pas échoué techniquement, mais a souvent été mal vendu et mal mis en œuvre. Les principes restent pertinents, l'exécution l'était moins. REST a gagné la bataille du web grâce à sa simplicité et son adoption massive à partir de 2010.</p>
               </div>
             </div>
 
@@ -266,40 +364,105 @@
                 <div class="principles-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; margin-top:1.5rem;">
                   <div class="principle-card">
                     <h5>1. Contrat standardisé</h5>
-                    <p>Chaque service expose un contrat formel (WSDL) décrivant exactement ses opérations sans dévoiler l’implémentation.</p>
-                    <pre><code class="text">ProcessPayment(amount, account)
-RefundPayment(transactionId)
-GetPaymentStatus(transactionId)</code></pre>
+                    <p>Chaque service expose un contrat formel (WSDL) décrivant exactement ses opérations sans dévoiler l'implémentation.</p>
+                    <p class="principle-note" style="margin-top:0.75rem; font-size:0.9em; color:#555;"><strong>Exemple concret :</strong> Le service Payment expose un WSDL qui définit clairement les opérations disponibles, leurs paramètres et leurs types de retour. Le client sait exactement comment appeler le service sans connaître son implémentation interne (Java, .NET, Python...).</p>
+                    <pre><code class="text">// Contrat WSDL du service Payment
+ProcessPayment(amount: decimal, account: string) → PaymentResult
+RefundPayment(transactionId: string) → RefundResult
+GetPaymentStatus(transactionId: string) → PaymentStatus</code></pre>
+                    <p class="principle-note" style="margin-top:0.5rem; font-size:0.85em; color:#666;"><em>Le client peut générer automatiquement le code client depuis ce WSDL, garantissant la compatibilité.</em></p>
                   </div>
                   <div class="principle-card">
                     <h5>2. Couplage faible</h5>
-                    <p>Les services restent indépendants : le contrat change rarement, l’implémentation librement.</p>
-                    <p class="principle-note">Contre-exemple : une base partagée où une modification casse les autres services.</p>
+                    <p>Les services restent indépendants : le contrat change rarement, l'implémentation librement.</p>
+                    <p class="principle-note" style="margin-top:0.75rem; font-size:0.9em; color:#555;"><strong>Exemple concret :</strong> Le service User peut migrer de Java vers .NET, changer sa base de données de MySQL à PostgreSQL, ou optimiser son code, sans impacter les clients tant que le contrat WSDL reste identique.</p>
+                    <p class="principle-note" style="margin-top:0.75rem; font-size:0.9em; color:#d32f2f;"><strong>❌ Contre-exemple :</strong> Si plusieurs services partagent directement la même base de données, une modification de schéma (ajout d'une colonne) casse tous les services. C'est un couplage fort à éviter.</p>
+                    <p class="principle-note" style="margin-top:0.5rem; font-size:0.85em; color:#666;"><em>Le contrat est l'interface stable, l'implémentation peut évoluer librement derrière.</em></p>
                   </div>
                   <div class="principle-card">
                     <h5>3. Abstraction</h5>
                     <p>Le client ne connaît que le contrat. La complexité interne (langage, stockage) est entièrement masquée.</p>
+                    <p class="principle-note" style="margin-top:0.75rem; font-size:0.9em; color:#555;"><strong>Exemple concret :</strong> Un client appelle <code>getUser(userId: 123)</code> sans savoir que le service User :</p>
+                    <ul style="margin-top:0.5rem; font-size:0.9em; color:#555;">
+                      <li>Utilise Java ou Python en interne</li>
+                      <li>Stocke les données dans MySQL, MongoDB ou un mainframe</li>
+                      <li>Fait des appels à d'autres services internes</li>
+                      <li>Utilise un cache Redis ou Memcached</li>
+                    </ul>
+                    <p class="principle-note" style="margin-top:0.5rem; font-size:0.85em; color:#666;"><em>Toute cette complexité est cachée. Le client voit seulement une interface simple : getUser(userId).</em></p>
                   </div>
                   <div class="principle-card">
                     <h5>4. Réutilisabilité</h5>
                     <p>Un service peut alimenter plusieurs canaux : application web, mobile, portail partenaire, API publique.</p>
+                    <p class="principle-note" style="margin-top:0.75rem; font-size:0.9em; color:#555;"><strong>Exemple concret :</strong> Le service <code>ProductService</code> avec l'opération <code>getProduct(productId)</code> est réutilisé par :</p>
+                    <ul style="margin-top:0.5rem; font-size:0.9em; color:#555;">
+                      <li><strong>Application web</strong> : affiche les produits sur le site e-commerce</li>
+                      <li><strong>Application mobile</strong> : affiche les produits dans l'app iOS/Android</li>
+                      <li><strong>Portail partenaire</strong> : API B2B pour les revendeurs</li>
+                      <li><strong>API publique</strong> : documentation publique pour les développeurs tiers</li>
+                    </ul>
+                    <p class="principle-note" style="margin-top:0.5rem; font-size:0.85em; color:#666;"><em>Un seul service, plusieurs consommateurs. Économie de développement et cohérence des données.</em></p>
                   </div>
                   <div class="principle-card">
                     <h5>5. Autonomie</h5>
                     <p>Chaque service contrôle ses données. Pour accéder aux utilisateurs, le service Commande appelle le service Utilisateur au lieu de lire sa base.</p>
+                    <p class="principle-note" style="margin-top:0.75rem; font-size:0.9em; color:#555;"><strong>Exemple concret :</strong> Le service <code>OrderService</code> a besoin des informations utilisateur pour créer une commande :</p>
+                    <ul style="margin-top:0.5rem; font-size:0.9em; color:#555;">
+                      <li><strong>❌ Mauvaise pratique :</strong> OrderService lit directement la table <code>users</code> de la base de données partagée</li>
+                      <li><strong>✅ Bonne pratique :</strong> OrderService appelle <code>UserService.getUser(userId)</code> via SOAP</li>
+                    </ul>
+                    <p class="principle-note" style="margin-top:0.75rem; font-size:0.9em; color:#555;"><strong>Avantage :</strong> Le service User contrôle ses données. Si la structure change, seul UserService est modifié, pas OrderService.</p>
+                    <p class="principle-note" style="margin-top:0.5rem; font-size:0.85em; color:#666;"><em>Chaque service est propriétaire de ses données et les expose via son contrat.</em></p>
                   </div>
                   <div class="principle-card">
                     <h5>6. Stateless</h5>
-                    <p>Pas d’état partagé entre requêtes : toutes les informations nécessaires voyagent dans le message.</p>
-                    <p>Avantage : la scalabilité horizontale devient naturelle.</p>
+                    <p>Pas d'état partagé entre requêtes : toutes les informations nécessaires voyagent dans le message.</p>
+                    <p class="principle-note" style="margin-top:0.75rem; font-size:0.9em; color:#555;"><strong>Exemple concret :</strong> Chaque requête SOAP contient toutes les informations nécessaires :</p>
+                    <pre style="margin-top:0.5rem; font-size:0.85em;"><code class="text">// Requête 1 : Créer une commande
+&lt;CreateOrder&gt;
+  &lt;userId&gt;123&lt;/userId&gt;
+  &lt;items&gt;...&lt;/items&gt;
+  &lt;shippingAddress&gt;...&lt;/shippingAddress&gt;
+&lt;/CreateOrder&gt;
+
+// Requête 2 : Vérifier le statut
+&lt;GetOrderStatus&gt;
+  &lt;orderId&gt;456&lt;/orderId&gt;
+  &lt;userId&gt;123&lt;/userId&gt;  // Inclus dans chaque requête
+&lt;/GetOrderStatus&gt;</code></pre>
+                    <p class="principle-note" style="margin-top:0.75rem; font-size:0.9em; color:#555;"><strong>Avantage :</strong> La scalabilité horizontale devient naturelle. On peut ajouter plusieurs instances du service sans partager d'état entre elles.</p>
+                    <p class="principle-note" style="margin-top:0.5rem; font-size:0.85em; color:#666;"><em>Chaque requête est indépendante et contient toutes les données nécessaires.</em></p>
                   </div>
                   <div class="principle-card">
                     <h5>7. Découvrabilité</h5>
                     <p>Les services sont catalogués et documentés (UDDI) pour que les équipes puissent les retrouver facilement.</p>
+                    <p class="principle-note" style="margin-top:0.75rem; font-size:0.9em; color:#555;"><strong>Exemple concret :</strong> Un développeur a besoin d'un service de paiement. Au lieu de chercher dans le code ou demander à ses collègues, il :</p>
+                    <ul style="margin-top:0.5rem; font-size:0.9em; color:#555;">
+                      <li>Consulte le registre UDDI (ou la documentation interne)</li>
+                      <li>Trouve <code>PaymentService</code> avec sa description, son WSDL, son endpoint</li>
+                      <li>Génère automatiquement le client depuis le WSDL</li>
+                      <li>Utilise le service immédiatement</li>
+                    </ul>
+                    <p class="principle-note" style="margin-top:0.75rem; font-size:0.9em; color:#555;"><strong>En pratique (2025) :</strong> UDDI a échoué, mais le principe reste : documentation claire (Swagger/OpenAPI), registre de services (Consul, Kubernetes), ou simplement une bonne documentation.</p>
+                    <p class="principle-note" style="margin-top:0.5rem; font-size:0.85em; color:#666;"><em>Les services doivent être facilement trouvables et documentés pour éviter la duplication.</em></p>
                   </div>
                   <div class="principle-card">
                     <h5>8. Composabilité</h5>
                     <p>On assemble des services spécialisés pour créer un processus métier complet : stock, prix, paiement, commande, confirmation…</p>
+                    <p class="principle-note" style="margin-top:0.75rem; font-size:0.9em; color:#555;"><strong>Exemple concret :</strong> Le processus métier "Créer une commande" assemble plusieurs services :</p>
+                    <pre style="margin-top:0.5rem; font-size:0.85em;"><code class="text">Processus "CréerCommande" :
+  1. StockService.checkAvailability(productId, quantity)
+     → Vérifie si le produit est en stock
+  2. PriceService.calculatePrice(productId, quantity)
+     → Calcule le prix avec remises
+  3. PaymentService.processPayment(amount, account)
+     → Traite le paiement
+  4. OrderService.createOrder(userId, items, total)
+     → Crée la commande
+  5. NotificationService.sendConfirmation(orderId)
+     → Envoie l'email de confirmation</code></pre>
+                    <p class="principle-note" style="margin-top:0.75rem; font-size:0.9em; color:#555;"><strong>Avantage :</strong> Chaque service est spécialisé (un service = une responsabilité). On compose ces services pour créer des processus métier complexes.</p>
+                    <p class="principle-note" style="margin-top:0.5rem; font-size:0.85em; color:#666;"><em>Comme des briques LEGO : des services simples qu'on assemble pour créer des processus complexes.</em></p>
                   </div>
                 </div>
 
@@ -470,7 +633,7 @@ GetPaymentStatus(transactionId)</code></pre>
             <h6>À retenir</h6>
             <ul>
               <li><strong>SOA</strong> : architecture lourde, très gouvernée, orientée interopérabilité entre systèmes hétérogènes. Idéale pour intégrer des systèmes legacy.</li>
-              <li><strong>Microservices</strong> : SOA modernisé, agile, supporté par le DevOps. Chaque service est autonome, déployable indépendamment et peut utiliser différents protocoles (REST, gRPC, etc.).</li>
+              <li><strong>Microservices</strong> : SOA modernisé, agile, supporté par le DevOps. Chaque service est autonome, déployable indépendamment et peut utiliser différents protocoles (REST, gRPC, etc.). (Note : en principe, SOA dans son paradigme pourrait aussi être associé à plusieurs protocoles, mais il a fini par ne plus être dissociable de SOAP en pratique.)</li>
             </ul>
             <blockquote>"Microservices are SOA done right." — Martin Fowler</blockquote>
             <p>Les microservices reprennent les principes de SOA (couplage faible, autonomie, réutilisabilité) en supprimant l'ESB central et la lourdeur des standards XML. Ils privilégient la simplicité, l'agilité et la scalabilité horizontale.</p>
@@ -510,6 +673,45 @@ GetPaymentStatus(transactionId)</code></pre>
                 <li>Vous avez besoin de scalabilité horizontale et d'autonomie des équipes.</li>
               </ul>
             </div>
+          </div>
+
+          <div class="highlight-box" style="margin-top:1.5rem; background:#fff8e1; border-left:4px solid #ffb300;">
+            <h6>📚 Définition : ACID (Transactions)</h6>
+            <p>ACID est un acronyme qui définit les propriétés garanties par une transaction dans une base de données :</p>
+            <div class="table-wrapper" style="margin-top:1rem;">
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th>Lettre</th>
+                    <th>Signification</th>
+                    <th>Explication</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>A</strong></td>
+                    <td>Atomicité</td>
+                    <td>Tout se fait ou rien ne se fait. Si une étape échoue, tout est annulé.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>C</strong></td>
+                    <td>Cohérence (Consistency)</td>
+                    <td>La base reste dans un état valide avant et après la transaction.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>I</strong></td>
+                    <td>Isolation</td>
+                    <td>Les transactions concurrentes n'interfèrent pas entre elles.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>D</strong></td>
+                    <td>Durabilité</td>
+                    <td>Une fois validée, la transaction est persistante, même en cas de panne.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="mt-2" style="font-size:0.9em;"><strong>Contexte :</strong> Les transactions ACID sont essentielles dans les secteurs régulés (banque, assurance) où la cohérence des données est critique. SOA supporte mieux les transactions distribuées ACID via WS-Transaction, tandis que les microservices privilégient souvent la consistance éventuelle (Eventual Consistency).</p>
           </div>
 
           <div class="highlight-box" style="margin-top:1.5rem; background:#e8f4fd; border-left:4px solid #0066cc;">
@@ -729,7 +931,20 @@ Authorization: Bearer abc123xyz
                 <span class="day-theme">Les spécifications WS-*</span>
               </div>
               <div class="day-content">
-                <p>SOAP s’accompagne d’un ensemble de spécifications optionnelles, les <strong>WS-*</strong>, qui visent à couvrir les besoins d’entreprise : sécurité, transactions, routage…</p>
+                <p>SOAP s'accompagne d'un ensemble de spécifications optionnelles, les <strong>WS-*</strong>, qui visent à couvrir les besoins d'entreprise : sécurité, transactions, routage…</p>
+                
+                <div class="highlight-box" style="margin-top:1rem; background:#e8f4fd; border-left:4px solid #0066cc;">
+                  <h6>💡 Implémentation des WS-* : gérée par les frameworks</h6>
+                  <p>Les spécifications WS-* sont complexes à implémenter manuellement (génération de signatures, gestion des tokens, routage, etc.). <strong>Heureusement, les frameworks et librairies SOAP propres à chaque langage gèrent automatiquement ces spécifications</strong>, permettant de ne pas avoir à tout coder à la main.</p>
+                  <p class="mt-2"><strong>Exemples de frameworks par langage :</strong></p>
+                  <ul>
+                    <li><strong>Java</strong> : Apache CXF, JAX-WS, Spring WS, Axis2</li>
+                    <li><strong>.NET</strong> : WCF (Windows Communication Foundation), ASMX</li>
+                    <li><strong>Python</strong> : Zeep, suds, spyne</li>
+                    <li><strong>Node.js</strong> : soap, strong-soap</li>
+                  </ul>
+                  <p class="mt-2"><strong>En pratique :</strong> Vous configurez simplement les WS-* que vous voulez utiliser (ex: activer WS-Security), et le framework génère automatiquement les headers SOAP, les signatures, les tokens, etc. Vous n'avez pas à manipuler manuellement le XML complexe des WS-*.</p>
+                </div>
 
                 <div class="table-wrapper">
                   <table class="comparison-table">
@@ -773,33 +988,54 @@ Authorization: Bearer abc123xyz
                   <p><strong>WS-Security</strong> est l'une des spécifications WS-* les plus utilisées. Elle permet de sécuriser les messages SOAP au niveau du message (message-level security), pas seulement au niveau transport (HTTPS).</p>
                   
                   <p class="mt-3"><strong>Message SOAP avec WS-Security :</strong></p>
-                  <pre><code class="language-xml">&lt;soap:Envelope xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot;
+                  <pre><code class="language-xml">&lt;!-- Enveloppe SOAP avec namespaces pour WS-Security --&gt;
+&lt;soap:Envelope xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot;
                  xmlns:wsse=&quot;http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd&quot;
                  xmlns:wsu=&quot;http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd&quot;&gt;
+  
+  &lt;!-- Header SOAP : contient les métadonnées de sécurité --&gt;
   &lt;soap:Header&gt;
-    &lt;!-- WS-Security : Token d'authentification --&gt;
+    
+    &lt;!-- Conteneur WS-Security : regroupe tous les éléments de sécurité --&gt;
     &lt;wsse:Security&gt;
+      
+      &lt;!-- PARTIE 1 : Authentification (UsernameToken) --&gt;
+      &lt;!-- Permet d'identifier l'utilisateur qui envoie le message --&gt;
       &lt;wsse:UsernameToken wsu:Id=&quot;UsernameToken-1&quot;&gt;
+        &lt;!-- Nom d'utilisateur pour l'authentification --&gt;
         &lt;wsse:Username&gt;admin&lt;/wsse:Username&gt;
+        &lt;!-- Mot de passe (Type=&quot;PasswordText&quot; = en clair, mais peut être hashé) --&gt;
         &lt;wsse:Password Type=&quot;http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText&quot;&gt;
           secret123
         &lt;/wsse:Password&gt;
       &lt;/wsse:UsernameToken&gt;
       
-      &lt;!-- WS-Security : Signature numérique du message --&gt;
+      &lt;!-- PARTIE 2 : Signature numérique (garantit l'intégrité et la non-répudiation) --&gt;
+      &lt;!-- La signature prouve que le message n'a pas été modifié et identifie l'expéditeur --&gt;
       &lt;ds:Signature xmlns:ds=&quot;http://www.w3.org/2000/09/xmldsig#&quot;&gt;
+        &lt;!-- Informations sur la signature --&gt;
         &lt;ds:SignedInfo&gt;
+          &lt;!-- Méthode de normalisation XML (canonicalisation) avant signature --&gt;
           &lt;ds:CanonicalizationMethod Algorithm=&quot;http://www.w3.org/2001/10/xml-exc-c14n#&quot; /&gt;
+          &lt;!-- Algorithme de signature : RSA avec SHA-1 --&gt;
           &lt;ds:SignatureMethod Algorithm=&quot;http://www.w3.org/2000/09/xmldsig#rsa-sha1&quot; /&gt;
+          &lt;!-- Référence vers l'élément signé (le Body du message) --&gt;
           &lt;ds:Reference URI=&quot;#Body&quot;&gt;
+            &lt;!-- Algorithme de hash : SHA-1 pour créer un digest du Body --&gt;
             &lt;ds:DigestMethod Algorithm=&quot;http://www.w3.org/2000/09/xmldsig#sha1&quot; /&gt;
+            &lt;!-- Hash (empreinte) du contenu du Body --&gt;
+            &lt;!-- Si le Body est modifié, ce hash ne correspondra plus --&gt;
             &lt;ds:DigestValue&gt;abc123def456...&lt;/ds:DigestValue&gt;
           &lt;/ds:Reference&gt;
         &lt;/ds:SignedInfo&gt;
+        &lt;!-- Valeur de la signature (chiffrée avec la clé privée de l'expéditeur) --&gt;
+        &lt;!-- Le serveur vérifie avec la clé publique pour valider l'intégrité --&gt;
         &lt;ds:SignatureValue&gt;xyz789...&lt;/ds:SignatureValue&gt;
       &lt;/ds:Signature&gt;
     &lt;/wsse:Security&gt;
   &lt;/soap:Header&gt;
+  
+  &lt;!-- Body SOAP : contenu métier du message (signé via Reference URI=&quot;#Body&quot;) --&gt;
   &lt;soap:Body wsu:Id=&quot;Body&quot;&gt;
     &lt;GetEventDetails&gt;
       &lt;EventID&gt;550e8400&lt;/EventID&gt;
@@ -856,38 +1092,59 @@ Authorization: Bearer abc123xyz
                   </ol>
                 </div>
 
-                <p>Extrait commenté :</p>
-                <pre><code class="language-xml">&lt;definitions name=&quot;EventService&quot;&gt;
+                <pre><code class="language-xml">&lt;!-- SECTION 1 : TYPES --&gt;
+&lt;!-- Définit les structures de données (schémas XSD) utilisées par le service --&gt;
+&lt;!-- Ces types seront utilisés dans les messages --&gt;
+&lt;definitions name=&quot;EventService&quot;&gt;
   &lt;types&gt;
+    &lt;!-- Type complexe Event : structure de données pour un événement --&gt;
     &lt;Event&gt;
-      &lt;ID&gt;string&lt;/ID&gt;
-      &lt;Title&gt;string&lt;/Title&gt;
-      &lt;Price&gt;decimal&lt;/Price&gt;
+      &lt;ID&gt;string&lt;/ID&gt;        &lt;!-- Identifiant unique de l'événement (type string) --&gt;
+      &lt;Title&gt;string&lt;/Title&gt;  &lt;!-- Titre de l'événement (type string) --&gt;
+      &lt;Price&gt;decimal&lt;/Price&gt;  &lt;!-- Prix de l'événement (type decimal/nombre) --&gt;
     &lt;/Event&gt;
   &lt;/types&gt;
 
+  &lt;!-- SECTION 2 : MESSAGES --&gt;
+  &lt;!-- Définit la structure des messages échangés (requêtes et réponses) --&gt;
+  &lt;!-- Message de requête : ce que le client envoie au service --&gt;
   &lt;message name=&quot;GetEventRequest&quot;&gt;
-    &lt;part name=&quot;eventID&quot; type=&quot;string&quot; /&gt;
+    &lt;part name=&quot;eventID&quot; type=&quot;string&quot; /&gt;  &lt;!-- Paramètre : ID de l'événement demandé --&gt;
   &lt;/message&gt;
+  &lt;!-- Message de réponse : ce que le service renvoie au client --&gt;
   &lt;message name=&quot;GetEventResponse&quot;&gt;
-    &lt;part name=&quot;event&quot; type=&quot;Event&quot; /&gt;
+    &lt;part name=&quot;event&quot; type=&quot;Event&quot; /&gt;  &lt;!-- Retourne un objet Event (défini dans &lt;types&gt;) --&gt;
   &lt;/message&gt;
 
+  &lt;!-- SECTION 3 : PORTTYPE (Interface) --&gt;
+  &lt;!-- Définit les opérations disponibles (comme une interface en programmation) --&gt;
   &lt;portType name=&quot;EventServicePort&quot;&gt;
+    &lt;!-- Opération GetEvent : récupère un événement par son ID --&gt;
     &lt;operation name=&quot;GetEvent&quot;&gt;
-      &lt;input message=&quot;GetEventRequest&quot; /&gt;
-      &lt;output message=&quot;GetEventResponse&quot; /&gt;
+      &lt;input message=&quot;GetEventRequest&quot; /&gt;   &lt;!-- Message d'entrée (requête) --&gt;
+      &lt;output message=&quot;GetEventResponse&quot; /&gt;  &lt;!-- Message de sortie (réponse) --&gt;
     &lt;/operation&gt;
+    &lt;!-- On pourrait ajouter d'autres opérations ici : CreateEvent, UpdateEvent, etc. --&gt;
   &lt;/portType&gt;
 
+  &lt;!-- SECTION 4 : BINDING --&gt;
+  &lt;!-- Définit comment le portType est implémenté (protocole SOAP, style, transport) --&gt;
   &lt;binding name=&quot;EventServiceBinding&quot; type=&quot;EventServicePort&quot;&gt;
+    &lt;!-- Style &quot;document&quot; : le Body SOAP contient un document XML complet --&gt;
+    &lt;!-- Transport &quot;http&quot; : utilise HTTP/HTTPS comme protocole de transport --&gt;
     &lt;soap:binding style=&quot;document&quot; transport=&quot;http&quot; /&gt;
+    &lt;!-- Note : style=&quot;rpc&quot; est une alternative (appel de fonction distant) --&gt;
   &lt;/binding&gt;
 
+  &lt;!-- SECTION 5 : SERVICE --&gt;
+  &lt;!-- Définit l'endpoint (URL) où le service est accessible --&gt;
   &lt;service name=&quot;EventService&quot;&gt;
+    &lt;!-- Port : point d'accès concret du service --&gt;
     &lt;port name=&quot;EventPort&quot; binding=&quot;EventServiceBinding&quot;&gt;
+      &lt;!-- URL réelle où le service SOAP est déployé --&gt;
       &lt;soap:address location=&quot;https://api.smartcity.local/soap/events&quot; /&gt;
     &lt;/port&gt;
+    &lt;!-- On pourrait avoir plusieurs ports (ex: un pour HTTP, un pour HTTPS) --&gt;
   &lt;/service&gt;
 &lt;/definitions&gt;</code></pre>
 
@@ -917,7 +1174,8 @@ Event event = service.getEvent("550e8400"); // C'est tout !</code></pre>
                 </div>
 
                 <p><strong>Génération automatique de clients</strong> : un avantage historique de WSDL.</p>
-                <p>WSDL permettait dès les années 2000 de générer automatiquement des clients typés dans tous les langages :</p>
+                <p>WSDL permettait dès les années 2000 de générer automatiquement des clients typés dans tous les langages. <strong>Historiquement, cette génération automatique via les frameworks SOAP était un avantage conséquent de WSDL</strong>, car REST n'avait pas encore d'équivalent standardisé. <strong>Cependant, OpenAPI (Swagger) a finalement rattrapé ce retard</strong> et permet aujourd'hui la même génération automatique pour les APIs REST.</p>
+                <p class="mt-3">Exemples de génération depuis WSDL :</p>
                 <pre><code class="language-bash"># Java
 wsimport http://api.smartcity.local/soap/events?wsdl
 
@@ -1284,21 +1542,46 @@ openapi-generator generate -i api.yaml -g python</code></pre>
                 <h5 class="mt-5">Service Discovery : trouver les services en runtime</h5>
                 <div class="highlight-box" style="margin-top:1rem; background:#e8f4fd; border-left:4px solid #0066cc;">
                   <h6>💡 Pourquoi le Service Discovery est nécessaire ?</h6>
-                  <p>Dans une architecture microservices, les services changent constamment d'adresse :</p>
+                  <p>Dans les architectures distribuées (SOA et microservices), les services changent constamment d'adresse :</p>
                   <ul>
-                    <li>Les services sont déployés dans des conteneurs (Docker) qui ont des IPs dynamiques</li>
-                    <li>Les services scalent (plusieurs instances avec des IPs différentes)</li>
-                    <li>Les services sont redéployés (nouvelle IP à chaque redéploiement)</li>
-                    <li>Les services peuvent tomber et être remplacés (failover)</li>
+                    <li><strong>SOA</strong> : Les services peuvent être déployés sur différents serveurs, migrer entre environnements (dev, test, prod), ou être remplacés par de nouvelles versions</li>
+                    <li><strong>Microservices</strong> : Les services sont déployés dans des conteneurs (Docker) qui ont des IPs dynamiques, scalent (plusieurs instances), sont redéployés, ou peuvent tomber et être remplacés (failover)</li>
                   </ul>
                   
                   <p class="mt-3"><strong>Problème sans Service Discovery :</strong></p>
-                  <pre><code class="language-text">Service Order (IP fixe : 10.0.1.5:8080)
+                  <div class="comparison-box" style="margin-top:1rem;">
+                    <div class="bad-example">
+                      <h6>SOA (exemple)</h6>
+                      <pre style="font-size:0.85em;"><code class="language-text">Service Commande (endpoint fixe : http://server1:8080/soap/orders)
+  → Appelle Service Utilisateur (endpoint fixe : http://server2:8080/soap/users)
+  → ❌ Problème : Si Utilisateur migre vers server3, 
+     Commande ne peut plus l'appeler</code></pre>
+                    </div>
+                    <div class="bad-example">
+                      <h6>Microservices (exemple)</h6>
+                      <pre style="font-size:0.85em;"><code class="language-text">Service Order (IP fixe : 10.0.1.5:8080)
   → Appelle Service User (IP fixe : 10.0.2.3:8080)
   → ❌ Problème : Si User change d'IP, Order ne peut plus l'appeler</code></pre>
+                    </div>
+                  </div>
 
                   <p class="mt-3"><strong>Solution avec Service Discovery :</strong></p>
-                  <pre><code class="language-text">Service Order
+                  <div class="comparison-box" style="margin-top:1rem;">
+                    <div class="good-example">
+                      <h6>SOA (exemple)</h6>
+                      <pre style="font-size:0.85em;"><code class="language-text">Service Commande
+  → Demande à l'ESB/UDDI : "Où est user-service ?"
+  → ESB/UDDI : "user-service est à http://server2:8080/soap/users"
+  → Service Commande appelle via l'ESB
+  
+Si Utilisateur migre vers server3 :
+  → ESB/UDDI met à jour : "user-service est maintenant à http://server3:8080/soap/users"
+  → Service Commande obtient automatiquement la nouvelle adresse
+  → ✅ Problème résolu</code></pre>
+                    </div>
+                    <div class="good-example">
+                      <h6>Microservices (exemple)</h6>
+                      <pre style="font-size:0.85em;"><code class="language-text">Service Order
   → Demande au Service Discovery : "Où est user-service ?"
   → Service Discovery : "user-service est à 10.0.2.3:8080"
   → Service Order appelle 10.0.2.3:8080
@@ -1306,26 +1589,45 @@ openapi-generator generate -i api.yaml -g python</code></pre>
 Si User change d'IP :
   → Service Discovery met à jour : "user-service est maintenant à 10.0.2.7:8080"
   → Service Order demande à nouveau et obtient la nouvelle adresse
-  → ✅ Problème résolu : Order trouve toujours User</code></pre>
+  → ✅ Problème résolu</code></pre>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="comparison-box" style="margin-top:1.5rem;">
                   <div class="good-example">
                     <h6>✅ Service Discovery interne</h6>
-                    <p>Pour les architectures microservices au sein d'une organisation :</p>
+                    <p>Pour les architectures SOA et microservices au sein d'une organisation :</p>
                     
                     <p class="mt-3"><strong>Qu'est-ce que c'est concrètement ?</strong></p>
                     <p>Le <strong>Service Discovery</strong> est un <strong>système d'infrastructure</strong> (serveur/outil à déployer) qui maintient un registre dynamique des services disponibles.</p>
                     
-                    <p class="mt-3"><strong>Fonctionnement en 3 étapes :</strong></p>
+                    <p class="mt-3"><strong>Fonctionnement en 3 étapes (identique pour SOA et microservices) :</strong></p>
                     <ol>
-                      <li><strong>Enregistrement</strong> : Au démarrage, chaque service s'enregistre dans le Service Discovery avec son nom, IP, port, et métadonnées</li>
+                      <li><strong>Enregistrement</strong> : Au démarrage, chaque service s'enregistre dans le Service Discovery avec son nom, adresse (IP/URL), port, et métadonnées</li>
                       <li><strong>Health checks</strong> : Le Service Discovery vérifie périodiquement si chaque service est disponible (heartbeat, health endpoint)</li>
                       <li><strong>Résolution</strong> : Quand un service a besoin d'appeler un autre service, il demande au Service Discovery l'adresse, qui retourne les instances disponibles</li>
                     </ol>
 
-                    <p class="mt-3"><strong>Exemple concret :</strong></p>
-                    <pre><code class="language-text">1. Service User démarre → s'enregistre dans Consul
+                    <p class="mt-3"><strong>Exemples concrets :</strong></p>
+                    <div class="comparison-box" style="margin-top:1rem;">
+                      <div class="good-example">
+                        <h6>SOA (exemple avec ESB/UDDI)</h6>
+                        <pre style="font-size:0.85em;"><code class="language-text">1. Service Utilisateur démarre → s'enregistre dans UDDI/ESB
+   "UserService" → http://server2:8080/soap/users?wsdl
+
+2. Service Commande a besoin d'appeler Utilisateur
+   → Demande à l'ESB : "Où est UserService ?"
+   → ESB consulte UDDI et répond : "http://server2:8080/soap/users"
+
+3. Si Utilisateur migre vers server3
+   → Service se réenregistre : "http://server3:8080/soap/users"
+   → UDDI/ESB met à jour automatiquement
+   → Commande obtient la nouvelle adresse via l'ESB</code></pre>
+                      </div>
+                      <div class="good-example">
+                        <h6>Microservices (exemple avec Consul)</h6>
+                        <pre style="font-size:0.85em;"><code class="language-text">1. Service User démarre → s'enregistre dans Consul
    "user-service" → 10.0.1.5:8080
 
 2. Service Order a besoin d'appeler User
@@ -1336,32 +1638,49 @@ Si User change d'IP :
    → User se réenregistre avec nouvelle IP : 10.0.2.7:8080
    → Consul met à jour automatiquement
    → Order obtient la nouvelle adresse lors du prochain appel</code></pre>
+                      </div>
+                    </div>
 
+                    <p class="mt-3"><strong>Outils de Service Discovery :</strong></p>
                     <ul>
-                      <li><strong>Consul</strong> : Serveur séparé (infrastructure) avec API REST et DNS intégré. Les services s'enregistrent via un agent Consul ou directement via API REST. Consul vérifie automatiquement la santé des services via health checks configurés (HTTP, TCP, script). Support multi-datacenter pour les architectures distribuées.
+                      <li><strong>UDDI (SOA)</strong> : Registre de services SOAP standardisé (2000-2001). Les services SOAP s'enregistrent avec leur WSDL, catégorie métier, et endpoint. Les clients consultent UDDI pour découvrir les services disponibles. <strong>Note :</strong> UDDI a échoué dans la pratique (trop complexe, faible adoption), mais le principe reste valable.
+                        <ul>
+                          <li>Architecture : Serveur UDDI (public ou privé) + Publication manuelle ou automatique</li>
+                          <li>Protocole : SOAP (ironiquement, UDDI utilise SOAP pour découvrir des services SOAP)</li>
+                          <li>Usage : Principalement dans les architectures SOA classiques (années 2000-2010)</li>
+                        </ul>
+                      </li>
+                      <li><strong>ESB (SOA)</strong> : Enterprise Service Bus intègre souvent un registre de services. Les services SOAP s'enregistrent dans l'ESB qui gère le routage et la découverte. L'ESB maintient un catalogue des services disponibles avec leurs endpoints.
+                        <ul>
+                          <li>Architecture : ESB centralisé (IBM WebSphere, Oracle SOA Suite, Mule ESB)</li>
+                          <li>Protocole : SOAP via l'ESB</li>
+                          <li>Usage : Architecture SOA avec ESB centralisé</li>
+                        </ul>
+                      </li>
+                      <li><strong>Consul (Microservices)</strong> : Serveur séparé (infrastructure) avec API REST et DNS intégré. Les services s'enregistrent via un agent Consul ou directement via API REST. Consul vérifie automatiquement la santé des services via health checks configurés (HTTP, TCP, script). Support multi-datacenter pour les architectures distribuées.
                         <ul>
                           <li>Architecture : Serveur Consul (cluster) + Agents Consul (sur chaque machine)</li>
                           <li>Protocole : HTTP/REST ou DNS natif</li>
                           <li>Déploiement : Docker, Kubernetes, ou serveur dédié</li>
-                    </ul>
+                        </ul>
                       </li>
-                      <li><strong>Eureka</strong> : Serveur Eureka (infrastructure) + bibliothèques clientes Java. Les services Java s'enregistrent automatiquement via la bibliothèque cliente Spring Cloud Eureka. Eureka fait du load balancing côté client (le client choisit une instance parmi celles disponibles).
+                      <li><strong>Eureka (Microservices)</strong> : Serveur Eureka (infrastructure) + bibliothèques clientes Java. Les services Java s'enregistrent automatiquement via la bibliothèque cliente Spring Cloud Eureka. Eureka fait du load balancing côté client (le client choisit une instance parmi celles disponibles).
                         <ul>
                           <li>Architecture : Serveur Eureka (cluster) + Clients Java (dans chaque service)</li>
                           <li>Protocole : HTTP/REST (propriétaire Netflix)</li>
                           <li>Déploiement : Serveur Java standalone ou intégré à Spring Cloud</li>
                         </ul>
                       </li>
-                      <li><strong>Kubernetes</strong> : Service Discovery intégré nativement dans Kubernetes. Chaque service Kubernetes a automatiquement un nom DNS (ex: <code>user-service.default.svc.cluster.local</code>). Kubernetes gère automatiquement le routage vers les pods (instances) disponibles via des Services K8s et des Endpoints. Pas besoin d'outil externe, tout est dans Kubernetes.
+                      <li><strong>Kubernetes (Microservices)</strong> : Service Discovery intégré nativement dans Kubernetes. Chaque service Kubernetes a automatiquement un nom DNS (ex: <code>user-service.default.svc.cluster.local</code>). Kubernetes gère automatiquement le routage vers les pods (instances) disponibles via des Services K8s et des Endpoints. Pas besoin d'outil externe, tout est dans Kubernetes.
                         <ul>
                           <li>Architecture : Intégré dans Kubernetes (etcd stocke les informations)</li>
                           <li>Protocole : DNS natif</li>
                           <li>Déploiement : Inclus dans Kubernetes, pas de déploiement séparé</li>
                         </ul>
                       </li>
-                      <li><strong>etcd</strong> : Base de données distribuée clé-valeur utilisée par Kubernetes pour stocker toutes les informations des services (adresses, labels, health status). etcd est le "cerveau" de Kubernetes qui maintient l'état du cluster.</li>
+                      <li><strong>etcd (Microservices)</strong> : Base de données distribuée clé-valeur utilisée par Kubernetes pour stocker toutes les informations des services (adresses, labels, health status). etcd est le "cerveau" de Kubernetes qui maintient l'état du cluster.</li>
                     </ul>
-                    <p class="mt-2"><strong>Avantage :</strong> Les services trouvent automatiquement les autres services sans configuration manuelle des adresses IP. Gestion automatique de la scalabilité (plusieurs instances), health checks, et mise à jour dynamique des adresses.</p>
+                    <p class="mt-2"><strong>Avantage (SOA et Microservices) :</strong> Les services trouvent automatiquement les autres services sans configuration manuelle des adresses. Gestion automatique de la scalabilité (plusieurs instances), health checks, et mise à jour dynamique des adresses.</p>
                   </div>
                   <div class="bad-example">
                     <h6>🌐 Documentation et Marketplaces (découverte fonctionnelle)</h6>
@@ -1398,7 +1717,7 @@ Si User change d'IP :
                   <p><strong>Service Discovery :</strong></p>
                   <ul>
                     <li><strong>Simplicité</strong> : Pas de protocole SOAP complexe, juste HTTP/REST ou DNS natif</li>
-                    <li><strong>Intégration native</strong> : Consul/K8s s'intègrent naturellement dans les architectures modernes (Docker, Kubernetes)</li>
+                    <li><strong>Intégration native</strong> : Consul/K8s s'intègrent naturellement dans les architectures modernes (Docker, Kubernetes) (Consul : service discovery dédié avec API REST/DNS ; K8s : service discovery intégré nativement via DNS et Services Kubernetes)</li>
                     <li><strong>Automatisation</strong> : Les services s'enregistrent automatiquement, pas besoin de configuration manuelle</li>
                     <li><strong>Health checks</strong> : Détection automatique des services indisponibles</li>
                     <li><strong>Scalabilité</strong> : Gestion automatique de plusieurs instances du même service</li>
@@ -1527,6 +1846,7 @@ Clients SOAP (appellent seulement les 5 méthodes)</code></pre>
                     <li>Service C utilise le format CSV : <code>User,John</code></li>
                     <li>Si on veut connecter A, B et C, il faut 6 transformations (A→B, A→C, B→A, B→C, C→A, C→B)</li>
                     <li>Avec 10 services, ça fait 90 transformations possibles ! (10×9)</li>
+                    <li><strong>Avec le modèle canonique :</strong> Seulement 20 transformations nécessaires ! (10 services × 2 : vers canonique + depuis canonique)</li>
                   </ul>
 
                   <p class="mt-3"><strong>Solution :</strong></p>
@@ -1785,6 +2105,13 @@ Système Legacy B (format propriétaire)</code></pre>
                     </ul>
                   </div>
                 </div>
+
+                <div class="highlight-box" style="margin-top:1.5rem; background:#e8f4fd; border-left:4px solid #0066cc;">
+                  <h6>💡 Lien avec les architectures</h6>
+                  <p><strong>Orchestration</strong> est historiquement liée à <strong>SOA</strong> : l'orchestrateur central contrôle le processus métier en appelant les services SOAP via l'ESB. Cette approche centralisée correspond à la philosophie SOA avec gouvernance et contrôle centralisés.</p>
+                  <p class="mt-2"><strong>Chorégraphie</strong> est naturellement adaptée aux <strong>microservices</strong> : chaque service réagit aux événements de manière autonome, sans orchestrateur central. Cette approche décentralisée correspond à la philosophie microservices avec autonomie des équipes et des services.</p>
+                  <p class="mt-2"><em>Note : Ces associations ne sont pas strictes. On peut faire de l'orchestration avec des microservices (AWS Step Functions) ou de la chorégraphie avec SOA (message brokers), mais les tendances historiques sont claires.</em></p>
+                </div>
               </div>
             </div>
 
@@ -1796,6 +2123,11 @@ Système Legacy B (format propriétaire)</code></pre>
               </div>
               <div class="day-content">
                 <p>Dans une architecture distribuée, les services peuvent tomber, les messages peuvent être perdus, et les réseaux peuvent être instables. Les <strong>patterns de fiabilité</strong> permettent de gérer ces situations et d'assurer la robustesse du système.</p>
+                
+                <div class="highlight-box" style="margin-top:1rem; background:#fff8e1; border-left:4px solid #ffb300;">
+                  <h6>💡 Note importante : Patterns principalement liés aux microservices</h6>
+                  <p>Ces patterns de fiabilité sont <strong>principalement utilisés dans les architectures microservices</strong>, où les services communiquent via le réseau (HTTP, gRPC) et sont donc exposés aux pannes réseau, aux timeouts, et aux défaillances temporaires. Dans SOA, certains de ces patterns existent mais sont souvent gérés différemment (via l'ESB, WS-ReliableMessaging pour la fiabilité des messages).</p>
+                </div>
 
                 <h5 class="mt-4">1. Idempotence</h5>
                 <div class="highlight-box" style="margin-top:1rem; background:#e8f4fd; border-left:4px solid #0066cc;">
@@ -1842,6 +2174,7 @@ Système Legacy B (format propriétaire)</code></pre>
                 <div class="highlight-box" style="margin-top:1rem; background:#fff8e1; border-left:4px solid #ffb300;">
                   <h6>💡 Qu'est-ce que c'est ?</h6>
                   <p>Un <strong>Circuit Breaker</strong> (disjoncteur) est un mécanisme qui interrompt temporairement les appels à un service en échec pour éviter l'effet domino (cascade de défaillances).</p>
+                  <p class="mt-2" style="font-size:0.9em; color:#d32f2f;"><strong>⚠️ Pattern principalement utilisé dans les microservices :</strong> Le Circuit Breaker est un pattern clé des architectures microservices, où les services appellent d'autres services via HTTP/gRPC et sont donc exposés aux pannes réseau. Dans SOA, la gestion des défaillances est souvent centralisée via l'ESB, mais le pattern Circuit Breaker reste applicable.</p>
                   
                   <p class="mt-3"><strong>Pourquoi c'est important ?</strong></p>
                   <ul>
@@ -1905,6 +2238,7 @@ Système Legacy B (format propriétaire)</code></pre>
                 <div class="highlight-box" style="margin-top:1rem; background:#eef9ff; border-left:4px solid #2196f3;">
                   <h6>💡 Qu'est-ce que c'est ?</h6>
                   <p><strong>Retry</strong> (réessai) consiste à réessayer automatiquement une opération en échec. <strong>Backoff exponentiel</strong> consiste à attendre de plus en plus longtemps entre chaque tentative.</p>
+                  <p class="mt-2" style="font-size:0.9em; color:#d32f2f;"><strong>⚠️ Pattern principalement utilisé dans les microservices :</strong> Le Retry avec backoff exponentiel est essentiel dans les architectures microservices où les appels HTTP/gRPC peuvent échouer temporairement (timeout, surcharge, réseau instable). Dans SOA, la fiabilité des messages est souvent gérée via WS-ReliableMessaging au niveau de l'ESB, mais le pattern Retry reste applicable pour les appels directs entre services.</p>
                   
                   <p class="mt-3"><strong>Pourquoi c'est important ?</strong></p>
                   <ul>

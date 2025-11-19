@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz de Révision - Jour 6</title>
+  <link rel="stylesheet" href="../styles/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .quiz-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-top: 90px;
+    }
+
+    .quiz-header h1 {
+      font-size: 2.5rem;
+      color: var(--logo-color);
+      margin-bottom: 1rem;
+    }
+
+    .quiz-header p {
+      font-size: 1.1rem;
+      color: var(--gray-600);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .quiz-section {
+      margin-bottom: 3rem;
+    }
+
+    .quiz-section-title {
+      font-size: 1.8rem;
+      color: var(--logo-color);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--primary-color);
+    }
+
+    .question-item {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      transition: var(--transition-normal);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .question-item:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .question-header {
+      padding: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--gray-100);
+      transition: var(--transition-fast);
+    }
+
+    .question-header:hover {
+      background: var(--gray-200);
+    }
+
+    .question-header.active {
+      background: var(--primary-color);
+      color: var(--white);
+    }
+
+    .question-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gray-800);
+      flex: 1;
+      margin-right: 1rem;
+    }
+
+    .question-header.active .question-text {
+      color: var(--white);
+    }
+
+    .question-toggle {
+      font-size: 1.2rem;
+      transition: transform var(--transition-fast);
+      color: var(--gray-600);
+    }
+
+    .question-header.active .question-toggle {
+      color: var(--white);
+      transform: rotate(180deg);
+    }
+
+    .question-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+      padding: 0 1.5rem;
+    }
+
+    .question-answer.open {
+      max-height: 5000px;
+      padding: 1.5rem;
+    }
+
+    .answer-content {
+      background: var(--gray-50);
+      border-left: 4px solid var(--primary-color);
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+    }
+
+    .answer-content h4 {
+      color: var(--logo-color);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .answer-content p,
+    .answer-content ul,
+    .answer-content ol {
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .answer-content ul,
+    .answer-content ol {
+      padding-left: 2rem;
+    }
+
+    .answer-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .answer-content code {
+      background: var(--gray-200);
+      padding: 0.2rem 0.4rem;
+      border-radius: var(--radius-sm);
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    .answer-content pre {
+      background: var(--gray-900);
+      color: var(--white);
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    .answer-content pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+
+    .answer-content strong {
+      color: var(--logo-color);
+    }
+
+    .answer-content em {
+      color: var(--gray-700);
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="../assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+        <span class="logo-text">Web Services</span>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="../index.html" class="nav-link">Accueil</a>
+        </li>
+        <li class="nav-item">
+          <a href="../index.html#programme" class="nav-link">Programme</a>
+        </li>
+        <li class="nav-item">
+          <a href="filerouge.html" class="nav-link">Projet SmartCity</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle">
+            <i class="fas fa-calendar-alt"></i> Journées
+            <i class="fas fa-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+            <a href="day2.html" class="dropdown-item">Jour 2 - Théorie</a>
+            <a href="day3.html" class="dropdown-item">Jour 3 - Théorie</a>
+            <a href="day4-5.html" class="dropdown-item">Jour 4 & 5 - Théorie</a>
+            <a href="day6.html" class="dropdown-item">Jour 6 - Théorie</a>
+            <a href="day7.html" class="dropdown-item">Jour 7 - Théorie</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle">
+            <i class="fas fa-question-circle"></i> Quiz
+            <i class="fas fa-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="quiz.html" class="dropdown-item">Quiz Jours 1-2-3</a>
+            <a href="quiz-4-5.html" class="dropdown-item">Quiz Jours 4-5</a>
+            <a href="quiz-jour6.html" class="dropdown-item active">Quiz Jour 6</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="ressources.html" class="nav-link">Ressources</a>
+        </li>
+        <li class="nav-item">
+          <a href="../index.html#contact" class="nav-link">Contact</a>
+        </li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Quiz Content -->
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h1>📋 Quiz de Révision - Jour 6</h1>
+      <p>Ce quiz contient 20 questions de révision sur l'Architecture SOA et les Services SOAP. Cliquez sur une question pour afficher la réponse détaillée.</p>
+    </div>
+
+    <!-- Questions sur le Paradigme SOA -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">🏗️ Questions sur le Paradigme SOA</h2>
+      
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 1: Qu'est-ce que SOA et quelle est sa différence avec SOAP ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>SOA (Service-Oriented Architecture)</strong> est une <strong>architecture</strong> qui organise les systèmes comme une collection de services réutilisables, faiblement couplés et interopérables.</p>
+            <p><strong>SOAP (Simple Object Access Protocol)</strong> est un <strong>protocole</strong> de communication standardisé par le W3C pour échanger des messages XML entre applications.</p>
+            <p><strong>La différence :</strong></p>
+            <ul>
+              <li>SOA = Architecture (comment organiser le système)</li>
+              <li>SOAP = Protocole (comment les services communiquent)</li>
+            </ul>
+            <p><em>Confusion courante :</em> On confond souvent "SOA" avec "SOAP" car historiquement, SOA s'est fortement associée à SOAP, mais théoriquement SOA peut utiliser d'autres protocoles.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 2: Quand SOA a-t-il été formalisé et pourquoi est-il né ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Chronologie :</strong></p>
+            <ul>
+              <li><strong>Années 1990 (prémices) :</strong> CORBA, DCOM, RMI (tentatives ratées, trop complexes)</li>
+              <li><strong>2000-2003 (formalisation) :</strong> Standardisation de SOAP, WSDL, UDDI, WS-*</li>
+              <li><strong>2003-2010 (adoption massive) :</strong> Grandes entreprises adoptent SOA via ESB</li>
+            </ul>
+            <p><strong>Pourquoi SOA est né :</strong></p>
+            <ul>
+              <li>Grandes entreprises avec des systèmes hétérogènes (mainframe COBOL, Java Unix, .NET Windows)</li>
+              <li>Besoin d'intégration standardisée</li>
+              <li>Réutilisation de services entre applications</li>
+              <li>Interopérabilité entre langages et plateformes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 3: Citez 5 des 8 principes fondamentaux de SOA.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue (5 parmi 8)</h4>
+            <ol>
+              <li><strong>Contrat standardisé :</strong> Chaque service expose un contrat formel (WSDL)</li>
+              <li><strong>Couplage faible :</strong> Les services sont indépendants, le contrat change rarement</li>
+              <li><strong>Abstraction :</strong> La complexité interne est masquée</li>
+              <li><strong>Réutilisabilité :</strong> Un service alimente plusieurs canaux</li>
+              <li><strong>Autonomie :</strong> Chaque service contrôle ses propres données</li>
+              <li><strong>Stateless :</strong> Pas d'état partagé entre requêtes</li>
+              <li><strong>Découvrabilité :</strong> Services catalogués (UDDI)</li>
+              <li><strong>Composabilité :</strong> Assemblage de services pour créer des processus</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 4: Quel est le rôle de l'ESB dans une architecture SOA ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>ESB (Enterprise Service Bus)</strong> est le cœur de l'architecture SOA. Il assure :</p>
+            <ul>
+              <li><strong>Routage intelligent :</strong> Acheminer les messages entre services</li>
+              <li><strong>Transformation :</strong> Convertir les formats (XML ↔ JSON ↔ CSV)</li>
+              <li><strong>Sécurité :</strong> Authentification, autorisation centralisées</li>
+              <li><strong>Gestion des transactions :</strong> Coordination de transactions distribuées</li>
+              <li><strong>Tolérance aux pannes :</strong> Retry, circuit breaker</li>
+              <li><strong>Monitoring :</strong> Traçabilité et logs centralisés</li>
+            </ul>
+            <p><strong>⚠️ Limites :</strong> L'ESB peut devenir un point de défaillance unique et un goulot d'étranglement si on y concentre trop de logique métier.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 5: Comparez SOA et Microservices en 5 points clés.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>5 différences clés :</strong></p>
+            <ol>
+              <li><strong>Naissance :</strong> SOA (2000-2005) vs Microservices (2014+)</li>
+              <li><strong>Philosophie :</strong> SOA (interopérabilité & réutilisation) vs Microservices (agilité & autonomie)</li>
+              <li><strong>Communication :</strong> SOA (ESB central) vs Microservices (point-à-point, message broker)</li>
+              <li><strong>Protocole dominant :</strong> SOA (SOAP/XML) vs Microservices (REST/JSON, gRPC)</li>
+              <li><strong>Base de données :</strong> SOA (souvent partagée) vs Microservices (une par service)</li>
+            </ol>
+            <p><strong>Citation :</strong> <em>"Microservices are SOA done right."</em> — Martin Fowler</p>
+            <p>Les microservices reprennent les principes SOA en supprimant l'ESB central et la lourdeur XML.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions sur SOAP et WSDL -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">📡 Questions sur SOAP et WSDL</h2>
+      
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 6: Quelles sont les 4 caractéristiques principales de SOAP ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <ol>
+              <li><strong>Protocole agnostique :</strong> SOAP fonctionne sur HTTP, SMTP, JMS, TCP</li>
+              <li><strong>Format XML structuré :</strong> Validation stricte via XSD, interopérabilité garantie</li>
+              <li><strong>Enveloppe standardisée :</strong> Structure fixe (Envelope → Header + Body)</li>
+              <li><strong>Extensibilité via WS-* :</strong> WS-Security, WS-Transaction, WS-ReliableMessaging</li>
+            </ol>
+            <p><strong>Structure d'un message SOAP :</strong></p>
+            <pre>Envelope (obligatoire)
+  ├─ Header (optionnel) : métadonnées, sécurité
+  └─ Body (obligatoire) : contenu métier</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 7: Décrivez 3 spécifications WS-* et leur utilité.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue (3 parmi les principales)</h4>
+            <ul>
+              <li><strong>WS-Security :</strong> Chiffrement et signature des messages au niveau message (pas seulement transport)
+                <ul>
+                  <li>Authentification (UsernameToken)</li>
+                  <li>Intégrité (signature numérique)</li>
+                  <li>Chiffrement du payload</li>
+                </ul>
+              </li>
+              <li><strong>WS-Transaction :</strong> Transactions distribuées ACID entre plusieurs services
+                <ul>
+                  <li>Coordination de transactions multi-systèmes</li>
+                  <li>Rollback distribué</li>
+                </ul>
+              </li>
+              <li><strong>WS-ReliableMessaging :</strong> Garantie de livraison des messages
+                <ul>
+                  <li>Ordre de livraison</li>
+                  <li>Pas de perte de message</li>
+                  <li>Pas de duplication</li>
+                </ul>
+              </li>
+            </ul>
+            <p><em>Note :</em> Ces spécifications sont complexes et sont gérées automatiquement par les frameworks SOAP (Apache CXF, WCF, etc.).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 8: Expliquez la structure d'un WSDL et ses 5 sections.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>WSDL (Web Services Description Language)</strong> décrit complètement un service SOAP. Les 5 sections :</p>
+            <ol>
+              <li><strong>Types :</strong> Schémas de données (XSD) définissant les structures
+                <pre>Event { ID: string, Title: string, Price: decimal }</pre>
+              </li>
+              <li><strong>Messages :</strong> Requêtes et réponses
+                <pre>GetEventRequest { eventID: string }
+GetEventResponse { event: Event }</pre>
+              </li>
+              <li><strong>PortType :</strong> Liste d'opérations (interface)
+                <pre>GetEvent(input: GetEventRequest) → output: GetEventResponse</pre>
+              </li>
+              <li><strong>Binding :</strong> Protocole et style SOAP
+                <pre>style="document", transport="http"</pre>
+              </li>
+              <li><strong>Service :</strong> Endpoints accessibles (URL du service)
+                <pre>https://api.smartcity.local/soap/events</pre>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 9: Pourquoi le typage fort de SOAP est un avantage ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Le typage fort via XSD offre :</strong></p>
+            <ul>
+              <li><strong>Validation automatique :</strong> Le serveur rejette un message invalide (ex: texte dans un champ numérique)</li>
+              <li><strong>Génération de code :</strong> Les outils créent automatiquement des classes typées depuis le WSDL</li>
+              <li><strong>Documentation :</strong> Le schéma XSD documente exactement les champs obligatoires, leurs types, leurs contraintes</li>
+              <li><strong>Contrat formel :</strong> Impossible de se tromper sur la structure</li>
+            </ul>
+            <p><strong>Exemple XSD :</strong></p>
+            <pre>&lt;xsd:element name="Price" type="xsd:decimal" /&gt;
+&lt;xsd:element name="Date" type="xsd:dateTime" /&gt;</pre>
+            <p>Si le client envoie <code>"abc"</code> dans Price, le serveur rejette automatiquement.</p>
+            <p><strong>Comparaison :</strong> Avec REST/JSON, ce typage est informel (sauf avec OpenAPI/Swagger).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 10: SOAP vs REST : donnez 3 avantages de chacun.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Avantages SOAP :</strong></p>
+            <ul>
+              <li>✅ Typage strict et validation automatique (XSD)</li>
+              <li>✅ Sécurité message-level (WS-Security)</li>
+              <li>✅ Transactions distribuées (WS-Transaction)</li>
+            </ul>
+            <p><strong>Avantages REST :</strong></p>
+            <ul>
+              <li>✅ Simplicité et légèreté (JSON ~250 bytes vs XML ~1200 bytes)</li>
+              <li>✅ Support navigateur natif (fetch, axios)</li>
+              <li>✅ Adoption massive et écosystème moderne</li>
+            </ul>
+            <p><strong>Règle de choix :</strong></p>
+            <ul>
+              <li><strong>SOAP :</strong> Secteurs régulés, transactions complexes, contrats formels requis</li>
+              <li><strong>REST :</strong> APIs publiques web/mobile, simplicité, time-to-market</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions sur Découverte et Annuaires -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">📚 Questions sur Découverte et Annuaires</h2>
+      
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 11: Qu'est-ce qu'UDDI et pourquoi a-t-il échoué ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>UDDI (Universal Description, Discovery and Integration)</strong> était un registre distribué (2000-2001) pour publier et découvrir des services SOAP.</p>
+            <p><strong>Promesse :</strong> Un annuaire mondial où les entreprises publient leurs services et où n'importe qui peut les découvrir.</p>
+            <p><strong>Pourquoi l'échec ?</strong></p>
+            <ul>
+              <li><strong>Complexité technique :</strong> L'API UDDI elle-même était en SOAP, trop complexe</li>
+              <li><strong>Gouvernance floue :</strong> Qui valide ? Qui modère ? Pas de mécanisme clair</li>
+              <li><strong>Manque de confiance :</strong> Les entreprises craignaient de publier publiquement</li>
+              <li><strong>Effet boule de neige :</strong> Peu de services → peu d'adoption → peu de services</li>
+              <li><strong>Google plus simple :</strong> Chercher "API banque SOAP" sur Google était plus efficace</li>
+            </ul>
+            <p><strong>Registres publics fermés :</strong> Microsoft, IBM, SAP ont tous fermé leurs registres en 2006.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 12: Quelle est la différence entre Service Discovery et Documentation ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Service Discovery (découverte technique) :</strong></p>
+            <ul>
+              <li><strong>Objectif :</strong> Trouver l'adresse IP/URL d'un service en runtime</li>
+              <li><strong>Question :</strong> "Où est le service User ?"</li>
+              <li><strong>Réponse :</strong> "user-service:8080"</li>
+              <li><strong>Quand :</strong> En runtime, quand les services s'appellent</li>
+              <li><strong>Outils :</strong> Consul, Eureka, Kubernetes, UDDI (SOA), ESB (SOA)</li>
+            </ul>
+            <p><strong>Documentation (découverte fonctionnelle) :</strong></p>
+            <ul>
+              <li><strong>Objectif :</strong> Comprendre comment utiliser un service</li>
+              <li><strong>Question :</strong> "Comment appeler le service User ?"</li>
+              <li><strong>Réponse :</strong> "GET /users/{id} retourne User{name, email}"</li>
+              <li><strong>Quand :</strong> Au développement, pour comprendre les APIs</li>
+              <li><strong>Outils :</strong> Swagger/OpenAPI, RapidAPI, Postman, README</li>
+            </ul>
+            <p><strong>Analogie :</strong> Service Discovery = "Où est le restaurant ?" | Documentation = "Que propose le restaurant ?"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 13: Comment fonctionne le Service Discovery dans les microservices ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Le cycle en 3 étapes :</strong></p>
+            <ol>
+              <li><strong>Enregistrement :</strong> Au démarrage, chaque service s'enregistre dans le Service Discovery
+                <pre>Service User : "user-service" → 10.0.1.5:8080</pre>
+              </li>
+              <li><strong>Health checks :</strong> Le Service Discovery vérifie périodiquement que les services sont disponibles
+                <pre>Consul ping user-service toutes les 10s</pre>
+              </li>
+              <li><strong>Résolution :</strong> Quand un service a besoin d'appeler un autre, il demande l'adresse
+                <pre>Service Order → Consul : "Où est user-service ?"
+Consul → "10.0.1.5:8080"</pre>
+              </li>
+            </ol>
+            <p><strong>Avantages :</strong></p>
+            <ul>
+              <li>Les services trouvent automatiquement les autres services</li>
+              <li>Gestion automatique de la scalabilité (plusieurs instances)</li>
+              <li>Mise à jour dynamique des adresses (redéploiements)</li>
+            </ul>
+            <p><strong>Outils populaires :</strong> Consul, Eureka (Netflix), Kubernetes (natif), etcd</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions sur Patterns SOA -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">🎨 Questions sur les Patterns SOA</h2>
+      
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 14: Expliquez les 3 patterns de conception : Service Façade, Service Adapter, Canonical Data Model.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>1. Service Façade :</strong></p>
+            <ul>
+              <li><strong>Problème :</strong> Système legacy avec 50 méthodes complexes</li>
+              <li><strong>Solution :</strong> Exposer une interface simple (5 méthodes SOAP claires)</li>
+              <li><strong>Exemple :</strong> <code>getAccount(accountId)</code> cache <code>legacyAccount.getDetailsByIdAndType(...)</code></li>
+            </ul>
+            <p><strong>2. Service Adapter :</strong></p>
+            <ul>
+              <li><strong>Problème :</strong> Traduire SOAP vers SQL, CSV, REST, etc.</li>
+              <li><strong>Solution :</strong> Adapter qui traduit les appels SOAP en appels natifs</li>
+              <li><strong>Exemple :</strong> SOAP <code>GetUser</code> → SQL <code>SELECT * FROM users</code></li>
+            </ul>
+            <p><strong>3. Canonical Data Model :</strong></p>
+            <ul>
+              <li><strong>Problème :</strong> N services avec N formats = N×(N-1) transformations</li>
+              <li><strong>Solution :</strong> Format standard intermédiaire (canonique)</li>
+              <li><strong>Exemple :</strong> Service A → Canonique XML → Service B</li>
+              <li><strong>Avantage :</strong> 10 services = 20 transformations au lieu de 90</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 15: Quelle est la différence entre Orchestration et Chorégraphie ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Orchestration (chef d'orchestre) :</strong></p>
+            <ul>
+              <li><strong>Principe :</strong> Un orchestrateur central contrôle le processus</li>
+              <li><strong>Exemple :</strong> Orchestrateur appelle Stock → Prix → Paiement → Commande</li>
+              <li><strong>Technologies :</strong> BPEL, Camunda, AWS Step Functions</li>
+              <li><strong>Avantages :</strong> Supervision simple, gestion d'erreurs centralisée</li>
+              <li><strong>Inconvénients :</strong> Point de défaillance unique, couplage fort</li>
+              <li><strong>Usage typique :</strong> SOA avec ESB</li>
+            </ul>
+            <p><strong>Chorégraphie (partition partagée) :</strong></p>
+            <ul>
+              <li><strong>Principe :</strong> Services réagissent aux événements (event-driven)</li>
+              <li><strong>Exemple :</strong> Commande publie "OrderCreated" → Stock écoute → publie "StockReserved" → ...</li>
+              <li><strong>Technologies :</strong> Kafka, RabbitMQ, event streaming</li>
+              <li><strong>Avantages :</strong> Résilience, découplage, scalabilité</li>
+              <li><strong>Inconvénients :</strong> Monitoring complexe, débogage difficile</li>
+              <li><strong>Usage typique :</strong> Microservices</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 16: Expliquez 3 patterns de fiabilité.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>1. Idempotence :</strong></p>
+            <ul>
+              <li><strong>Principe :</strong> Appeler plusieurs fois = même résultat qu'une fois</li>
+              <li><strong>Exemple :</strong> <code>createOrder(orderId: 123)</code> appelé 2× ne crée qu'une commande</li>
+              <li><strong>Implémentation :</strong> ID unique, vérification d'existence</li>
+            </ul>
+            <p><strong>2. Circuit Breaker (disjoncteur) :</strong></p>
+            <ul>
+              <li><strong>Principe :</strong> Interrompre les appels à un service en échec</li>
+              <li><strong>3 états :</strong> CLOSED (normal) → OPEN (bloqué) → HALF-OPEN (test)</li>
+              <li><strong>Avantage :</strong> Évite la cascade de défaillances</li>
+            </ul>
+            <p><strong>3. Retry + Backoff Exponentiel :</strong></p>
+            <ul>
+              <li><strong>Principe :</strong> Réessayer avec délais croissants (1s, 2s, 4s, 8s...)</li>
+              <li><strong>Exemple :</strong> Appel échoue → attendre 1s → réessayer → échoue → attendre 2s...</li>
+              <li><strong>Avantage :</strong> Laisse le temps au service de récupérer</li>
+            </ul>
+            <p><em>Note :</em> Ces patterns sont principalement utilisés dans les microservices, mais applicables à SOA.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 17: Décrivez 3 anti-patterns SOA et comment les éviter.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>1. God Service (Service Dieu) :</strong></p>
+            <ul>
+              <li><strong>Problème :</strong> Service avec 150 opérations, plusieurs responsabilités</li>
+              <li><strong>Conséquence :</strong> Monolithe déguisé, impossible à maintenir</li>
+              <li><strong>Solution :</strong> Découper par domaine métier (User, Order, Payment)</li>
+            </ul>
+            <p><strong>2. Chatty Services (Services Bavards) :</strong></p>
+            <ul>
+              <li><strong>Problème :</strong> 5 appels réseau pour afficher un profil utilisateur</li>
+              <li><strong>Conséquence :</strong> Latence élevée (250ms-1s), fragilité</li>
+              <li><strong>Solution :</strong> Créer une façade ou une API composite</li>
+            </ul>
+            <p><strong>3. ESB Spaghetti :</strong></p>
+            <ul>
+              <li><strong>Problème :</strong> ESB contient toute la logique métier</li>
+              <li><strong>Conséquence :</strong> Goulot d'étranglement, complexité</li>
+              <li><strong>Solution :</strong> Limiter l'ESB aux préoccupations transverses (sécurité, routage simple)</li>
+            </ul>
+            <p><strong>Règle d'or :</strong> Principe de responsabilité unique - un service = une responsabilité.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions de Synthèse -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">🎯 Questions de Synthèse</h2>
+      
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 18: Quand choisir SOA plutôt que Microservices en 2025 ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Choisir SOA si :</strong></p>
+            <ul>
+              <li>✅ Vous devez intégrer des systèmes legacy très hétérogènes</li>
+              <li>✅ Votre secteur est fortement régulé (banque, santé, administration)</li>
+              <li>✅ Vous gérez des transactions distribuées ACID complexes</li>
+              <li>✅ Des partenaires imposent SOAP ou WS-*</li>
+              <li>✅ La gouvernance, traçabilité et audit sont critiques</li>
+            </ul>
+            <p><strong>Choisir Microservices si :</strong></p>
+            <ul>
+              <li>🚀 Vous êtes une startup/PME orientée time-to-market</li>
+              <li>🚀 Vous livrez fréquemment (CI/CD, DevOps)</li>
+              <li>🚀 Vous exposez des APIs web/mobile publiques</li>
+              <li>🚀 Votre équipe maîtrise les pratiques Cloud-native</li>
+              <li>🚀 Vous cherchez simplicité et scalabilité horizontale</li>
+            </ul>
+            <p><strong>Réalité 2025 :</strong> Nouvelles architectures SOA pures sont rares. Grandes entreprises migrent progressivement vers microservices.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 19: Pourquoi REST a-t-il gagné la bataille face à SOAP ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Raisons du succès de REST :</strong></p>
+            <ul>
+              <li><strong>Simplicité :</strong> JSON léger vs XML verbeux (250 bytes vs 1200 bytes)</li>
+              <li><strong>Support navigateur :</strong> fetch/axios natif vs pas de support SOAP</li>
+              <li><strong>Courbe d'apprentissage :</strong> REST très simple vs SOAP complexe (WSDL, WS-*)</li>
+              <li><strong>Adoption web 2.0 :</strong> REST explosif avec APIs publiques (Twitter, GitHub, Facebook)</li>
+              <li><strong>Mobile :</strong> iOS/Android adoptent massivement REST/JSON (2010+)</li>
+              <li><strong>Frameworks modernes :</strong> Express, Spring Boot facilitent REST</li>
+            </ul>
+            <p><strong>Timeline :</strong></p>
+            <ul>
+              <li>2000-2010 : SOAP dominant dans les entreprises</li>
+              <li>2010-2015 : Explosion REST (APIs publiques, mobile)</li>
+              <li>2025 : REST dominant (95%+ des nouvelles APIs)</li>
+            </ul>
+            <p><strong>Leçon :</strong> La simplicité bat la complexité, même avec moins de fonctionnalités.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 20: Créez une stratégie de migration d'un système SOA/SOAP vers REST/Microservices.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Stratégie de migration progressive :</strong></p>
+            <ol>
+              <li><strong>Audit et inventaire (1 mois) :</strong>
+                <ul>
+                  <li>Cartographier tous les services SOAP existants</li>
+                  <li>Identifier les dépendances</li>
+                  <li>Prioriser par valeur métier et complexité</li>
+                </ul>
+              </li>
+              <li><strong>API Gateway (2 mois) :</strong>
+                <ul>
+                  <li>Déployer un API Gateway (Kong, AWS API Gateway)</li>
+                  <li>Router SOAP ↔ REST selon les besoins</li>
+                  <li>Point d'entrée unique pour tous les clients</li>
+                </ul>
+              </li>
+              <li><strong>Strangler Fig Pattern (6-24 mois) :</strong>
+                <ul>
+                  <li>Créer des microservices REST pour les nouvelles fonctionnalités</li>
+                  <li>Migrer progressivement les services SOAP existants (un par un)</li>
+                  <li>L'API Gateway route vers l'ancien ou le nouveau selon disponibilité</li>
+                  <li>Une fois tout migré, décommissionner l'ancien système</li>
+                </ul>
+              </li>
+              <li><strong>Formation et culture (continu) :</strong>
+                <ul>
+                  <li>Former les équipes aux microservices, REST, DevOps</li>
+                  <li>Adoption progressive de CI/CD</li>
+                  <li>Containerisation (Docker, Kubernetes)</li>
+                </ul>
+              </li>
+            </ol>
+            <p><strong>Durée totale :</strong> 2-5 ans pour un grand SI</p>
+            <p><strong>Erreur à éviter :</strong> Big Bang (tout remplacer d'un coup) → risque d'échec élevé</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer id="contact" class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="../assets/logo.jpeg" alt="YNOV Campus" class="footer-logo-img">
+            <span class="footer-logo-text">Web Services</span>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Programme</h3>
+          <ul>
+            <li><a href="../index.html#programme">Planning détaillé</a></li>
+            <li><a href="filerouge.html">Projet SmartCity</a></li>
+            <li><a href="ressources.html">Ressources</a></li>
+            <li><a href="../index.html#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Technologies</h3>
+          <ul>
+            <li>SOA & Microservices</li>
+            <li>SOAP & WSDL</li>
+            <li>REST & GraphQL</li>
+            <li>OAuth 2.0 & JWT</li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> contact@ynov.com</p>
+            <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+            <p><i class="fas fa-map-marker-alt"></i> Campus Ynov</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 YNOV Campus. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+  <script>
+    // Gestion de l'affichage des réponses au clic
+    document.addEventListener('DOMContentLoaded', function() {
+      const questionHeaders = document.querySelectorAll('.question-header');
+      
+      questionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+          const questionItem = this.closest('.question-item');
+          const answer = questionItem.querySelector('.question-answer');
+          const isOpen = answer.classList.contains('open');
+          
+          // Toggle de l'état
+          if (isOpen) {
+            answer.classList.remove('open');
+            this.classList.remove('active');
+          } else {
+            answer.classList.add('open');
+            this.classList.add('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
