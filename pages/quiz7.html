@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz de Révision - Jour 7</title>
+  <link rel="stylesheet" href="../styles/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .quiz-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-top: 90px;
+    }
+
+    .quiz-header h1 {
+      font-size: 2.5rem;
+      color: var(--logo-color);
+      margin-bottom: 1rem;
+    }
+
+    .quiz-header p {
+      font-size: 1.1rem;
+      color: var(--gray-600);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .quiz-section {
+      margin-bottom: 3rem;
+    }
+
+    .quiz-section-title {
+      font-size: 1.8rem;
+      color: var(--logo-color);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--primary-color);
+    }
+
+    .question-item {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      transition: var(--transition-normal);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .question-item:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .question-header {
+      padding: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--gray-100);
+      transition: var(--transition-fast);
+    }
+
+    .question-header:hover {
+      background: var(--gray-200);
+    }
+
+    .question-header.active {
+      background: var(--primary-color);
+      color: var(--white);
+    }
+
+    .question-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gray-800);
+      flex: 1;
+      margin-right: 1rem;
+    }
+
+    .question-header.active .question-text {
+      color: var(--white);
+    }
+
+    .question-toggle {
+      font-size: 1.2rem;
+      transition: transform var(--transition-fast);
+      color: var(--gray-600);
+    }
+
+    .question-header.active .question-toggle {
+      color: var(--white);
+      transform: rotate(180deg);
+    }
+
+    .question-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+      padding: 0 1.5rem;
+    }
+
+    .question-answer.open {
+      max-height: 5000px;
+      padding: 1.5rem;
+    }
+
+    .answer-content {
+      background: var(--gray-50);
+      border-left: 4px solid var(--primary-color);
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+    }
+
+    .answer-content h4 {
+      color: var(--logo-color);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .answer-content p,
+    .answer-content ul,
+    .answer-content ol {
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .answer-content ul,
+    .answer-content ol {
+      padding-left: 2rem;
+    }
+
+    .answer-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .answer-content code {
+      background: var(--gray-200);
+      padding: 0.2rem 0.4rem;
+      border-radius: var(--radius-sm);
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    .answer-content pre {
+      background: var(--gray-900);
+      color: var(--white);
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    .answer-content pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+
+    .answer-content strong {
+      color: var(--logo-color);
+    }
+
+    .answer-content em {
+      color: var(--gray-700);
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="../assets/logo.jpeg" alt="YNOV Campus" class="logo-img">
+        <span class="logo-text">Web Services</span>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="../index.html" class="nav-link">Accueil</a>
+        </li>
+        <li class="nav-item">
+          <a href="../index.html#programme" class="nav-link">Programme</a>
+        </li>
+        <li class="nav-item">
+          <a href="filerouge.html" class="nav-link">Projet SmartCity</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle">
+            <i class="fas fa-calendar-alt"></i> Journées
+            <i class="fas fa-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="day1.html" class="dropdown-item">Jour 1 - Théorie</a>
+            <a href="day2.html" class="dropdown-item">Jour 2 - Théorie</a>
+            <a href="day3.html" class="dropdown-item">Jour 3 - Théorie</a>
+            <a href="day4-5.html" class="dropdown-item">Jour 4 & 5 - Théorie</a>
+            <a href="day6.html" class="dropdown-item">Jour 6 - Théorie</a>
+            <a href="day7.html" class="dropdown-item">Jour 7 - Théorie</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle">
+            <i class="fas fa-question-circle"></i> Quiz
+            <i class="fas fa-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="quiz.html" class="dropdown-item">Quiz Jours 1-2-3</a>
+            <a href="quiz-4-5.html" class="dropdown-item">Quiz Jours 4-5</a>
+            <a href="quiz6.html" class="dropdown-item">Quiz Jour 6</a>
+            <!-- <a href="quiz7.html" class="dropdown-item active">Quiz Jour 7</a> -->
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="ressources.html" class="nav-link">Ressources</a>
+        </li>
+        <li class="nav-item">
+          <a href="../index.html#contact" class="nav-link">Contact</a>
+        </li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Quiz Content -->
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h1>📋 Quiz de Révision - Jour 7</h1>
+      <p>Ce quiz contient 20 questions de révision sur les Microservices et l'Architecture Distribuée. Cliquez sur une question pour afficher la réponse détaillée.</p>
+    </div>
+
+    <!-- Questions sur l'Architecture Microservices -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">🧱 Questions sur l'Architecture Microservices</h2>
+      
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 1: Qu'est-ce qu'un microservice et quelles sont ses 5 caractéristiques principales ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p>Un <strong>microservice</strong> est un service <strong>petit, autonome et fortement encapsulé</strong>.</p>
+            <p><strong>Les 5 caractéristiques principales :</strong></p>
+            <ol>
+              <li><strong>Single Responsibility</strong> : Un service = un domaine métier (Events, Users, Payments...)</li>
+              <li><strong>Base de données privée</strong> : Chaque service possède sa propre base de données</li>
+              <li><strong>API explicite</strong> : Communication via REST, gRPC ou messages</li>
+              <li><strong>Déploiement indépendant</strong> : Chaque service peut être déployé séparément</li>
+              <li><strong>Équipe autonome</strong> : "Two Pizza Team" - une équipe suffisamment petite pour être nourrie avec deux pizzas</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 2: Comparez Monolithe, SOA et Microservices en 5 critères clés.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>5 critères de comparaison :</strong></p>
+            <ol>
+              <li><strong>Complexité initiale :</strong>
+                <ul>
+                  <li>Monolithe : ✅ Simple</li>
+                  <li>SOA : ⚠️ Élevée (ESB, gouvernance)</li>
+                  <li>Microservices : ❌ Complexe (infra, CI/CD)</li>
+                </ul>
+              </li>
+              <li><strong>Scalabilité :</strong>
+                <ul>
+                  <li>Monolithe : Verticale (+CPU/RAM)</li>
+                  <li>SOA : Horizontale mais via ESB</li>
+                  <li>Microservices : Horizontale par service</li>
+                </ul>
+              </li>
+              <li><strong>Base de données :</strong>
+                <ul>
+                  <li>Monolithe : Unique</li>
+                  <li>SOA : Souvent partagée / modèle canonique</li>
+                  <li>Microservices : Une par service</li>
+                </ul>
+              </li>
+              <li><strong>Résilience :</strong>
+                <ul>
+                  <li>Monolithe : ❌ Point unique de défaillance</li>
+                  <li>SOA : ⚠️ ESB = SPOF si mal dimensionné</li>
+                  <li>Microservices : ✅ Isolation des pannes</li>
+                </ul>
+              </li>
+              <li><strong>Technologies :</strong>
+                <ul>
+                  <li>Monolithe : Stack unique</li>
+                  <li>SOA : Standards WS-*, SOAP</li>
+                  <li>Microservices : Liberté par service</li>
+                </ul>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 3: Quand utiliser ou éviter les microservices ? Donnez 3 arguments pour chaque cas.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>✅ Adoptez les microservices si :</strong></p>
+            <ul>
+              <li>Équipe > 15 personnes avec besoin d'autonomie</li>
+              <li>Domaines métier multiples (Events, Users, Billing...)</li>
+              <li>Charges différentes nécessitant du scaling fin (Events 1000 req/s vs Users 10 req/s)</li>
+            </ul>
+            <p><strong>❌ Restez monolithe si :</strong></p>
+            <ul>
+              <li>Startup/MVP : vitesse > architecture</li>
+              <li>Petite équipe (<10) ou budget limité</li>
+              <li>Pas d'expertise DevOps (Kubernetes, observabilité)</li>
+            </ul>
+            <p><strong>Citation de Martin Fowler :</strong> <em>"Don't start with microservices. Start with a monolith and split when the pain is real."</em></p>
+            <p><strong>Signaux de migration :</strong> Déploiement > 30 min, équipes qui se marchent dessus, scalabilité fine impossible, base de données saturée.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 4: Citez les 4 défis majeurs des microservices et leurs solutions.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Les 4 défis majeurs :</strong></p>
+            <ol>
+              <li><strong>Complexité opérationnelle</strong> (50 services = 50 repos, déploiements, pipelines)
+                <ul>
+                  <li><em>Solutions :</em> Kubernetes, Docker, CI/CD (GitHub Actions), Infra as Code (Terraform)</li>
+                </ul>
+              </li>
+              <li><strong>Communication inter-services</strong> (latence réseau cumulée)
+                <ul>
+                  <li><em>Solutions :</em> Caching (Redis), Messaging asynchrone (RabbitMQ, Kafka), API Gateway</li>
+                </ul>
+              </li>
+              <li><strong>Données distribuées</strong> (pas de transactions ACID multi-services)
+                <ul>
+                  <li><em>Solutions :</em> Saga Pattern, Eventual Consistency, Event Sourcing</li>
+                </ul>
+              </li>
+              <li><strong>Monitoring & debugging</strong> (une requête traverse 5 services)
+                <ul>
+                  <li><em>Solutions :</em> Distributed Tracing (Jaeger, Zipkin), Centralized Logging (ELK), Correlation ID</li>
+                </ul>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 5: Qu'est-ce qu'un Correlation ID et pourquoi est-il essentiel ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p>Un <strong>Correlation ID</strong> est un identifiant unique généré au début d'une requête et propagé à travers tous les services appelés.</p>
+            <p><strong>Pourquoi c'est essentiel :</strong></p>
+            <ul>
+              <li>Permet de tracer une requête qui traverse plusieurs services</li>
+              <li>Facilite le debugging en filtrant les logs par cet ID</li>
+              <li>Indispensable pour le distributed tracing</li>
+            </ul>
+            <p><strong>Exemple de flux :</strong></p>
+            <pre><code>// API Gateway génère l'ID
+const correlationId = uuidv4();
+req.headers['x-correlation-id'] = correlationId;
+
+// Dans les logs :
+[abc-123] Gateway: Received request
+[abc-123] Events Service: Fetching event
+[abc-123] Payment Service: Processing payment
+[abc-123] Notification Service: Sending email</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions sur API Gateway -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">🚪 Questions sur l'API Gateway</h2>
+      
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 6: Qu'est-ce qu'une API Gateway et quelle est la différence avec un simple reverse proxy ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p>Une <strong>API Gateway</strong> est le <strong>point d'entrée officiel</strong> de tous les clients (web, mobile, partenaires) vers le système.</p>
+            <p><strong>Différence avec un reverse proxy :</strong></p>
+            <ul>
+              <li><strong>Reverse proxy</strong> : Simple redirection de requêtes basée sur l'URL</li>
+              <li><strong>API Gateway</strong> : Comprend les notions métier ("/api/events" → Events Service) et applique des politiques uniformes</li>
+            </ul>
+            <p><strong>Analogie :</strong> La réception d'un hôtel - on passe toujours par elle avant d'accéder aux chambres.</p>
+            <p><strong>Avantages :</strong></p>
+            <ul>
+              <li>Une seule URL publique</li>
+              <li>Authentification centralisée</li>
+              <li>Masque la topologie interne</li>
+              <li>Point stratégique pour observabilité, A/B testing, cache</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 7: Citez les 6 responsabilités clés d'une API Gateway.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Les 6 responsabilités clés :</strong></p>
+            <ol>
+              <li><strong>Routage</strong> : Rediriger chaque endpoint vers le service cible
+                <pre><code>/api/events → http://events:3001
+/api/users → http://users:3002</code></pre>
+              </li>
+              <li><strong>Authentification</strong> : Vérifier le JWT une seule fois puis propager l'identité (x-user-id, x-user-role)</li>
+              <li><strong>Rate limiting</strong> : Limiter les abus (DDOS, bots) - ex: max 100 requêtes / 15 min</li>
+              <li><strong>Load balancing</strong> : Répartir la charge sur plusieurs instances (round-robin)</li>
+              <li><strong>Agrégation</strong> : Composer un dashboard en un seul appel (Promise.all sur plusieurs services)</li>
+              <li><strong>Cache & transformation</strong> : Mettre en cache les réponses (Redis), transformer les formats</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 8: L'API Gateway est-elle un point de défaillance unique (SPOF) ? Comment le mitiger ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Oui, l'API Gateway est potentiellement un SPOF</strong> car toutes les requêtes passent par elle. Si elle tombe, tout le système devient inaccessible.</p>
+            <p><strong>Stratégies de mitigation :</strong></p>
+            <ol>
+              <li><strong>Haute disponibilité (HA)</strong> : Déployer plusieurs instances de la Gateway derrière un load balancer</li>
+              <li><strong>Health checks</strong> : Surveiller la Gateway et basculer automatiquement sur une instance saine</li>
+              <li><strong>Stateless</strong> : La Gateway ne doit stocker aucun état (permet le scaling horizontal)</li>
+              <li><strong>Timeouts et Circuit Breaker</strong> : Éviter que la Gateway soit bloquée par un service lent</li>
+              <li><strong>Caching</strong> : Réduire la charge sur les services backend</li>
+            </ol>
+            <p><strong>Architecture résiliente :</strong></p>
+            <pre><code>Load Balancer (HAProxy, AWS ALB)
+       │
+   ┌───┴───┐
+   │       │
+Gateway1  Gateway2  (plusieurs instances)
+   │       │
+   └───┬───┘
+       │
+   Services</code></pre>
+            <p><strong>Principe clé :</strong> La Gateway doit rester "légère" - elle route, authentifie et limite, mais ne contient pas de logique métier complexe.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions sur Service Discovery -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">🔍 Questions sur le Service Discovery</h2>
+      
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 9: Pourquoi le Service Discovery est-il nécessaire dans une architecture microservices ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Problème :</strong> Avec des services qui scalent automatiquement (nouvelles instances, IPs dynamiques), comment savoir où envoyer les requêtes ? Impossible de maintenir un fichier de configuration manuel si les IPs changent toutes les minutes.</p>
+            <p><strong>Service Discovery</strong> = un annuaire dynamique, le "DNS intelligent" des microservices.</p>
+            <p><strong>Sans Service Discovery (❌) :</strong></p>
+            <ul>
+              <li>Configuration statique des IPs</li>
+              <li>Maintenance manuelle (erreurs, oublis)</li>
+              <li>Impossible de supporter le scaling horizontal</li>
+              <li>Downtime dès qu'une IP change</li>
+            </ul>
+            <p><strong>Avec Service Discovery (✅) :</strong></p>
+            <ul>
+              <li>Enregistrement et retrait automatiques</li>
+              <li>Health-checks pour ne router que vers les instances saines</li>
+              <li>Support du scaling et des déploiements rolling</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 10: Décrivez le cycle d'enregistrement/découverte d'un service.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Cycle en 4 étapes :</strong></p>
+            <ol>
+              <li><strong>Enregistrement</strong> : Le service démarre → s'enregistre dans le registre avec son nom ("events"), IP, port et tags</li>
+              <li><strong>Health-checks</strong> : Le registre exécute des health-checks périodiques (<code>/health</code>) pour vérifier la disponibilité</li>
+              <li><strong>Résolution</strong> : Les clients (gateway, autres services) interrogent le registre pour obtenir les instances valides</li>
+              <li><strong>Retrait</strong> : En cas de panne, le registre retire l'instance et renvoie uniquement les nœuds healthy</li>
+            </ol>
+            <pre><code>1. Service Events démarre → s'enregistre ("events", 10.0.1.5:3001)
+2. Le registre vérifie périodiquement /health
+3. La Gateway demande : "Donne-moi une instance de events"
+4. Le registre renvoie la liste healthy
+5. La Gateway choisit une instance (round-robin) et route l'appel
+6. Si l'instance ne répond plus, elle est retirée automatiquement</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 11: Comparez Consul et Kubernetes pour le Service Discovery.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Consul (HashiCorp) :</strong></p>
+            <ul>
+              <li>Registre distribué + DNS + KV store</li>
+              <li>S'installe comme un cluster de serveurs</li>
+              <li>Chaque service s'enregistre via un agent local ou une API HTTP</li>
+              <li>Expose l'inventaire via HTTP, DNS ou client officiel</li>
+              <li>Permet des health-checks très fins et des métadonnées (tags, version, datacenter)</li>
+            </ul>
+            <p><strong>Kubernetes (natif) :</strong></p>
+            <ul>
+              <li>Chaque "Service" K8s possède un DNS interne (<code>http://events-service</code>)</li>
+              <li>Le DNS est mis à jour automatiquement quand les pods scalent ou se redéploient</li>
+              <li>Les probes (liveness/readiness) déterminent si un pod est routable</li>
+              <li>Pas besoin d'outil externe pour un déploiement Cloud-native</li>
+            </ul>
+            <p><strong>Différence clé :</strong> Consul est un outil dédié (multi-environnement), Kubernetes intègre le Service Discovery nativement.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 12: Pourquoi les health checks sont-ils essentiels et que doivent-ils vérifier ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Pourquoi les health checks sont essentiels :</strong></p>
+            <ul>
+              <li>Permettent au Service Discovery de savoir quelles instances sont disponibles</li>
+              <li>Évitent de router du trafic vers des services défaillants</li>
+              <li>Permettent le retrait automatique des instances en panne</li>
+              <li>Facilitent les déploiements rolling (attendre qu'une instance soit prête avant de router)</li>
+            </ul>
+            <p><strong>Que doit vérifier un bon health check ?</strong></p>
+            <ol>
+              <li><strong>Connexion à la base de données</strong> : Le service peut-il exécuter une requête simple ?</li>
+              <li><strong>Dépendances critiques</strong> : Redis, message broker, APIs externes essentielles</li>
+              <li><strong>Ressources</strong> : Mémoire, CPU, espace disque suffisants ?</li>
+            </ol>
+            <p><strong>Ce qu'il ne faut PAS faire :</strong></p>
+            <ul>
+              <li>❌ Vérifier des dépendances non-critiques (un service de statistiques down ne doit pas rendre le service "unhealthy")</li>
+              <li>❌ Health check trop lent ou coûteux (appelé toutes les 10 secondes !)</li>
+              <li>❌ Retourner "healthy" sans vraiment vérifier les dépendances</li>
+            </ul>
+            <p><strong>Principe :</strong> Un health check doit répondre vite (<100ms) et vérifier uniquement ce qui empêcherait le service de fonctionner.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions sur les Patterns Essentiels -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">⚡ Questions sur les Patterns Essentiels</h2>
+      
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 13: Expliquez le Circuit Breaker et ses 3 états.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Circuit Breaker</strong> = disjoncteur logiciel qui coupe les appels après N échecs pour éviter l'effet domino (cascade de défaillances).</p>
+            <p><strong>Problème résolu :</strong> Si Service B est down et que Service A continue de l'appeler (timeout 5s), 100 req/s × 5s = 500 threads bloqués → A finit par tomber aussi.</p>
+            <p><strong>Les 3 états :</strong></p>
+            <ol>
+              <li><strong>CLOSED</strong> : Fonctionnement normal, les requêtes passent
+                <ul><li>Si N échecs consécutifs → passe à OPEN</li></ul>
+              </li>
+              <li><strong>OPEN</strong> : Toutes les requêtes échouent instantanément (fail fast)
+                <ul><li>Après un délai (ex: 60s) → passe à HALF-OPEN</li></ul>
+              </li>
+              <li><strong>HALF-OPEN</strong> : On teste 1 requête
+                <ul>
+                  <li>Succès → retour à CLOSED</li>
+                  <li>Échec → retour à OPEN</li>
+                </ul>
+              </li>
+            </ol>
+            <p><strong>Libraries :</strong> Node.js – <code>opossum</code>, Java – Resilience4j, Python – <code>pybreaker</code></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 14: Qu'est-ce que le Saga Pattern et pourquoi est-il nécessaire ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Problème :</strong> Dans les microservices, chaque service a sa propre base de données. Il est donc impossible d'avoir une transaction ACID globale couvrant Order + Payment + Reservation.</p>
+            <p><strong>Saga Pattern</strong> = orchestration de transactions locales avec des opérations de compensation en cas d'échec.</p>
+            <p><strong>Exemple :</strong> Créer une commande = Order + Payment + Reservation + Notification</p>
+            <ul>
+              <li>Chaque service effectue sa transaction locale</li>
+              <li>Si une étape échoue, on déclenche les compensations (annulation, remboursement)</li>
+            </ul>
+            <p><strong>Rappel ACID :</strong> Atomicité, Cohérence, Isolation, Durabilité - garanties assurées par un moteur de base de données unique, impossibles nativement en distribué.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 15: Comparez Chorégraphie et Orchestration pour les Sagas.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Chorégraphie (event-driven) :</strong></p>
+            <pre><code>Order Service → publie "OrderCreated"
+Payment Service → écoute, tente le débit
+  ↳ succès : publie "PaymentProcessed"
+  ↳ échec : publie "PaymentFailed"
+Event Service → écoute "PaymentProcessed"
+  ↳ succès : publie "SeatReserved"
+  ↳ échec : publie "ReservationFailed" (→ refund)</code></pre>
+            <ul>
+              <li>✅ Décentralisé, scalable, pas de SPOF</li>
+              <li>❌ Difficile à tracer/debugger</li>
+            </ul>
+            <p><strong>Orchestration :</strong></p>
+            <ul>
+              <li>Un orchestrateur central contrôle tout le flux</li>
+              <li>✅ Vue globale, debugging facile</li>
+              <li>❌ Orchestrateur = point central de défaillance</li>
+            </ul>
+            <p><strong>Tableau comparatif :</strong></p>
+            <ul>
+              <li><strong>Complexité :</strong> Chorégraphie ⚠️ élevée | Orchestration ✅ plus simple</li>
+              <li><strong>Couplage :</strong> Chorégraphie ✅ faible | Orchestration ⚠️ moyen</li>
+              <li><strong>Point de défaillance :</strong> Chorégraphie ✅ aucun | Orchestration ❌ orchestrateur</li>
+              <li><strong>Debugging :</strong> Chorégraphie ❌ difficile | Orchestration ✅ facile</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 16: Quelle est la différence entre communication synchrone et asynchrone (Event-Driven) ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Synchrone (❌) :</strong></p>
+            <pre><code>Client → Gateway → Order Service (attend 2s)
+                 → Payment Service (attend 1s)
+                 → Notification Service (attend 3s)
+= 6s de latence, tout échoue si Notification down</code></pre>
+            <p><strong>Asynchrone / Event-Driven (✅) :</strong></p>
+            <pre><code>Client → Gateway → Order Service (réponse 200ms)
+Order Service publie "OrderCreated" dans RabbitMQ
+Payment / Notification / Analytics consomment en parallèle</code></pre>
+            <p><strong>Avantages de l'Event-Driven :</strong></p>
+            <ul>
+              <li>Découplage total entre services</li>
+              <li>Résilience : si un consumer est down, les autres continuent</li>
+              <li>Scalabilité horizontale des consumers</li>
+              <li>Performance : réponse rapide au client</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 17: Qu'est-ce que le pattern "Database per Service" et quels problèmes pose-t-il ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Database per Service</strong> = chaque microservice possède sa propre base de données, inaccessible directement par les autres services.</p>
+            <p><strong>Pourquoi ce pattern ?</strong></p>
+            <ul>
+              <li><strong>Autonomie</strong> : Chaque équipe peut choisir sa technologie de stockage (PostgreSQL, MongoDB, Redis...)</li>
+              <li><strong>Découplage</strong> : Un changement de schéma n'impacte pas les autres services</li>
+              <li><strong>Scalabilité</strong> : Chaque base peut être optimisée et scalée indépendamment</li>
+              <li><strong>Isolation des pannes</strong> : Si une base tombe, seul son service est impacté</li>
+            </ul>
+            <p><strong>Problèmes posés :</strong></p>
+            <ol>
+              <li><strong>Pas de transactions ACID cross-services</strong> : Impossible de faire un rollback global → nécessite le Saga Pattern</li>
+              <li><strong>Jointures impossibles</strong> : Pour afficher "commande + utilisateur", il faut appeler 2 services</li>
+              <li><strong>Duplication de données</strong> : Parfois nécessaire de copier des données entre services (ex: nom utilisateur dans le service Commande)</li>
+              <li><strong>Cohérence à terme (Eventual Consistency)</strong> : Les données ne sont pas synchronisées instantanément</li>
+            </ol>
+            <p><strong>Règle d'or :</strong> Un service ne doit JAMAIS accéder directement à la base d'un autre service. Toujours passer par l'API.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 18: Expliquez les patterns Timeout, Retry + Backoff, et Bulkhead.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>1. Timeout :</strong></p>
+            <ul>
+              <li>Ne jamais attendre indéfiniment une réponse</li>
+              <li>Définir une limite de temps (ex: 5 secondes)</li>
+              <li>Si dépassé → abort et erreur</li>
+            </ul>
+            <p><strong>2. Retry + Backoff Exponentiel :</strong></p>
+            <ul>
+              <li>Réessayer automatiquement en cas d'échec</li>
+              <li>Backoff exponentiel : attendre de plus en plus longtemps (2s, 4s, 8s...)</li>
+              <li>Évite de surcharger un service en difficulté</li>
+            </ul>
+            <pre><code>Tentative 1 : échec → attendre 2s
+Tentative 2 : échec → attendre 4s
+Tentative 3 : échec → attendre 8s
+Tentative 4 : abandon</code></pre>
+            <p><strong>3. Bulkhead (cloisons) :</strong></p>
+            <ul>
+              <li>Isoler les ressources pour éviter qu'un service saturé consomme toutes les connexions</li>
+              <li>Exemple : max 10 requêtes simultanées vers Payment Service</li>
+              <li>Si limite atteinte → les autres requêtes attendent ou échouent</li>
+              <li>Protège les autres services de l'effet domino</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions de Synthèse -->
+    <div class="quiz-section">
+      <h2 class="quiz-section-title">🎯 Questions de Synthèse</h2>
+      
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 19: Qu'est-ce que l'Eventual Consistency et pourquoi l'accepter en microservices ?</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Eventual Consistency</strong> (cohérence à terme) = les services ne sont pas synchronisés instantanément, mais ils <strong>convergent</strong> vers un état cohérent.</p>
+            <p><strong>Exemple :</strong></p>
+            <ul>
+              <li>Service Commande traite une commande</li>
+              <li>Service Stock reçoit l'événement 50 ms après</li>
+              <li>Service Notification reçoit l'événement 200 ms plus tard</li>
+              <li>Pendant ce délai, les services sont dans des états "incohérents" mais ils finissent par converger</li>
+            </ul>
+            <p><strong>Pourquoi l'accepter ?</strong></p>
+            <ul>
+              <li>✅ Permet des échanges asynchrones (Kafka, RabbitMQ)</li>
+              <li>✅ Meilleure scalabilité horizontale</li>
+              <li>✅ Pas de transactions distribuées complexes</li>
+              <li>✅ Résilience : un service down ne bloque pas les autres</li>
+            </ul>
+            <p><strong>Trade-off :</strong> On échange la cohérence immédiate contre la performance et la résilience.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question-header">
+          <div class="question-text">Question 20: Décrivez le flux complet d'une requête "Créer un événement" dans SmartCity.</div>
+          <i class="fas fa-chevron-down question-toggle"></i>
+        </div>
+        <div class="question-answer">
+          <div class="answer-content">
+            <h4>Réponse attendue</h4>
+            <p><strong>Flux typique en 6 étapes :</strong></p>
+            <ol>
+              <li><strong>Client</strong> envoie <code>POST /api/events</code> → <strong>API Gateway</strong></li>
+              <li><strong>Gateway</strong> vérifie le JWT (authentification centralisée)</li>
+              <li><strong>Gateway</strong> route vers <strong>Events Service</strong> (:3001) via Service Discovery</li>
+              <li><strong>Events Service</strong> crée l'événement dans sa base (Postgres Events)</li>
+              <li><strong>Events Service</strong> publie <code>EventCreated</code> dans RabbitMQ</li>
+              <li><strong>Notification Service</strong> consomme l'événement et envoie un email de confirmation</li>
+            </ol>
+            <p><strong>Patterns utilisés :</strong></p>
+            <ul>
+              <li><strong>API Gateway</strong> : point d'entrée unique, auth, routage</li>
+              <li><strong>Service Discovery</strong> : localisation dynamique des services</li>
+              <li><strong>Event-Driven</strong> : communication asynchrone via RabbitMQ</li>
+              <li><strong>Database per Service</strong> : chaque service a sa propre base</li>
+            </ul>
+            <pre><code>┌─────────────────────────────────────────────────────────┐
+│                     CLIENTS (Web, Mobile)               │
+└────────────────────┬────────────────────────────────────┘
+                     │ HTTPS
+        ┌────────────▼────────────┐
+        │        API GATEWAY      │ Auth, Rate limit, Routage
+        └────────────┬────────────┘
+                     │
+   ┌────────────────▼────────────────┐
+   │         Events Service          │ → Postgres Events
+   └────────────────┬────────────────┘
+                    │ EventCreated
+           ┌────────▼────────┐
+           │    RabbitMQ     │
+           └────────┬────────┘
+                    │
+   ┌────────────────▼────────────────┐
+   │     Notification Service        │ → Email
+   └─────────────────────────────────┘</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer id="contact" class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="../assets/logo.jpeg" alt="YNOV Campus" class="footer-logo-img">
+            <span class="footer-logo-text">Web Services</span>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Programme</h3>
+          <ul>
+            <li><a href="../index.html#programme">Planning détaillé</a></li>
+            <li><a href="filerouge.html">Projet SmartCity</a></li>
+            <li><a href="ressources.html">Ressources</a></li>
+            <li><a href="../index.html#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Technologies</h3>
+          <ul>
+            <li>Microservices</li>
+            <li>API Gateway</li>
+            <li>Service Discovery</li>
+            <li>Circuit Breaker & Saga</li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> contact@ynov.com</p>
+            <p><i class="fas fa-phone"></i> +33 1 23 45 67 89</p>
+            <p><i class="fas fa-map-marker-alt"></i> Campus Ynov</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 YNOV Campus. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+  <script>
+    // Gestion de l'affichage des réponses au clic
+    document.addEventListener('DOMContentLoaded', function() {
+      const questionHeaders = document.querySelectorAll('.question-header');
+      
+      questionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+          const questionItem = this.closest('.question-item');
+          const answer = questionItem.querySelector('.question-answer');
+          const isOpen = answer.classList.contains('open');
+          
+          // Toggle de l'état
+          if (isOpen) {
+            answer.classList.remove('open');
+            this.classList.remove('active');
+          } else {
+            answer.classList.add('open');
+            this.classList.add('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+
